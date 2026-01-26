@@ -1,16 +1,10 @@
 import { AboutPanelOptionsOptions, app, BrowserWindow } from "electron";
 import path from "path";
-import { isDev } from "./util.js";
-import { createMainWindow } from "./window.js";
-import { readAppConfigFile } from "./config.js";
 import { Toggles } from "../shared/types.js";
-import { menu } from "./menu.js";
 import { MENU_IDS } from "./data.js";
-import {
-  handleRendererInitialization,
-  handleRendererTrackerStateUpdates,
-  handleResetSize,
-} from "./ipc.js";
+import { menu } from "./menu.js";
+import { getPreloadPath } from "./pathResolver.js";
+import { isDev } from "./util.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -24,8 +18,18 @@ const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
 
 app.on("ready", () => {
   app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
-  const config = readAppConfigFile();
-  const mainWindow = createMainWindow(config);
+  // const config = readAppConfigFile();
+  // const mainWindow = createMainWindow(config);
+
+  const mainWindow = new BrowserWindow({
+    title: "Metroid Prime Hint Tracker",
+    minWidth: 640,
+    minHeight: 480,
+    webPreferences: {
+      devTools: isDev(),
+      preload: getPreloadPath(),
+    },
+  });
 
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5173");
@@ -33,15 +37,15 @@ app.on("ready", () => {
     mainWindow.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
   }
 
-  if (config) {
-    setToggles(config.toggles, mainWindow);
-  }
+  // if (config) {
+  //   setToggles(config.toggles, mainWindow);
+  // }
 });
 
 // IPC Handlers
-handleRendererInitialization();
-handleResetSize();
-handleRendererTrackerStateUpdates();
+// handleRendererInitialization();
+// handleResetSize();
+// handleRendererTrackerStateUpdates();
 
 function setToggle(id: string, checked: boolean) {
   const menuItem = menu.getMenuItemById(id);
