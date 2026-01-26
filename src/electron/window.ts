@@ -1,7 +1,5 @@
 import { BrowserWindow, Menu } from "electron";
-import { menu } from "./menu.js";
-import { getPreloadPath } from "./pathResolver.js";
-import { isDev } from "./util.js";
+import { AppConfig } from "../shared/types.js";
 import {
   getTrackerState,
   handleSaveAppConfig,
@@ -9,13 +7,15 @@ import {
   writeTrackerConfigFile,
 } from "./config.js";
 import { WINDOW_SIZE } from "./data.js";
-import { AppConfig } from "../shared/types.js";
+import { menu } from "./menu.js";
+import { getPreloadPath } from "./pathResolver.js";
+import { isDev } from "./util.js";
 
 let mainWindow: BrowserWindow | null = null;
 
 export function createMainWindow(config: AppConfig | null) {
   mainWindow = new BrowserWindow({
-    title: "Metroid Prime Hint Tracker",
+    title: "BashPrime Hint Tracker",
     width: config?.window.width ?? WINDOW_SIZE.default.width,
     height: config?.window.height ?? WINDOW_SIZE.default.height,
     x: config?.window.x ?? undefined,

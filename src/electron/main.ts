@@ -7,7 +7,7 @@ import { getPreloadPath } from "./pathResolver.js";
 import { isDev } from "./util.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
-  applicationName: "Metroid Prime Hint Tracker",
+  applicationName: "BashPrime Hint Tracker",
   applicationVersion: `v${app.getVersion()}`,
   website: "https://github.com/bashprime/prime-hint-tracker",
   copyright:
@@ -22,7 +22,7 @@ app.on("ready", () => {
   // const mainWindow = createMainWindow(config);
 
   const mainWindow = new BrowserWindow({
-    title: "Metroid Prime Hint Tracker",
+    title: "BashPrime Hint Tracker",
     minWidth: 640,
     minHeight: 480,
     webPreferences: {
