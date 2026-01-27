@@ -1,16 +1,16 @@
 {
-    "appId": "com.bashprime.bashprime-hint-tracker",
-    "files": ["dist-electron", "dist-react"],
-    "extraResources": ["dist-electron/electron/preload.cjs"],
-    "icon": "./icon.png",
-    "mac": {
-        "target": "dmg"
-    },
-    "linux": {
-        "target": "AppImage",
-        "category": "Game"
-    },
-    "win": {
-        "target": ["nsis", "portable"]
-    }
+  "appId": "com.bashprime.bashprime-hint-tracker",
+  "files": ["dist-electron", "dist-react"],
+  "extraResources": ["dist-electron/electron/preload.cjs"],
+  "icon": "./icon.png",
+  "mac": {
+    "target": "dmg"
+  },
+  "linux": {
+    "target": "AppImage",
+    "category": "Game"
+  },
+  "win": {
+    "target": ["nsis", "portable"]
+  }
 }

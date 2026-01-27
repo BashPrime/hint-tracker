@@ -10,18 +10,15 @@
       "windows": {
         "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
       },
-      "args" : ["."],
+      "args": ["."],
       "outputCapture": "std",
       "env": {
         "NODE_ENV": "development"
       },
       "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/dist-electron/**",
-        "!**/node_modules/**"
-      ],
+      "resolveSourceMapLocations": ["${workspaceFolder}/dist-electron/**", "!**/node_modules/**"],
       "presentation": {
-        "hidden": true,
+        "hidden": true
       },
       "preLaunchTask": "npm: transpile:electron"
     },
@@ -40,7 +37,7 @@
         "uriFormat": "http://localhost:%s"
       },
       "presentation": {
-        "hidden": true,
+        "hidden": true
       }
     }
   ],

@@ -9,9 +9,9 @@ name: Build and Publish
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 jobs:
   lint:
@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
@@ -66,7 +66,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
@@ -76,7 +76,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Upload artifacts"
+      - name: 'Upload artifacts'
         uses: actions/upload-artifact@v4.0.0
         with:
           name: prime-hint-tracker-${{ matrix.dist }}

@@ -1,28 +1,28 @@
-import { AboutPanelOptionsOptions, app, BrowserWindow } from "electron";
-import path from "path";
-import { Toggles } from "../shared/types.js";
-import { MENU_IDS } from "./data.js";
-import { menu } from "./menu.js";
-import { getPreloadPath } from "./pathResolver.js";
-import { isDev } from "./util.js";
+import { AboutPanelOptionsOptions, app, BrowserWindow } from 'electron';
+import path from 'path';
+import { Toggles } from '../shared/types.js';
+import { MENU_IDS } from './data.js';
+import { menu } from './menu.js';
+import { getPreloadPath } from './pathResolver.js';
+import { isDev } from './util.js';
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
-  applicationName: "BashPrime Hint Tracker",
+  applicationName: 'BashPrime Hint Tracker',
   applicationVersion: `v${app.getVersion()}`,
-  website: "https://github.com/bashprime/prime-hint-tracker",
+  website: 'https://github.com/bashprime/prime-hint-tracker',
   copyright:
     `Copyright (c) ${new Date().getFullYear()} BashPrime` +
-    "\n\nThis software is free for personal and commercial use under the MIT License.",
-  iconPath: "./icon.png",
+    '\n\nThis software is free for personal and commercial use under the MIT License.',
+  iconPath: './icon.png',
 };
 
-app.on("ready", () => {
+app.on('ready', () => {
   app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
   // const config = readAppConfigFile();
   // const mainWindow = createMainWindow(config);
 
   const mainWindow = new BrowserWindow({
-    title: "BashPrime Hint Tracker",
+    title: 'BashPrime Hint Tracker',
     minWidth: 640,
     minHeight: 480,
     webPreferences: {
@@ -32,9 +32,9 @@ app.on("ready", () => {
   });
 
   if (isDev()) {
-    mainWindow.loadURL("http://localhost:5173");
+    mainWindow.loadURL('http://localhost:5173');
   } else {
-    mainWindow.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
+    mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'));
   }
 
   // if (config) {

@@ -1,15 +1,15 @@
 import { cn } from '@/lib/utils';
-import type { HintInput } from '@/types/hint.types';
+import { HintInput } from '@/types/hint.types';
 import { useAtomValue, type PrimitiveAtom } from 'jotai';
 import { Hint } from './hint';
 
 type Props = {
   header: string;
-  atom: PrimitiveAtom<HintInput[]>
+  atom: PrimitiveAtom<HintInput[]>;
 };
 
 export function HintPanel({ header, atom }: Props) {
-  const hints = useAtomValue(atom)
+  const hints = useAtomValue(atom);
 
   return (
     <div className={cn('bg-gray-700')}>

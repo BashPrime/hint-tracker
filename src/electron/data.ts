@@ -1,25 +1,25 @@
 export const MENU_IDS = {
-  alwaysOnTop: "alwaysOnTop",
-  game: "game",
+  alwaysOnTop: 'alwaysOnTop',
+  game: 'game',
   keybearerRoomLabels: {
-    aether: "aether",
-    darkAether: "darkAether",
-    both: "both",
+    aether: 'aether',
+    darkAether: 'darkAether',
+    both: 'both',
   },
-  legacyHintsEnabled: "legacyHintsEnabled",
+  legacyHintsEnabled: 'legacyHintsEnabled',
 };
 
 export const IPC_IDS = {
-  requestRendererState: "request-renderer-state",
-  requestMainState: "request-main-state",
-  rendererTrackerState: "renderer-tracker-state",
-  resetTracker: "reset-tracker",
-  setLegacyHintsEnabled: "set-legacy-hints-enabled",
-  resetSize: "reset-size",
-  loadTrackerSession: "load-tracker-session",
-  setKeybearerRooms: "set-keybearer-rooms",
-  setGame: "set-game",
-  setPhazonSuitHint: "set-phazon-suit-hint",
+  requestRendererState: 'request-renderer-state',
+  requestMainState: 'request-main-state',
+  rendererTrackerState: 'renderer-tracker-state',
+  resetTracker: 'reset-tracker',
+  setLegacyHintsEnabled: 'set-legacy-hints-enabled',
+  resetSize: 'reset-size',
+  loadTrackerSession: 'load-tracker-session',
+  setKeybearerRooms: 'set-keybearer-rooms',
+  setGame: 'set-game',
+  setPhazonSuitHint: 'set-phazon-suit-hint',
 };
 
 type WindowSize = {

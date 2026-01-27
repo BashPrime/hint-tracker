@@ -1,22 +1,16 @@
-import { dialog, ipcMain } from "electron";
-import { IPC_IDS, MENU_IDS } from "./data.js";
-import { getMainWindow } from "./window.js";
-import {
-  Action,
-  Game,
-  KeybearerRooms,
-  PhazonSuitHint,
-  TrackerConfig,
-} from "../shared/types.js";
-import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
+import { dialog, ipcMain } from 'electron';
+import { IPC_IDS, MENU_IDS } from './data.js';
+import { getMainWindow } from './window.js';
+import { Action, Game, KeybearerRooms, PhazonSuitHint, TrackerConfig } from '../shared/types.js';
+import { getDefaultWindowSize, parseTrackerConfig } from './util.js';
 import {
   getAppConfigState,
   getTrackerState,
   readTrackerConfigFile,
   setGameMenuItem,
   setTrackerState,
-} from "./config.js";
-import { menu } from "./menu.js";
+} from './config.js';
+import { menu } from './menu.js';
 
 export function requestRendererState(action: Action) {
   const window = getMainWindow();
@@ -38,11 +32,10 @@ export function resetTracker() {
   if (mainWindow) {
     dialog
       .showMessageBox(mainWindow, {
-        title: "Confirm Reset",
-        message:
-          "This will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?",
-        type: "warning",
-        buttons: ["Cancel", "Yes"],
+        title: 'Confirm Reset',
+        message: 'This will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?',
+        type: 'warning',
+        buttons: ['Cancel', 'Yes'],
         cancelId,
       })
       .then((value) => {
@@ -72,11 +65,11 @@ export function setGame(game: Game) {
   if (mainWindow && state?.game !== game) {
     dialog
       .showMessageBox(mainWindow, {
-        title: "Confirm Game Switch",
+        title: 'Confirm Game Switch',
         message:
-          "Switching games will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?",
-        type: "warning",
-        buttons: ["Cancel", "Yes"],
+          'Switching games will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?',
+        type: 'warning',
+        buttons: ['Cancel', 'Yes'],
         cancelId,
       })
       .then((value) => {
@@ -84,19 +77,11 @@ export function setGame(game: Game) {
           mainWindow?.webContents.send(IPC_IDS.setGame, game);
 
           // If the window size is smaller than the game's default, reset the window size
-          const legacyHintsEnabled = menu.getMenuItemById(
-            MENU_IDS.legacyHintsEnabled
-          )?.checked;
-          const gameWindowSize = getDefaultWindowSize(
-            game,
-            legacyHintsEnabled ?? false
-          );
+          const legacyHintsEnabled = menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked;
+          const gameWindowSize = getDefaultWindowSize(game, legacyHintsEnabled ?? false);
           const currentWindowSize = mainWindow.getSize();
 
-          if (
-            currentWindowSize[0] < gameWindowSize.width &&
-            currentWindowSize[1] < gameWindowSize.height
-          ) {
+          if (currentWindowSize[0] < gameWindowSize.width && currentWindowSize[1] < gameWindowSize.height) {
             mainWindow.setSize(gameWindowSize.width, gameWindowSize.height);
           }
         } else if (state) {
@@ -133,16 +118,13 @@ export function handleRendererInitialization() {
 }
 
 export function handleResetSize() {
-  ipcMain.handle(
-    IPC_IDS.resetSize,
-    (_, game: string, isLegacyHints: boolean) => {
-      const mainWindow = getMainWindow();
-      const windowSize = getDefaultWindowSize(game, isLegacyHints);
-      if (windowSize && mainWindow) {
-        mainWindow.setSize(windowSize.width, windowSize.height);
-      }
+  ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
+    const mainWindow = getMainWindow();
+    const windowSize = getDefaultWindowSize(game, isLegacyHints);
+    if (windowSize && mainWindow) {
+      mainWindow.setSize(windowSize.width, windowSize.height);
     }
-  );
+  });
 }
 
 export function handleRendererTrackerStateUpdates() {

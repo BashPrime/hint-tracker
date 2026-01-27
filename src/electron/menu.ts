@@ -1,12 +1,8 @@
-import { app, Menu, MenuItemConstructorOptions } from "electron";
-import { getMainWindow } from "./window.js";
-import { isDev } from "./util.js";
-import {
-  handleSaveAppConfig,
-  openUserProvidedTrackerFile,
-  saveTrackerFileAs,
-} from "./config.js";
-import { MENU_IDS } from "./data.js";
+import { app, Menu, MenuItemConstructorOptions } from 'electron';
+import { getMainWindow } from './window.js';
+import { isDev } from './util.js';
+import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
+import { MENU_IDS } from './data.js';
 import {
   requestRendererState,
   resetTracker,
@@ -14,7 +10,7 @@ import {
   setKeybearerRoomLabels,
   setLegacyHintsEnabled,
   setPhazonSuitHint,
-} from "./ipc.js";
+} from './ipc.js';
 import {
   Game,
   GameSchema,
@@ -22,7 +18,7 @@ import {
   KeybearerRoomsSchema,
   PhazonSuitHint,
   PhazonSuitHintSchema,
-} from "../shared/types.js";
+} from '../shared/types.js';
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
@@ -52,122 +48,115 @@ function togglePhazonSuitHint(value: PhazonSuitHint) {
 
 const template: MenuItemConstructorOptions[] = [
   {
-    label: "Tracker",
+    label: 'Tracker',
     submenu: [
-      { label: "Reset Size", click: () => requestRendererState("reset-size") },
-      { label: "Reset Tracker", click: () => resetTracker() },
-      { type: "separator" },
-      { label: "Open", click: () => openUserProvidedTrackerFile() },
-      { label: "Save As...", click: () => saveTrackerFileAs() },
+      { label: 'Reset Size', click: () => requestRendererState('reset-size') },
+      { label: 'Reset Tracker', click: () => resetTracker() },
+      { type: 'separator' },
+      { label: 'Open', click: () => openUserProvidedTrackerFile() },
+      { label: 'Save As...', click: () => saveTrackerFileAs() },
     ],
   },
   {
-    label: "Game",
+    label: 'Game',
     id: MENU_IDS.game,
     submenu: [
       {
-        label: "Metroid Prime",
+        label: 'Metroid Prime',
         id: GameSchema.enum.prime,
-        type: "radio",
+        type: 'radio',
         checked: true,
         click: () => toggleGame(GameSchema.enum.prime),
       },
       {
-        label: "Metroid Prime 2: Echoes",
+        label: 'Metroid Prime 2: Echoes',
         id: GameSchema.enum.echoes,
-        type: "radio",
+        type: 'radio',
         checked: false,
         click: () => toggleGame(GameSchema.enum.echoes),
       },
       {
-        label: "Metroid Prime 3: Corruption",
+        label: 'Metroid Prime 3: Corruption',
         id: GameSchema.enum.corruption,
-        type: "radio",
+        type: 'radio',
         checked: false,
         click: () => toggleGame(GameSchema.enum.corruption),
       },
     ],
   },
   {
-    label: "Toggles",
+    label: 'Toggles',
     submenu: [
       {
         id: MENU_IDS.alwaysOnTop,
-        label: "Always on Top",
-        type: "checkbox",
+        label: 'Always on Top',
+        type: 'checkbox',
         checked: false,
         click: (item) => toggleAlwaysOnTop(item.checked),
       },
       {
         id: MENU_IDS.legacyHintsEnabled,
-        label: "Legacy Hints",
-        type: "checkbox",
+        label: 'Legacy Hints',
+        type: 'checkbox',
         checked: false,
         click: (item) => {
           toggleLegacyHints(item.checked);
         },
       },
       {
-        label: "Prime 1 Phazon Suit Hint",
+        label: 'Prime 1 Phazon Suit Hint',
         submenu: [
           {
             id: PhazonSuitHintSchema.enum.areaName,
-            label: "Area Name",
-            type: "radio",
+            label: 'Area Name',
+            type: 'radio',
             checked: true,
-            click: () =>
-              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaName),
+            click: () => togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaName),
           },
           {
             id: PhazonSuitHintSchema.enum.roomName,
-            label: "Room Name",
-            type: "radio",
+            label: 'Room Name',
+            type: 'radio',
             checked: false,
-            click: () =>
-              togglePhazonSuitHint(PhazonSuitHintSchema.enum.roomName),
+            click: () => togglePhazonSuitHint(PhazonSuitHintSchema.enum.roomName),
           },
         ],
       },
       {
-        label: "Prime 2 Keybearer Room Labels",
+        label: 'Prime 2 Keybearer Room Labels',
         submenu: [
           {
             id: MENU_IDS.keybearerRoomLabels.both,
-            label: "Both",
-            type: "radio",
+            label: 'Both',
+            type: 'radio',
             checked: true,
             click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.both),
           },
           {
             id: MENU_IDS.keybearerRoomLabels.aether,
-            label: "Aether only",
-            type: "radio",
+            label: 'Aether only',
+            type: 'radio',
             checked: false,
             click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.aether),
           },
           {
             id: MENU_IDS.keybearerRoomLabels.darkAether,
-            label: "Dark Aether only",
-            type: "radio",
+            label: 'Dark Aether only',
+            type: 'radio',
             checked: false,
-            click: () =>
-              toggleKeybearerRooms(KeybearerRoomsSchema.enum.darkAether),
+            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.darkAether),
           },
         ],
       },
     ],
   },
   isDev()
-    ? { role: "viewMenu" }
+    ? { role: 'viewMenu' }
     : {
-        label: "View",
-        submenu: [
-          { role: "resetZoom" },
-          { role: "zoomIn" },
-          { role: "zoomOut" },
-        ],
+        label: 'View',
+        submenu: [{ role: 'resetZoom' }, { role: 'zoomIn' }, { role: 'zoomOut' }],
       },
-  { label: "Help", submenu: [{ label: "About", role: "about" }] },
+  { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];
 
