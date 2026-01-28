@@ -7,24 +7,27 @@ export const PresetBaseHintSchema = z.object({
 });
 export type PresetBaseHint = z.infer<typeof PresetBaseHintSchema>;
 
-export const PresetHintCollectionSchema = z.object({
-  ...PresetBaseHintSchema.shape,
-  header: z.string().optional(),
-  lineColor: z.string().optional(),
-  type: z.literal('hint-collection'),
-  hints: z.array(PresetBaseHintSchema),
-});
-export type PresetHintCollection = z.infer<typeof PresetHintCollectionSchema>;
-
 export const PresetHintSchema = z.object({
   ...PresetBaseHintSchema.shape,
-  lineColor: PresetHintCollectionSchema.shape.lineColor,
-  hints: PresetHintCollectionSchema.optional(),
-});
+  type: z.string().optional()
+})
 export type PresetHint = z.infer<typeof PresetHintSchema>;
+
+export const PresetHintGroupSchema = z.object({
+  ...PresetBaseHintSchema.shape,
+  nameColor: z.string().optional(),
+  hints: z.array(PresetBaseHintSchema),
+});
+export type PresetHintGroup = z.infer<typeof PresetHintGroupSchema>;
+
+export const PresetSectionSchema = z.object({
+  header: z.string().optional(),
+  lineColor: z.string().optional(),
+  hintGroups: z.array(PresetHintGroupSchema),
+})
 
 export const PresetSchema = z.object({
   schemaVersion: z.number(),
   name: z.string(),
-  layout: z.array(PresetHintSchema),
+  layout: z.array(PresetSectionSchema),
 });

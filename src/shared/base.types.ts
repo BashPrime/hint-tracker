@@ -7,5 +7,5 @@ export const BaseElementSchema = z.object({
   name: EmptyStringSchema,
 });
 
-export const HintTypeSchema = z.enum(['item', 'location', 'item-location', 'hint-collection']);
+export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
 export type HintType = z.infer<typeof HintTypeSchema>
