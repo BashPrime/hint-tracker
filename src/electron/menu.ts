@@ -1,21 +1,16 @@
 import { app, Menu, MenuItemConstructorOptions } from 'electron';
 import {
   Game,
-  GameSchema,
   KeybearerRooms,
-  KeybearerRoomsSchema,
-  PhazonSuitHint,
-  PhazonSuitHintSchema,
+  PhazonSuitHint
 } from '../shared/types.js';
 // import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
 import { MENU_IDS } from './data.js';
 import {
-  requestRendererState,
-  resetTracker,
   // setGame,
   setKeybearerRoomLabels,
   setLegacyHintsEnabled,
-  setPhazonSuitHint,
+  setPhazonSuitHint
 } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
@@ -47,43 +42,16 @@ function togglePhazonSuitHint(value: PhazonSuitHint) {
 }
 
 const template: MenuItemConstructorOptions[] = [
-  {
-    label: 'Tracker',
-    submenu: [
-      { label: 'Reset Size', click: () => requestRendererState('reset-size') },
-      { label: 'Reset Tracker', click: () => resetTracker() },
-      { type: 'separator' },
-      // { label: 'Open', click: () => openUserProvidedTrackerFile() },
-      // { label: 'Save As...', click: () => saveTrackerFileAs() },
-    ],
-  },
-  {
-    label: 'Game',
-    id: MENU_IDS.game,
-    submenu: [
-      {
-        label: 'Metroid Prime',
-        id: GameSchema.enum.prime,
-        type: 'radio',
-        checked: true,
-        click: () => toggleGame(GameSchema.enum.prime),
-      },
-      {
-        label: 'Metroid Prime 2: Echoes',
-        id: GameSchema.enum.echoes,
-        type: 'radio',
-        checked: false,
-        click: () => toggleGame(GameSchema.enum.echoes),
-      },
-      {
-        label: 'Metroid Prime 3: Corruption',
-        id: GameSchema.enum.corruption,
-        type: 'radio',
-        checked: false,
-        click: () => toggleGame(GameSchema.enum.corruption),
-      },
-    ],
-  },
+  // {
+  //   label: 'Tracker',
+  //   submenu: [
+  //     { label: 'Reset Size', click: () => requestRendererState('reset-size') },
+  //     { label: 'Reset Tracker', click: () => resetTracker() },
+  //     { type: 'separator' },
+  //     { label: 'Open', click: () => openUserProvidedTrackerFile() },
+  //     { label: 'Save As...', click: () => saveTrackerFileAs() },
+  //   ],
+  // },
   {
     label: 'Toggles',
     submenu: [
@@ -93,60 +61,6 @@ const template: MenuItemConstructorOptions[] = [
         type: 'checkbox',
         checked: false,
         click: (item) => toggleAlwaysOnTop(item.checked),
-      },
-      {
-        id: MENU_IDS.legacyHintsEnabled,
-        label: 'Legacy Hints',
-        type: 'checkbox',
-        checked: false,
-        click: (item) => {
-          toggleLegacyHints(item.checked);
-        },
-      },
-      {
-        label: 'Prime 1 Phazon Suit Hint',
-        submenu: [
-          {
-            id: PhazonSuitHintSchema.enum.areaName,
-            label: 'Area Name',
-            type: 'radio',
-            checked: true,
-            click: () => togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaName),
-          },
-          {
-            id: PhazonSuitHintSchema.enum.roomName,
-            label: 'Room Name',
-            type: 'radio',
-            checked: false,
-            click: () => togglePhazonSuitHint(PhazonSuitHintSchema.enum.roomName),
-          },
-        ],
-      },
-      {
-        label: 'Prime 2 Keybearer Room Labels',
-        submenu: [
-          {
-            id: MENU_IDS.keybearerRoomLabels.both,
-            label: 'Both',
-            type: 'radio',
-            checked: true,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.both),
-          },
-          {
-            id: MENU_IDS.keybearerRoomLabels.aether,
-            label: 'Aether only',
-            type: 'radio',
-            checked: false,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.aether),
-          },
-          {
-            id: MENU_IDS.keybearerRoomLabels.darkAether,
-            label: 'Dark Aether only',
-            type: 'radio',
-            checked: false,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.darkAether),
-          },
-        ],
       },
     ],
   },

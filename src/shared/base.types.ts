@@ -8,4 +8,4 @@ export const BaseElementSchema = z.object({
 });
 
 export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
-export type HintType = z.infer<typeof HintTypeSchema>
+export type HintType = z.infer<typeof HintTypeSchema>;

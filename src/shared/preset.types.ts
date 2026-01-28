@@ -1,5 +1,9 @@
 import z from 'zod';
-import { EmptyStringSchema, HintTypeSchema } from './base.types';
+
+export const EmptyStringSchema = z.string().default('');
+
+export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
+export type HintType = z.infer<typeof HintTypeSchema>;
 
 export const PresetBaseHintSchema = z.object({
   name: z.string(),
@@ -20,6 +24,7 @@ export const PresetSectionSchema = z.object({
   lineColor: z.string().optional(),
   hints: z.array(PresetHintSchema),
 });
+export type PresetSection = z.infer<typeof PresetSectionSchema>;
 
 export const PresetSchema = z.object({
   schemaVersion: z.number(),
@@ -28,3 +33,4 @@ export const PresetSchema = z.object({
   description: EmptyStringSchema,
   layout: z.array(PresetSectionSchema),
 });
+export type Preset = z.infer<typeof PresetSchema>;

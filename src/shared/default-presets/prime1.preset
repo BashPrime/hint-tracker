@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "667e61e4-2376-4b83-b675-0e68394f269d",
+  "name": "Metroid Prime",
+  "description": "The default layout for Metroid Prime.",
+  "layout": [
+    {
+      "header": "Sky Temple Keys",
+      "lineColor": "lime",
+      "hints": [
+        {
+          "color": "lime",
+          "type": "location",
+          "group": [
+            "Key 1",
+            "Key 2",
+            "Key 3",
+            "Key 4",
+            "Key 5",
+            "Key 6",
+            "Key 7",
+            "Key 8",
+            "Key 9"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "Torvus Bog",
+      "lineColor": "emerald",
+      "hints": [
+        {
+          "name": "Chykka",
+          "color": "red",
+          "type": "location"
+        },
+        {
+          "color": "red",
+          "type": "location",
+          "group": [
+            "Key 1",
+            "Key 2",
+            "Key 3"
+          ]
+        },
+        {
+          "color": "emerald",
+          "type": "item-location",
+          "group": [
+            "Path of Roots",
+            "Torvus Energy Controller"
+          ]
+        }
+      ]
+    }
+  ]
+}

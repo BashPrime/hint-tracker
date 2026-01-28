@@ -1,33 +1,21 @@
-import { app } from 'electron';
 import path from 'path';
 import { z } from 'zod';
 import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
-import { Game } from '../shared/types.js';
+import { PresetSchema } from '../shared/preset.types.js';
+import { DEFAULT_PRESETS_PATH, PRESET_FILENAME_EXT, WINDOW_CONFIG_PATH } from './constants.js';
 import { readDir, readJsonFile, writeJsonFile } from './io.js';
-import { menu } from './menu.js';
-import { getErrorMsg, isDev } from './util.js';
+import { getErrorMsg } from './util.js';
 
-const USER_DATA_DIR = app.getPath('userData');
-const WINDOW_CONFIG_PATH = path.join(USER_DATA_DIR, 'window.json');
-
-export function setGameMenuItem(game: Game) {
-  const menuItem = menu.getMenuItemById(game);
-
-  if (menuItem) {
-    menuItem.checked = true;
-  }
-}
-
-export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {
+export function readAndParseJsonFile<T extends z.ZodTypeAny>(path: string, schema: T) {
   const raw = readJsonFile(path);
 
   if (raw) {
     try {
-      const parsed = WindowConfigSchema.parse(raw);
+      const parsed = schema.parse(raw);
       return parsed;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error('readWindowConfigFile(): Error trying to read window config file:', err.issues);
+        console.error('readAndParseJsonFile(): Error trying to read window config file:', err.issues);
       } else console.error(getErrorMsg(err));
     }
   }
@@ -35,13 +23,29 @@ export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {
   return null;
 }
 
+export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {
+  return readAndParseJsonFile(path, WindowConfigSchema);
+}
+
 export function writeWindowConfigFile(config: WindowConfig, path: string = WINDOW_CONFIG_PATH) {
   const json = JSON.stringify(config, null, 2);
   writeJsonFile(path, json);
 }
 
-export function getDefaultPresetFiles() {
-  return readDir(path.join(app.getAppPath(), isDev() ? './src' : '..', 'shared/default-presets'));
+export function getDefaultPresets() {
+  const files = readDir(DEFAULT_PRESETS_PATH);
+
+  if (!files) {
+    return null;
+  }
+
+  return files
+    .filter((file) => {
+      return path.extname(file).toLowerCase() === PRESET_FILENAME_EXT;
+    })
+    .map((file) => {
+      return readAndParseJsonFile(path.join(DEFAULT_PRESETS_PATH, file), PresetSchema);
+    });
 }
 
 // export function openUserProvidedTrackerFile() {

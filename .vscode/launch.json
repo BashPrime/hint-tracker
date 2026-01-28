@@ -48,6 +48,13 @@
       "presentation": {
         "order": 1
       }
+    },
+    {
+      "name": "Debug Electron",
+      "configurations": ["Debug Main Process"],
+      "presentation": {
+        "order": 2
+      }
     }
   ]
 }

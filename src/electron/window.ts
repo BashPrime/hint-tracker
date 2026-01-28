@@ -1,8 +1,9 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, Menu } from 'electron';
 import z from 'zod';
 import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
 import { writeWindowConfigFile } from './config.js';
 import { WINDOW_SIZE } from './data.js';
+import { menu } from './menu.js';
 import { getPreloadPath } from './pathResolver.js';
 import { getErrorMsg, isDev } from './util.js';
 
@@ -23,7 +24,7 @@ export function createMainWindow(windowConfig: WindowConfig | null) {
     },
   });
 
-  // Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(menu);
   mainWindowHandlers(mainWindow);
 
   return mainWindow;

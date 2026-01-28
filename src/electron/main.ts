@@ -1,7 +1,7 @@
 import { AboutPanelOptionsOptions, app, BrowserWindow } from 'electron';
 import path from 'path';
 import { Toggles } from '../shared/types.js';
-import { getDefaultPresetFiles, readWindowConfigFile } from './config.js';
+import { readWindowConfigFile } from './config.js';
 import { MENU_IDS } from './data.js';
 import { menu } from './menu.js';
 import { isDev } from './util.js';
@@ -20,7 +20,6 @@ const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
 app.on('ready', () => {
   app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
   const windowConfig = readWindowConfigFile();
-  const files = getDefaultPresetFiles();
   // const config = readAppConfigFile();
   const mainWindow = createMainWindow(windowConfig);
 
