@@ -1,7 +1,10 @@
 {
+  "schemaVersion": 1,
   "name": "Metroid Prime 2: Echoes",
   "layout": [
     {
+      "name": "Sky Temple Keys",
+      "type": "hint-collection",
       "header": "Sky Temple Keys",
       "lineColor": "green",
       "hints": [
