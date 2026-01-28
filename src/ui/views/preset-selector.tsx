@@ -13,7 +13,11 @@ export function PresetSelector() {
       <p>Select a Preset:</p>
       <ItemGroup>
         {presets?.map((preset) => (
-          <Item className="hover:cursor-pointer" variant="outline" onClick={() => setActivePreset(preset)}>
+          <Item
+            className="hover:cursor-pointer hover:brightness-150 hover:bg-gray-800"
+            variant="outline"
+            onClick={() => setActivePreset(preset)}
+          >
             <ItemContent>
               <ItemTitle>{preset.name}</ItemTitle>
               <ItemDescription>{preset.description}</ItemDescription>
