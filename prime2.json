@@ -1,0 +1,62 @@
+{
+  "name": "Metroid Prime 2: Echoes",
+  "layout": [
+    {
+      "header": "Sky Temple Keys",
+      "lineColor": "green",
+      "hints": [
+        {
+          "name": "Key 1",
+          "type": "location"
+        }
+      ]
+    },
+    {
+      "header": "Torvus Bog",
+      "lineColor": "emerald",
+      "hints": [
+        {
+          "name": "Chykka",
+          "type": "item"
+        },
+        {
+          "name": "Chykka Keys",
+          "type": "hint-collection",
+          "hints": [
+            {
+              "name": "Key 1",
+              "type": "location"
+            }
+          ]
+        },
+        {
+          "name": "Torvus Ing Caches",
+          "type": "hint-collection",
+          "hints": [
+            {
+              "name": "Dungeon",
+              "type": "item"
+            },
+            {
+              "name": "Poisoned Bog",
+              "type": "item"
+            }
+          ]
+        },
+        {
+          "name": "Translator Hints",
+          "type": "hint-collection",
+          "hints": [
+            {
+              "name": "Torvus Energy Controller",
+              "type": "item-location"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "items": [
+    "Dark Beam"
+  ]
+}
