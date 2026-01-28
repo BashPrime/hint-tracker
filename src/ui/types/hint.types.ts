@@ -1,6 +1,6 @@
 import type { PrimitiveAtom } from 'jotai';
+import { BaseElementSchema, EmptyStringSchema } from 'src/shared/base.types';
 import z from 'zod';
-import { BaseElementSchema, EmptyStringSchema } from './base.types';
 
 export const CheckedSchema = z.boolean().default(false);
 export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);

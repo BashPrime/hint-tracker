@@ -24,7 +24,7 @@ export function createMainWindow(windowConfig: WindowConfig | null) {
   });
 
   // Menu.setApplicationMenu(menu);
-  // mainWindowHandlers(mainWindow);
+  mainWindowHandlers(mainWindow);
 
   return mainWindow;
 }
@@ -63,13 +63,13 @@ function handleSaveWindowConfig() {
 }
 
 function mainWindowHandlers(window: BrowserWindow) {
-  window.on('resized', () => {
-    handleSaveWindowConfig();
-  });
+  // window.on('resized', () => {
+  //   handleSaveWindowConfig();
+  // });
 
-  window.on('moved', () => {
-    handleSaveWindowConfig();
-  });
+  // window.on('moved', () => {
+  //   handleSaveWindowConfig();
+  // });
 
   window.on('close', (event) => {
     handleSaveWindowConfig();

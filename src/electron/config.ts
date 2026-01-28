@@ -3,9 +3,9 @@ import path from 'path';
 import { z } from 'zod';
 import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
 import { Game } from '../shared/types.js';
-import { readJsonFile, writeJsonFile } from './io.js';
+import { readDir, readJsonFile, writeJsonFile } from './io.js';
 import { menu } from './menu.js';
-import { getErrorMsg } from './util.js';
+import { getErrorMsg, isDev } from './util.js';
 
 const USER_DATA_DIR = app.getPath('userData');
 const WINDOW_CONFIG_PATH = path.join(USER_DATA_DIR, 'window.json');
@@ -38,6 +38,10 @@ export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {
 export function writeWindowConfigFile(config: WindowConfig, path: string = WINDOW_CONFIG_PATH) {
   const json = JSON.stringify(config, null, 2);
   writeJsonFile(path, json);
+}
+
+export function getDefaultPresetFiles() {
+  return readDir(path.join(app.getAppPath(), isDev() ? './src' : '..', 'shared/default-presets'));
 }
 
 // export function openUserProvidedTrackerFile() {
