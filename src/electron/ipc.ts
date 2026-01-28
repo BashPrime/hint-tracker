@@ -1,16 +1,15 @@
 import { dialog, ipcMain } from 'electron';
-import { IPC_IDS, MENU_IDS } from './data.js';
+import { Action, KeybearerRooms, PhazonSuitHint, TrackerConfig } from '../shared/types.js';
+import { IPC_IDS } from './data.js';
+import { getDefaultWindowSize } from './util.js';
 import { getMainWindow } from './window.js';
-import { Action, Game, KeybearerRooms, PhazonSuitHint, TrackerConfig } from '../shared/types.js';
-import { getDefaultWindowSize, parseTrackerConfig } from './util.js';
-import {
-  getAppConfigState,
-  getTrackerState,
-  readTrackerConfigFile,
-  setGameMenuItem,
-  setTrackerState,
-} from './config.js';
-import { menu } from './menu.js';
+// import {
+//   getAppConfigState,
+//   getTrackerState,
+//   readTrackerConfigFile,
+//   setGameMenuItem,
+//   setTrackerState,
+// } from './config.js';
 
 export function requestRendererState(action: Action) {
   const window = getMainWindow();
@@ -19,7 +18,7 @@ export function requestRendererState(action: Action) {
 
 export function loadTrackerSession(config: TrackerConfig | null) {
   const mainWindow = getMainWindow();
-  setTrackerState(config);
+  // setTrackerState(config);
 
   if (mainWindow) {
     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
@@ -56,66 +55,66 @@ export function setKeybearerRoomLabels(value: KeybearerRooms) {
   window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
 }
 
-export function setGame(game: Game) {
-  const mainWindow = getMainWindow();
-  const cancelId = 0;
+// export function setGame(game: Game) {
+//   const mainWindow = getMainWindow();
+//   const cancelId = 0;
 
-  const state = getTrackerState();
+//   // const state = getTrackerState();
 
-  if (mainWindow && state?.game !== game) {
-    dialog
-      .showMessageBox(mainWindow, {
-        title: 'Confirm Game Switch',
-        message:
-          'Switching games will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?',
-        type: 'warning',
-        buttons: ['Cancel', 'Yes'],
-        cancelId,
-      })
-      .then((value) => {
-        if (value.response !== cancelId) {
-          mainWindow?.webContents.send(IPC_IDS.setGame, game);
+//   if (mainWindow && state?.game !== game) {
+//     dialog
+//       .showMessageBox(mainWindow, {
+//         title: 'Confirm Game Switch',
+//         message:
+//           'Switching games will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?',
+//         type: 'warning',
+//         buttons: ['Cancel', 'Yes'],
+//         cancelId,
+//       })
+//       .then((value) => {
+//         if (value.response !== cancelId) {
+//           mainWindow?.webContents.send(IPC_IDS.setGame, game);
 
-          // If the window size is smaller than the game's default, reset the window size
-          const legacyHintsEnabled = menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked;
-          const gameWindowSize = getDefaultWindowSize(game, legacyHintsEnabled ?? false);
-          const currentWindowSize = mainWindow.getSize();
+//           // If the window size is smaller than the game's default, reset the window size
+//           const legacyHintsEnabled = menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked;
+//           const gameWindowSize = getDefaultWindowSize(game, legacyHintsEnabled ?? false);
+//           const currentWindowSize = mainWindow.getSize();
 
-          if (currentWindowSize[0] < gameWindowSize.width && currentWindowSize[1] < gameWindowSize.height) {
-            mainWindow.setSize(gameWindowSize.width, gameWindowSize.height);
-          }
-        } else if (state) {
-          // Need to switch back to the previous radio button
-          setGameMenuItem(state.game);
-        }
-      });
-  }
-}
+//           if (currentWindowSize[0] < gameWindowSize.width && currentWindowSize[1] < gameWindowSize.height) {
+//             mainWindow.setSize(gameWindowSize.width, gameWindowSize.height);
+//           }
+//         } else if (state) {
+//           // Need to switch back to the previous radio button
+//           setGameMenuItem(state.game);
+//         }
+//       });
+//   }
+// }
 
 export function setPhazonSuitHint(value: PhazonSuitHint) {
   const window = getMainWindow();
   window?.webContents.send(IPC_IDS.setPhazonSuitHint, value);
 }
 
-export function handleRendererInitialization() {
-  ipcMain.handle(IPC_IDS.requestMainState, () => {
-    const trackerConfig = readTrackerConfigFile();
-    const appConfig = getAppConfigState();
+// export function handleRendererInitialization() {
+//   ipcMain.handle(IPC_IDS.requestMainState, () => {
+//     const trackerConfig = readTrackerConfigFile();
+//     const appConfig = getAppConfigState();
 
-    if (trackerConfig) {
-      setTrackerState(trackerConfig);
-    }
+//     if (trackerConfig) {
+//       setTrackerState(trackerConfig);
+//     }
 
-    // Send tracker and toggle data to renderer
-    loadTrackerSession(trackerConfig);
+//     // Send tracker and toggle data to renderer
+//     loadTrackerSession(trackerConfig);
 
-    if (appConfig) {
-      setLegacyHintsEnabled(appConfig.toggles.legacyHintsEnabled);
-      setKeybearerRoomLabels(appConfig.toggles.keybearerRoomLabels);
-      setPhazonSuitHint(appConfig.toggles.phazonSuitHint);
-    }
-  });
-}
+//     if (appConfig) {
+//       setLegacyHintsEnabled(appConfig.toggles.legacyHintsEnabled);
+//       setKeybearerRoomLabels(appConfig.toggles.keybearerRoomLabels);
+//       setPhazonSuitHint(appConfig.toggles.phazonSuitHint);
+//     }
+//   });
+// }
 
 export function handleResetSize() {
   ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
@@ -127,10 +126,10 @@ export function handleResetSize() {
   });
 }
 
-export function handleRendererTrackerStateUpdates() {
-  // handle receive from the renderer
-  ipcMain.handle(IPC_IDS.rendererTrackerState, (_, state: object) => {
-    const parsed = parseTrackerConfig(state);
-    setTrackerState(parsed);
-  });
-}
+// export function handleRendererTrackerStateUpdates() {
+//   // handle receive from the renderer
+//   ipcMain.handle(IPC_IDS.rendererTrackerState, (_, state: object) => {
+//     const parsed = parseTrackerConfig(state);
+//     setTrackerState(parsed);
+//   });
+// }

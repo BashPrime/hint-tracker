@@ -1,16 +1,4 @@
 import { app, Menu, MenuItemConstructorOptions } from 'electron';
-import { getMainWindow } from './window.js';
-import { isDev } from './util.js';
-import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
-import { MENU_IDS } from './data.js';
-import {
-  requestRendererState,
-  resetTracker,
-  setGame,
-  setKeybearerRoomLabels,
-  setLegacyHintsEnabled,
-  setPhazonSuitHint,
-} from './ipc.js';
 import {
   Game,
   GameSchema,
@@ -19,31 +7,43 @@ import {
   PhazonSuitHint,
   PhazonSuitHintSchema,
 } from '../shared/types.js';
+// import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
+import { MENU_IDS } from './data.js';
+import {
+  requestRendererState,
+  resetTracker,
+  // setGame,
+  setKeybearerRoomLabels,
+  setLegacyHintsEnabled,
+  setPhazonSuitHint,
+} from './ipc.js';
+import { isDev } from './util.js';
+import { getMainWindow } from './window.js';
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
   window?.setAlwaysOnTop(checked);
-  handleSaveAppConfig();
+  // handleSaveAppConfig();
 }
 
 function toggleLegacyHints(checked: boolean) {
   setLegacyHintsEnabled(checked);
-  handleSaveAppConfig();
+  // handleSaveAppConfig();
 }
 
 function toggleKeybearerRooms(value: KeybearerRooms) {
   setKeybearerRoomLabels(value);
-  handleSaveAppConfig();
+  // handleSaveAppConfig();
 }
 
 function toggleGame(game: Game) {
-  setGame(game);
-  handleSaveAppConfig();
+  // setGame(game);
+  // handleSaveAppConfig();
 }
 
 function togglePhazonSuitHint(value: PhazonSuitHint) {
   setPhazonSuitHint(value);
-  handleSaveAppConfig();
+  // handleSaveAppConfig();
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -53,8 +53,8 @@ const template: MenuItemConstructorOptions[] = [
       { label: 'Reset Size', click: () => requestRendererState('reset-size') },
       { label: 'Reset Tracker', click: () => resetTracker() },
       { type: 'separator' },
-      { label: 'Open', click: () => openUserProvidedTrackerFile() },
-      { label: 'Save As...', click: () => saveTrackerFileAs() },
+      // { label: 'Open', click: () => openUserProvidedTrackerFile() },
+      // { label: 'Save As...', click: () => saveTrackerFileAs() },
     ],
   },
   {

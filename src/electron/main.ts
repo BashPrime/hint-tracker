@@ -1,10 +1,11 @@
 import { AboutPanelOptionsOptions, app, BrowserWindow } from 'electron';
 import path from 'path';
 import { Toggles } from '../shared/types.js';
+import { readWindowConfigFile } from './config.js';
 import { MENU_IDS } from './data.js';
 import { menu } from './menu.js';
-import { getPreloadPath } from './pathResolver.js';
 import { isDev } from './util.js';
+import { createMainWindow } from './window.js';
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: 'BashPrime Hint Tracker',
@@ -18,18 +19,9 @@ const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
 
 app.on('ready', () => {
   app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
+  const windowConfig = readWindowConfigFile();
   // const config = readAppConfigFile();
-  // const mainWindow = createMainWindow(config);
-
-  const mainWindow = new BrowserWindow({
-    title: 'BashPrime Hint Tracker',
-    minWidth: 640,
-    minHeight: 480,
-    webPreferences: {
-      devTools: isDev(),
-      preload: getPreloadPath(),
-    },
-  });
+  const mainWindow = createMainWindow(windowConfig);
 
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173');

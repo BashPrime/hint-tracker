@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { WINDOW_SIZE } from './data.js';
 import { GameSchema, TrackerConfigSchema } from '../shared/types.js';
+import { WINDOW_SIZE } from './data.js';
 
 export function isDev(): boolean {
   return process.env.NODE_ENV === 'development';

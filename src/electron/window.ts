@@ -1,20 +1,20 @@
-import { BrowserWindow, Menu } from 'electron';
-import { AppConfig } from '../shared/types.js';
-import { getTrackerState, handleSaveAppConfig, setTrackerState, writeTrackerConfigFile } from './config.js';
+import { BrowserWindow } from 'electron';
+import z from 'zod';
+import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
+import { writeWindowConfigFile } from './config.js';
 import { WINDOW_SIZE } from './data.js';
-import { menu } from './menu.js';
 import { getPreloadPath } from './pathResolver.js';
-import { isDev } from './util.js';
+import { getErrorMsg, isDev } from './util.js';
 
 let mainWindow: BrowserWindow | null = null;
 
-export function createMainWindow(config: AppConfig | null) {
+export function createMainWindow(windowConfig: WindowConfig | null) {
   mainWindow = new BrowserWindow({
     title: 'BashPrime Hint Tracker',
-    width: config?.window.width ?? WINDOW_SIZE.default.width,
-    height: config?.window.height ?? WINDOW_SIZE.default.height,
-    x: config?.window.x ?? undefined,
-    y: config?.window.y ?? undefined,
+    width: windowConfig?.width ?? WINDOW_SIZE.default.width,
+    height: windowConfig?.height ?? WINDOW_SIZE.default.height,
+    x: windowConfig?.x ?? undefined,
+    y: windowConfig?.y ?? undefined,
     minWidth: 640,
     minHeight: 480,
     webPreferences: {
@@ -23,8 +23,8 @@ export function createMainWindow(config: AppConfig | null) {
     },
   });
 
-  Menu.setApplicationMenu(menu);
-  mainWindowHandlers(mainWindow);
+  // Menu.setApplicationMenu(menu);
+  // mainWindowHandlers(mainWindow);
 
   return mainWindow;
 }
@@ -42,23 +42,36 @@ export function closeMainWindow() {
   mainWindow?.close();
 }
 
+function getWindowState() {
+  const state = mainWindow?.getBounds();
+
+  try {
+    return WindowConfigSchema.parse(state);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error('getWindowState(): Error when parsing:', err.issues);
+    } else console.error(getErrorMsg(err));
+  }
+}
+
+function handleSaveWindowConfig() {
+  const windowState = getWindowState();
+
+  if (windowState) {
+    writeWindowConfigFile(windowState);
+  }
+}
+
 function mainWindowHandlers(window: BrowserWindow) {
   window.on('resized', () => {
-    handleSaveAppConfig();
+    handleSaveWindowConfig();
   });
 
   window.on('moved', () => {
-    handleSaveAppConfig();
+    handleSaveWindowConfig();
   });
 
   window.on('close', (event) => {
-    const state = getTrackerState();
-
-    if (state) {
-      event.preventDefault();
-      writeTrackerConfigFile(state);
-      setTrackerState(null);
-      window.close();
-    }
+    handleSaveWindowConfig();
   });
 }

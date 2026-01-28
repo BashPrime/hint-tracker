@@ -1,18 +1,24 @@
 import type { PrimitiveAtom } from 'jotai';
 import z from 'zod';
-import { EmptyStringSchema } from './tracker.types';
+import { BaseElementSchema, EmptyStringSchema } from './base.types';
 
 export const CheckedSchema = z.boolean().default(false);
+export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
 
 export const BaseHintSchema = z.object({
-  id: z.uuid(),
-  name: z.string(),
-  checked: CheckedSchema,
+  ...BaseElementSchema.shape,
 });
 export type BaseHint = z.infer<typeof BaseHintSchema>;
 
+export const BaseHintInputSchema = z.object({
+  ...BaseHintSchema.shape,
+  checked: CheckedSchema,
+});
+export type BaseHintInput = z.infer<typeof BaseHintInputSchema>;
+
 export const ItemLocationHintSchema = z.object({
   ...BaseHintSchema.shape,
+  type: z.literal('item-location'),
   item: EmptyStringSchema,
   location: EmptyStringSchema,
 });
@@ -61,3 +67,13 @@ export const LocationHintInputSchema = z.object({
   checked: HintInputBoolAtom,
 });
 export type LocationHintInput = z.infer<typeof LocationHintInputSchema>;
+
+export const HintCollectionSchema = z.object({
+  name: z.string(),
+  header: z.string().nullable(),
+  type: z.literal('hint-collection'),
+  get hints() {
+    return z.array(z.union([ItemHintSchema, LocationHintSchema, ItemLocationHintSchema, HintCollectionSchema]));
+  },
+});
+export type HintCollection = z.infer<typeof HintCollectionSchema>;
