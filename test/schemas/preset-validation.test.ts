@@ -4,4 +4,4 @@ import { PresetSchema } from '../../src/shared/preset.types';
 
 test('default prime2 preset passes validation', () => {
   expect(PresetSchema.safeParse(prime2Json).success).toBe(true);
-})
+});

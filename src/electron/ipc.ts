@@ -1,7 +1,6 @@
-import { dialog, ipcMain } from 'electron';
-import { Action, KeybearerRooms, PhazonSuitHint, TrackerConfig } from '../shared/types.js';
-import { IPC_IDS } from './data.js';
-import { getDefaultWindowSize } from './util.js';
+import { ipcMain } from 'electron';
+import { getDefaultPresets } from './config.js';
+import { IPC_IDS } from './constants.js';
 import { getMainWindow } from './window.js';
 // import {
 //   getAppConfigState,
@@ -11,49 +10,49 @@ import { getMainWindow } from './window.js';
 //   setTrackerState,
 // } from './config.js';
 
-export function requestRendererState(action: Action) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.requestRendererState, action);
-}
+// export function requestRendererState(action: Action) {
+//   const window = getMainWindow();
+//   window?.webContents.send(IPC_IDS.requestRendererState, action);
+// }
 
-export function loadTrackerSession(config: TrackerConfig | null) {
-  const mainWindow = getMainWindow();
-  // setTrackerState(config);
+// export function loadTrackerSession(config: TrackerConfig | null) {
+//   const mainWindow = getMainWindow();
+//   // setTrackerState(config);
 
-  if (mainWindow) {
-    mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
-  }
-}
+//   if (mainWindow) {
+//     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
+//   }
+// }
 
-export function resetTracker() {
-  const mainWindow = getMainWindow();
-  const cancelId = 0;
-  if (mainWindow) {
-    dialog
-      .showMessageBox(mainWindow, {
-        title: 'Confirm Reset',
-        message: 'This will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?',
-        type: 'warning',
-        buttons: ['Cancel', 'Yes'],
-        cancelId,
-      })
-      .then((value) => {
-        if (value.response !== cancelId) {
-          mainWindow?.webContents.send(IPC_IDS.resetTracker);
-        }
-      });
-  }
-}
+// export function resetTracker() {
+//   const mainWindow = getMainWindow();
+//   const cancelId = 0;
+//   if (mainWindow) {
+//     dialog
+//       .showMessageBox(mainWindow, {
+//         title: 'Confirm Reset',
+//         message: 'This will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?',
+//         type: 'warning',
+//         buttons: ['Cancel', 'Yes'],
+//         cancelId,
+//       })
+//       .then((value) => {
+//         if (value.response !== cancelId) {
+//           mainWindow?.webContents.send(IPC_IDS.resetTracker);
+//         }
+//       });
+//   }
+// }
 
-export function setLegacyHintsEnabled(enabled: boolean) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, enabled);
-}
+// export function setLegacyHintsEnabled(enabled: boolean) {
+//   const window = getMainWindow();
+//   window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, enabled);
+// }
 
-export function setKeybearerRoomLabels(value: KeybearerRooms) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
-}
+// export function setKeybearerRoomLabels(value: KeybearerRooms) {
+//   const window = getMainWindow();
+//   window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
+// }
 
 // export function setGame(game: Game) {
 //   const mainWindow = getMainWindow();
@@ -91,10 +90,10 @@ export function setKeybearerRoomLabels(value: KeybearerRooms) {
 //   }
 // }
 
-export function setPhazonSuitHint(value: PhazonSuitHint) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setPhazonSuitHint, value);
-}
+// export function setPhazonSuitHint(value: PhazonSuitHint) {
+//   const window = getMainWindow();
+//   window?.webContents.send(IPC_IDS.setPhazonSuitHint, value);
+// }
 
 // export function handleRendererInitialization() {
 //   ipcMain.handle(IPC_IDS.requestMainState, () => {
@@ -116,15 +115,15 @@ export function setPhazonSuitHint(value: PhazonSuitHint) {
 //   });
 // }
 
-export function handleResetSize() {
-  ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
-    const mainWindow = getMainWindow();
-    const windowSize = getDefaultWindowSize(game, isLegacyHints);
-    if (windowSize && mainWindow) {
-      mainWindow.setSize(windowSize.width, windowSize.height);
-    }
-  });
-}
+// export function handleResetSize() {
+//   ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
+//     const mainWindow = getMainWindow();
+//     const windowSize = getDefaultWindowSize(game, isLegacyHints);
+//     if (windowSize && mainWindow) {
+//       mainWindow.setSize(windowSize.width, windowSize.height);
+//     }
+//   });
+// }
 
 // export function handleRendererTrackerStateUpdates() {
 //   // handle receive from the renderer
@@ -133,3 +132,12 @@ export function handleResetSize() {
 //     setTrackerState(parsed);
 //   });
 // }
+
+export function runIpcHandlers() {
+  // Receive request for default presets and respond with the presets data
+  ipcMain.handle(IPC_IDS.requestDefaultPresets, () => {
+    const presets = getDefaultPresets();
+
+    getMainWindow()?.webContents.send(IPC_IDS.defaultPresetsResponse, presets ?? []);
+  });
+}

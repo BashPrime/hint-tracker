@@ -1,17 +1,8 @@
 import { app, Menu, MenuItemConstructorOptions } from 'electron';
-import {
-  Game,
-  KeybearerRooms,
-  PhazonSuitHint
-} from '../shared/types.js';
+import { Game, KeybearerRooms, PhazonSuitHint } from '../shared/types.js';
 // import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
 import { MENU_IDS } from './data.js';
-import {
-  // setGame,
-  setKeybearerRoomLabels,
-  setLegacyHintsEnabled,
-  setPhazonSuitHint
-} from './ipc.js';
+// import { setGame, setKeybearerRoomLabels, setLegacyHintsEnabled, setPhazonSuitHint } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
@@ -22,12 +13,12 @@ function toggleAlwaysOnTop(checked: boolean) {
 }
 
 function toggleLegacyHints(checked: boolean) {
-  setLegacyHintsEnabled(checked);
+  // setLegacyHintsEnabled(checked);
   // handleSaveAppConfig();
 }
 
 function toggleKeybearerRooms(value: KeybearerRooms) {
-  setKeybearerRoomLabels(value);
+  // setKeybearerRoomLabels(value);
   // handleSaveAppConfig();
 }
 
@@ -37,7 +28,7 @@ function toggleGame(game: Game) {
 }
 
 function togglePhazonSuitHint(value: PhazonSuitHint) {
-  setPhazonSuitHint(value);
+  // setPhazonSuitHint(value);
   // handleSaveAppConfig();
 }
 

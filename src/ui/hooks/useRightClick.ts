@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback } from 'react';
 
-export default function useRightClick(callback: CallableFunction) {
+export function useRightClick(callback: CallableFunction) {
   // !FUNCTION
   const handleRightClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {

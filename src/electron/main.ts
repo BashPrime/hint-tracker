@@ -3,6 +3,7 @@ import path from 'path';
 import { Toggles } from '../shared/types.js';
 import { readWindowConfigFile } from './config.js';
 import { MENU_IDS } from './data.js';
+import { runIpcHandlers } from './ipc.js';
 import { menu } from './menu.js';
 import { isDev } from './util.js';
 import { createMainWindow } from './window.js';
@@ -35,6 +36,7 @@ app.on('ready', () => {
 });
 
 // IPC Handlers
+runIpcHandlers();
 // handleRendererInitialization();
 // handleResetSize();
 // handleRendererTrackerStateUpdates();
