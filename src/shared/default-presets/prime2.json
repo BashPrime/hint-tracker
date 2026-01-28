@@ -1,65 +1,29 @@
 {
   "schemaVersion": 1,
+  "id": "9c1240ee-cca0-4e8b-a429-87a6311b8182",
   "name": "Metroid Prime 2: Echoes",
+  "description": "The default layout for Metroid Prime 2: Echoes.",
   "layout": [
     {
-      "name": "Sky Temple Keys",
-      "type": "hint-collection",
       "header": "Sky Temple Keys",
-      "lineColor": "green",
+      "lineColor": "lime",
       "hints": [
         {
-          "name": "Key 1",
-          "type": "location"
-        }
-      ]
-    },
-    {
-      "header": "Torvus Bog",
-      "lineColor": "emerald",
-      "hints": [
-        {
-          "name": "Chykka",
-          "type": "item"
-        },
-        {
-          "name": "Chykka Keys",
-          "type": "hint-collection",
-          "hints": [
-            {
-              "name": "Key 1",
-              "type": "location"
-            }
-          ]
-        },
-        {
-          "name": "Torvus Ing Caches",
-          "type": "hint-collection",
-          "hints": [
-            {
-              "name": "Dungeon",
-              "type": "item"
-            },
-            {
-              "name": "Poisoned Bog",
-              "type": "item"
-            }
-          ]
-        },
-        {
-          "name": "Translator Hints",
-          "type": "hint-collection",
-          "hints": [
-            {
-              "name": "Torvus Energy Controller",
-              "type": "item-location"
-            }
+          "color": "lime",
+          "type": "location",
+          "group": [
+            "Key 1",
+            "Key 2",
+            "Key 3",
+            "Key 4",
+            "Key 5",
+            "Key 6",
+            "Key 7",
+            "Key 8",
+            "Key 9"
           ]
         }
       ]
     }
-  ],
-  "items": [
-    "Dark Beam"
   ]
 }

@@ -1,5 +1,5 @@
 import z from 'zod';
-import { HintTypeSchema } from './base.types';
+import { EmptyStringSchema, HintTypeSchema } from './base.types';
 
 export const PresetBaseHintSchema = z.object({
   name: z.string(),
@@ -9,25 +9,22 @@ export type PresetBaseHint = z.infer<typeof PresetBaseHintSchema>;
 
 export const PresetHintSchema = z.object({
   ...PresetBaseHintSchema.shape,
-  type: z.string().optional()
-})
-export type PresetHint = z.infer<typeof PresetHintSchema>;
-
-export const PresetHintGroupSchema = z.object({
-  ...PresetBaseHintSchema.shape,
-  nameColor: z.string().optional(),
-  hints: z.array(PresetBaseHintSchema),
+  name: z.string().optional(),
+  color: z.string().optional(),
+  group: z.array(z.union([z.string(), PresetBaseHintSchema])).optional(),
 });
-export type PresetHintGroup = z.infer<typeof PresetHintGroupSchema>;
+export type PresetHint = z.infer<typeof PresetHintSchema>;
 
 export const PresetSectionSchema = z.object({
   header: z.string().optional(),
   lineColor: z.string().optional(),
-  hintGroups: z.array(PresetHintGroupSchema),
-})
+  hints: z.array(PresetHintSchema),
+});
 
 export const PresetSchema = z.object({
   schemaVersion: z.number(),
+  id: z.uuidv4(),
   name: z.string(),
+  description: EmptyStringSchema,
   layout: z.array(PresetSectionSchema),
 });
