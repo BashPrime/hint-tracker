@@ -6,10 +6,10 @@
   "layout": [
     {
       "header": "Sky Temple Keys",
-      "lineColor": "lime",
+      "lineColor": "lime-400",
       "content": [
         {
-          "color": "lime",
+          "color": "lime-400",
           "type": "location",
           "hints": [
             "Key 1",
@@ -27,17 +27,17 @@
     },
     {
       "header": "Torvus Bog",
-      "lineColor": "emerald",
+      "lineColor": "emerald-400",
       "content": [
         {
-          "color": "red",
+          "color": "red-400",
           "type": "location",
           "hints": [
             "Chykka"
           ]
         },
         {
-          "color": "red",
+          "color": "red-400",
           "type": "location",
           "hints": [
             "Key 1",
