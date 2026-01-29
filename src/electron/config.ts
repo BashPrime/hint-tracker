@@ -32,8 +32,8 @@ export function writeWindowConfigFile(config: WindowConfig, path: string = WINDO
   writeJsonFile(path, json);
 }
 
-export function getDefaultPresets() {
-  const files = readDir(DEFAULT_PRESETS_PATH);
+export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
+  const files = readDir(dir);
 
   if (!files) {
     return null;

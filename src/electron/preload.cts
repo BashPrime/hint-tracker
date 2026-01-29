@@ -4,9 +4,9 @@ const electron = require('electron');
 
 electron.contextBridge.exposeInMainWorld('electronApi', {
   // renderer requests default presets, which main process sends
-  requestDefaultPresets: () => ipcRenderer.invoke('request-default-presets'),
-  defaultPresetsResponse: (callback: (presets: object[]) => void) =>
-    ipcRenderer.on('default-presets-response', (_, presets: object[]) => callback(presets)),
+  requestPresets: () => ipcRenderer.invoke('request-presets'),
+  presetsResponse: (callback: (presets: object[]) => void) =>
+    ipcRenderer.on('presets-response', (_, presets: object[]) => callback(presets)),
   // onResetTracker: (callback: () => void) => ipcRenderer.on('reset-tracker', () => callback()),
   // setLegacyHintsEnabled: (callback: (checked: boolean) => void) =>
   //   ipcRenderer.on('set-legacy-hints-enabled', (_, checked: boolean) => callback(checked)),

@@ -10,18 +10,18 @@ export function useIpcHandlers() {
 
   // On load, run these API functions
   useEffect(() => {
-    window.electronApi.requestDefaultPresets();
+    window.electronApi.requestPresets();
   }, []);
 
   // Handle communications from main process
   useEffect(() => {
-    window.electronApi.defaultPresetsResponse((presets) => {
+    window.electronApi.presetsResponse((presets) => {
       try {
         const parsed = z.array(PresetSchema).parse(presets);
         setDefaultPresets(parsed);
       } catch (err) {
         if (err instanceof z.ZodError) {
-          console.error('defaultPresetsResponse(): Error trying to set default presets:', presets, err.issues);
+          console.error('presetsResponse(): Error trying to set default presets:', presets, err.issues);
         }
       }
     });

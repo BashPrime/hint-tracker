@@ -1,9 +1,9 @@
 interface Window {
   electronApi: {
     // Requests from renderer process
-    requestDefaultPresets: () => void;
+    requestPresets: () => void;
     // Main process handlers
-    defaultPresetsResponse: (callback: (presets: object[]) => void) => void;
+    presetsResponse: (callback: (presets: object[]) => void) => void;
     onResetTracker: (callback: () => void) => void;
     setLegacyHintsEnabled: (callback: (checked: boolean) => void) => void;
     onRequestRendererState: (callback: (action: string) => void) => void;
