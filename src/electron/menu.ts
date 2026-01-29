@@ -1,7 +1,7 @@
 import { app, Menu, MenuItemConstructorOptions } from 'electron';
 import { Game, KeybearerRooms, PhazonSuitHint } from '../shared/types.js';
 // import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
-import { MENU_IDS } from './data.js';
+import { MENU_IDS } from './constants.js';
 // import { setGame, setKeybearerRoomLabels, setLegacyHintsEnabled, setPhazonSuitHint } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';

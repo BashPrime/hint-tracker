@@ -23,3 +23,14 @@ export const IPC_IDS = {
   setGame: 'set-game',
   setPhazonSuitHint: 'set-phazon-suit-hint',
 };
+
+// Menu
+export const MENU_IDS = {
+  alwaysOnTop: 'alwaysOnTop',
+};
+
+// Window size
+export const DEFAULT_WINDOW_SIZE = {
+  width: 640,
+  height: 480,
+};

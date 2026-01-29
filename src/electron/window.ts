@@ -2,7 +2,7 @@ import { BrowserWindow, Menu } from 'electron';
 import z from 'zod';
 import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
 import { writeWindowConfigFile } from './config.js';
-import { WINDOW_SIZE } from './data.js';
+import { DEFAULT_WINDOW_SIZE } from './constants.js';
 import { menu } from './menu.js';
 import { getPreloadPath } from './pathResolver.js';
 import { getErrorMsg, isDev } from './util.js';
@@ -12,8 +12,8 @@ let mainWindow: BrowserWindow | null = null;
 export function createMainWindow(windowConfig: WindowConfig | null) {
   mainWindow = new BrowserWindow({
     title: 'BashPrime Hint Tracker',
-    width: windowConfig?.width ?? WINDOW_SIZE.default.width,
-    height: windowConfig?.height ?? WINDOW_SIZE.default.height,
+    width: windowConfig?.width ?? DEFAULT_WINDOW_SIZE.width,
+    height: windowConfig?.height ?? DEFAULT_WINDOW_SIZE.height,
     x: windowConfig?.x ?? undefined,
     y: windowConfig?.y ?? undefined,
     minWidth: 640,

@@ -1,25 +1,20 @@
-import { AboutPanelOptionsOptions, app, BrowserWindow } from 'electron';
+import { app } from 'electron';
 import path from 'path';
-import { Toggles } from '../shared/types.js';
 import { readWindowConfigFile } from './config.js';
-import { MENU_IDS } from './data.js';
 import { runIpcHandlers } from './ipc.js';
-import { menu } from './menu.js';
 import { isDev } from './util.js';
 import { createMainWindow } from './window.js';
 
-const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
-  applicationName: 'BashPrime Hint Tracker',
-  applicationVersion: `v${app.getVersion()}`,
-  website: 'https://github.com/bashprime/prime-hint-tracker',
-  copyright:
-    `Copyright (c) ${new Date().getFullYear()} BashPrime` +
-    '\n\nThis software is free for personal and commercial use under the MIT License.',
-  iconPath: './icon.png',
-};
-
 app.on('ready', () => {
-  app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
+  app.setAboutPanelOptions({
+    applicationName: 'BashPrime Hint Tracker',
+    applicationVersion: `v${app.getVersion()}`,
+    website: 'https://github.com/bashprime/prime-hint-tracker',
+    copyright:
+      `Copyright (c) ${new Date().getFullYear()} BashPrime` +
+      '\n\nThis software is free for personal and commercial use under the MIT License.',
+    iconPath: './icon.png',
+  });
   const windowConfig = readWindowConfigFile();
   // const config = readAppConfigFile();
   const mainWindow = createMainWindow(windowConfig);
@@ -37,22 +32,3 @@ app.on('ready', () => {
 
 // IPC Handlers
 runIpcHandlers();
-// handleRendererInitialization();
-// handleResetSize();
-// handleRendererTrackerStateUpdates();
-
-function setToggle(id: string, checked: boolean) {
-  const menuItem = menu.getMenuItemById(id);
-
-  if (menuItem) {
-    menuItem.checked = checked;
-  }
-}
-
-function setToggles(toggles: Toggles, window: BrowserWindow) {
-  setToggle(MENU_IDS.alwaysOnTop, toggles.alwaysOnTop);
-  setToggle(MENU_IDS.legacyHintsEnabled, toggles.legacyHintsEnabled);
-  setToggle(toggles.keybearerRoomLabels, true);
-  setToggle(toggles.phazonSuitHint, true);
-  window.setAlwaysOnTop(toggles.alwaysOnTop);
-}
