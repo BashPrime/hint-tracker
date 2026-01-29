@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
 import './App.css';
+import { useDisplayMode } from './hooks/useDisplayMode';
 import { useHintLayoutBuilder } from './hooks/useHintLayoutBuilder';
 import { useIpcHandlers } from './hooks/useIpcHandlers';
 import { activePresetState } from './states/App.states';
@@ -12,6 +13,7 @@ function App() {
 
   // !HOOKS
   useIpcHandlers();
+  useDisplayMode();
   useHintLayoutBuilder();
 
   return (
