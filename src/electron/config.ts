@@ -15,7 +15,7 @@ export function readAndParseJsonFile<T extends z.ZodTypeAny>(path: string, schem
       return parsed;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error('readAndParseJsonFile(): Error trying to read window config file:', err.issues);
+        console.error('readAndParseJsonFile(): Error trying to read json file:', err.issues);
       } else console.error(getErrorMsg(err));
     }
   }
@@ -45,7 +45,8 @@ export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
     })
     .map((file) => {
       return readAndParseJsonFile(path.join(DEFAULT_PRESETS_PATH, file), PresetSchema);
-    });
+    })
+    .filter((preset) => preset !== null);
 }
 
 // export function openUserProvidedTrackerFile() {

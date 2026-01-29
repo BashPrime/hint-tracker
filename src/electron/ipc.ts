@@ -6,10 +6,9 @@ import { getMainWindow } from './window.js';
 export function runIpcHandlers() {
   // Receive request for default presets and respond with the presets data
   ipcMain.handle(IPC_IDS.requestPresets, () => {
-    const presets = [
-      ...getAllPresetsInDir() ?? [],
-      ...getAllPresetsInDir(USER_PRESETS_PATH) ?? [],
-    ]
+    const defaultPresets = getAllPresetsInDir() ?? [];
+    const userPresets = getAllPresetsInDir(USER_PRESETS_PATH) ?? [];
+    const presets = [...defaultPresets, ...userPresets];
 
     getMainWindow()?.webContents.send(IPC_IDS.presetsResponse, presets ?? []);
   });

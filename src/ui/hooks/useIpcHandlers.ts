@@ -8,6 +8,7 @@ export function useIpcHandlers() {
   // !STATE
   const setPresets = useSetAtom(presetsState);
 
+  // !HOOKS
   // On load, run these API functions
   useEffect(() => {
     window.electronApi.requestPresets();

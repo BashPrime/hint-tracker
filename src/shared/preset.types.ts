@@ -16,13 +16,13 @@ export const PresetHintContainerSchema = z.object({
   name: z.string().optional(),
   type: HintTypeSchema,
   color: z.string().optional(),
-  hints: z.array(z.union([z.string(), PresetHintSchema])),
+  hints: z.array(z.union([z.string(), PresetHintSchema])).nonempty(),
 });
 
 export const PresetSectionSchema = z.object({
   header: z.string().optional(),
   lineColor: z.string().optional(),
-  content: z.array(PresetHintContainerSchema),
+  content: z.array(PresetHintContainerSchema).nonempty(),
 });
 export type PresetSection = z.infer<typeof PresetSectionSchema>;
 
@@ -31,6 +31,6 @@ export const PresetSchema = z.object({
   id: z.uuidv4(),
   name: z.string(),
   description: EmptyStringSchema,
-  layout: z.array(PresetSectionSchema),
+  layout: z.array(PresetSectionSchema).nonempty(),
 });
 export type Preset = z.infer<typeof PresetSchema>;

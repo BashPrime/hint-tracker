@@ -7,11 +7,11 @@
     {
       "header": "Sky Temple Keys",
       "lineColor": "lime",
-      "hints": [
+      "content": [
         {
           "color": "lime",
           "type": "location",
-          "group": [
+          "hints": [
             "Key 1",
             "Key 2",
             "Key 3",
@@ -28,16 +28,18 @@
     {
       "header": "Torvus Bog",
       "lineColor": "emerald",
-      "hints": [
+      "content": [
         {
-          "name": "Chykka",
           "color": "red",
-          "type": "location"
+          "type": "location",
+          "hints": [
+            "Chykka"
+          ]
         },
         {
           "color": "red",
           "type": "location",
-          "group": [
+          "hints": [
             "Key 1",
             "Key 2",
             "Key 3"
@@ -46,7 +48,7 @@
         {
           "color": "emerald",
           "type": "item-location",
-          "group": [
+          "hints": [
             "Path of Roots",
             "Torvus Energy Controller"
           ]
