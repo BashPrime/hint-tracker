@@ -23,8 +23,8 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
 
   return (
     <Combobox
-      items={items}
       autoHighlight
+      items={items}
       value={value}
       onValueChange={(v) => setValue(v ?? '')}
       inputValue={inputValue}
