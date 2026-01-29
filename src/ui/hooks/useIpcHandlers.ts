@@ -1,4 +1,4 @@
-import { defaultPresetsState } from '@/states/App.states';
+import { presetsState } from '@/states/App.states';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import z from 'zod';
@@ -6,7 +6,7 @@ import { PresetSchema } from '../../shared/preset.types';
 
 export function useIpcHandlers() {
   // !STATE
-  const setDefaultPresets = useSetAtom(defaultPresetsState);
+  const setPresets = useSetAtom(presetsState);
 
   // On load, run these API functions
   useEffect(() => {
@@ -18,12 +18,12 @@ export function useIpcHandlers() {
     window.electronApi.presetsResponse((presets) => {
       try {
         const parsed = z.array(PresetSchema).parse(presets);
-        setDefaultPresets(parsed);
+        setPresets(parsed);
       } catch (err) {
         if (err instanceof z.ZodError) {
           console.error('presetsResponse(): Error trying to set default presets:', presets, err.issues);
         }
       }
     });
-  }, []);
+  }, [setPresets]);
 }

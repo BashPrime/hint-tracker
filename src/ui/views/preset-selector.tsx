@@ -1,11 +1,11 @@
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
-import { activePresetState, defaultPresetsState } from '@/states/App.states';
+import { activePresetState, presetsState } from '@/states/App.states';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ChevronRightIcon } from 'lucide-react';
 
 export function PresetSelector() {
   // !STATE
-  const presets = useAtomValue(defaultPresetsState);
+  const presets = useAtomValue(presetsState);
   const setActivePreset = useSetAtom(activePresetState);
 
   return (
