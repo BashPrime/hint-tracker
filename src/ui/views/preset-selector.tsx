@@ -21,6 +21,7 @@ export function PresetSelector() {
       <ItemGroup>
         {presets?.map((preset) => (
           <Item
+            key={preset.id}
             className="hover:cursor-pointer hover:brightness-150 hover:bg-gray-800"
             variant="outline"
             onClick={() => setActivePreset(preset)}

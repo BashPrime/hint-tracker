@@ -11,7 +11,11 @@ export function HintPage() {
       <p>That's weird. There's no layout despite you selecting a preset.</p>
     );
   }
-  return activeHintLayout.layout.map((section, idx) => (
-    <HintSection key={`section-${idx}`} section={section} />
-  ));
+  return (
+    <div className="flex items-top gap-2">
+      {activeHintLayout.layout.map((section, idx) => (
+        <HintSection key={`section-${idx}`} section={section} />
+      ))}
+    </div>
+  );
 }
