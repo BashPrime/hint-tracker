@@ -1,31 +1,41 @@
 import { expect, test } from 'vitest';
-import { PresetBaseHintSchema, PresetHintSchema } from '../../src/shared/preset.types';
+import { PresetHintContainerSchema, PresetHintSchema } from '../../src/shared/preset.types';
 
-test('PresetBaseHintSchema passes validation', () => {
-  expect(
-    PresetBaseHintSchema.safeParse({
-      name: 'test hint',
-      type: 'item-location',
-    }).success
-  ).toBe(true);
-});
-
-test('PresetHintSchema with string group passes validation', () => {
+test('PresetHintSchema passes validation', () => {
   expect(
     PresetHintSchema.safeParse({
       name: 'Test Group',
       type: 'location',
-      group: ['Item 1', 'Item 2'],
+      color: 'red',
     }).success
   ).toBe(true);
 });
 
-test('PresetHintSchema with object group passes validation', () => {
+test('PresetHintSchema with optional color passes validation', () => {
   expect(
     PresetHintSchema.safeParse({
       name: 'Test Group',
       type: 'location',
-      group: [
+    }).success
+  ).toBe(true);
+});
+
+test('PresetHintContainerSchema with string hints array passes validation', () => {
+  expect(
+    PresetHintContainerSchema.safeParse({
+      name: 'Test Group',
+      type: 'location',
+      hints: ['Item 1', 'Item 2', 'Item 3'],
+    }).success
+  ).toBe(true);
+});
+
+test('PresetHintContainerSchema with object hints array passes validation', () => {
+  expect(
+    PresetHintContainerSchema.safeParse({
+      name: 'Test Group',
+      type: 'location',
+      hints: [
         {
           name: 'Item 1',
           type: 'location',
@@ -43,12 +53,12 @@ test('PresetHintSchema with object group passes validation', () => {
   ).toBe(true);
 });
 
-test('PresetHintSchema with mixed group passes validation', () => {
+test('PresetHintContainerSchema with mixed type hints array passes validation', () => {
   expect(
-    PresetHintSchema.safeParse({
+    PresetHintContainerSchema.safeParse({
       name: 'Test Group',
       type: 'location',
-      group: [
+      hints: [
         'Item 1',
         {
           name: 'Item 2',
