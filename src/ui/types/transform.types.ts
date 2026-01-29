@@ -15,22 +15,25 @@ import {
 const PresetToLayoutHintContainerTransformSchema =
   PresetHintContainerSchema.transform((presetContainer) => {
     const parsedHints = presetContainer.hints.map((hint) => {
-      let selectedObj;
+      let hintToParse;
       switch (typeof hint) {
         // If the hint is a string literal, apply the hint type from the container.
         case 'string':
-          selectedObj = presetContainer;
+          hintToParse = {
+            ...presetContainer,
+            name: hint,
+          };
           break;
         // If the hint is an object, its properties override the container's.
         case 'object':
-          selectedObj = hint;
+          hintToParse = hint;
           break;
       }
       return HintSchema.parse({
-        name: selectedObj.name,
-        color: selectedObj.color,
-        item: selectedObj.type !== 'location' ? atom('') : null,
-        location: selectedObj.type !== 'item' ? atom('') : null,
+        name: hintToParse.name,
+        color: hintToParse.color,
+        item: hintToParse.type !== 'location' ? atom('') : null,
+        location: hintToParse.type !== 'item' ? atom('') : null,
         checked: atom(false),
       });
     });
