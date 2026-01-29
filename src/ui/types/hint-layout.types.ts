@@ -1,6 +1,6 @@
 import { atom, PrimitiveAtom } from 'jotai';
-import { PresetHintSchema, PresetSchema } from 'src/shared/preset.types';
 import z from 'zod';
+import { PresetHintSchema, PresetSchema } from '../../shared/preset.types';
 
 const HintStrAtomSchema: z.ZodType<PrimitiveAtom<string>> = z.any();
 const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
@@ -72,7 +72,7 @@ export const HintSectionSchema = z.object({
   lineColor: z.string().optional(),
   hints: z.array(PresetToHintSchema),
 });
-export type PresetSection = z.infer<typeof HintSectionSchema>;
+export type HintSection = z.infer<typeof HintSectionSchema>;
 
 export const HintLayoutSchema = z.object({
   ...PresetSchema.shape,
