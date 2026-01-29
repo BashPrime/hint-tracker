@@ -1,6 +1,10 @@
 import { atom } from 'jotai';
 import { expect, test } from 'vitest';
-import { HintContainerSchema, HintSchema, HintSectionSchema } from '../../src/ui/types/hint-layout.types';
+import {
+  HintContainerSchema,
+  HintSchema,
+  HintSectionSchema,
+} from '../../src/ui/types/hint-layout.types';
 
 test('HintSchema (item-location) passes validation', () => {
   expect(
@@ -50,7 +54,14 @@ test('HintContainerSchema passes validation', () => {
     HintContainerSchema.safeParse({
       name: 'Test Container',
       color: 'purple',
-      hints: [{ name: 'Test Hint', item: atom(''), location: null, checked: atom(false) }],
+      hints: [
+        {
+          name: 'Test Hint',
+          item: atom(''),
+          location: null,
+          checked: atom(false),
+        },
+      ],
     }).success
   ).toBe(true);
 });
@@ -74,7 +85,14 @@ test('HintSectionSchema passes validation', () => {
         {
           name: 'Test Container',
           color: 'purple',
-          hints: [{ name: 'Test Hint', item: atom(''), location: null, checked: atom(false) }],
+          hints: [
+            {
+              name: 'Test Hint',
+              item: atom(''),
+              location: null,
+              checked: atom(false),
+            },
+          ],
         },
       ],
     }).success

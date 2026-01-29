@@ -1,5 +1,8 @@
 import { expect, test } from 'vitest';
-import { PresetHintContainerSchema, PresetHintSchema } from '../../src/shared/preset.types';
+import {
+  PresetHintContainerSchema,
+  PresetHintSchema,
+} from '../../src/shared/preset.types';
 
 test('PresetHintSchema passes validation', () => {
   expect(

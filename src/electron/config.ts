@@ -2,11 +2,18 @@ import path from 'path';
 import { z } from 'zod';
 import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
 import { PresetSchema } from '../shared/preset.types.js';
-import { DEFAULT_PRESETS_PATH, PRESET_FILENAME_EXT, WINDOW_CONFIG_PATH } from './constants.js';
+import {
+  DEFAULT_PRESETS_PATH,
+  PRESET_FILENAME_EXT,
+  WINDOW_CONFIG_PATH,
+} from './constants.js';
 import { readDir, readJsonFile, writeJsonFile } from './io.js';
 import { getErrorMsg } from './util.js';
 
-export function readAndParseJsonFile<T extends z.ZodTypeAny>(path: string, schema: T) {
+export function readAndParseJsonFile<T extends z.ZodTypeAny>(
+  path: string,
+  schema: T
+) {
   const raw = readJsonFile(path);
 
   if (raw) {
@@ -15,7 +22,10 @@ export function readAndParseJsonFile<T extends z.ZodTypeAny>(path: string, schem
       return parsed;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error('readAndParseJsonFile(): Error trying to read json file:', err.issues);
+        console.error(
+          'readAndParseJsonFile(): Error trying to read json file:',
+          err.issues
+        );
       } else console.error(getErrorMsg(err));
     }
   }
@@ -27,7 +37,10 @@ export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {
   return readAndParseJsonFile(path, WindowConfigSchema);
 }
 
-export function writeWindowConfigFile(config: WindowConfig, path: string = WINDOW_CONFIG_PATH) {
+export function writeWindowConfigFile(
+  config: WindowConfig,
+  path: string = WINDOW_CONFIG_PATH
+) {
   const json = JSON.stringify(config, null, 2);
   writeJsonFile(path, json);
 }
@@ -44,7 +57,10 @@ export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
       return path.extname(file).toLowerCase() === PRESET_FILENAME_EXT;
     })
     .map((file) => {
-      return readAndParseJsonFile(path.join(DEFAULT_PRESETS_PATH, file), PresetSchema);
+      return readAndParseJsonFile(
+        path.join(DEFAULT_PRESETS_PATH, file),
+        PresetSchema
+      );
     })
     .filter((preset) => preset !== null);
 }

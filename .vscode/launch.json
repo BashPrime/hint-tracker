@@ -16,7 +16,10 @@
         "NODE_ENV": "development"
       },
       "sourceMaps": true,
-      "resolveSourceMapLocations": ["${workspaceFolder}/dist-electron/**", "!**/node_modules/**"],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/dist-electron/**",
+        "!**/node_modules/**"
+      ],
       "presentation": {
         "hidden": true
       },

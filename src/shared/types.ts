@@ -22,8 +22,12 @@ export type PhazonSuitHint = z.infer<typeof PhazonSuitHintSchema>;
 export const TogglesSchema = z.object({
   alwaysOnTop: z.boolean().default(false),
   legacyHintsEnabled: z.boolean().default(false),
-  keybearerRoomLabels: KeybearerRoomsSchema.default(KeybearerRoomsSchema.enum.both),
-  phazonSuitHint: PhazonSuitHintSchema.default(PhazonSuitHintSchema.enum.areaName),
+  keybearerRoomLabels: KeybearerRoomsSchema.default(
+    KeybearerRoomsSchema.enum.both
+  ),
+  phazonSuitHint: PhazonSuitHintSchema.default(
+    PhazonSuitHintSchema.enum.areaName
+  ),
 });
 export type Toggles = z.infer<typeof TogglesSchema>;
 

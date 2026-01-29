@@ -36,7 +36,11 @@ export const LocationHintSchema = z.object({
 });
 export type LocationHint = z.infer<typeof LocationHintSchema>;
 
-export const HintInputTypeSchema = z.enum(['item', 'location', 'item-location']);
+export const HintInputTypeSchema = z.enum([
+  'item',
+  'location',
+  'item-location',
+]);
 export type HintInputType = z.infer<typeof HintInputTypeSchema>;
 
 const HintInputStrAtom: z.ZodType<PrimitiveAtom<string>> = z.any();
@@ -73,7 +77,14 @@ export const HintCollectionSchema = z.object({
   header: z.string().nullable(),
   type: z.literal('hint-collection'),
   get hints() {
-    return z.array(z.union([ItemHintSchema, LocationHintSchema, ItemLocationHintSchema, HintCollectionSchema]));
+    return z.array(
+      z.union([
+        ItemHintSchema,
+        LocationHintSchema,
+        ItemLocationHintSchema,
+        HintCollectionSchema,
+      ])
+    );
   },
 });
 export type HintCollection = z.infer<typeof HintCollectionSchema>;

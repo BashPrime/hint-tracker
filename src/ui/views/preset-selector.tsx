@@ -1,4 +1,11 @@
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemTitle,
+} from '@/components/ui/item';
 import { activePresetState, presetsState } from '@/states/App.states';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ChevronRightIcon } from 'lucide-react';

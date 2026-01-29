@@ -22,7 +22,11 @@ export function useIpcHandlers() {
         setPresets(parsed);
       } catch (err) {
         if (err instanceof z.ZodError) {
-          console.error('presetsResponse(): Error trying to set default presets:', presets, err.issues);
+          console.error(
+            'presetsResponse(): Error trying to set default presets:',
+            presets,
+            err.issues
+          );
         }
       }
     });
