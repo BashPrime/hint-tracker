@@ -6,10 +6,10 @@
   "layout": [
     {
       "header": "Sky Temple Keys",
-      "lineColor": "lime-400",
+      "lineColor": "oklch(89.7% 0.196 126.665)",
       "content": [
         {
-          "color": "lime-400",
+          "color": "oklch(89.7% 0.196 126.665)",
           "type": "location",
           "hints": [
             "Key 1",
@@ -27,17 +27,17 @@
     },
     {
       "header": "Torvus Bog",
-      "lineColor": "emerald-400",
+      "lineColor": "oklch(84.5% 0.143 164.978)",
       "content": [
         {
-          "color": "red-400",
+          "color": "oklch(63.7% 0.237 25.331)",
           "type": "location",
           "hints": [
             "Chykka"
           ]
         },
         {
-          "color": "red-400",
+          "color": "oklch(63.7% 0.237 25.331)",
           "type": "location",
           "hints": [
             "Key 1",
@@ -46,7 +46,7 @@
           ]
         },
         {
-          "color": "emerald",
+          "color": "oklch(84.5% 0.143 164.978)",
           "type": "item-location",
           "hints": [
             "Path of Roots",

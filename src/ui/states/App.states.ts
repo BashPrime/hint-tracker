@@ -2,9 +2,9 @@ import { HintLayout } from '@/types/hint-layout.types';
 import { atom } from 'jotai';
 import { Preset } from 'src/shared/preset.types';
 
-export const userDisplayModeState = atom<'light' | 'dark' | 'system'>('system');
+export const userAppearanceState = atom<'light' | 'dark' | 'system'>('system');
 
-export const systemDisplayModeState = atom<'light' | 'dark'>((get) => {
+export const systemAppearanceState = atom<'light' | 'dark'>((get) => {
   if (typeof window !== 'undefined' && window.matchMedia) {
     return window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
@@ -13,15 +13,11 @@ export const systemDisplayModeState = atom<'light' | 'dark'>((get) => {
   return 'light';
 });
 
-export const displayModeState = atom((get) => {
-  const userDisplayMode = get(userDisplayModeState);
-  const systemDisplayMode = get(systemDisplayModeState);
+export const appearanceState = atom((get) => {
+  const userAppearance = get(userAppearanceState);
+  const systemAppearance = get(systemAppearanceState);
 
-  if (userDisplayMode === 'system') {
-    return systemDisplayMode;
-  }
-
-  return userDisplayMode;
+  return userAppearance === 'system' ? systemAppearance : userAppearance;
 });
 
 export const presetsState = atom<Preset[] | null>(null);

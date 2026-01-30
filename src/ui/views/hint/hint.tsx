@@ -17,10 +17,20 @@ export function Hint({ hint }: Props) {
 
   return (
     <div
-      className={cn('border border-black', checked && 'bg-green-900')}
+      className={cn(
+        'flex flex-col gap-1 p-2',
+        'border-b border-black',
+        'font-bold uppercase',
+        checked && 'bg-green-900'
+      )}
       onMouseDown={handleRightClick}
     >
-      <p className={cn(hint.color && `text-${hint.color}`)}>{hint.name}</p>
+      <p
+        style={{ color: hint.color }}
+        className={cn(hint.color && 'brightness-85 dark:brightness-100')}
+      >
+        {hint.name}
+      </p>
       {hint.item && (
         <AtomCombobox
           atom={hint.item}

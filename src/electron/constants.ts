@@ -21,18 +21,17 @@ export const USER_PRESETS_PATH = path.join(USER_DATA_DIR, 'presets');
 export const IPC_IDS = {
   requestPresets: 'request-presets',
   presetsResponse: 'presets-response',
-  resetTracker: 'reset-tracker',
-  setLegacyHintsEnabled: 'set-legacy-hints-enabled',
-  resetSize: 'reset-size',
-  loadTrackerSession: 'load-tracker-session',
-  setKeybearerRooms: 'set-keybearer-rooms',
-  setGame: 'set-game',
-  setPhazonSuitHint: 'set-phazon-suit-hint',
+  toggleAppearance: 'toggle-appearance',
 };
 
 // Menu
 export const MENU_IDS = {
   alwaysOnTop: 'alwaysOnTop',
+  appearance: {
+    system: 'system',
+    light: 'light',
+    dark: 'dark',
+  },
 };
 
 // Window size

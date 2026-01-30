@@ -1,35 +1,17 @@
-import { app, Menu, MenuItemConstructorOptions } from 'electron';
-import { Game, KeybearerRooms, PhazonSuitHint } from '../shared/types.js';
-// import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from './config.js';
+import { app, Menu, MenuItemConstructorOptions, nativeTheme } from 'electron';
 import { MENU_IDS } from './constants.js';
-// import { setGame, setKeybearerRoomLabels, setLegacyHintsEnabled, setPhazonSuitHint } from './ipc.js';
+import { ipcToggleAppearance } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
   window?.setAlwaysOnTop(checked);
-  // handleSaveAppConfig();
 }
 
-function toggleLegacyHints(checked: boolean) {
-  // setLegacyHintsEnabled(checked);
-  // handleSaveAppConfig();
-}
-
-function toggleKeybearerRooms(value: KeybearerRooms) {
-  // setKeybearerRoomLabels(value);
-  // handleSaveAppConfig();
-}
-
-function toggleGame(game: Game) {
-  // setGame(game);
-  // handleSaveAppConfig();
-}
-
-function togglePhazonSuitHint(value: PhazonSuitHint) {
-  // setPhazonSuitHint(value);
-  // handleSaveAppConfig();
+function toggleAppearanceMode(appearance: 'system' | 'light' | 'dark') {
+  nativeTheme.themeSource = appearance;
+  ipcToggleAppearance(appearance);
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -52,6 +34,32 @@ const template: MenuItemConstructorOptions[] = [
         type: 'checkbox',
         checked: false,
         click: (item) => toggleAlwaysOnTop(item.checked),
+      },
+      {
+        label: 'Appearance',
+        submenu: [
+          {
+            id: MENU_IDS.appearance.system,
+            label: 'System',
+            type: 'radio',
+            checked: true,
+            click: () => toggleAppearanceMode('system'),
+          },
+          {
+            id: MENU_IDS.appearance.light,
+            label: 'Light',
+            type: 'radio',
+            checked: false,
+            click: () => toggleAppearanceMode('light'),
+          },
+          {
+            id: MENU_IDS.appearance.dark,
+            label: 'Dark',
+            type: 'radio',
+            checked: false,
+            click: () => toggleAppearanceMode('dark'),
+          },
+        ],
       },
     ],
   },

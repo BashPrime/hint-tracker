@@ -19,7 +19,7 @@
   height: 100%;
   background-image: url('./assets/bashprime-logo-transparent.png');
   background-position: center;
-  background-size: 25%;
+  background-size: auto 25%;
   background-repeat: no-repeat;
   opacity: 0.33;
   z-index: 0; /* Places the pseudo-element behind the content */

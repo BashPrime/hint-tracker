@@ -7,13 +7,18 @@ type Props = {
 
 export function HintSection({ section }: Props) {
   return (
-    <section className="flex flex-col bg-slate-800">
+    <div
+      style={{ borderLeft: `1px solid ${section.lineColor ?? 'white'}` }}
+      className="flex flex-col bg-zinc-200/90 dark:bg-zinc-800/90 "
+    >
       {section.header && (
-        <p className="bg-slate-900 uppercase font-semibold text-lg p-1">{section.header}</p>
+        <p className="bg-zinc-400 dark:bg-zinc-900 uppercase font-bold text-lg p-1">
+          {section.header}
+        </p>
       )}
       {section.content.map((container, idx) => (
         <HintContainer key={`container-${idx}`} container={container} />
       ))}
-    </section>
+    </div>
   );
 }
