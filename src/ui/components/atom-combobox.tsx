@@ -32,7 +32,6 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
     >
       <ComboboxInput
         showTrigger={false}
-        showClear
         placeholder={placeholder}
       />
       <ComboboxContent>

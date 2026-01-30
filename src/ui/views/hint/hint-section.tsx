@@ -9,10 +9,9 @@ type Props = {
 export function HintSection({ section }: Props) {
   return (
     <div
-      style={{ borderLeft: `1px solid ${section.lineColor ?? 'white'}` }}
+      style={{ borderLeft: `2px solid ${section.lineColor ?? 'white'}` }}
       className={cn(
         'flex flex-auto flex-col',
-        'bg-zinc-200/90 dark:bg-zinc-800/90',
         'md:h-screen'
       )}
     >
@@ -23,7 +22,7 @@ export function HintSection({ section }: Props) {
       )}
       <div
         style={{ scrollbarGutter: 'stable' }}
-        className="scrollbar-thin md:overflow-auto"
+        className={cn('flex flex-col gap-2', 'scrollbar-thin md:overflow-auto')}
       >
         {section.content.map((container, idx) => (
           <HintContainer key={`container-${idx}`} container={container} />
