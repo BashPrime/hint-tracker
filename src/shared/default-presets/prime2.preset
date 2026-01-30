@@ -26,12 +26,86 @@
       ]
     },
     {
+      "header": "Temple Grounds",
+      "lineColor": "oklch(71.4% 0.203 305.504)",
+      "content": [
+        {
+          "color": "oklch(63.7% 0.237 25.331)",
+          "type": "item",
+          "hints": [
+            "U-Mos Reward"
+          ]
+        },
+        {
+          "color": "oklch(70.2% 0.183 293.541)",
+          "type": "item",
+          "hints": [
+            "Accursed Lake",
+            "Defiled Shrine",
+            "Ing Reliquary"
+          ]
+        },
+        {
+          "color": "oklch(71.4% 0.203 305.504)",
+          "type": "item-location",
+          "hints": [
+            "Fortress Transport Access",
+            "Main Energy Controller",
+            "Meeting Grounds",
+            "Path of Eyes",
+            "Transport to Agon Wastes"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "Agon Wastes",
+      "lineColor": "oklch(76.9% 0.188 70.08)",
+      "content": [
+        {
+          "color": "oklch(63.7% 0.237 25.331)",
+          "type": "item",
+          "hints": [
+            "Amorbis"
+          ]
+        },
+        {
+          "color": "oklch(63.7% 0.237 25.331)",
+          "type": "location",
+          "hints": [
+            "Key 1",
+            "Key 2",
+            "Key 3"
+          ]
+        },
+        {
+          "color": "oklch(70.2% 0.183 293.541)",
+          "type": "item",
+          "hints": [
+            "Battleground",
+            "Dark Oasis"
+          ]
+        },
+        {
+          "color": "oklch(76.9% 0.188 70.08)",
+          "type": "item-location",
+          "hints": [
+            "Agon Energy Controller",
+            "Mining Plaza",
+            "Mining Station A",
+            "Mining Station B",
+            "Portal Terminal"
+          ]
+        }
+      ]
+    },
+    {
       "header": "Torvus Bog",
       "lineColor": "oklch(84.5% 0.143 164.978)",
       "content": [
         {
           "color": "oklch(63.7% 0.237 25.331)",
-          "type": "location",
+          "type": "item",
           "hints": [
             "Chykka"
           ]
@@ -46,11 +120,65 @@
           ]
         },
         {
+          "color": "oklch(70.2% 0.183 293.541)",
+          "type": "item",
+          "hints": [
+            "Dungeon",
+            "Poisoned Bog"
+          ]
+        },
+        {
           "color": "oklch(84.5% 0.143 164.978)",
           "type": "item-location",
           "hints": [
+            "Catacombs",
+            "Gathering Hall",
             "Path of Roots",
-            "Torvus Energy Controller"
+            "Torvus Energy Controller",
+            "Training Chamber",
+            "Underground Tunnel"
+          ]
+        }
+      ]
+    },
+    {
+      "header": "Sanctuary Fortress",
+      "lineColor": "oklch(74.6% 0.16 232.661)",
+      "content": [
+        {
+          "color": "oklch(63.7% 0.237 25.331)",
+          "type": "item",
+          "hints": [
+            "Quadraxis"
+          ]
+        },
+        {
+          "color": "oklch(63.7% 0.237 25.331)",
+          "type": "location",
+          "hints": [
+            "Key 1",
+            "Key 2",
+            "Key 3"
+          ]
+        },
+        {
+          "color": "oklch(70.2% 0.183 293.541)",
+          "type": "item",
+          "hints": [
+            "Hive Dynamo Works",
+            "Hive Entrance"
+          ]
+        },
+        {
+          "color": "oklch(74.6% 0.16 232.661)",
+          "type": "item-location",
+          "hints": [
+            "Hall of Combat Mastery",
+            "Main Gyro Chamber",
+            "Main Research",
+            "Sanctuary Energy Controller",
+            "Sanctuary Entrance",
+            "Watch Station"
           ]
         }
       ]
