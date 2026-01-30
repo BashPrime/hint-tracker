@@ -4,20 +4,19 @@ import { Preset } from 'src/shared/preset.types';
 
 export const userAppearanceState = atom<'light' | 'dark' | 'system'>('system');
 
-export const systemAppearanceState = atom<'light' | 'dark'>((get) => {
+export const appearanceState = atom((get) => {
+  const userAppearance = get(userAppearanceState);
+
+  if (userAppearance !== 'system') {
+    return userAppearance;
+  }
+
   if (typeof window !== 'undefined' && window.matchMedia) {
     return window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light';
   }
   return 'light';
-});
-
-export const appearanceState = atom((get) => {
-  const userAppearance = get(userAppearanceState);
-  const systemAppearance = get(systemAppearanceState);
-
-  return userAppearance === 'system' ? systemAppearance : userAppearance;
 });
 
 export const presetsState = atom<Preset[] | null>(null);

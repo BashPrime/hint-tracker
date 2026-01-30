@@ -1,25 +1,25 @@
 import { useAtomValue } from 'jotai';
 import './App.css';
-import { useAppearance } from './hooks/useAppearance';
 import { useHintLayoutBuilder } from './hooks/useHintLayoutBuilder';
 import { useIpcHandlers } from './hooks/useIpcHandlers';
-import { activePresetState, appearanceState } from './states/App.states';
+import { useThemeChanger } from './hooks/useThemeChanger';
+import { activePresetState, userAppearanceState } from './states/App.states';
 import { HintPage } from './views/hint/page';
 import { PresetSelector } from './views/preset-selector';
 
 function App() {
   // !STATE
   const activePreset = useAtomValue(activePresetState);
-  const appearance = useAtomValue(appearanceState);
+  const userAppearance = useAtomValue(userAppearanceState);
 
   // !HOOKS
   useIpcHandlers();
-  useAppearance();
+  useThemeChanger();
   useHintLayoutBuilder();
 
   return (
     <>
-      <p>{appearance}</p>
+      <p>User: {userAppearance}</p>
       {!activePreset && <PresetSelector />}
       {activePreset && <HintPage />}
     </>
