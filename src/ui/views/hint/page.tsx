@@ -12,7 +12,7 @@ export function HintPage() {
     );
   }
   return (
-    <div className="flex items-top gap-2">
+    <div className="items-top flex gap-2">
       {activeHintLayout.layout.map((section, idx) => (
         <HintSection key={`section-${idx}`} section={section} />
       ))}

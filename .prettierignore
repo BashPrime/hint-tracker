@@ -1,7 +1,8 @@
-# Ignore artifacts:
 build
 dist
 dist-react
 dist-electron
 coverage
 README.md
+pnpm-lock.yaml
+pnpm-workspace.yaml

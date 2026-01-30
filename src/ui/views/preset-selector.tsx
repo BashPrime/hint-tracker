@@ -22,7 +22,7 @@ export function PresetSelector() {
         {presets?.map((preset) => (
           <Item
             key={preset.id}
-            className="hover:cursor-pointer dark:hover:brightness-150 dark:hover:bg-gray-800"
+            className="hover:cursor-pointer dark:hover:bg-gray-800 dark:hover:brightness-150"
             variant="outline"
             onClick={() => setActivePreset(preset)}
           >
