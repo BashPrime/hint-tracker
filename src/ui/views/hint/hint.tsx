@@ -19,15 +19,18 @@ export function Hint({ hint }: Props) {
     <div
       className={cn(
         'flex flex-col gap-1 p-2',
-        'border-b border-black',
+        'border-b border-zinc-400 dark:border-zinc-600',
         'font-bold uppercase',
-        checked && 'bg-green-900'
+        checked && 'bg-green-300 dark:bg-green-900'
       )}
       onMouseDown={handleRightClick}
     >
       <p
-        style={{ color: hint.color }}
-        className={cn(hint.color && 'brightness-85 dark:brightness-100')}
+        style={{ color: !checked ? hint.color : '' }}
+        className={cn(
+          hint.color && !checked && 'brightness-75 dark:brightness-100',
+          checked && 'text-green-700 dark:text-green-400'
+        )}
       >
         {hint.name}
       </p>
