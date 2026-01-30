@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@plugin 'tailwind-scrollbar';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -50,6 +51,11 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
+
+/* :root * {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+} */
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

@@ -11,7 +11,7 @@ export function HintSection({ section }: Props) {
     <div
       style={{ borderLeft: `1px solid ${section.lineColor ?? 'white'}` }}
       className={cn(
-        'flex flex-col',
+        'flex flex-col flex-auto',
         'bg-zinc-200/90 dark:bg-zinc-800/90',
         'h-screen'
       )}
@@ -21,7 +21,10 @@ export function HintSection({ section }: Props) {
           {section.header}
         </p>
       )}
-      <div className="overflow-auto">
+      <div
+        style={{ scrollbarGutter: 'stable' }}
+        className="scrollbar-thin overflow-auto"
+      >
         {section.content.map((container, idx) => (
           <HintContainer key={`container-${idx}`} container={container} />
         ))}
