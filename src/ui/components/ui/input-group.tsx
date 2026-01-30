@@ -12,7 +12,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
       data-slot="input-group"
       role="group"
       className={cn(
-        'group/input-group border-input dark:bg-input/30 relative flex w-full items-center rounded-md border shadow-xs transition-[color,box-shadow] outline-none',
+        'group/input-group border-zinc-400 dark:border-zinc-500 relative flex w-full items-center border-b transition-[color] outline-none',
         'h-9 min-w-0 has-[>textarea]:h-auto',
 
         // Variants based on alignment.
@@ -22,10 +22,10 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
         'has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3',
 
         // Focus state.
-        'has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot=input-group-control]:focus-visible]:ring-[3px]',
+        'has-[[data-slot=input-group-control]:focus-visible]:bg-ring/50',
 
         // Error state.
-        'has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot][aria-invalid=true]]:border-destructive dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40',
+        'has-[[data-slot][aria-invalid=true]]:bg-destructive/50',
 
         className
       )}
@@ -164,5 +164,6 @@ export {
   InputGroupButton,
   InputGroupInput,
   InputGroupText,
-  InputGroupTextarea,
+  InputGroupTextarea
 };
+
