@@ -13,7 +13,7 @@ export function HintSection({ section }: Props) {
       className={cn(
         'flex flex-auto flex-col',
         'bg-zinc-200/90 dark:bg-zinc-800/90',
-        'h-screen'
+        'md:h-screen'
       )}
     >
       {section.header && (
@@ -23,7 +23,7 @@ export function HintSection({ section }: Props) {
       )}
       <div
         style={{ scrollbarGutter: 'stable' }}
-        className="scrollbar-thin overflow-auto"
+        className="scrollbar-thin md:overflow-auto"
       >
         {section.content.map((container, idx) => (
           <HintContainer key={`container-${idx}`} container={container} />

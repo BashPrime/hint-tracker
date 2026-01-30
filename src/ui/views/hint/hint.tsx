@@ -18,9 +18,9 @@ export function Hint({ hint }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-col gap-1 p-2',
-        'border-b border-zinc-400 dark:border-zinc-600',
+        'flex flex-col px-2',
         'font-bold uppercase',
+        'border-b border-zinc-500 dark:border-zinc-600',
         checked && 'bg-green-300 dark:bg-green-900'
       )}
       onMouseDown={handleRightClick}
@@ -38,14 +38,20 @@ export function Hint({ hint }: Props) {
         <AtomCombobox
           atom={hint.item}
           placeholder={'What?'}
-          items={['Dark Beam']}
+          items={['Dark Beam', 'Light Beam', 'Annihilator Beam']}
         />
       )}
       {hint.location && (
         <AtomCombobox
           atom={hint.location}
           placeholder={'Where?'}
-          items={['Torvus Energy Controller']}
+          items={[
+            'Agon Temple',
+            'Torvus Temple',
+            'Sanctuary Temple',
+            'Sanctuary Energy Controller',
+            'Hall of Honored Dead',
+          ]}
         />
       )}
     </div>
