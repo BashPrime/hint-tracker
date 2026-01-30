@@ -18,9 +18,9 @@ export function Hint({ hint }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-col pl-2 gap',
+        'gap flex flex-col pl-2',
         'font-bold uppercase',
-        "border-b border-zinc-950",
+        'border-b border-zinc-950',
         'bg-zinc-300/90 dark:bg-zinc-700/90',
         checked && 'bg-green-300/90 dark:bg-green-900/90'
       )}
