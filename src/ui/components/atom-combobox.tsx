@@ -30,7 +30,11 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
       inputValue={inputValue}
       onInputValueChange={setInputValue}
     >
-      <ComboboxInput placeholder={placeholder} />
+      <ComboboxInput
+        showTrigger={false}
+        showClear
+        placeholder={placeholder}
+      />
       <ComboboxContent>
         <ComboboxEmpty>{emptyStr ? emptyStr : 'No items found.'}</ComboboxEmpty>
         <ComboboxList>
