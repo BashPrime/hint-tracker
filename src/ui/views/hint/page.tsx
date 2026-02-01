@@ -12,7 +12,7 @@ export function HintPage() {
     );
   }
   return (
-    <div className="items-top flex flex-col md:flex-row">
+    <div className="items-top flex flex-col md:flex-row" data-name="hint-page">
       {activeHintLayout.layout.map((section, idx) => (
         <HintSection key={`section-${idx}`} section={section} />
       ))}

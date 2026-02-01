@@ -25,6 +25,7 @@ export function Hint({ hint }: Props) {
         checked && 'bg-green-300/90 dark:bg-green-900/90'
       )}
       onMouseDown={handleRightClick}
+      data-name="hint"
     >
       <p
         style={{ color: !checked ? hint.color : '' }}

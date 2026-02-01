@@ -11,6 +11,7 @@ export function HintSection({ section }: Props) {
     <div
       style={{ borderLeft: `2px solid ${section.lineColor ?? 'white'}` }}
       className={cn('flex flex-auto flex-col', 'md:h-screen')}
+      data-name="hint-section"
     >
       {section.header && (
         <p className="bg-zinc-400 p-1 text-lg font-bold uppercase dark:bg-zinc-900">
