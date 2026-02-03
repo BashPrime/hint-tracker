@@ -1,18 +1,42 @@
-
 export function NewHintPage() {
-  // const jsonData = GridConfigSchema.parse({
-  //   columns: 30,
-  //   gap: 'md',
-  //   // items: [{ id: '1', colSpan: 2 }, { id: '2' }, { id: '3' }],
-  //   items: Array.from(Array(30).keys()).map((item) => ({
-  //     id: item.toString(),
-  //   })),
-  //   className: 'h-full'
-  // });
-  // return <Grid data={jsonData} />;
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-3">
-      <div className="bg-lime-800">
+    // Grid
+    <div className="grid sm:grid-cols-1 md:grid-cols-4" data-name="grid-parent">
+      {/* Column 1*/}
+      <div className="border-l-2 border-lime-500 bg-neutral-800">
+        <div className="bg-neutral-800" data-name="panel-stks">
+          <p className="bg-neutral-900 uppercase">Sky Temple Keys</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+        </div>
+        <div
+          className="border-l-2 border-lime-500 bg-neutral-800"
+          data-name="panel-stks"
+        >
+          <p className="bg-neutral-900 uppercase">Sky Temple Keys</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+          <p>Key</p>
+        </div>
+      </div>
+      {/* Column 2 */}
+      <div
+        className="border-l-2 border-lime-500 bg-neutral-800"
+        data-name="panel-stks"
+      >
         <p className="bg-neutral-900 uppercase">Sky Temple Keys</p>
         <p>Key</p>
         <p>Key</p>
@@ -24,7 +48,7 @@ export function NewHintPage() {
         <p>Key</p>
         <p>Key</p>
       </div>
-      <div className="bg-orange-800">
+      <div className="bg-orange-800" data-name="panel-agon">
         <p className="bg-neutral-900 uppercase">Agon Wastes</p>
         <div className="grid md:grid-cols-2">
           <p>Amorbis</p>
@@ -46,7 +70,7 @@ export function NewHintPage() {
           <p>Translator</p>
         </div>
       </div>
-      <div className="bg-green-800">
+      <div className="bg-green-800" data-name="panel-torvus">
         <p className="bg-neutral-900 uppercase">Torvus Bog</p>
         <div className="grid md:grid-cols-2">
           <p>Chykka</p>
@@ -69,5 +93,5 @@ export function NewHintPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

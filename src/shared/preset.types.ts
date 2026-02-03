@@ -12,25 +12,56 @@ export const PresetHintSchema = z.object({
 });
 export type PresetHint = z.infer<typeof PresetHintSchema>;
 
-export const PresetHintContainerSchema = z.object({
+export const PresetHintCollectionSchema = z.object({
   name: z.string().optional(),
   type: HintTypeSchema,
   color: z.string().optional(),
   hints: z.array(z.union([z.string(), PresetHintSchema])).nonempty(),
 });
+export type PresetHintCollection = z.infer<typeof PresetHintCollectionSchema>;
 
-export const PresetSectionSchema = z.object({
+export const PresetPanelSchema = z.object({
   header: z.string().optional(),
   lineColor: z.string().optional(),
-  content: z.array(PresetHintContainerSchema).nonempty(),
+  colSpan: z.number().min(1).optional(),
+  get content() {
+    return z
+      .array(
+        z.union([
+          PresetGridSchema,
+          PresetHintCollectionSchema,
+          PresetHintSchema,
+        ])
+      )
+      .nonempty();
+  },
 });
-export type PresetSection = z.infer<typeof PresetSectionSchema>;
+export type PresetPanel = z.infer<typeof PresetPanelSchema>;
+
+export const PresetColumnSchema = z.object({
+  colSpan: z.number().min(1).optional(),
+  get content() {
+    const contentTypeSchema = z.union([
+      PresetGridSchema,
+      PresetPanelSchema,
+      PresetHintCollectionSchema,
+      PresetHintSchema,
+    ]);
+    return z.union([contentTypeSchema, z.array(contentTypeSchema).nonempty()]);
+  },
+});
+export type PresetColumn = z.infer<typeof PresetColumnSchema>;
+
+export const PresetGridSchema = z.object({
+  numColumns: z.number().min(1),
+  columns: z.array(PresetColumnSchema).nonempty(),
+});
 
 export const PresetSchema = z.object({
   schemaVersion: z.number(),
   id: z.uuidv4(),
   name: z.string(),
   description: EmptyStringSchema,
-  layout: z.array(PresetSectionSchema).nonempty(),
+  layout: PresetGridSchema,
 });
 export type Preset = z.infer<typeof PresetSchema>;
