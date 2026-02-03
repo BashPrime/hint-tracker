@@ -1,19 +1,19 @@
 import { atom } from 'jotai';
 import z from 'zod';
 import {
-  PresetHintContainerSchema,
-  PresetSchema,
-  PresetSectionSchema,
+    PresetHintCollectionSchema,
+    PresetSchema,
+    PresetSectionSchema,
 } from '../../shared/preset.types';
 import {
-  HintContainerSchema,
-  HintLayoutSchema,
-  HintSchema,
-  HintSectionSchema,
+    HintContainerSchema,
+    HintLayoutSchema,
+    HintSchema,
+    HintSectionSchema,
 } from './hint-layout.types';
 
 const PresetToLayoutHintContainerTransformSchema =
-  PresetHintContainerSchema.transform((presetContainer) => {
+  PresetHintCollectionSchema.transform((presetContainer) => {
     const parsedHints = presetContainer.hints.map((hint) => {
       let hintToParse;
       switch (typeof hint) {
