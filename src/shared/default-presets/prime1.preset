@@ -3,7 +3,45 @@
   "id": "667e61e4-2376-4b83-b675-0e68394f269d",
   "name": "Metroid Prime",
   "description": "The default layout for Metroid Prime.",
-  "layout": [
+  "layout": {
+    "numColumns": 1,
+    "columns": [
+      {
+        "_name": "col-artifacts",
+        "header": "Chozo Artifacts",
+        "lineColor": "oklch(78.9% 0.154 211.53)",
+        "content": {
+          "color": "oklch(78.9% 0.154 211.53)",
+          "type": "location",
+          "hints": [
+            "Truth",
+            "Strength",
+            "Elder",
+            "Wild",
+            "Lifegiver",
+            "Warrior",
+            "Chozo",
+            "Nature",
+            "Sun",
+            "World",
+            "Spirit",
+            "Newborn"
+          ]
+        }
+      },
+      {
+        "lineColor": "oklch(57.7% 0.245 27.325)",
+        "content": {
+          "color": "oklch(57.7% 0.245 27.325)",
+          "type": "location",
+          "hints": [
+            "Phazon Suit"
+          ]
+        }
+      }
+    ]
+  },
+  "_layout": [
     {
       "header": "Chozo Artifacts",
       "lineColor": "cyan",
