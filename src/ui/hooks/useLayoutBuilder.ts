@@ -1,9 +1,9 @@
 import { activeHintLayoutState, activePresetState } from '@/states/App.states';
-import { PresetToHintLayoutSchema } from '@/types/transform.types';
+import { PresetToLayoutTransformSchema } from '@/types/transform.types';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 
-export function useHintLayoutBuilder() {
+export function useLayoutBuilder() {
   // !STATE
   const activePreset = useAtomValue(activePresetState);
   const setActiveHintLayout = useSetAtom(activeHintLayoutState);
@@ -12,7 +12,7 @@ export function useHintLayoutBuilder() {
   // update hint layout atom when a new preset is picked
   useEffect(() => {
     if (activePreset) {
-      const parsed = PresetToHintLayoutSchema.parse(activePreset);
+      const parsed = PresetToLayoutTransformSchema.parse(activePreset);
       setActiveHintLayout(parsed);
     } else {
       setActiveHintLayout(null);

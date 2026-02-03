@@ -1,26 +1,37 @@
 import { atom } from 'jotai';
-import z from 'zod';
 import {
-    PresetHintCollectionSchema,
-    PresetSchema,
-    PresetSectionSchema,
+  PresetGridSchema,
+  PresetHintCollectionSchema,
+  PresetHintPanelSchema,
+  PresetHintSchema,
+  PresetSchema,
 } from '../../shared/preset.types';
 import {
-    HintContainerSchema,
-    HintLayoutSchema,
-    HintSchema,
-    HintSectionSchema,
-} from './hint-layout.types';
+  GridSchema,
+  HintCollectionSchema,
+  HintPanelSchema,
+  HintSchema,
+  LayoutSchema,
+} from './layout.types';
 
-const PresetToLayoutHintContainerTransformSchema =
-  PresetHintCollectionSchema.transform((presetContainer) => {
-    const parsedHints = presetContainer.hints.map((hint) => {
+export const HintTransformSchema = PresetHintSchema.transform((hint) => {
+  return HintSchema.parse({
+    ...hint,
+    item: atom(hint.type !== 'location' ? '' : null),
+    location: atom(hint.type !== 'item' ? '' : null),
+    checked: atom(false),
+  });
+});
+
+export const HintCollectionTransformSchema =
+  PresetHintCollectionSchema.transform((collection) => {
+    const parsedHints = collection.hints.map((hint) => {
       let hintToParse;
       switch (typeof hint) {
         // If the hint is a string literal, apply the hint type from the container.
         case 'string':
           hintToParse = {
-            ...presetContainer,
+            ...collection,
             name: hint,
           };
           break;
@@ -29,35 +40,75 @@ const PresetToLayoutHintContainerTransformSchema =
           hintToParse = hint;
           break;
       }
-      return HintSchema.parse({
-        name: hintToParse.name,
-        color: hintToParse.color,
-        item: hintToParse.type !== 'location' ? atom('') : null,
-        location: hintToParse.type !== 'item' ? atom('') : null,
-        checked: atom(false),
-      });
+      return HintTransformSchema.parse(hintToParse);
     });
 
-    return HintContainerSchema.parse({
-      ...presetContainer,
+    return HintCollectionSchema.parse({
+      ...collection,
       hints: parsedHints,
     });
   });
 
-const PresetToLayoutHintSectionSchema = PresetSectionSchema.transform(
-  (section) => {
-    return HintSectionSchema.parse({
-      ...section,
-      content: z
-        .array(PresetToLayoutHintContainerTransformSchema)
-        .parse(section.content),
+const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
+  function parseContent(content: object) {
+    const parsedCollection = HintCollectionTransformSchema.safeParse(content);
+    const parsedHint = HintTransformSchema.safeParse(content);
+
+    if (parsedHint.success) {
+      return parsedHint.data;
+    }
+
+    if (parsedCollection.success) {
+      return parsedCollection.data;
+    }
+  }
+  return HintPanelSchema.parse({
+    ...panel,
+    content: PresetHintPanelSchema.shape.content
+      .transform((content) => {
+        if (Array.isArray(content)) {
+          return content.map((contentItem) => parseContent(contentItem));
+        }
+        return parseContent(content);
+      })
+      .parse(panel.content),
+  });
+});
+
+const GridTransformSchema = PresetGridSchema.transform((grid) => {
+  return GridSchema.parse({
+    numColumns: grid.numColumns,
+    colSpan: grid.colSpan,
+    columns: PresetGridSchema.shape.columns
+      .transform((columns) =>
+        columns.map((column) => {
+          const parsedHint = HintTransformSchema.safeParse(column);
+          const parsedCollection =
+            HintCollectionTransformSchema.safeParse(column);
+          const parsedPanel = HintPanelTransformSchema.safeParse(column);
+
+          if (parsedHint.success) {
+            return parsedHint.data;
+          }
+
+          if (parsedCollection.success) {
+            return parsedCollection.data;
+          }
+
+          if (parsedPanel.success) {
+            return parsedPanel.data;
+          }
+        })
+      )
+      .parse(grid.columns),
+  });
+});
+
+export const PresetToLayoutTransformSchema = PresetSchema.transform(
+  (preset) => {
+    return LayoutSchema.parse({
+      ...preset,
+      layout: GridTransformSchema.parse(preset.layout),
     });
   }
 );
-
-export const PresetToHintLayoutSchema = PresetSchema.transform((preset) => {
-  return HintLayoutSchema.parse({
-    ...preset,
-    layout: z.array(PresetToLayoutHintSectionSchema).parse(preset.layout),
-  });
-});

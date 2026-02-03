@@ -15,6 +15,10 @@ export function PresetSelector() {
   const presets = useAtomValue(presetsState);
   const setActivePreset = useSetAtom(activePresetState);
 
+  if (!presets) {
+    return null;
+  }
+
   return (
     <div>
       <p>Select a Preset:</p>
