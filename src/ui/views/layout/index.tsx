@@ -15,6 +15,7 @@ export function Layout() {
         gridTemplateColumns: `repeat(${layout.numColumns}, minmax(0, 1fr))`,
       }}
       className="grid"
+      data-name="layout-root"
     >
       {layout.columns.map((column, idx) => (
         <Column key={`column-${idx}`} column={column} />

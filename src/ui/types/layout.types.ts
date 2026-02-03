@@ -5,15 +5,14 @@ import z from 'zod';
 export const ColSpanSchema = z.number().min(1).optional();
 export const NumColumnsSchema = z.number().min(1);
 
-const HintStrOrNullAtomSchema: z.ZodType<PrimitiveAtom<string | null>> =
-  z.any();
+const HintStrAtomSchema: z.ZodType<PrimitiveAtom<string>> = z.any();
 const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
 
 export const HintSchema = z.object({
   name: z.string(),
   color: z.string().optional(),
-  item: HintStrOrNullAtomSchema,
-  location: HintStrOrNullAtomSchema,
+  item: HintStrAtomSchema.nullable(),
+  location: HintStrAtomSchema.nullable(),
   checked: HintBoolAtomSchema,
   colSpan: ColSpanSchema,
 });

@@ -1,7 +1,7 @@
 import { AtomCombobox } from '@/components/atom-combobox';
 import { useRightClick } from '@/hooks/useRightClick';
 import { cn } from '@/lib/utils';
-import { Hint as HintType } from '@/types/hint-layout.types';
+import { Hint as HintType } from '@/types/layout.types';
 import { useAtom } from 'jotai';
 
 type Props = {

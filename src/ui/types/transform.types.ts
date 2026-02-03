@@ -17,8 +17,8 @@ import {
 export const HintTransformSchema = PresetHintSchema.transform((hint) => {
   return HintSchema.parse({
     ...hint,
-    item: atom(hint.type !== 'location' ? '' : null),
-    location: atom(hint.type !== 'item' ? '' : null),
+    item: hint.type !== 'location' ? atom('') : null,
+    location: hint.type !== 'item' ? atom('') : null,
     checked: atom(false),
   });
 });

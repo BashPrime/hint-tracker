@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { HintSection as HintSectionType } from '@/types/hint-layout.types';
-import { HintContainer } from './hint-container';
+import { HintCollection } from './hint-collection';
 
 type Props = {
   section: HintSectionType;
@@ -23,7 +23,7 @@ export function HintSection({ section }: Props) {
         className={cn('flex flex-col gap-2', 'scrollbar-thin md:overflow-auto')}
       >
         {section.content.map((container, idx) => (
-          <HintContainer key={`container-${idx}`} container={container} />
+          <HintCollection key={`container-${idx}`} container={container} />
         ))}
       </div>
     </div>

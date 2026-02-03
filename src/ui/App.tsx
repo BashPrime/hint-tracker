@@ -20,7 +20,6 @@ function App() {
     <>
       {!activePreset && <PresetSelector />}
       {activePreset && <Layout />}
-      {/* <NewHintPage /> */}
     </>
   );
 }
