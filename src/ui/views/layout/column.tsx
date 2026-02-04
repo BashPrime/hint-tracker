@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import {
   Column as ColumnType,
   HintCollectionSchema,
@@ -18,7 +19,7 @@ export function Column({ column }: Props) {
   const parsedPanel = HintPanelSchema.safeParse(column);
 
   return (
-    <div>
+    <div className={cn('h-full')} data-name="column">
       {parsedHint.success && <Hint hint={parsedHint.data} />}
       {parsedCollection.success && (
         <HintCollection collection={parsedCollection.data} />
