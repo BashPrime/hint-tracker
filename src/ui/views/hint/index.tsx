@@ -3,6 +3,7 @@ import { useRightClick } from '@/hooks/useRightClick';
 import { cn } from '@/lib/utils';
 import { Hint as HintType } from '@/types/layout.types';
 import { useAtom } from 'jotai';
+import { Check } from 'lucide-react';
 
 type Props = {
   hint: HintType;
@@ -27,15 +28,25 @@ export function Hint({ hint }: Props) {
       onMouseDown={handleRightClick}
       data-name="hint"
     >
-      <p
-        style={{ color: !checked ? hint.color : '' }}
-        className={cn(
-          hint.color && !checked && 'brightness-75 dark:brightness-100',
-          checked && 'text-green-700 dark:text-green-400'
-        )}
-      >
-        {hint.name}
-      </p>
+      <div className={cn('flex flex-row justify-between')}>
+        <p
+          style={{ color: !checked ? hint.color : '' }}
+          className={cn(
+            hint.color && !checked && 'brightness-75 dark:brightness-100',
+            checked && 'text-green-800 dark:text-green-400'
+          )}
+        >
+          {hint.name}
+        </p>
+        <Check
+          className={cn(
+            'text-green-800 dark:text-green-300',
+            'h-4 w-4 mx-1 my-0.5',
+            !checked && 'opacity-0'
+          )}
+        />
+      </div>
+
       {hint.item && (
         <AtomCombobox
           atom={hint.item}
