@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import {
   Hint,
   HintCollection,
@@ -15,17 +16,34 @@ export function HintPanel({ panel }: Props) {
   }
 
   return (
-    <div data-name="hint-panel">
+    <div
+      style={{
+        borderLeft: panel.lineColor ? `2px solid ${panel.lineColor}` : 'none',
+      }}
+      className="grow"
+      data-name="hint-panel"
+    >
       {panel.header && (
         <p className="bg-zinc-400 p-1 text-lg font-bold uppercase dark:bg-zinc-900">
           {panel.header}
         </p>
       )}
-      {isArray(panel.content) &&
-        panel.content.map((contentItem) => (
-          <HintPanelContent content={contentItem} />
-        ))}
-      {!isArray(panel.content) && <HintPanelContent content={panel.content} />}
+      <div
+        style={{
+          gridTemplateColumns: panel.numColumns
+            ? `repeat(${panel.numColumns}, minmax(0, 1fr))`
+            : 'unset',
+        }}
+        className={cn(panel.numColumns && 'grid')}
+      >
+        {isArray(panel.content) &&
+          panel.content.map((contentItem) => (
+            <HintPanelContent content={contentItem} />
+          ))}
+        {!isArray(panel.content) && (
+          <HintPanelContent content={panel.content} />
+        )}
+      </div>
     </div>
   );
 }
