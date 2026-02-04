@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { HintCollection as HintCollectionType } from '@/types/layout.types';
 import { Hint } from '.';
 
@@ -11,9 +12,18 @@ export function HintCollection({ collection }: Props) {
       {collection.name && (
         <p style={{ color: collection.color }}>{collection.name}</p>
       )}
-      {collection.hints.map((hint, idx) => (
-        <Hint key={`hint-${idx}`} hint={hint} />
-      ))}
+      <div
+        style={{
+          gridTemplateColumns: collection.numColumns
+            ? `repeat(${collection.numColumns}, minmax(0, 1fr))`
+            : 'unset',
+        }}
+        className={cn(collection.numColumns && 'grid')}
+      >
+        {collection.hints.map((hint, idx) => (
+          <Hint key={`hint-${idx}`} hint={hint} />
+        ))}
+      </div>
     </div>
   );
 }
