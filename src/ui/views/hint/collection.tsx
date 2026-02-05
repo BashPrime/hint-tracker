@@ -18,10 +18,19 @@ export function HintCollection({ collection }: Props) {
             ? `repeat(${collection.numColumns}, minmax(0, 1fr))`
             : 'unset',
         }}
-        className={cn(collection.numColumns && 'grid')}
+        className={cn(collection.numColumns && 'md:grid')}
       >
         {collection.hints.map((hint, idx) => (
-          <Hint key={`hint-${idx}`} hint={hint} />
+          <Hint
+            key={`hint-${idx}`}
+            hint={hint}
+            className={cn(
+              collection.numColumns && collection.numColumns > 1
+                ? 'border-r'
+                : null,
+              'border-b border-neutral-600 dark:border-neutral-950'
+            )}
+          />
         ))}
       </div>
     </div>

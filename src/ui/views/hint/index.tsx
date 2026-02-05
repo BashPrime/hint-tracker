@@ -7,9 +7,10 @@ import { Check } from 'lucide-react';
 
 type Props = {
   hint: HintType;
+  className?: string;
 };
 
-export function Hint({ hint }: Props) {
+export function Hint({ hint, className }: Props) {
   // !STATE
   const [checked, setChecked] = useAtom(hint.checked);
 
@@ -21,9 +22,9 @@ export function Hint({ hint }: Props) {
       className={cn(
         'gap flex flex-col pl-2',
         'font-bold uppercase',
-        'border-b border-zinc-950',
-        'bg-zinc-300/90 dark:bg-zinc-700/90',
-        checked && 'bg-green-300/90 dark:bg-green-900/90'
+        'bg-neutral-300/90 dark:bg-neutral-700/90',
+        checked && 'bg-green-300/90 dark:bg-green-900/90',
+        className
       )}
       onMouseDown={handleRightClick}
       data-name="hint"

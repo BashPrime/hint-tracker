@@ -16,8 +16,8 @@ export function createMainWindow(windowConfig: WindowConfig | null) {
     height: windowConfig?.height ?? DEFAULT_WINDOW_SIZE.height,
     x: windowConfig?.x ?? undefined,
     y: windowConfig?.y ?? undefined,
-    minWidth: 640,
-    minHeight: 480,
+    minWidth: 240,
+    minHeight: 240,
     webPreferences: {
       devTools: isDev(),
       preload: getPreloadPath(),
