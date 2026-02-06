@@ -5,7 +5,7 @@
   "description": "The default layout for Metroid Prime 2: Echoes.",
   "layout": {
     "numColumns": 5,
-    "gridBreakpoint": "md",
+    "gridBreakpoint": "lg",
     "columns": [
       {
         "header": "Sky Temple Keys",
@@ -42,6 +42,7 @@
           {
             "color": "oklch(70.2% 0.183 293.541)",
             "type": "item",
+            "numColumns": 2,
             "hints": [
               "Accursed Lake",
               "Defiled Shrine",
@@ -75,6 +76,7 @@
           {
             "color": "oklch(63.7% 0.237 25.331)",
             "type": "location",
+            "numColumns": 2,
             "hints": [
               "Key 1",
               "Key 2",
@@ -84,6 +86,7 @@
           {
             "color": "oklch(70.2% 0.183 293.541)",
             "type": "item",
+            "numColumns": 2,
             "hints": [
               "Battleground",
               "Dark Oasis"
@@ -116,6 +119,7 @@
           {
             "color": "oklch(63.7% 0.237 25.331)",
             "type": "location",
+            "numColumns": 2,
             "hints": [
               "Key 1",
               "Key 2",
@@ -125,6 +129,7 @@
           {
             "color": "oklch(70.2% 0.183 293.541)",
             "type": "item",
+            "numColumns": 2,
             "hints": [
               "Dungeon",
               "Poisoned Bog"
@@ -158,6 +163,7 @@
           {
             "color": "oklch(63.7% 0.237 25.331)",
             "type": "location",
+            "numColumns": 2,
             "hints": [
               "Key 1",
               "Key 2",
@@ -167,6 +173,7 @@
           {
             "color": "oklch(70.2% 0.183 293.541)",
             "type": "item",
+            "numColumns": 2,
             "hints": [
               "Hive Dynamo Works",
               "Hive Entrance"

@@ -1,5 +1,8 @@
 import { cn } from '@/lib/utils';
+import { activeHintLayoutState } from '@/states/App.states';
 import { HintCollection as HintCollectionType } from '@/types/layout.types';
+import { useAtomValue } from 'jotai';
+import { GRID_BREAKPOINTS } from 'src/shared/constants';
 import { Hint } from '.';
 
 type Props = {
@@ -7,6 +10,8 @@ type Props = {
 };
 
 export function HintCollection({ collection }: Props) {
+  const layout = useAtomValue(activeHintLayoutState)?.layout;
+
   return (
     <div data-name="hint-collection">
       {collection.name && (
@@ -18,7 +23,11 @@ export function HintCollection({ collection }: Props) {
             ? `repeat(${collection.numColumns}, minmax(0, 1fr))`
             : 'unset',
         }}
-        className={cn(collection.numColumns && 'md:grid')}
+        className={cn(
+          layout &&
+            collection.numColumns &&
+            GRID_BREAKPOINTS[layout.gridBreakpoint]
+        )}
       >
         {collection.hints.map((hint, idx) => (
           <Hint
