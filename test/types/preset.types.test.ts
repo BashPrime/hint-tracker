@@ -86,24 +86,20 @@ test('PresetHintPanelSchema with single grid object passes validation', () => {
       header: 'Test Panel',
       lineColor: '#ff0000',
       content: {
+        name: 'Test Collection',
         numColumns: 1,
-        columns: [
+        type: 'location',
+        hints: [
+          'Item 1',
           {
-            name: 'Test Group',
-            type: 'location',
-            hints: [
-              'Item 1',
-              {
-                name: 'Item 2',
-                type: 'item-location',
-              },
-              'Item 3',
-              'Item 4',
-              {
-                name: 'Item 5',
-                type: 'item',
-              },
-            ],
+            name: 'Item 2',
+            type: 'item-location',
+          },
+          'Item 3',
+          'Item 4',
+          {
+            name: 'Item 5',
+            type: 'item',
           },
         ],
       },
@@ -180,8 +176,41 @@ test('PresetHintPanelSchema with content array passes validation', () => {
           ],
         },
         {
-          numColumns: 1,
-          columns: [
+          name: 'Test Group',
+          type: 'location',
+          hints: [
+            'Item 1',
+            {
+              name: 'Item 2',
+              type: 'item-location',
+            },
+            'Item 3',
+            'Item 4',
+            {
+              name: 'Item 5',
+              type: 'item',
+            },
+          ],
+        },
+      ],
+    }).success
+  ).toBe(true);
+});
+
+test('PresetGridSchema passes validation', () => {
+  expect(
+    PresetGridSchema.safeParse({
+      numColumns: 1,
+      columns: [
+        {
+          header: 'Test Panel',
+          lineColor: '#ff0000',
+          content: [
+            {
+              name: 'Test Hint',
+              color: '#ff0000',
+              type: 'location',
+            },
             {
               name: 'Test Group',
               type: 'location',
@@ -199,53 +228,6 @@ test('PresetHintPanelSchema with content array passes validation', () => {
                 },
               ],
             },
-          ],
-        },
-      ],
-    }).success
-  ).toBe(true);
-});
-
-test('PresetGridSchema passes validation', () => {
-  expect(
-    PresetGridSchema.safeParse({
-      numColumns: 1,
-      columns: [
-        {
-          header: 'Test Panel',
-          lineColor: '#ff0000',
-          colSpan: 2,
-          content: {
-            name: 'Test Hint',
-            color: '#00ff00',
-            type: 'location',
-          },
-        },
-        {
-          name: 'Test Hint',
-          color: '#ff0000',
-          type: 'location',
-        },
-        {
-          name: 'Test Group',
-          type: 'location',
-          hints: [
-            'Item 1',
-            {
-              name: 'Item 2',
-              type: 'item-location',
-            },
-            'Item 3',
-            'Item 4',
-            {
-              name: 'Item 5',
-              type: 'item',
-            },
-          ],
-        },
-        {
-          numColumns: 1,
-          columns: [
             {
               name: 'Test Group',
               type: 'location',
