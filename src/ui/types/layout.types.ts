@@ -1,5 +1,5 @@
 import { PrimitiveAtom } from 'jotai';
-import { EmptyStringSchema } from 'src/shared/base.types';
+import { EmptyStringSchema, GridBreakpointSchema } from 'src/shared/base.types';
 import z from 'zod';
 
 export const ColSpanSchema = z.number().min(1).optional();
@@ -49,7 +49,7 @@ export type Column = z.infer<typeof ColumnSchema>;
 
 export const GridSchema = z.object({
   numColumns: NumColumnsSchema,
-  colSpan: ColSpanSchema,
+  gridBreakpoint: GridBreakpointSchema.default('sm'),
   columns: z.array(ColumnSchema).nonempty(),
 });
 export type Grid = z.infer<typeof GridSchema>;

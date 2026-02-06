@@ -78,7 +78,7 @@ const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
 const GridTransformSchema = PresetGridSchema.transform((grid) => {
   return GridSchema.parse({
     numColumns: grid.numColumns,
-    colSpan: grid.colSpan,
+    gridBreakpoint: grid.gridBreakpoint,
     columns: PresetGridSchema.shape.columns
       .transform((columns) =>
         columns.map((column) => {

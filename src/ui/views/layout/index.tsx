@@ -4,7 +4,15 @@ import { useAtomValue } from 'jotai';
 import { Column } from './column';
 
 export function Layout() {
+  // !STATE
   const layout = useAtomValue(activeHintLayoutState)?.layout;
+  const gridBreakpointMapping = {
+    sm: 'sm:grid',
+    md: 'md:grid',
+    lg: 'lg:grid',
+    xl: 'xl:grid',
+    '2xl': '2xl:grid',
+  };
 
   if (!layout) {
     return null;
@@ -12,12 +20,12 @@ export function Layout() {
 
   return (
     <div
-      style={{
-        gridTemplateColumns: `repeat(${layout.numColumns}, minmax(0, 1fr))`,
-      }}
       className={cn(
-        layout.numColumns && layout.numColumns > 1 ? 'md:h-full' : null,
-        'flex flex-col md:grid gap-2'
+        'h-full',
+        'flex flex-col gap-2',
+        gridBreakpointMapping[layout.gridBreakpoint],
+        layout.numColumns > 1 &&
+          `grid-cols-[repeat(${layout.numColumns},minmax(0,1fr))]`
       )}
       data-name="layout-root"
     >

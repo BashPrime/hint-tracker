@@ -5,6 +5,7 @@
   "description": "The default layout for Metroid Prime 2: Echoes.",
   "layout": {
     "numColumns": 5,
+    "gridBreakpoint": "md",
     "columns": [
       {
         "header": "Sky Temple Keys",

@@ -3,6 +3,7 @@ import z from 'zod';
 export const EmptyStringSchema = z.string().default('');
 export const ColSpanSchema = z.number().min(1).optional();
 export const NumColumnsSchema = z.number().min(1);
+export const GridBreakpointSchema = z.enum(['sm', 'md', 'lg', 'xl', '2xl']);
 
 export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
 export type HintType = z.infer<typeof HintTypeSchema>;
@@ -47,7 +48,7 @@ export type PresetColumn = z.infer<typeof PresetColumnSchema>;
 
 export const PresetGridSchema = z.object({
   numColumns: NumColumnsSchema,
-  colSpan: ColSpanSchema,
+  gridBreakpoint: GridBreakpointSchema.default('sm'),
   columns: z.array(PresetColumnSchema).nonempty(),
 });
 export type PresetGrid = z.infer<typeof PresetGridSchema>;
