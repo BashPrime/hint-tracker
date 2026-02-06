@@ -18,15 +18,22 @@ export function useThemeChanger() {
 
   // !HOOK
   useEffect(() => {
+    // !WHY Need to run the function at least once to ensure the proper theme is applied at launch
     handleThemeChange(appearance);
-  }, [appearance]);
 
-  // Watch for system theme changes
-  window
-    .matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', (event) => {
+    const handler = (e: MediaQueryListEvent) => {
       if (userAppearance === 'system') {
-        handleThemeChange(event.matches ? 'dark' : 'light');
+        handleThemeChange(e.matches ? 'dark' : 'light');
       }
-    });
+    };
+    const watchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Watch for system theme changes
+    watchMedia.addEventListener('change', handler);
+
+    return () => {
+      // Cleanup
+      watchMedia.removeEventListener('change', handler);
+    };
+  }, [appearance]);
 }
