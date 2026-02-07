@@ -1,12 +1,15 @@
 import { cn } from '@/lib/utils';
 import { activeHintLayoutState } from '@/states/App.states';
 import { useAtomValue } from 'jotai';
-import { GRID_BREAKPOINTS } from 'src/shared/constants';
+import { useMediaQuery } from 'usehooks-ts';
 import { Column } from './column';
 
 export function Layout() {
   // !STATE
   const layout = useAtomValue(activeHintLayoutState)?.layout;
+
+  // !HOOKS
+  const matches = useMediaQuery('(min-width: 64rem)');
 
   if (!layout) {
     return null;
@@ -15,14 +18,17 @@ export function Layout() {
   return (
     <div
       style={{
-        gridTemplateColumns: layout.numColumns > 1
+        gridTemplateColumns: matches && layout.numColumns > 3
           ? `repeat(${layout.numColumns}, minmax(0, 1fr))`
-          : 'unset',
+          : undefined,
       }}
       className={cn(
-        'h-full',
-        'flex flex-col gap-2',
-        GRID_BREAKPOINTS[layout.gridBreakpoint]
+        'h-full grid grid-cols-1 gap-2',
+        'overflow-none',
+        layout.numColumns >= 2 && 'sm:grid-cols-2',
+        layout.numColumns >= 3 && 'md:grid-cols-3',
+
+        // GRID_BREAKPOINTS[layout.gridBreakpoint]
       )}
       data-name="layout-root"
     >
