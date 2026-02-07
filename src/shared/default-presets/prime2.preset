@@ -50,6 +50,7 @@
             ]
           },
           {
+            "grow": true,
             "color": "oklch(71.4% 0.203 305.504)",
             "type": "item-location",
             "hints": [
@@ -93,6 +94,7 @@
             ]
           },
           {
+            "grow": true,
             "color": "oklch(76.9% 0.188 70.08)",
             "type": "item-location",
             "hints": [
@@ -136,6 +138,7 @@
             ]
           },
           {
+            "grow": true,
             "color": "oklch(84.5% 0.143 164.978)",
             "type": "item-location",
             "hints": [
@@ -180,6 +183,7 @@
             ]
           },
           {
+            "grow": true,
             "color": "oklch(74.6% 0.16 232.661)",
             "type": "item-location",
             "hints": [

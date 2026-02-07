@@ -23,6 +23,7 @@ export const HintCollectionSchema = z.object({
   color: z.string().optional(),
   hints: z.array(HintSchema).nonempty(),
   numColumns: NumColumnsSchema.optional(),
+  grow: z.boolean().default(false),
   colSpan: ColSpanSchema,
 });
 export type HintCollection = z.infer<typeof HintCollectionSchema>;

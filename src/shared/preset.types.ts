@@ -22,6 +22,7 @@ export const PresetHintCollectionSchema = z.object({
   color: z.string().optional(),
   hints: z.array(z.union([z.string(), PresetHintSchema])).nonempty(),
   numColumns: NumColumnsSchema.optional(),
+  grow: z.boolean().default(false),
   colSpan: ColSpanSchema,
 });
 export type PresetHintCollection = z.infer<typeof PresetHintCollectionSchema>;
