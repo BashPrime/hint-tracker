@@ -1,8 +1,9 @@
 import { AtomCombobox } from '@/components/atom-combobox';
 import { useRightClick } from '@/hooks/useRightClick';
 import { cn } from '@/lib/utils';
+import { activeHintLayoutState } from '@/states/App.states';
 import { Hint as HintType } from '@/types/layout.types';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 export function Hint({ hint, className }: Props) {
   // !STATE
   const [checked, setChecked] = useAtom(hint.checked);
+  const layout = useAtomValue(activeHintLayoutState)?.layout;
 
   // !HOOK
   const handleRightClick = useRightClick(() => setChecked(!checked));
@@ -35,6 +37,7 @@ export function Hint({ hint, className }: Props) {
           <p
             style={{ color: !checked ? hint.color : '' }}
             className={cn(
+              layout?.numColumns && layout.numColumns > 1 && 'sm:truncate',
               hint.color && !checked && 'brightness-75 dark:brightness-100',
               checked && 'text-green-800 dark:text-green-400'
             )}
