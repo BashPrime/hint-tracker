@@ -18,15 +18,16 @@ export function Layout() {
   return (
     <div
       style={{
-        gridTemplateColumns: matches && layout.numColumns > 3
-          ? `repeat(${layout.numColumns}, minmax(0, 1fr))`
-          : undefined,
+        gridTemplateColumns:
+          matches && layout.numColumns > 3
+            ? `repeat(${layout.numColumns}, minmax(0, 1fr))`
+            : undefined,
       }}
       className={cn(
-        'h-full grid grid-cols-1 gap-2',
+        'grid h-full grid-cols-1 gap-2',
         'overflow-none',
         layout.numColumns >= 2 && 'sm:grid-cols-2',
-        layout.numColumns >= 3 && 'md:grid-cols-3',
+        layout.numColumns >= 3 && 'md:grid-cols-3'
       )}
       data-name="layout-root"
     >

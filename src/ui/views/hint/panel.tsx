@@ -26,7 +26,9 @@ export function HintPanel({ panel }: Props) {
           ? `2px solid ${panel.lineColor}`
           : undefined,
       }}
-      className={cn('h-full flex flex-col bg-neutral-400/50 dark:bg-[#0e1013]/50')}
+      className={cn(
+        'flex h-full flex-col bg-neutral-400/50 dark:bg-[#0e1013]/50'
+      )}
       data-name="hint-panel"
     >
       {panel.header && (

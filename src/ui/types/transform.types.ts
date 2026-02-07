@@ -65,7 +65,8 @@ export const MultiHintCollectionTransformSchema =
 const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
   function parseContent(content: object) {
     const parsedCollection = HintCollectionTransformSchema.safeParse(content);
-    const parsedMultiCollection = MultiHintCollectionTransformSchema.safeParse(content);
+    const parsedMultiCollection =
+      MultiHintCollectionTransformSchema.safeParse(content);
     const parsedHint = HintTransformSchema.safeParse(content);
 
     if (parsedHint.success) {
