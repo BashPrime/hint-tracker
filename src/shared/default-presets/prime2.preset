@@ -70,19 +70,24 @@
         "content": [
           {
             "color": "oklch(63.7% 0.237 25.331)",
-            "type": "item",
-            "hints": [
-              "Amorbis"
-            ]
-          },
-          {
-            "color": "oklch(63.7% 0.237 25.331)",
-            "type": "location",
             "numColumns": 2,
-            "hints": [
-              "Key 1",
-              "Key 2",
-              "Key 3"
+            "collections": [
+              {
+                "color": "oklch(63.7% 0.237 25.331)",
+                "type": "item",
+                "hints": [
+                  "Amorbis"
+                ]
+              },
+              {
+                "color": "oklch(63.7% 0.237 25.331)",
+                "type": "location",
+                "hints": [
+                  "Key 1",
+                  "Key 2",
+                  "Key 3"
+                ]
+              }
             ]
           },
           {

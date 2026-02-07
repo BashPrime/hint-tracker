@@ -65,6 +65,7 @@ export const MultiHintCollectionTransformSchema =
 const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
   function parseContent(content: object) {
     const parsedCollection = HintCollectionTransformSchema.safeParse(content);
+    const parsedMultiCollection = MultiHintCollectionTransformSchema.safeParse(content);
     const parsedHint = HintTransformSchema.safeParse(content);
 
     if (parsedHint.success) {
@@ -73,6 +74,10 @@ const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
 
     if (parsedCollection.success) {
       return parsedCollection.data;
+    }
+
+    if (parsedMultiCollection.success) {
+      return parsedMultiCollection.data;
     }
   }
   return HintPanelSchema.parse({
@@ -97,6 +102,8 @@ const GridTransformSchema = PresetGridSchema.transform((grid) => {
           const parsedHint = HintTransformSchema.safeParse(column);
           const parsedCollection =
             HintCollectionTransformSchema.safeParse(column);
+          const parsedMultiCollection =
+            MultiHintCollectionTransformSchema.safeParse(column);
           const parsedPanel = HintPanelTransformSchema.safeParse(column);
 
           if (parsedHint.success) {
@@ -105,6 +112,10 @@ const GridTransformSchema = PresetGridSchema.transform((grid) => {
 
           if (parsedCollection.success) {
             return parsedCollection.data;
+          }
+
+          if (parsedMultiCollection.success) {
+            return parsedMultiCollection.data;
           }
 
           if (parsedPanel.success) {
