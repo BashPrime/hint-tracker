@@ -6,7 +6,6 @@ import {
   HintPanel as HintPanelType,
 } from '@/types/layout.types';
 import { useAtomValue } from 'jotai';
-import { GRID_BREAKPOINTS } from 'src/shared/constants';
 import { HintPanelContent } from './panel-content';
 
 type Props = {
@@ -23,9 +22,11 @@ export function HintPanel({ panel }: Props) {
   return (
     <div
       style={{
-        borderLeft: panel.lineColor ? `2px solid ${panel.lineColor}` : 'unset',
+        borderLeft: panel.lineColor
+          ? `2px solid ${panel.lineColor}`
+          : undefined,
       }}
-      className={cn('bg-neutral-400/50 dark:bg-[#0e1013]/50')}
+      className={cn('h-full flex flex-col bg-neutral-400/50 dark:bg-[#0e1013]/50')}
       data-name="hint-panel"
     >
       {panel.header && (
@@ -33,29 +34,11 @@ export function HintPanel({ panel }: Props) {
           {panel.header}
         </p>
       )}
-      <div
-        style={{
-          gridTemplateColumns: panel.numColumns
-            ? `repeat(${panel.numColumns}, minmax(0, 1fr))`
-            : 'unset',
-        }}
-        className={cn(
-          'scrollbar-thin md:overflow-auto',
-          layout &&
-            panel.numColumns &&
-            panel.numColumns > 1 &&
-            GRID_BREAKPOINTS[layout.gridBreakpoint]
-        )}
-        data-name="panel-content-wrapper"
-      >
-        {isArray(panel.content) &&
-          panel.content.map((contentItem) => (
-            <HintPanelContent content={contentItem} className="mb-1 last:m-0" />
-          ))}
-        {!isArray(panel.content) && (
-          <HintPanelContent content={panel.content} />
-        )}
-      </div>
+      {isArray(panel.content) &&
+        panel.content.map((contentItem) => (
+          <HintPanelContent content={contentItem} className="mb-1 last:m-0" />
+        ))}
+      {!isArray(panel.content) && <HintPanelContent content={panel.content} />}
     </div>
   );
 }

@@ -27,8 +27,6 @@ export function Layout() {
         'overflow-none',
         layout.numColumns >= 2 && 'sm:grid-cols-2',
         layout.numColumns >= 3 && 'md:grid-cols-3',
-
-        // GRID_BREAKPOINTS[layout.gridBreakpoint]
       )}
       data-name="layout-root"
     >

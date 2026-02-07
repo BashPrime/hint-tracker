@@ -1,9 +1,11 @@
 import { atom } from 'jotai';
+import z from 'zod';
 import {
   PresetGridSchema,
   PresetHintCollectionSchema,
   PresetHintPanelSchema,
   PresetHintSchema,
+  PresetMultiHintCollectionSchema,
   PresetSchema,
 } from '../../shared/preset.types';
 import {
@@ -12,6 +14,7 @@ import {
   HintPanelSchema,
   HintSchema,
   LayoutSchema,
+  MultiHintCollectionSchema,
 } from './layout.types';
 
 export const HintTransformSchema = PresetHintSchema.transform((hint) => {
@@ -49,6 +52,16 @@ export const HintCollectionTransformSchema =
     });
   });
 
+export const MultiHintCollectionTransformSchema =
+  PresetMultiHintCollectionSchema.transform((multi) => {
+    return MultiHintCollectionSchema.parse({
+      ...multi,
+      collections: z
+        .array(HintCollectionTransformSchema)
+        .parse(multi.collections),
+    });
+  });
+
 const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
   function parseContent(content: object) {
     const parsedCollection = HintCollectionTransformSchema.safeParse(content);
@@ -78,7 +91,6 @@ const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
 const GridTransformSchema = PresetGridSchema.transform((grid) => {
   return GridSchema.parse({
     numColumns: grid.numColumns,
-    gridBreakpoint: grid.gridBreakpoint,
     columns: PresetGridSchema.shape.columns
       .transform((columns) =>
         columns.map((column) => {

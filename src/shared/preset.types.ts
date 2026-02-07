@@ -3,7 +3,6 @@ import z from 'zod';
 export const EmptyStringSchema = z.string().default('');
 export const ColSpanSchema = z.number().min(1).optional();
 export const NumColumnsSchema = z.number().min(1);
-export const GridBreakpointSchema = z.enum(['sm', 'md', 'lg', 'xl', '2xl']);
 
 export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
 export type HintType = z.infer<typeof HintTypeSchema>;
@@ -13,44 +12,63 @@ export const PresetHintSchema = z.object({
   type: HintTypeSchema,
   color: z.string().optional(),
   colSpan: ColSpanSchema,
+  grow: z.boolean().default(false),
 });
 export type PresetHint = z.infer<typeof PresetHintSchema>;
 
 export const PresetHintCollectionSchema = z.object({
-  name: z.string().optional(),
+  hints: z.array(z.union([z.string(), PresetHintSchema])).nonempty(),
   type: HintTypeSchema,
   color: z.string().optional(),
-  hints: z.array(z.union([z.string(), PresetHintSchema])).nonempty(),
   numColumns: NumColumnsSchema.optional(),
   grow: z.boolean().default(false),
   colSpan: ColSpanSchema,
 });
 export type PresetHintCollection = z.infer<typeof PresetHintCollectionSchema>;
 
+export const PresetMultiHintCollectionSchema = z.object({
+  collections: z.array(PresetHintCollectionSchema).nonempty(),
+  color: z.string().optional(),
+  numColumns: NumColumnsSchema.optional(),
+  grow: z.boolean().default(false),
+});
+export type PresetMultiHintCollection = z.infer<
+  typeof PresetMultiHintCollectionSchema
+>;
+
 export const PresetHintPanelSchema = z.object({
+  content: z.union([
+    PresetMultiHintCollectionSchema,
+    PresetHintCollectionSchema,
+    PresetHintSchema,
+    z
+      .array(
+        z.union([
+          PresetMultiHintCollectionSchema,
+          PresetHintCollectionSchema,
+          PresetHintSchema,
+        ])
+      )
+      .nonempty(),
+  ]),
   header: z.string().optional(),
   lineColor: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),
   colSpan: ColSpanSchema,
-  content: z.union([
-    PresetHintCollectionSchema,
-    PresetHintSchema,
-    z.array(z.union([PresetHintCollectionSchema, PresetHintSchema])).nonempty(),
-  ]),
 });
 export type PresetHintPanel = z.infer<typeof PresetHintPanelSchema>;
 
 export const PresetColumnSchema = z.union([
   PresetHintPanelSchema,
+  PresetMultiHintCollectionSchema,
   PresetHintCollectionSchema,
   PresetHintSchema,
 ]);
 export type PresetColumn = z.infer<typeof PresetColumnSchema>;
 
 export const PresetGridSchema = z.object({
-  numColumns: NumColumnsSchema,
-  gridBreakpoint: GridBreakpointSchema.default('sm'),
   columns: z.array(PresetColumnSchema).nonempty(),
+  numColumns: NumColumnsSchema,
 });
 export type PresetGrid = z.infer<typeof PresetGridSchema>;
 

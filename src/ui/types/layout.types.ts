@@ -1,5 +1,5 @@
 import { PrimitiveAtom } from 'jotai';
-import { EmptyStringSchema, GridBreakpointSchema } from 'src/shared/base.types';
+import { EmptyStringSchema } from 'src/shared/base.types';
 import z from 'zod';
 
 export const ColSpanSchema = z.number().min(1).optional();
@@ -15,43 +15,55 @@ export const HintSchema = z.object({
   location: HintStrAtomSchema.nullable(),
   checked: HintBoolAtomSchema,
   colSpan: ColSpanSchema,
+  grow: z.boolean().default(false),
 });
 export type Hint = z.infer<typeof HintSchema>;
 
 export const HintCollectionSchema = z.object({
-  name: z.string().optional(),
-  color: z.string().optional(),
   hints: z.array(HintSchema).nonempty(),
+  color: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),
   grow: z.boolean().default(false),
-  colSpan: ColSpanSchema,
 });
 export type HintCollection = z.infer<typeof HintCollectionSchema>;
 
+export const MultiHintCollectionSchema = z.object({
+  collections: z.array(HintCollectionSchema).nonempty(),
+  color: z.string().optional(),
+  numColumns: NumColumnsSchema.optional(),
+  grow: z.boolean().default(false),
+});
+export type MultiHintCollection = z.infer<typeof MultiHintCollectionSchema>;
+
 export const HintPanelSchema = z.object({
+  content: z.union([
+    MultiHintCollectionSchema,
+    HintCollectionSchema,
+    HintSchema,
+    z
+      .array(
+        z.union([MultiHintCollectionSchema, HintCollectionSchema, HintSchema])
+      )
+      .nonempty(),
+  ]),
   header: z.string().optional(),
   lineColor: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),
   colSpan: ColSpanSchema,
-  content: z.union([
-    HintCollectionSchema,
-    HintSchema,
-    z.array(z.union([HintCollectionSchema, HintSchema])).nonempty(),
-  ]),
 });
 export type HintPanel = z.infer<typeof HintPanelSchema>;
 
 export const ColumnSchema = z.union([
   HintPanelSchema,
+  MultiHintCollectionSchema,
   HintCollectionSchema,
   HintSchema,
 ]);
 export type Column = z.infer<typeof ColumnSchema>;
 
 export const GridSchema = z.object({
-  numColumns: NumColumnsSchema,
-  gridBreakpoint: GridBreakpointSchema.default('sm'),
   columns: z.array(ColumnSchema).nonempty(),
+  numColumns: NumColumnsSchema,
 });
 export type Grid = z.infer<typeof GridSchema>;
 
