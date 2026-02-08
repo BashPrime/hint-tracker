@@ -18,6 +18,13 @@ export function runIpcHandlers() {
     getMainWindow()?.webContents.send(IPC_IDS.presetsResponse, presets ?? []);
   });
 
+  ipcMain.handle('request-presets-new', () => {
+    const defaultPresets = getAllPresetsInDir() ?? [];
+    const userPresets = getAllPresetsInDir(USER_PRESETS_PATH) ?? [];
+
+    return [...defaultPresets, ...userPresets];
+  });
+
   ipcMain.handle('test', (_, val: string) => {
     return `sent back from main: ${val}`;
   });

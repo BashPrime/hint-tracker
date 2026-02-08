@@ -13,5 +13,6 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     ipcRenderer.on('toggle-appearance', (_, appearance: string) =>
       callback(appearance)
     ),
-  test: (val: string) => ipcRenderer.invoke('test', val)
+  test: (val: string) => ipcRenderer.invoke('test', val),
+  requestPresetsNew: () => ipcRenderer.invoke('request-presets-new'),
 });

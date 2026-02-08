@@ -1,6 +1,5 @@
 import { app, Menu, MenuItemConstructorOptions, nativeTheme } from 'electron';
 import { MENU_IDS } from './constants.js';
-import { ipcToggleAppearance } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
@@ -11,7 +10,7 @@ function toggleAlwaysOnTop(checked: boolean) {
 
 function toggleAppearanceMode(appearance: 'system' | 'light' | 'dark') {
   nativeTheme.themeSource = appearance;
-  ipcToggleAppearance(appearance);
+  // ipcToggleAppearance(appearance);
 }
 
 const template: MenuItemConstructorOptions[] = [

@@ -1,12 +1,6 @@
-import { appearanceState, userAppearanceState } from '@/states/App.states';
-import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 
 export function useThemeChanger() {
-  // !STATE
-  const appearance = useAtomValue(appearanceState);
-  const userAppearance = useAtomValue(userAppearanceState);
-
   // !FUNCTION
   function handleThemeChange(theme: 'light' | 'dark') {
     if (theme === 'dark') {
@@ -18,22 +12,18 @@ export function useThemeChanger() {
 
   // !HOOK
   useEffect(() => {
-    // !WHY Need to run the function at least once to ensure the proper theme is applied at launch
-    handleThemeChange(appearance);
-
     const handler = (e: MediaQueryListEvent) => {
-      if (userAppearance === 'system') {
-        handleThemeChange(e.matches ? 'dark' : 'light');
-      }
+      handleThemeChange(e.matches ? 'dark' : 'light');
     };
-    const watchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+    const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+    handleThemeChange(matchMedia.matches ? 'dark' : 'light');
 
     // Watch for system theme changes
-    watchMedia.addEventListener('change', handler);
+    matchMedia.addEventListener('change', handler);
 
     return () => {
       // Cleanup
-      watchMedia.removeEventListener('change', handler);
+      matchMedia.removeEventListener('change', handler);
     };
-  }, [appearance]);
+  }, []);
 }

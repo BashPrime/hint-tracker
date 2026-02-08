@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { activeHintLayoutState } from '@/states/App.states';
+import { activeLayoutState } from '@/states/App.states';
 import {
   Hint,
   HintCollection,
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export function HintPanel({ panel }: Props) {
-  const layout = useAtomValue(activeHintLayoutState)?.layout;
+  const layout = useAtomValue(activeLayoutState)?.layout;
 
   function isArray(content: any): content is Array<Hint | HintCollection> {
     return Array.isArray(content);

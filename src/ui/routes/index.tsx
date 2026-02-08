@@ -1,3 +1,4 @@
+import { LoadingSpinner } from '@/components/loading-spinner';
 import {
   Item,
   ItemActions,
@@ -8,11 +9,29 @@ import {
 } from '@/components/ui/item';
 import { presetsState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useAtomValue } from 'jotai';
+import { getDefaultStore, useAtomValue } from 'jotai';
 import { ChevronRightIcon } from 'lucide-react';
+import { PresetSchema } from 'src/shared/preset.types';
+import z from 'zod';
 
 export const Route = createFileRoute('/')({
   component: Index,
+  pendingComponent: LoadingSpinner,
+  loader: async () => {
+    const data = await window.electronApi.requestPresetsNew();
+    try {
+      const parsed = z.array(PresetSchema).parse(data);
+      getDefaultStore().set(presetsState, parsed);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        console.error(
+          'Index loader(): Error parsing presets data',
+          data,
+          err.issues
+        );
+      }
+    }
+  },
 });
 
 function Index() {

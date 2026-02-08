@@ -1,14 +1,12 @@
-import { useIpcHandlers } from '@/hooks/useIpcHandlers';
-import { useLayoutBuilder } from '@/hooks/useLayoutBuilder';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import './root.css';
 
 function RootLayout() {
   // !HOOKS
-  useIpcHandlers();
+  // useIpcHandlers();
   useThemeChanger();
-  useLayoutBuilder();
 
   return (
     <>
