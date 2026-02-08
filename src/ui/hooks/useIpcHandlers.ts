@@ -13,7 +13,12 @@ export function useIpcHandlers() {
   // !HOOKS
   // On load, run these API functions
   useEffect(() => {
+    const testVal = async () => {
+      const data = await window.electronApi.test('testVal');
+      console.log(data);
+    };
     window.electronApi.requestPresets();
+    testVal();
   }, []);
 
   // Handle communications from main process

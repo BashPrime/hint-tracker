@@ -17,4 +17,8 @@ export function runIpcHandlers() {
 
     getMainWindow()?.webContents.send(IPC_IDS.presetsResponse, presets ?? []);
   });
+
+  ipcMain.handle('test', (_, val: string) => {
+    return `sent back from main: ${val}`;
+  });
 }
