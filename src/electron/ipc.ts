@@ -3,10 +3,6 @@ import { getAllPresetsInDir } from './config.js';
 import { IPC_IDS, USER_PRESETS_PATH } from './constants.js';
 import { getMainWindow } from './window.js';
 
-export function ipcToggleAppearance(appearance: 'system' | 'light' | 'dark') {
-  getMainWindow()?.webContents.send(IPC_IDS.toggleAppearance, appearance);
-}
-
 export function runIpcHandlers() {
   // Responses
   // Receive request for default presets and respond with the presets data
@@ -23,9 +19,5 @@ export function runIpcHandlers() {
     const userPresets = getAllPresetsInDir(USER_PRESETS_PATH) ?? [];
 
     return [...defaultPresets, ...userPresets];
-  });
-
-  ipcMain.handle('test', (_, val: string) => {
-    return `sent back from main: ${val}`;
   });
 }

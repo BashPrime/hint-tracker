@@ -1,21 +1,26 @@
-import { BrowserWindow, Menu } from 'electron';
+import { BrowserWindow, Menu, nativeTheme } from 'electron';
 import z from 'zod';
-import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
-import { writeWindowConfigFile } from './config.js';
-import { DEFAULT_WINDOW_SIZE } from './constants.js';
+import { ThemeType } from '../shared/base.types.js';
+import { ConfigSchema, ConfigType } from '../shared/config.types.js';
+import { writeConfigFile } from './config.js';
+import {
+  DEFAULT_WINDOW_BOUNDS,
+  DEFAULT_WINDOW_SIZE,
+  MENU_IDS,
+} from './constants.js';
 import { menu } from './menu.js';
 import { getPreloadPath } from './pathResolver.js';
 import { getErrorMsg, isDev } from './util.js';
 
 let mainWindow: BrowserWindow | null = null;
 
-export function createMainWindow(windowConfig: WindowConfig | null) {
+export function createMainWindow(config: ConfigType | null) {
   mainWindow = new BrowserWindow({
     title: 'BashPrime Hint Tracker',
-    width: windowConfig?.width ?? DEFAULT_WINDOW_SIZE.width,
-    height: windowConfig?.height ?? DEFAULT_WINDOW_SIZE.height,
-    x: windowConfig?.x ?? undefined,
-    y: windowConfig?.y ?? undefined,
+    width: config?.window.width ?? DEFAULT_WINDOW_SIZE.width,
+    height: config?.window.height ?? DEFAULT_WINDOW_SIZE.height,
+    x: config?.window.x ?? undefined,
+    y: config?.window.y ?? undefined,
     minWidth: 240,
     minHeight: 240,
     webPreferences: {
@@ -24,9 +29,12 @@ export function createMainWindow(windowConfig: WindowConfig | null) {
     },
   });
 
+  if (config) {
+    setInitialTheme(config.theme);
+  }
+
   Menu.setApplicationMenu(menu);
   mainWindowHandlers(mainWindow);
-
   return mainWindow;
 }
 
@@ -43,36 +51,31 @@ export function closeMainWindow() {
   mainWindow?.close();
 }
 
-function getWindowState() {
-  const state = mainWindow?.getBounds();
+function setInitialTheme(theme: ThemeType) {
+  nativeTheme.themeSource = theme;
+  const menuThemeRadioItem = menu.getMenuItemById(MENU_IDS.theme[theme]);
+  if (menuThemeRadioItem) {
+    menuThemeRadioItem.checked = true;
+  }
+}
 
+function handleSaveConfig() {
   try {
-    return WindowConfigSchema.parse(state);
+    const parsed = ConfigSchema.parse({
+      theme: nativeTheme.themeSource,
+      window: mainWindow?.getBounds() ?? DEFAULT_WINDOW_BOUNDS,
+    });
+
+    writeConfigFile(parsed);
   } catch (err) {
     if (err instanceof z.ZodError) {
-      console.error('getWindowState(): Error when parsing:', err.issues);
+      console.error('handleSaveConfig(): Error when parsing:', err.issues);
     } else console.error(getErrorMsg(err));
   }
 }
 
-function handleSaveWindowConfig() {
-  const windowState = getWindowState();
-
-  if (windowState) {
-    writeWindowConfigFile(windowState);
-  }
-}
-
 function mainWindowHandlers(window: BrowserWindow) {
-  // window.on('resized', () => {
-  //   handleSaveWindowConfig();
-  // });
-
-  // window.on('moved', () => {
-  //   handleSaveWindowConfig();
-  // });
-
-  window.on('close', (event) => {
-    handleSaveWindowConfig();
+  window.on('close', () => {
+    handleSaveConfig();
   });
 }

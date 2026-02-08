@@ -1,6 +1,6 @@
 import { app } from 'electron';
 import path from 'path';
-import { readWindowConfigFile } from './config.js';
+import { readConfigFile } from './config.js';
 import { runIpcHandlers } from './ipc.js';
 import { isDev } from './util.js';
 import { createMainWindow } from './window.js';
@@ -15,9 +15,8 @@ app.on('ready', () => {
       '\n\nThis software is free for personal and commercial use under the MIT License.',
     iconPath: './icon.png',
   });
-  const windowConfig = readWindowConfigFile();
-  // const config = readAppConfigFile();
-  const mainWindow = createMainWindow(windowConfig);
+  const config = readConfigFile();
+  const mainWindow = createMainWindow(config);
 
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173');

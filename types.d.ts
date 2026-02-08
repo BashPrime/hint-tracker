@@ -4,8 +4,6 @@ interface Window {
     requestPresets: () => void;
     // Main process handlers with callbacks
     presetsResponse: (callback: (presets: object[]) => void) => void;
-    toggleAppearance: (callback: (presets: string) => void) => void;
-    test: (val: string) => Promise<string>;
     requestPresetsNew: () => Promise<object[]>;
   };
 }

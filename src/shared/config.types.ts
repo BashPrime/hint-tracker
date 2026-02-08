@@ -1,11 +1,11 @@
 import { Rectangle } from 'electron';
 import z from 'zod';
 
-export const WindowConfigSchema = z.custom<Rectangle>();
-export type WindowConfig = z.infer<typeof WindowConfigSchema>;
-
-export const AppConfigSchema = z.object({
-  // toggles: TogglesSchema,
+export const ConfigSchema = z.object({
+  theme: z.enum(['system', 'light', 'dark']),
   window: z.custom<Rectangle>(),
 });
-export type AppConfig = z.infer<typeof AppConfigSchema>;
+export type ConfigType = z.infer<typeof ConfigSchema>;
+
+export const WindowConfigSchema = z.custom<Rectangle>();
+export type WindowConfig = z.infer<typeof WindowConfigSchema>;

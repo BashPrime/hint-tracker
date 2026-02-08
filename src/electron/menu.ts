@@ -1,4 +1,5 @@
 import { app, Menu, MenuItemConstructorOptions, nativeTheme } from 'electron';
+import { ThemeType } from '../shared/base.types.js';
 import { MENU_IDS } from './constants.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
@@ -8,9 +9,8 @@ function toggleAlwaysOnTop(checked: boolean) {
   window?.setAlwaysOnTop(checked);
 }
 
-function toggleAppearanceMode(appearance: 'system' | 'light' | 'dark') {
-  nativeTheme.themeSource = appearance;
-  // ipcToggleAppearance(appearance);
+function toggleTheme(theme: ThemeType) {
+  nativeTheme.themeSource = theme;
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -35,28 +35,28 @@ const template: MenuItemConstructorOptions[] = [
         click: (item) => toggleAlwaysOnTop(item.checked),
       },
       {
-        label: 'Appearance',
+        label: 'Theme',
         submenu: [
           {
-            id: MENU_IDS.appearance.system,
+            id: MENU_IDS.theme.system,
             label: 'System',
             type: 'radio',
             checked: true,
-            click: () => toggleAppearanceMode('system'),
+            click: () => toggleTheme('system'),
           },
           {
-            id: MENU_IDS.appearance.light,
+            id: MENU_IDS.theme.light,
             label: 'Light',
             type: 'radio',
             checked: false,
-            click: () => toggleAppearanceMode('light'),
+            click: () => toggleTheme('light'),
           },
           {
-            id: MENU_IDS.appearance.dark,
+            id: MENU_IDS.theme.dark,
             label: 'Dark',
             type: 'radio',
             checked: false,
-            click: () => toggleAppearanceMode('dark'),
+            click: () => toggleTheme('dark'),
           },
         ],
       },

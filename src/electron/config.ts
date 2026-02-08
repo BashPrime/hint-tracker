@@ -1,8 +1,14 @@
 import path from 'path';
 import { z } from 'zod';
-import { WindowConfig, WindowConfigSchema } from '../shared/config.types.js';
+import {
+  ConfigSchema,
+  ConfigType,
+  WindowConfig,
+  WindowConfigSchema,
+} from '../shared/config.types.js';
 import { PresetSchema } from '../shared/preset.types.js';
 import {
+  CONFIG_PATH,
   DEFAULT_PRESETS_PATH,
   PRESET_FILENAME_EXT,
   WINDOW_CONFIG_PATH,
@@ -24,6 +30,8 @@ export function readAndParseJsonFile<T extends z.ZodTypeAny>(
       if (err instanceof z.ZodError) {
         console.error(
           'readAndParseJsonFile(): Error trying to read json file:',
+          path,
+          schema.type,
           err.issues
         );
       } else console.error(getErrorMsg(err));
@@ -31,6 +39,18 @@ export function readAndParseJsonFile<T extends z.ZodTypeAny>(
   }
 
   return null;
+}
+
+export function readConfigFile(path: string = CONFIG_PATH) {
+  return readAndParseJsonFile(path, ConfigSchema);
+}
+
+export function writeConfigFile(
+  config: ConfigType,
+  path: string = CONFIG_PATH
+) {
+  const json = JSON.stringify(config, null, 2);
+  writeJsonFile(path, json);
 }
 
 export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {

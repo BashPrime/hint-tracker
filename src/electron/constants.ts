@@ -8,6 +8,7 @@ export const TRACKER_FILE_EXT = '.track';
 
 // Paths
 export const USER_DATA_DIR = app.getPath('userData');
+export const CONFIG_PATH = path.join(USER_DATA_DIR, 'config.json');
 export const WINDOW_CONFIG_PATH = path.join(USER_DATA_DIR, 'window.json');
 export const DEFAULT_PRESETS_PATH = path.join(
   app.getAppPath(),
@@ -21,13 +22,12 @@ export const USER_PRESETS_PATH = path.join(USER_DATA_DIR, 'presets');
 export const IPC_IDS = {
   requestPresets: 'request-presets',
   presetsResponse: 'presets-response',
-  toggleAppearance: 'toggle-appearance',
 };
 
 // Menu
 export const MENU_IDS = {
   alwaysOnTop: 'alwaysOnTop',
-  appearance: {
+  theme: {
     system: 'system',
     light: 'light',
     dark: 'dark',
@@ -38,4 +38,11 @@ export const MENU_IDS = {
 export const DEFAULT_WINDOW_SIZE = {
   width: 640,
   height: 480,
+};
+
+// Window state
+export const DEFAULT_WINDOW_BOUNDS = {
+  x: 0,
+  y: 0,
+  ...DEFAULT_WINDOW_SIZE,
 };

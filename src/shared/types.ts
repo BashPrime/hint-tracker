@@ -1,4 +1,3 @@
-import { Rectangle } from 'electron';
 import { z } from 'zod';
 
 export const GameSchema = z.enum(['prime', 'echoes', 'corruption']);
@@ -31,8 +30,3 @@ export const TogglesSchema = z.object({
 });
 export type Toggles = z.infer<typeof TogglesSchema>;
 
-export const AppConfigSchema = z.object({
-  // toggles: TogglesSchema,
-  window: z.custom<Rectangle>(),
-});
-export type AppConfig = z.infer<typeof AppConfigSchema>;

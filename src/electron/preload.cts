@@ -9,10 +9,5 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     ipcRenderer.on('presets-response', (_, presets: object[]) =>
       callback(presets)
     ),
-  toggleAppearance: (callback: (appearance: string) => void) =>
-    ipcRenderer.on('toggle-appearance', (_, appearance: string) =>
-      callback(appearance)
-    ),
-  test: (val: string) => ipcRenderer.invoke('test', val),
   requestPresetsNew: () => ipcRenderer.invoke('request-presets-new'),
 });
