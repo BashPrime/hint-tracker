@@ -44,7 +44,7 @@ function Index() {
 
   return (
     <div>
-      <p>Select a Layout:</p>
+      <p className="text-center p-2 text-lg">Select a Layout:</p>
       <ItemGroup>
         {presets?.map((preset) => (
           <Link to="/layouts/$layoutId" params={{ layoutId: preset.id }}>
