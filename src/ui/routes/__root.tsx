@@ -10,7 +10,7 @@ function RootLayout() {
 
   return (
     <>
-      <div className="flex gap-2 p-2">
+      <div className="flex gap-2 p-2 flex-0">
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{' '}
@@ -19,7 +19,9 @@ function RootLayout() {
         </Link>
       </div>
       <hr />
-      <Outlet />
+      <div className="flex-auto overflow-auto">
+        <Outlet />
+      </div>
       <TanStackRouterDevtools />
     </>
   );
