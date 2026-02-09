@@ -18,7 +18,7 @@ export function useIpcHandlers() {
       } catch (err) {
         if (err instanceof z.ZodError) {
           console.error(
-            'presetsResponse(): Error trying to set default presets:',
+            'presetsResponse(): Error trying to set presets:',
             presets,
             err.issues
           );
