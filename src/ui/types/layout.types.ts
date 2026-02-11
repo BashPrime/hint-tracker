@@ -19,30 +19,30 @@ export const HintSchema = z.object({
 });
 export type Hint = z.infer<typeof HintSchema>;
 
+// export const HintCollectionSchema = z.object({
+//   hints: z.array(HintSchema).nonempty(),
+//   color: z.string().optional(),
+//   numColumns: NumColumnsSchema.optional(),
+//   grow: z.boolean().default(false),
+// });
+// export type HintCollection = z.infer<typeof HintCollectionSchema>;
+
 export const HintCollectionSchema = z.object({
-  hints: z.array(HintSchema).nonempty(),
+  get hints() {
+    return z.array(z.union([HintSchema, z.array(HintSchema)]));
+  },
   color: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),
   grow: z.boolean().default(false),
+  colSpan: ColSpanSchema,
 });
 export type HintCollection = z.infer<typeof HintCollectionSchema>;
 
-export const MultiHintCollectionSchema = z.object({
-  collections: z.array(HintCollectionSchema).nonempty(),
-  color: z.string().optional(),
-  numColumns: NumColumnsSchema.optional(),
-  grow: z.boolean().default(false),
-});
-export type MultiHintCollection = z.infer<typeof MultiHintCollectionSchema>;
-
 export const HintPanelContentTypeSchema = z.union([
-  MultiHintCollectionSchema,
   HintCollectionSchema,
   HintSchema,
 ]);
-export type HintPanelContentType = z.infer<
-  typeof HintPanelContentTypeSchema
->;
+export type HintPanelContentType = z.infer<typeof HintPanelContentTypeSchema>;
 
 export const HintPanelSchema = z.object({
   content: z.union([
@@ -58,7 +58,6 @@ export type HintPanel = z.infer<typeof HintPanelSchema>;
 
 export const ColumnSchema = z.union([
   HintPanelSchema,
-  MultiHintCollectionSchema,
   HintCollectionSchema,
   HintSchema,
 ]);

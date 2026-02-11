@@ -16,8 +16,23 @@ export const PresetHintSchema = z.object({
 });
 export type PresetHint = z.infer<typeof PresetHintSchema>;
 
+export const PresetHintCollectionHintTypeSchema = z.union([
+  z.string(),
+  PresetHintSchema,
+]);
+export type PresetHintCollectionHintType = z.infer<
+  typeof PresetHintCollectionHintTypeSchema
+>;
+
 export const PresetHintCollectionSchema = z.object({
-  hints: z.array(z.union([z.string(), PresetHintSchema])).nonempty(),
+  hints: z
+    .array(
+      z.union([
+        PresetHintCollectionHintTypeSchema,
+        z.array(PresetHintCollectionHintTypeSchema),
+      ])
+    )
+    .nonempty(),
   type: HintTypeSchema,
   color: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),
@@ -26,30 +41,15 @@ export const PresetHintCollectionSchema = z.object({
 });
 export type PresetHintCollection = z.infer<typeof PresetHintCollectionSchema>;
 
-export const PresetMultiHintCollectionSchema = z.object({
-  collections: z.array(PresetHintCollectionSchema).nonempty(),
-  color: z.string().optional(),
-  numColumns: NumColumnsSchema.optional(),
-  grow: z.boolean().default(false),
-});
-export type PresetMultiHintCollection = z.infer<
-  typeof PresetMultiHintCollectionSchema
->;
+export const PresetHintPanelContentTypeSchema = z.union([
+  PresetHintCollectionSchema,
+  PresetHintSchema,
+]);
 
 export const PresetHintPanelSchema = z.object({
   content: z.union([
-    PresetMultiHintCollectionSchema,
-    PresetHintCollectionSchema,
-    PresetHintSchema,
-    z
-      .array(
-        z.union([
-          PresetMultiHintCollectionSchema,
-          PresetHintCollectionSchema,
-          PresetHintSchema,
-        ])
-      )
-      .nonempty(),
+    PresetHintPanelContentTypeSchema,
+    z.array(z.union([PresetHintPanelContentTypeSchema])).nonempty(),
   ]),
   header: z.string().optional(),
   lineColor: z.string().optional(),
@@ -60,7 +60,6 @@ export type PresetHintPanel = z.infer<typeof PresetHintPanelSchema>;
 
 export const PresetColumnSchema = z.union([
   PresetHintPanelSchema,
-  PresetMultiHintCollectionSchema,
   PresetHintCollectionSchema,
   PresetHintSchema,
 ]);

@@ -32,48 +32,46 @@ export function Hint({ hint, className }: Props) {
       onMouseDown={handleRightClick}
       data-name="hint"
     >
-      <div data-name="hint-direct-container">
-        <div className={cn('flex flex-row justify-between')}>
-          <p
-            style={{ color: !checked ? hint.color : '' }}
-            className={cn(
-              layout?.numColumns && layout.numColumns > 1 && 'sm:truncate',
-              hint.color && !checked && 'brightness-75 dark:brightness-100',
-              checked && 'text-green-800 dark:text-green-400'
-            )}
-          >
-            {hint.name}
-          </p>
-          <Check
-            className={cn(
-              'text-green-800 dark:text-green-300',
-              'mx-1 my-0.5 h-4 w-4',
-              !checked && 'opacity-0'
-            )}
-          />
-        </div>
-
-        {hint.item && (
-          <AtomCombobox
-            atom={hint.item}
-            placeholder={'Item'}
-            items={['Dark Beam', 'Light Beam', 'Annihilator Beam']}
-          />
-        )}
-        {hint.location && (
-          <AtomCombobox
-            atom={hint.location}
-            placeholder={'Location'}
-            items={[
-              'Agon Temple',
-              'Torvus Temple',
-              'Sanctuary Temple',
-              'Sanctuary Energy Controller',
-              'Hall of Honored Dead',
-            ]}
-          />
-        )}
+      <div className={cn('flex flex-row justify-between')}>
+        <p
+          style={{ color: !checked ? hint.color : '' }}
+          className={cn(
+            layout?.numColumns && layout.numColumns > 1 && 'sm:truncate',
+            hint.color && !checked && 'brightness-75 dark:brightness-100',
+            checked && 'text-green-800 dark:text-green-400'
+          )}
+        >
+          {hint.name}
+        </p>
+        <Check
+          className={cn(
+            'text-green-800 dark:text-green-300',
+            'mx-1 my-0.5 h-4 w-4',
+            !checked && 'opacity-0'
+          )}
+        />
       </div>
+
+      {hint.item && (
+        <AtomCombobox
+          atom={hint.item}
+          placeholder={'Item'}
+          items={['Dark Beam', 'Light Beam', 'Annihilator Beam']}
+        />
+      )}
+      {hint.location && (
+        <AtomCombobox
+          atom={hint.location}
+          placeholder={'Location'}
+          items={[
+            'Agon Temple',
+            'Torvus Temple',
+            'Sanctuary Temple',
+            'Sanctuary Energy Controller',
+            'Hall of Honored Dead',
+          ]}
+        />
+      )}
     </div>
   );
 }

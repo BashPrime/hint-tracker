@@ -66,29 +66,22 @@
       {
         "header": "Agon Wastes",
         "lineColor": "oklch(76.9% 0.188 70.08)",
-        "numColumns": 2,
         "content": [
           {
             "color": "oklch(63.7% 0.237 25.331)",
+            "type": "location",
             "numColumns": 2,
-            "collections": [
+            "hints": [
               {
-                "color": "oklch(63.7% 0.237 25.331)",
+                "name": "Amorbis",
                 "type": "item",
-                "grow": true,
-                "hints": [
-                  "Amorbis"
-                ]
+                "color": "oklch(63.7% 0.237 25.331)"
               },
-              {
-                "color": "oklch(63.7% 0.237 25.331)",
-                "type": "location",
-                "hints": [
-                  "Key 1",
-                  "Key 2",
-                  "Key 3"
-                ]
-              }
+              [
+                "Key 1",
+                "Key 2",
+                "Key 3"
+              ]
             ]
           },
           {
@@ -120,19 +113,19 @@
         "content": [
           {
             "color": "oklch(63.7% 0.237 25.331)",
-            "type": "item",
-            "hints": [
-              "Chykka"
-            ]
-          },
-          {
-            "color": "oklch(63.7% 0.237 25.331)",
             "type": "location",
             "numColumns": 2,
             "hints": [
-              "Key 1",
-              "Key 2",
-              "Key 3"
+              {
+                "name": "Chykka",
+                "type": "item",
+                "color": "oklch(63.7% 0.237 25.331)"
+              },
+              [
+                "Key 1",
+                "Key 2",
+                "Key 3"
+              ]
             ]
           },
           {
@@ -165,19 +158,19 @@
         "content": [
           {
             "color": "oklch(63.7% 0.237 25.331)",
-            "type": "item",
-            "hints": [
-              "Quadraxis"
-            ]
-          },
-          {
-            "color": "oklch(63.7% 0.237 25.331)",
             "type": "location",
             "numColumns": 2,
             "hints": [
-              "Key 1",
-              "Key 2",
-              "Key 3"
+              {
+                "name": "Quadraxis",
+                "type": "item",
+                "color": "oklch(63.7% 0.237 25.331)"
+              },
+              [
+                "Key 1",
+                "Key 2",
+                "Key 3"
+              ]
             ]
           },
           {

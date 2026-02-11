@@ -1,12 +1,10 @@
 import {
   HintCollectionSchema,
   HintPanelContentType,
-  HintSchema,
-  MultiHintCollectionSchema
+  HintSchema
 } from '@/types/layout.types';
 import { Hint } from '.';
 import { HintCollection } from './collection';
-import { MultiHintCollection } from './multi-collection';
 
 type Props = {
   content: HintPanelContentType;
@@ -16,7 +14,6 @@ type Props = {
 export function HintPanelContent({ content, className }: Props) {
   const parsedHint = HintSchema.safeParse(content);
   const parsedCollection = HintCollectionSchema.safeParse(content);
-  const parsedMultiCollection = MultiHintCollectionSchema.safeParse(content);
   return (
     <>
       {parsedHint.success && (
@@ -25,12 +22,6 @@ export function HintPanelContent({ content, className }: Props) {
       {parsedCollection.success && (
         <HintCollection
           collection={parsedCollection.data}
-          className={className}
-        />
-      )}
-      {parsedMultiCollection.success && (
-        <MultiHintCollection
-          data={parsedMultiCollection.data}
           className={className}
         />
       )}

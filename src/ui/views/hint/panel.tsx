@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import {
   HintPanelContentTypeSchema,
-  HintPanel as HintPanelType
+  HintPanel as HintPanelType,
 } from '@/types/layout.types';
 import z from 'zod';
 import { HintPanelContent } from './panel-content';

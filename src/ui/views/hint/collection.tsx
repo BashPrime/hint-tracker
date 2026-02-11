@@ -22,19 +22,40 @@ export function HintCollection({ collection, className }: Props) {
       )}
       data-name="hint-collection"
     >
-      {collection.hints.map((hint, idx) => (
-        <Hint
-          key={`hint-${idx}`}
-          hint={hint}
-          className={cn(
-            'border-b border-neutral-600 dark:border-neutral-950',
-            collection.grow && 'grow',
-            collection.numColumns && collection.numColumns > 1
-              ? 'border-r'
-              : null
-          )}
-        />
-      ))}
+      {collection.hints.map((hintsElem, idx) => {
+        if (Array.isArray(hintsElem)) {
+          return (
+            <div className="flex flex-col" data-name="nested-hints-container">
+              {hintsElem.map((hint) => (
+                <Hint
+                  key={`hint-${idx}`}
+                  hint={hint}
+                  className={cn(
+                    'border-b border-neutral-600 dark:border-neutral-950',
+                    collection.grow && 'grow',
+                    collection.numColumns && collection.numColumns > 1
+                      ? 'border-r'
+                      : null
+                  )}
+                />
+              ))}
+            </div>
+          );
+        }
+        return (
+          <Hint
+            key={`hint-${idx}`}
+            hint={hintsElem}
+            className={cn(
+              'border-b border-neutral-600 dark:border-neutral-950',
+              collection.grow && 'grow',
+              collection.numColumns && collection.numColumns > 1
+                ? 'border-r'
+                : null
+            )}
+          />
+        );
+      })}
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import { atom } from 'jotai';
-import z from 'zod';
 import {
   PresetGridSchema,
+  PresetHintCollectionHintType,
   PresetHintCollectionSchema,
   PresetHintPanelSchema,
   PresetHintSchema,
-  PresetMultiHintCollectionSchema,
   PresetSchema,
 } from '../../shared/preset.types';
 import {
@@ -14,7 +13,6 @@ import {
   HintPanelSchema,
   HintSchema,
   LayoutSchema,
-  MultiHintCollectionSchema,
 } from './layout.types';
 
 export const HintTransformSchema = PresetHintSchema.transform((hint) => {
@@ -28,14 +26,15 @@ export const HintTransformSchema = PresetHintSchema.transform((hint) => {
 
 export const HintCollectionTransformSchema =
   PresetHintCollectionSchema.transform((collection) => {
-    const parsedHints = collection.hints.map((hint) => {
+    function parseHint(hint: PresetHintCollectionHintType) {
       let hintToParse;
       switch (typeof hint) {
         // If the hint is a string literal, apply the hint type from the container.
         case 'string':
           hintToParse = {
-            ...collection,
             name: hint,
+            type: collection.type,
+            color: collection.color,
           };
           break;
         // If the hint is an object, its properties override the container's.
@@ -44,6 +43,15 @@ export const HintCollectionTransformSchema =
           break;
       }
       return HintTransformSchema.parse(hintToParse);
+    }
+
+    const parsedHints = collection.hints.map((hintsElem) => {
+      // collection can have nested arrays!
+      if (Array.isArray(hintsElem)) {
+        return hintsElem.map((hint) => parseHint(hint));
+      }
+
+      return parseHint(hintsElem);
     });
 
     return HintCollectionSchema.parse({
@@ -52,21 +60,9 @@ export const HintCollectionTransformSchema =
     });
   });
 
-export const MultiHintCollectionTransformSchema =
-  PresetMultiHintCollectionSchema.transform((multi) => {
-    return MultiHintCollectionSchema.parse({
-      ...multi,
-      collections: z
-        .array(HintCollectionTransformSchema)
-        .parse(multi.collections),
-    });
-  });
-
 const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
   function parseContent(content: object) {
     const parsedCollection = HintCollectionTransformSchema.safeParse(content);
-    const parsedMultiCollection =
-      MultiHintCollectionTransformSchema.safeParse(content);
     const parsedHint = HintTransformSchema.safeParse(content);
 
     if (parsedHint.success) {
@@ -75,10 +71,6 @@ const HintPanelTransformSchema = PresetHintPanelSchema.transform((panel) => {
 
     if (parsedCollection.success) {
       return parsedCollection.data;
-    }
-
-    if (parsedMultiCollection.success) {
-      return parsedMultiCollection.data;
     }
   }
   return HintPanelSchema.parse({
@@ -103,8 +95,6 @@ const GridTransformSchema = PresetGridSchema.transform((grid) => {
           const parsedHint = HintTransformSchema.safeParse(column);
           const parsedCollection =
             HintCollectionTransformSchema.safeParse(column);
-          const parsedMultiCollection =
-            MultiHintCollectionTransformSchema.safeParse(column);
           const parsedPanel = HintPanelTransformSchema.safeParse(column);
 
           if (parsedHint.success) {
@@ -113,10 +103,6 @@ const GridTransformSchema = PresetGridSchema.transform((grid) => {
 
           if (parsedCollection.success) {
             return parsedCollection.data;
-          }
-
-          if (parsedMultiCollection.success) {
-            return parsedMultiCollection.data;
           }
 
           if (parsedPanel.success) {
