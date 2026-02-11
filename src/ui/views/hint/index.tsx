@@ -36,7 +36,7 @@ export function Hint({ hint, className }: Props) {
         <p
           style={{ color: !checked ? hint.color : '' }}
           className={cn(
-            layout?.numColumns && layout.numColumns > 1 && 'sm:truncate',
+            // layout?.numColumns && layout.numColumns > 1 && 'sm:truncate',
             hint.color && !checked && 'brightness-75 dark:brightness-100',
             checked && 'text-green-800 dark:text-green-400'
           )}
