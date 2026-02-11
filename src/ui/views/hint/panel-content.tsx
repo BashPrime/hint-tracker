@@ -1,16 +1,15 @@
 import {
   HintCollectionSchema,
-  HintCollection as HintCollectionType,
+  HintPanelContentType,
   HintSchema,
-  Hint as HintType,
-  MultiHintCollectionSchema,
+  MultiHintCollectionSchema
 } from '@/types/layout.types';
 import { Hint } from '.';
 import { HintCollection } from './collection';
 import { MultiHintCollection } from './multi-collection';
 
 type Props = {
-  content: HintType | HintCollectionType;
+  content: HintPanelContentType;
   className?: string;
 };
 

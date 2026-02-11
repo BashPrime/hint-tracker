@@ -35,16 +35,19 @@ export const MultiHintCollectionSchema = z.object({
 });
 export type MultiHintCollection = z.infer<typeof MultiHintCollectionSchema>;
 
+export const HintPanelContentTypeSchema = z.union([
+  MultiHintCollectionSchema,
+  HintCollectionSchema,
+  HintSchema,
+]);
+export type HintPanelContentType = z.infer<
+  typeof HintPanelContentTypeSchema
+>;
+
 export const HintPanelSchema = z.object({
   content: z.union([
-    MultiHintCollectionSchema,
-    HintCollectionSchema,
-    HintSchema,
-    z
-      .array(
-        z.union([MultiHintCollectionSchema, HintCollectionSchema, HintSchema])
-      )
-      .nonempty(),
+    HintPanelContentTypeSchema,
+    z.array(HintPanelContentTypeSchema).nonempty(),
   ]),
   header: z.string().optional(),
   lineColor: z.string().optional(),

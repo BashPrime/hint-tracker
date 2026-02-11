@@ -1,11 +1,9 @@
 import { cn } from '@/lib/utils';
-import { activeLayoutState } from '@/states/App.states';
 import {
-  Hint,
-  HintCollection,
-  HintPanel as HintPanelType,
+  HintPanelContentTypeSchema,
+  HintPanel as HintPanelType
 } from '@/types/layout.types';
-import { useAtomValue } from 'jotai';
+import z from 'zod';
 import { HintPanelContent } from './panel-content';
 
 type Props = {
@@ -13,11 +11,10 @@ type Props = {
 };
 
 export function HintPanel({ panel }: Props) {
-  const layout = useAtomValue(activeLayoutState)?.layout;
-
-  function isArray(content: any): content is Array<Hint | HintCollection> {
-    return Array.isArray(content);
-  }
+  const parsedContentArr = z
+    .array(HintPanelContentTypeSchema)
+    .safeParse(panel.content);
+  const parsedContentObj = HintPanelContentTypeSchema.safeParse(panel.content);
 
   return (
     <div
@@ -36,11 +33,13 @@ export function HintPanel({ panel }: Props) {
           {panel.header}
         </p>
       )}
-      {isArray(panel.content) &&
-        panel.content.map((contentItem) => (
+      {parsedContentArr.success &&
+        parsedContentArr.data.map((contentItem) => (
           <HintPanelContent content={contentItem} className="mb-1 last:m-0" />
         ))}
-      {!isArray(panel.content) && <HintPanelContent content={panel.content} />}
+      {parsedContentObj.success && (
+        <HintPanelContent content={parsedContentObj.data} />
+      )}
     </div>
   );
 }
