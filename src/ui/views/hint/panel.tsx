@@ -27,7 +27,13 @@ export function HintPanel({ panel }: Props) {
       data-name="hint-panel"
     >
       {panel.header && (
-        <p className="bg-neutral-400 px-2 py-1 text-lg font-bold uppercase dark:bg-neutral-900">
+        <p
+          className={cn(
+            'bg-neutral-400 dark:bg-neutral-900',
+            'px-2 py-1',
+            'text-lg font-bold uppercase select-none'
+          )}
+        >
           {panel.header}
         </p>
       )}
