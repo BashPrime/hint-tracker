@@ -18,7 +18,7 @@ export const Route = createFileRoute('/')({
   component: Index,
   pendingComponent: LoadingSpinner,
   loader: async () => {
-    const data = await window.electronApi.requestPresetsNew();
+    const data = await window.electronApi.requestPresets();
     try {
       const parsed = z.array(PresetSchema).parse(data);
       getDefaultStore().set(presetsState, parsed);
@@ -50,7 +50,7 @@ function Index() {
           <Link to="/layouts/$layoutId" params={{ layoutId: preset.id }}>
             <Item
               key={preset.id}
-              className="hover:cursor-pointer dark:hover:bg-gray-800 dark:hover:brightness-150"
+              className="hover:cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-800"
               variant="outline"
             >
               <ItemContent>

@@ -1,9 +1,5 @@
 interface Window {
   electronApi: {
-    // Requests from renderer process
-    requestPresets: () => void;
-    // Main process handlers with callbacks
-    presetsResponse: (callback: (presets: object[]) => void) => void;
-    requestPresetsNew: () => Promise<object[]>;
+    requestPresets: () => Promise<object[]>;
   };
 }

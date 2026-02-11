@@ -21,7 +21,6 @@ export const USER_PRESETS_PATH = path.join(USER_DATA_DIR, 'presets');
 // IPC
 export const IPC_IDS = {
   requestPresets: 'request-presets',
-  presetsResponse: 'presets-response',
 };
 
 // Menu
