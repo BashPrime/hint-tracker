@@ -15,6 +15,7 @@ export const GameDataSchema = z.object({
     })
   ),
 });
+export type GameData = z.infer<typeof GameDataSchema>;
 
 export const GameSchema = z.object({
   schemaVersion: z.number(),
@@ -22,3 +23,4 @@ export const GameSchema = z.object({
   name: z.string(),
   data: GameDataSchema,
 });
+export type Game = z.infer<typeof GameSchema>;

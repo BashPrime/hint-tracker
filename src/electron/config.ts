@@ -6,9 +6,11 @@ import {
   WindowConfig,
   WindowConfigSchema,
 } from '../shared/types/config.types.js';
+import { GameSchema } from '../shared/types/game.types.js';
 import { PresetSchema } from '../shared/types/preset.types.js';
 import {
   CONFIG_PATH,
+  DEFAULT_GAMES_PATH,
   DEFAULT_PRESETS_PATH,
   PRESET_FILENAME_EXT,
   WINDOW_CONFIG_PATH,
@@ -63,6 +65,26 @@ export function writeWindowConfigFile(
 ) {
   const json = JSON.stringify(config, null, 2);
   writeJsonFile(path, json);
+}
+
+export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
+  const files = readDir(dir);
+
+  if (!files) {
+    return null;
+  }
+
+  return files
+    .filter((file) => {
+      return path.extname(file).toLowerCase() === '.json';
+    })
+    .map((file) => {
+      return readAndParseJsonFile(
+        path.join(DEFAULT_PRESETS_PATH, file),
+        GameSchema
+      );
+    })
+    .filter((preset) => preset !== null);
 }
 
 export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
