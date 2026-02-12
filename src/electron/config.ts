@@ -1,11 +1,6 @@
 import path from 'path';
 import { z } from 'zod';
-import {
-  ConfigSchema,
-  ConfigType,
-  WindowConfig,
-  WindowConfigSchema,
-} from '../shared/types/config.types.js';
+import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
 import { GameSchema } from '../shared/types/game.types.js';
 import { PresetSchema } from '../shared/types/preset.types.js';
 import {
@@ -13,7 +8,6 @@ import {
   DEFAULT_GAMES_PATH,
   DEFAULT_PRESETS_PATH,
   PRESET_FILENAME_EXT,
-  WINDOW_CONFIG_PATH,
 } from './constants.js';
 import { readDir, readJsonFile, writeJsonFile } from './io.js';
 import { getErrorMsg } from './util.js';
@@ -55,18 +49,6 @@ export function writeConfigFile(
   writeJsonFile(path, json);
 }
 
-export function readWindowConfigFile(path: string = WINDOW_CONFIG_PATH) {
-  return readAndParseJsonFile(path, WindowConfigSchema);
-}
-
-export function writeWindowConfigFile(
-  config: WindowConfig,
-  path: string = WINDOW_CONFIG_PATH
-) {
-  const json = JSON.stringify(config, null, 2);
-  writeJsonFile(path, json);
-}
-
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
   const files = readDir(dir);
 
@@ -79,10 +61,7 @@ export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
       return path.extname(file).toLowerCase() === '.json';
     })
     .map((file) => {
-      return readAndParseJsonFile(
-        path.join(dir, file),
-        GameSchema
-      );
+      return readAndParseJsonFile(path.join(dir, file), GameSchema);
     })
     .filter((preset) => preset !== null);
 }
@@ -99,10 +78,7 @@ export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
       return path.extname(file).toLowerCase() === PRESET_FILENAME_EXT;
     })
     .map((file) => {
-      return readAndParseJsonFile(
-        path.join(dir, file),
-        PresetSchema
-      );
+      return readAndParseJsonFile(path.join(dir, file), PresetSchema);
     })
     .filter((preset) => preset !== null);
 }

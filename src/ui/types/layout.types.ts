@@ -74,6 +74,7 @@ export const LayoutSchema = z.object({
   id: z.uuidv4(),
   name: z.string(),
   description: EmptyStringSchema,
+  gameId: z.uuidv4(),
   layout: GridSchema,
 });
 export type Layout = z.infer<typeof LayoutSchema>;

@@ -76,6 +76,7 @@ export const PresetSchema = z.object({
   id: z.uuidv4(),
   name: z.string(),
   description: EmptyStringSchema,
+  gameId: z.uuidv4(),
   layout: PresetGridSchema,
 });
 export type Preset = z.infer<typeof PresetSchema>;
