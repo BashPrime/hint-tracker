@@ -30,26 +30,18 @@ function Index() {
             to="/layouts/$layoutId"
             params={{ layoutId: game.id }}
             key={game.id}
+            className={cn(
+              !game.cover &&
+                'flex h-full w-full items-center justify-center bg-neutral-900'
+            )}
           >
             {game.cover && (
-              <img
-                src={`data:image/webp;base64,${game.cover}`}
-                alt={game.name}
-              />
+              <img src={`data:image;base64,${game.cover}`} alt={game.name} />
             )}
             {!game.cover && (
-              <div
-                className={cn(
-                  'h-full w-full',
-                  'flex items-center text-center',
-                  'bg-neutral-900'
-                )}
-                data-name="cover-placeholder"
-              >
-                <p className="pb-6 text-xl font-bold text-neutral-50">
-                  {game.name}
-                </p>
-              </div>
+              <p className="text-center text-xl font-bold text-neutral-50">
+                {game.name}
+              </p>
             )}
           </Link>
         ))}
