@@ -27,16 +27,20 @@ function Index() {
       <div className="grid max-w-[400px] grid-cols-2 place-items-center gap-2 p-4 md:max-w-[600px] md:grid-cols-3">
         {games?.map((game) => (
           <Link
-            to="/layouts/$layoutId"
-            params={{ layoutId: game.id }}
+            to="/games/$gameId"
+            params={{ gameId: game.id }}
             key={game.id}
             className={cn(
+              'relative after:absolute after:inset-0 hover:after:bg-blue-400/50',
               !game.cover &&
                 'flex h-full w-full items-center justify-center bg-neutral-900'
             )}
           >
             {game.cover && (
-              <img src={`data:image;base64,${game.cover}`} alt={game.name} />
+              <img
+                src={`data:image/webp;base64,${game.cover}`}
+                alt={game.name}
+              />
             )}
             {!game.cover && (
               <p className="text-center text-xl font-bold text-neutral-50">
