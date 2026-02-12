@@ -1,9 +1,10 @@
 import { LoadingSpinner } from '@/components/loading-spinner';
+import { fetchPresets } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { activeLayoutState, presetsState } from '@/states/App.states';
 import { PresetToLayoutTransformSchema } from '@/types/transform.types';
 import { Column } from '@/views/layout/column';
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 import { useMediaQuery } from 'usehooks-ts';
 import z from 'zod';
@@ -11,11 +12,11 @@ import z from 'zod';
 export const Route = createFileRoute('/layouts/$layoutId')({
   component: Layout,
   pendingComponent: LoadingSpinner,
-  beforeLoad: () => {
+  beforeLoad: async () => {
     const presets = getDefaultStore().get(presetsState);
 
     if (!presets) {
-      throw redirect({ to: '/' });
+      await fetchPresets();
     }
   },
   loader: async ({ params }) => {
