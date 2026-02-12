@@ -17,11 +17,17 @@ export const GameDataSchema = z.object({
 });
 export type GameData = z.infer<typeof GameDataSchema>;
 
+export const GameCoverSchema = z.object({
+  data: z.base64(),
+  type: z.enum(['webp', 'png', 'jpeg']),
+});
+export type GameCover = z.infer<typeof GameCoverSchema>;
+
 export const GameSchema = z.object({
   schemaVersion: z.number(),
   id: z.uuidv4(),
   name: z.string(),
-  cover: z.base64().optional(),
+  cover: GameCoverSchema.optional(),
   data: GameDataSchema,
 });
 export type Game = z.infer<typeof GameSchema>;

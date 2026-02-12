@@ -17,7 +17,10 @@ export function runIpcHandlers() {
       if (coverMatch) {
         return {
           ...game,
-          cover: coverMatch.data,
+          cover: {
+            data: coverMatch.data,
+            type: coverMatch.type,
+          },
         };
       }
 

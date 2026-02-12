@@ -36,9 +36,27 @@ export function getAllCoversInDir(dir: string = DEFAULT_COVERS_PATH) {
   }
 
   return files.map((file) => {
+    const parsed = path.parse(file);
+    let type: 'webp' | 'png' | 'jpeg';
+
+    switch (parsed.ext) {
+      case '.webp':
+        type = 'webp';
+        break;
+      case '.png':
+        type = 'png';
+        break;
+      case 'jpg':
+      case 'jpeg':
+        type = 'jpeg';
+        break;
+      default:
+        type = 'png';
+    }
     return {
-      name: path.parse(file).name,
+      name: parsed.name,
       data: fs.readFileSync(path.join(dir, file)).toString('base64'),
+      type,
     };
   });
 }
