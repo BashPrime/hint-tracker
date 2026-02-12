@@ -10,7 +10,7 @@ export function GameCover({ name, image }: Props) {
   return (
     <div
       className={cn(
-        'h-[300px]',
+        'h-[300px] select-none',
         !image && 'flex w-[200px] items-center justify-center bg-neutral-900',
       )}
       data-name="game-cover"

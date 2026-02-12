@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import { activeGameState, gamesState, presetsState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
-import { ChevronRightIcon } from 'lucide-react';
+import { ChevronRightIcon, Undo2 } from 'lucide-react';
 
 export const Route = createFileRoute('/games/$gameId')({
   component: RouteComponent,
@@ -25,7 +25,7 @@ export const Route = createFileRoute('/games/$gameId')({
       await fetchGames();
     }
   },
-  loader: async ({ params }) => {
+  loader: ({ params }) => {
     const store = getDefaultStore();
     const games = store.get(gamesState);
 
@@ -34,7 +34,7 @@ export const Route = createFileRoute('/games/$gameId')({
       games?.find((game) => game.id === params.gameId) ?? null
     );
 
-    await fetchPresetsForGame(params.gameId);
+    fetchPresetsForGame(params.gameId);
   },
 });
 
@@ -48,36 +48,53 @@ function RouteComponent() {
 
   return (
     <div className="flex h-full flex-auto gap-2 p-2">
-      <div className="flex flex-none flex-col">
+      <div className="flex flex-none flex-col gap-1">
+        <Link
+          to="/"
+          className={cn(
+            'flex items-center gap-1',
+            'font-semibold',
+            'hover:text-blue-500 dark:hover:text-blue-400',
+            'mb-2'
+          )}
+        >
+          <Undo2 />
+          Back to Games
+        </Link>
         <GameCover name={game.name} image={game.cover} />
         {game.cover && (
           <p className="text-center text-lg font-semibold">{game.name}</p>
         )}
       </div>
-      <ItemGroup className="flex-auto overflow-auto">
-        {presets?.map((preset) => (
-          <Link to="/layouts/$layoutId" params={{ layoutId: preset.id }}>
-            <Item
-              key={preset.id}
-              className={cn(
-                'border border-neutral-400 dark:border-inherit',
-                'hover:cursor-pointer hover:bg-blue-300 dark:hover:bg-blue-800'
-              )}
-              variant="outline"
-            >
-              <ItemContent>
-                <ItemTitle className="text-lg font-bold">
-                  {preset.name}
-                </ItemTitle>
-                <ItemDescription>{preset.description}</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <ChevronRightIcon className="size-4" />
-              </ItemActions>
-            </Item>
-          </Link>
-        ))}
-      </ItemGroup>
+      <div className="flex flex-auto flex-col gap-2">
+        <p className="text-center text-2xl font-bold uppercase">
+          Select a Layout
+        </p>
+        <ItemGroup className="overflow-auto">
+          {presets?.map((preset) => (
+            <Link to="/layouts/$layoutId" params={{ layoutId: preset.id }}>
+              <Item
+                key={preset.id}
+                className={cn(
+                  'border border-neutral-400 dark:border-inherit',
+                  'hover:cursor-pointer hover:bg-blue-300 dark:hover:bg-blue-800'
+                )}
+                variant="outline"
+              >
+                <ItemContent>
+                  <ItemTitle className="text-lg font-bold">
+                    {preset.name}
+                  </ItemTitle>
+                  <ItemDescription>{preset.description}</ItemDescription>
+                </ItemContent>
+                <ItemActions>
+                  <ChevronRightIcon className="size-4" />
+                </ItemActions>
+              </Item>
+            </Link>
+          ))}
+        </ItemGroup>
+      </div>
     </div>
   );
 }
