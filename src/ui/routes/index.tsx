@@ -40,16 +40,6 @@ function Index() {
             >
               <GameCover name={game.name} image={game.cover} />
             </Link>
-            <Link
-              to="/games/$gameId"
-              params={{ gameId: game.id }}
-              key={game.id}
-              className={cn(
-                'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
-              )}
-            >
-              <GameCover name={game.name} image={game.cover} />
-            </Link>
           </>
         ))}
       </div>
