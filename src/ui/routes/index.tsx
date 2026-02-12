@@ -27,20 +27,18 @@ function Index() {
       <p className="p-2 text-center text-2xl font-bold uppercase">
         Select a Game
       </p>
-      <div className="grid auto-cols-auto grid-flow-col justify-center gap-2 p-2">
+      <div className="flex flex-wrap justify-center gap-4 p-2">
         {games?.map((game) => (
-          <>
-            <Link
-              to="/games/$gameId"
-              params={{ gameId: game.id }}
-              key={game.id}
-              className={cn(
-                'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
-              )}
-            >
-              <GameCover name={game.name} image={game.cover} />
-            </Link>
-          </>
+          <Link
+            to="/games/$gameId"
+            params={{ gameId: game.id }}
+            key={game.id}
+            className={cn(
+              'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
+            )}
+          >
+            <GameCover name={game.name} image={game.cover} />
+          </Link>
         ))}
       </div>
     </div>
