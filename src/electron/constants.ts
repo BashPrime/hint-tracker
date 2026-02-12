@@ -24,6 +24,7 @@ export const USER_PRESETS_PATH = path.join(USER_DATA_DIR, 'presets');
 export const IPC_IDS = {
   requestGames: 'request-games',
   requestPresets: 'request-presets',
+  requestPresetsForGame: 'request-presets-for-game',
 };
 
 // Menu

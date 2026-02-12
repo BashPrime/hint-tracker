@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "667e61e4-2376-4b83-b675-0e68394f269d",
-  "name": "Metroid Prime",
+  "name": "Default",
   "description": "The default layout for Metroid Prime.",
   "layout": {
     "numColumns": 2,

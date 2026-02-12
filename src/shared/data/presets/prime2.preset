@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "9c1240ee-cca0-4e8b-a429-87a6311b8182",
-  "name": "Metroid Prime 2: Echoes",
+  "name": "Default",
   "description": "The default layout for Metroid Prime 2: Echoes.",
   "gameId": "9e6dcb5f-83c1-4b52-a464-f9420155a5a5",
   "layout": {

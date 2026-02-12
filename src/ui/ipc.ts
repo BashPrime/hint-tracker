@@ -35,3 +35,19 @@ export async function fetchPresets() {
     }
   }
 }
+
+export async function fetchPresetsForGame(gameId: string) {
+  const data = await window.electronApi.requestPresetsForGame(gameId);
+  try {
+    const parsed = z.array(PresetSchema).parse(data);
+    getDefaultStore().set(presetsState, parsed);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error(
+        'fetchPresetsForGame(): Error parsing data',
+        data,
+        err.issues
+      );
+    }
+  }
+}

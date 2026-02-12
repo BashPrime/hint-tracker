@@ -32,4 +32,13 @@ export function runIpcHandlers() {
 
     return [...defaultPresets, ...userPresets];
   });
+  // Get all presets for game
+  ipcMain.handle(IPC_IDS.requestPresetsForGame, (_, gameId: string) => {
+    const defaultPresets = getAllPresetsInDir() ?? [];
+    const userPresets = getAllPresetsInDir(USER_PRESETS_PATH) ?? [];
+
+    const presets = [...defaultPresets, ...userPresets];
+
+    return presets.filter((preset) => preset.gameId === gameId);
+  });
 }

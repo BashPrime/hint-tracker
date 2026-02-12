@@ -7,5 +7,6 @@ export const presetsState = atom<Preset[] | null>(null);
 export const activePresetState = atom<Preset | null>(null);
 
 export const gamesState = atom<Game[] | null>(null);
+export const activeGameState = atom<Game | null>(null);
 
 export const activeLayoutState = atom<Layout | null>(null);
