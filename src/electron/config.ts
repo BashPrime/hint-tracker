@@ -5,8 +5,8 @@ import {
   ConfigType,
   WindowConfig,
   WindowConfigSchema,
-} from '../shared/config.types.js';
-import { PresetSchema } from '../shared/preset.types.js';
+} from '../shared/types/config.types.js';
+import { PresetSchema } from '../shared/types/preset.types.js';
 import {
   CONFIG_PATH,
   DEFAULT_PRESETS_PATH,

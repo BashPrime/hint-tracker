@@ -2,7 +2,7 @@ import { presetsState } from '@/states/App.states';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import z from 'zod';
-import { PresetSchema } from '../../shared/preset.types';
+import { PresetSchema } from '../../shared/types/preset.types';
 
 export function useIpcHandlers() {
   // !STATE

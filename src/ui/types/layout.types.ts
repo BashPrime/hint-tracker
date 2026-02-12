@@ -1,5 +1,5 @@
 import { PrimitiveAtom } from 'jotai';
-import { EmptyStringSchema } from 'src/shared/base.types';
+import { EmptyStringSchema } from 'src/shared/types/base.types';
 import z from 'zod';
 
 export const ColSpanSchema = z.number().min(1).optional();

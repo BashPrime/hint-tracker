@@ -1,5 +1,5 @@
 import { app, Menu, MenuItemConstructorOptions, nativeTheme } from 'electron';
-import { ThemeType } from '../shared/base.types.js';
+import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS } from './constants.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';

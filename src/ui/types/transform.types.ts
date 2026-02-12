@@ -6,7 +6,7 @@ import {
   PresetHintPanelSchema,
   PresetHintSchema,
   PresetSchema,
-} from '../../shared/preset.types';
+} from '../../shared/types/preset.types';
 import {
   GridSchema,
   HintCollectionSchema,

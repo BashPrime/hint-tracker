@@ -1,6 +1,6 @@
 import { Layout } from '@/types/layout.types';
 import { atom } from 'jotai';
-import { Preset } from 'src/shared/preset.types';
+import { Preset } from 'src/shared/types/preset.types';
 
 export const presetsState = atom<Preset[] | null>(null);
 export const activePresetState = atom<Preset | null>(null);

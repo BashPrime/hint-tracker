@@ -11,7 +11,7 @@ import { presetsState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 import { ChevronRightIcon } from 'lucide-react';
-import { PresetSchema } from 'src/shared/preset.types';
+import { PresetSchema } from 'src/shared/types/preset.types';
 import z from 'zod';
 
 export const Route = createFileRoute('/')({

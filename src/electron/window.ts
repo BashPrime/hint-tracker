@@ -1,7 +1,7 @@
 import { BrowserWindow, Menu, nativeTheme } from 'electron';
 import z from 'zod';
-import { ThemeType } from '../shared/base.types.js';
-import { ConfigSchema, ConfigType } from '../shared/config.types.js';
+import { ThemeType } from '../shared/types/base.types.js';
+import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
 import { writeConfigFile } from './config.js';
 import {
   DEFAULT_WINDOW_BOUNDS,
