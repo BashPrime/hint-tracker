@@ -7,55 +7,42 @@ import {
   ItemGroup,
   ItemTitle,
 } from '@/components/ui/item';
-import { presetsState } from '@/states/App.states';
+import { fetchGames } from '@/ipc';
+import { gamesState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { getDefaultStore, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { ChevronRightIcon } from 'lucide-react';
-import { PresetSchema } from 'src/shared/types/preset.types';
-import z from 'zod';
 
 export const Route = createFileRoute('/')({
   component: Index,
   pendingComponent: LoadingSpinner,
   loader: async () => {
-    const data = await window.electronApi.requestPresets();
-    try {
-      const parsed = z.array(PresetSchema).parse(data);
-      getDefaultStore().set(presetsState, parsed);
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        console.error(
-          'Index loader(): Error parsing presets data',
-          data,
-          err.issues
-        );
-      }
-    }
+    await fetchGames();
   },
 });
 
 function Index() {
   // !STATE
-  const presets = useAtomValue(presetsState);
+  const games = useAtomValue(gamesState);
 
-  if (!presets) {
+  if (!games) {
     return null;
   }
 
   return (
     <div>
-      <p className="text-center p-2 text-lg">Select a Layout:</p>
+      <p className="p-2 text-center text-lg">Select a Game:</p>
       <ItemGroup>
-        {presets?.map((preset) => (
-          <Link to="/layouts/$layoutId" params={{ layoutId: preset.id }}>
+        {games?.map((game) => (
+          <Link to="/layouts/$layoutId" params={{ layoutId: game.id }}>
             <Item
-              key={preset.id}
+              key={game.id}
               className="hover:cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-800"
               variant="outline"
             >
               <ItemContent>
-                <ItemTitle>{preset.name}</ItemTitle>
-                <ItemDescription>{preset.description}</ItemDescription>
+                <ItemTitle>{game.name}</ItemTitle>
+                <ItemDescription>{game.id}</ItemDescription>
               </ItemContent>
               <ItemActions>
                 <ChevronRightIcon className="size-4" />

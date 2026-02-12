@@ -80,7 +80,7 @@ export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
     })
     .map((file) => {
       return readAndParseJsonFile(
-        path.join(DEFAULT_PRESETS_PATH, file),
+        path.join(dir, file),
         GameSchema
       );
     })
@@ -100,7 +100,7 @@ export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
     })
     .map((file) => {
       return readAndParseJsonFile(
-        path.join(DEFAULT_PRESETS_PATH, file),
+        path.join(dir, file),
         PresetSchema
       );
     })

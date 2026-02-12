@@ -5,7 +5,8 @@ import { IPC_IDS, USER_PRESETS_PATH } from './constants.js';
 export function runIpcHandlers() {
   // Handle games request from renderer
   ipcMain.handle(IPC_IDS.requestGames, () => {
-    return getAllGamesInDir() ?? [];
+    const defaultGames = getAllGamesInDir() ?? [];
+    return defaultGames; 
   });
   // Handle presets request from renderer
   ipcMain.handle(IPC_IDS.requestPresets, () => {
