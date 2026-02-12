@@ -7,22 +7,16 @@ export const PRESET_FILENAME_EXT = '.preset';
 export const TRACKER_FILE_EXT = '.track';
 
 // Paths
+export const DEFAULT_DATA_DIR = path.join(
+  app.getAppPath(),
+  isDev() ? './src' : '..',
+  'shared',
+  'data'
+);
 export const USER_DATA_DIR = app.getPath('userData');
 export const CONFIG_PATH = path.join(USER_DATA_DIR, 'config.json');
-export const WINDOW_CONFIG_PATH = path.join(USER_DATA_DIR, 'window.json');
-export const DEFAULT_GAMES_PATH = path.join(
-  app.getAppPath(),
-  isDev() ? './src' : '..',
-  'shared',
-  'data',
-  'games'
-);
-export const DEFAULT_PRESETS_PATH = path.join(
-  app.getAppPath(),
-  isDev() ? './src' : '..',
-  'shared',
-  'default-presets'
-);
+export const DEFAULT_GAMES_PATH = path.join(DEFAULT_DATA_DIR, 'games');
+export const DEFAULT_PRESETS_PATH = path.join(DEFAULT_DATA_DIR, 'presets');
 export const USER_PRESETS_PATH = path.join(USER_DATA_DIR, 'presets');
 
 // IPC
