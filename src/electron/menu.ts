@@ -6,14 +6,14 @@ import {
   shell,
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
-import { MENU_IDS } from './constants.js';
+import { MENU_IDS, USER_DATA_DIR } from './constants.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
 async function openUserDataFolder() {
   try {
     // Check if the path is valid and then open it
-    await shell.openPath(app.getPath('userData'));
+    await shell.openPath(USER_DATA_DIR);
     return { success: true };
   } catch (error) {
     console.error(
