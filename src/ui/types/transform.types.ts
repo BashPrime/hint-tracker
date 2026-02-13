@@ -1,5 +1,10 @@
 import { atom } from 'jotai';
 import {
+  GameDataItem,
+  GameDataLocation,
+  GameDataSchema,
+} from 'src/shared/types/game.types';
+import {
   PresetGridSchema,
   PresetHintCollectionHintType,
   PresetHintCollectionSchema,
@@ -14,6 +19,39 @@ import {
   HintSchema,
   LayoutSchema,
 } from './layout.types';
+
+export const GameDataOptionsTransformSchema = GameDataSchema.transform(
+  (data) => {
+    function itemMap(item: GameDataItem) {
+      return item.name;
+    }
+
+    function locationMap(location: GameDataLocation) {
+      return location.name;
+    }
+    
+    return {
+      items: data.items.filter((item) => item.type !== 'feature').map(itemMap),
+      progression: data.items
+        .filter((item) => item.type === 'progression')
+        .map(itemMap),
+      useful: data.items.filter((item) => item.type === 'useful').map(itemMap),
+      filler: data.items.filter((item) => item.type === 'filler').map(itemMap),
+      itemFeatures: data.items
+        .filter((item) => item.type === 'feature')
+        .map(itemMap),
+      locations: data.locations
+        .filter((location) => location.type !== 'feature')
+        .map(locationMap),
+      regions: data.locations
+        .map((location) => location.region)
+        .filter((region, idx, self) => region && idx === self.indexOf(region)),
+      locationFeatures: data.locations
+        .filter((location) => location.type === 'feature')
+        .map(locationMap),
+    };
+  }
+);
 
 export const HintTransformSchema = PresetHintSchema.transform((hint) => {
   return HintSchema.parse({
@@ -33,6 +71,7 @@ export const HintCollectionTransformSchema =
         case 'string':
           hintToParse = {
             name: hint,
+            options: collection.options,
             type: collection.type,
             color: collection.color,
           };
