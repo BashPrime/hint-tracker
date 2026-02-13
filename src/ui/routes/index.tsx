@@ -44,7 +44,9 @@ function Index() {
               )}
             >
               <GameCover name={game.name} image={cover} className="h-72" />
-              <p className="text-center text-xl font-semibold">{game.name}</p>
+              <p className="max-w-48 text-center text-xl font-semibold">
+                {game.name}
+              </p>
             </Link>
           );
         })}

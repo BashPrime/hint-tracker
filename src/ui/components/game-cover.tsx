@@ -10,24 +10,29 @@ type Props = {
 
 export function GameCover({ name, image, className }: Props) {
   return (
-    <div
-      className={cn(
-        'select-none',
-        !image &&
-          `flex aspect-2/3 h-fit items-center justify-center bg-slate-800 dark:bg-slate-700 ${className}`
-      )}
-      data-name="game-cover"
-    >
+    <>
       {image && (
-        <img
-          src={`data:image/${image.type};base64,${image.data}`}
-          alt={name}
-          className={className}
-        />
+        <div className={cn(className)} data-name="game-cover">
+          <img
+            src={`data:image/${image.type};base64,${image.data}`}
+            alt={name}
+            className="h-full w-auto"
+          />
+        </div>
       )}
       {!image && (
-        <CircleQuestionMark className="h-auto w-3/5 text-neutral-50" />
+        <div
+          className={cn(
+            'flex items-center justify-center',
+            'aspect-2/3',
+            'bg-slate-800 dark:bg-slate-700',
+            className
+          )}
+          data-name="game-without-cover"
+        >
+          <CircleQuestionMark className="h-auto w-3/5 text-neutral-50" />
+        </div>
       )}
-    </div>
+    </>
   );
 }
