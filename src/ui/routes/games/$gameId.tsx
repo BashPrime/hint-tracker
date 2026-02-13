@@ -85,7 +85,11 @@ function GameLayouts() {
         </p>
         <ItemGroup className="overflow-auto">
           {presets?.map((preset) => (
-            <Link to="/layouts/$layoutId" params={{ layoutId: preset.id }}>
+            <Link
+              to="/layouts/$layoutId"
+              params={{ layoutId: preset.id }}
+              key={preset.id}
+            >
               <Item
                 key={preset.id}
                 className={cn(

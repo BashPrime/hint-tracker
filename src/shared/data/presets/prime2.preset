@@ -41,6 +41,9 @@
             "type": "item",
             "hints": [
               "U-Mos Reward"
+            ],
+            "options": [
+              "items"
             ]
           },
           {
@@ -51,6 +54,10 @@
               "Accursed Lake",
               "Defiled Shrine",
               "Ing Reliquary"
+            ],
+            "options": [
+              "items",
+              "itemFeatures"
             ]
           },
           {
@@ -63,6 +70,12 @@
               "Meeting Grounds",
               "Path of Eyes",
               "Transport to Agon Wastes"
+            ],
+            "options": [
+              "items",
+              "locations",
+              "itemFeatures",
+              "locationFeatures"
             ]
           }
         ]
@@ -79,13 +92,19 @@
               {
                 "name": "Amorbis",
                 "type": "item",
-                "color": "oklch(63.7% 0.237 25.331)"
+                "color": "oklch(63.7% 0.237 25.331)",
+                "options": [
+                  "items"
+                ]
               },
               [
                 "Key 1",
                 "Key 2",
                 "Key 3"
               ]
+            ],
+            "options": [
+              "locations"
             ]
           },
           {
@@ -95,6 +114,10 @@
             "hints": [
               "Battleground",
               "Dark Oasis"
+            ],
+            "options": [
+              "items",
+              "itemFeatures"
             ]
           },
           {
@@ -107,6 +130,12 @@
               "Mining Station A",
               "Mining Station B",
               "Portal Terminal"
+            ],
+            "options": [
+              "items",
+              "locations",
+              "itemFeatures",
+              "locationFeatures"
             ]
           }
         ]
@@ -123,13 +152,19 @@
               {
                 "name": "Chykka",
                 "type": "item",
-                "color": "oklch(63.7% 0.237 25.331)"
+                "color": "oklch(63.7% 0.237 25.331)",
+                "options": [
+                  "items"
+                ]
               },
               [
                 "Key 1",
                 "Key 2",
                 "Key 3"
               ]
+            ],
+            "options": [
+              "locations"
             ]
           },
           {
@@ -139,6 +174,10 @@
             "hints": [
               "Dungeon",
               "Poisoned Bog"
+            ],
+            "options": [
+              "items",
+              "itemFeatures"
             ]
           },
           {
@@ -152,6 +191,12 @@
               "Torvus Energy Controller",
               "Training Chamber",
               "Underground Tunnel"
+            ],
+            "options": [
+              "items",
+              "locations",
+              "itemFeatures",
+              "locationFeatures"
             ]
           }
         ]
@@ -168,13 +213,19 @@
               {
                 "name": "Quadraxis",
                 "type": "item",
-                "color": "oklch(63.7% 0.237 25.331)"
+                "color": "oklch(63.7% 0.237 25.331)",
+                "options": [
+                  "items"
+                ]
               },
               [
                 "Key 1",
                 "Key 2",
                 "Key 3"
               ]
+            ],
+            "options": [
+              "locations"
             ]
           },
           {
@@ -184,6 +235,10 @@
             "hints": [
               "Hive Dynamo Works",
               "Hive Entrance"
+            ],
+            "options": [
+              "items",
+              "itemFeatures"
             ]
           },
           {
@@ -197,6 +252,12 @@
               "Sanctuary Energy Controller",
               "Sanctuary Entrance",
               "Watch Station"
+            ],
+            "options": [
+              "items",
+              "locations",
+              "itemFeatures",
+              "locationFeatures"
             ]
           }
         ]
