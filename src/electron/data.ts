@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { CoverSchema } from '../shared/types/cover.types.js';
 import { GameSchema } from '../shared/types/game.types.js';
 import { PresetSchema } from '../shared/types/preset.types.js';
 import { readAndParseJsonFile } from './config.js';
@@ -8,44 +9,11 @@ import {
   DEFAULT_GAMES_PATH,
   DEFAULT_PRESETS_PATH,
   PRESET_FILENAME_EXT,
+  USER_COVERS_PATH,
   USER_GAMES_PATH,
 } from './constants.js';
 import { readDir } from './io.js';
-
-export function getAllGames() {
-  const defaultGames = getAllGamesInDir(DEFAULT_GAMES_PATH);
-  const userGames = getAllGamesInDir(USER_GAMES_PATH) ?? [];
-
-  if (!defaultGames) {
-    return [];
-  }
-
-  return [
-    ...defaultGames.map((game) => {
-      const match = userGames.find((uGame) => uGame.id === game.id);
-
-      return {
-        ...game,
-        // !WHY we always want to return the default layouts along with the user layouts
-        layouts: match
-          ? [
-              ...game.layouts,
-              ...match.layouts.filter(
-                (layout) => !game.layouts.includes(layout)
-              ),
-            ]
-          : game.layouts,
-        // !WHY the user's cover image and data override the defaults however
-        coverImg: match ? match.coverImg : game.coverImg,
-        data: match ? match.data : game.data,
-      };
-    }),
-    // !WHY we want to filter out the default games when appending the user games
-    ...userGames.filter(
-      (game) => !defaultGames.find((dGame) => dGame.id === game.id)
-    ),
-  ];
-}
+import { CoverFileTypeTransformSchema } from './types/transform.types.js';
 
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
   const files = readDir(dir);
@@ -64,6 +32,36 @@ export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
     .filter((preset) => preset !== null);
 }
 
+export function getAllGames() {
+  const defaultGames = getAllGamesInDir(DEFAULT_GAMES_PATH);
+  const userGames = getAllGamesInDir(USER_GAMES_PATH) ?? [];
+
+  if (!defaultGames) {
+    return [];
+  }
+
+  return [
+    ...defaultGames.map((game) => {
+      const match = userGames.find((uGame) => uGame.id === game.id);
+
+      return {
+        ...game,
+        // !WHY the user's cover image and data override the defaults
+        coverImg: match ? match.coverImg : game.coverImg,
+        data: match ? match.data : game.data,
+      };
+    }),
+    // !WHY we want to filter out the default games when appending the user games
+    ...userGames.filter(
+      (game) => !defaultGames.find((dGame) => dGame.id === game.id)
+    ),
+  ];
+}
+
+export function getGame(id: string) {
+  return getAllGames().find((game) => game.id === id);
+}
+
 export function getAllCoversInDir(dir: string = DEFAULT_COVERS_PATH) {
   const files = readDir(dir);
 
@@ -72,29 +70,24 @@ export function getAllCoversInDir(dir: string = DEFAULT_COVERS_PATH) {
   }
 
   return files.map((file) => {
-    const parsed = path.parse(file);
-    let type: 'webp' | 'png' | 'jpeg';
-
-    switch (parsed.ext) {
-      case '.webp':
-        type = 'webp';
-        break;
-      case '.png':
-        type = 'png';
-        break;
-      case 'jpg':
-      case 'jpeg':
-        type = 'jpeg';
-        break;
-      default:
-        type = 'png';
-    }
-    return {
-      name: parsed.name,
+    return CoverSchema.parse({
+      name: file,
       data: fs.readFileSync(path.join(dir, file)).toString('base64'),
-      type,
-    };
+      type: CoverFileTypeTransformSchema.parse(file),
+    });
   });
+}
+
+export function getAllCovers() {
+  const defaultCovers = getAllCoversInDir(DEFAULT_COVERS_PATH) ?? [];
+  const userCovers = getAllCoversInDir(USER_COVERS_PATH) ?? [];
+  const userCoversNames = userCovers.map((cover) => cover.name);
+
+  return [
+    // !WHY if two covers have the same name, the user cover takes precedence
+    ...defaultCovers?.filter((cover) => !userCoversNames.includes(cover.name)),
+    ...userCovers,
+  ];
 }
 
 export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {

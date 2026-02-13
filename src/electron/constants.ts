@@ -25,6 +25,7 @@ export const USER_COVERS_PATH = path.join(USER_DATA_DIR, 'covers');
 // IPC
 export const IPC_IDS = {
   requestGames: 'request-games',
+  requestCovers: 'request-covers',
   requestPresets: 'request-presets',
   requestPresetsForGame: 'request-presets-for-game',
 };

@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import { GameCover as GameCoverType } from '../../shared/types/game.types';
+import { Cover } from 'src/shared/types/cover.types';
 
 type Props = {
   name: string;
-  image?: GameCoverType;
+  image?: Cover;
 };
 
 export function GameCover({ name, image }: Props) {
@@ -11,7 +11,7 @@ export function GameCover({ name, image }: Props) {
     <div
       className={cn(
         'h-[300px] select-none',
-        !image && 'flex w-[200px] items-center justify-center bg-neutral-900',
+        !image && 'flex w-[200px] items-center justify-center bg-neutral-900'
       )}
       data-name="game-cover"
     >

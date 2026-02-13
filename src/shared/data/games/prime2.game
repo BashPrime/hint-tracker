@@ -2,6 +2,8 @@
   "schemaVersion": 1,
   "id": "9e6dcb5f-83c1-4b52-a464-f9420155a5a5",
   "name": "Metroid Prime 2: Echoes",
+  "coverImg": "9e6dcb5f-83c1-4b52-a464-f9420155a5a5.webp",
+  "layouts": ["9c1240ee-cca0-4e8b-a429-87a6311b8182"],
   "data": {
     "items": [
       {

@@ -1,8 +1,8 @@
 import { GameCover } from '@/components/game-cover';
 import { LoadingSpinner } from '@/components/loading-spinner';
-import { fetchGames } from '@/ipc';
+import { fetchCovers, fetchGames } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { gamesState } from '@/states/App.states';
+import { coversState, gamesState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useAtomValue } from 'jotai';
 
@@ -11,12 +11,14 @@ export const Route = createFileRoute('/')({
   pendingComponent: LoadingSpinner,
   loader: async () => {
     await fetchGames();
+    await fetchCovers();
   },
 });
 
 function Index() {
   // !STATE
   const games = useAtomValue(gamesState);
+  const covers = useAtomValue(coversState);
 
   if (!games) {
     return null;
@@ -28,18 +30,21 @@ function Index() {
         Select a Game
       </p>
       <div className="flex flex-wrap justify-center gap-4 p-2">
-        {games?.map((game) => (
-          <Link
-            to="/games/$gameId"
-            params={{ gameId: game.id }}
-            key={game.id}
-            className={cn(
-              'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
-            )}
-          >
-            <GameCover name={game.name} image={game.cover} />
-          </Link>
-        ))}
+        {games?.map((game) => {
+          const cover = covers?.find((cover) => cover.name === game.coverImg);
+          return (
+            <Link
+              to="/games/$gameId"
+              params={{ gameId: game.id }}
+              key={game.id}
+              className={cn(
+                'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
+              )}
+            >
+              <GameCover name={game.name} image={cover} />
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

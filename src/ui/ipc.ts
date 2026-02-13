@@ -1,8 +1,9 @@
 import { getDefaultStore } from 'jotai';
+import { CoverSchema } from 'src/shared/types/cover.types';
 import { GameSchema } from 'src/shared/types/game.types';
 import { PresetSchema } from 'src/shared/types/preset.types';
 import z from 'zod';
-import { gamesState, presetsState } from './states/App.states';
+import { coversState, gamesState, presetsState } from './states/App.states';
 
 export async function fetchGames() {
   const data = await window.electronApi.requestGames();
@@ -11,11 +12,19 @@ export async function fetchGames() {
     getDefaultStore().set(gamesState, parsed);
   } catch (err) {
     if (err instanceof z.ZodError) {
-      console.error(
-        'fetchGames(): Error parsing data',
-        data,
-        err.issues
-      );
+      console.error('fetchGames(): Error parsing data', data, err.issues);
+    }
+  }
+}
+
+export async function fetchCovers() {
+  const data = await window.electronApi.requestCovers();
+  try {
+    const parsed = z.array(CoverSchema).parse(data);
+    getDefaultStore().set(coversState, parsed);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error('fetchCovers(): Error parsing data', data, err.issues);
     }
   }
 }
@@ -27,11 +36,7 @@ export async function fetchPresets() {
     getDefaultStore().set(presetsState, parsed);
   } catch (err) {
     if (err instanceof z.ZodError) {
-      console.error(
-        'fetchPresets(): Error parsing data',
-        data,
-        err.issues
-      );
+      console.error('fetchPresets(): Error parsing data', data, err.issues);
     }
   }
 }

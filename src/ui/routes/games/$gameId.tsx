@@ -9,9 +9,14 @@ import {
   ItemGroup,
   ItemTitle,
 } from '@/components/ui/item';
-import { fetchGames, fetchPresetsForGame } from '@/ipc';
+import { fetchCovers, fetchGames, fetchPresetsForGame } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { activeGameState, gamesState, presetsState } from '@/states/App.states';
+import {
+  activeGameState,
+  coversState,
+  gamesState,
+  presetsState,
+} from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 import { ChevronRightIcon, Undo2 } from 'lucide-react';
@@ -20,10 +25,16 @@ export const Route = createFileRoute('/games/$gameId')({
   component: RouteComponent,
   pendingComponent: LoadingSpinner,
   beforeLoad: async () => {
-    const games = getDefaultStore().get(gamesState);
+    const store = getDefaultStore();
+    const games = store.get(gamesState);
+    const covers = store.get(coversState);
 
     if (!games) {
       await fetchGames();
+    }
+
+    if (!covers) {
+      await fetchCovers();
     }
   },
   loader: ({ params }) => {
@@ -40,24 +51,33 @@ export const Route = createFileRoute('/games/$gameId')({
 });
 
 function RouteComponent() {
+  // !STATE
   const game = useAtomValue(activeGameState);
   const presets = useAtomValue(presetsState);
+  const covers = useAtomValue(coversState);
 
   if (!game || !presets) {
     return null;
   }
 
+  const coverMatch = covers?.find((cover) => cover.name === game.coverImg);
+
   return (
     <div className="flex h-full flex-auto gap-2 p-2">
       <div className="flex flex-none flex-col gap-1">
         <Link to="/">
-          <Button variant="secondary" className={cn('font-bold cursor-pointer mb-2 border border-neutral-300 dark:border-neutral-700')}>
+          <Button
+            variant="secondary"
+            className={cn(
+              'mb-2 cursor-pointer border border-neutral-300 font-bold dark:border-neutral-700'
+            )}
+          >
             <Undo2 />
             Back to Games
           </Button>
         </Link>
-        <GameCover name={game.name} image={game.cover} />
-        {game.cover && (
+        <GameCover name={game.name} image={coverMatch} />
+        {coverMatch && (
           <p className="text-center text-lg font-semibold">{game.name}</p>
         )}
       </div>
