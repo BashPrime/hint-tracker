@@ -41,7 +41,8 @@ function Index() {
                 'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
               )}
             >
-              <GameCover name={game.name} image={cover} />
+              <GameCover name={game.name} image={cover} className="h-84" />
+              <p className="text-center text-lg font-semibold">{game.name}</p>
             </Link>
           );
         })}

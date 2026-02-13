@@ -1,17 +1,20 @@
 import { cn } from '@/lib/utils';
+import { CircleQuestionMark } from 'lucide-react';
 import { Cover } from 'src/shared/types/cover.types';
 
 type Props = {
   name: string;
   image?: Cover;
+  className?: string;
 };
 
-export function GameCover({ name, image }: Props) {
+export function GameCover({ name, image, className }: Props) {
   return (
     <div
       className={cn(
-        'h-[300px] select-none',
-        !image && 'flex w-[200px] items-center justify-center bg-neutral-900'
+        'select-none',
+        !image &&
+          `flex h-fit aspect-2/3 items-center justify-center bg-slate-800 ${className}`
       )}
       data-name="game-cover"
     >
@@ -19,11 +22,11 @@ export function GameCover({ name, image }: Props) {
         <img
           src={`data:image/${image.type};base64,${image.data}`}
           alt={name}
-          className={cn('h-full')}
+          className={className}
         />
       )}
       {!image && (
-        <p className="text-center text-xl font-bold text-neutral-50">{name}</p>
+        <CircleQuestionMark className="w-3/5 h-auto text-neutral-50" />
       )}
     </div>
   );

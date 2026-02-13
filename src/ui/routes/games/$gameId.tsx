@@ -64,7 +64,7 @@ function RouteComponent() {
 
   return (
     <div className="flex h-full flex-auto gap-2 p-2">
-      <div className="flex flex-none flex-col gap-1">
+      <div className="flex w-48 flex-none flex-col gap-1">
         <Link to="/">
           <Button
             variant="secondary"
@@ -77,9 +77,7 @@ function RouteComponent() {
           </Button>
         </Link>
         <GameCover name={game.name} image={coverMatch} />
-        {coverMatch && (
-          <p className="text-center text-lg font-semibold">{game.name}</p>
-        )}
+        <p className="text-center text-lg font-semibold">{game.name}</p>
       </div>
       <div className="flex flex-auto flex-col gap-2">
         <p className="text-center text-2xl font-bold uppercase">
