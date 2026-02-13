@@ -1,7 +1,7 @@
 import {
   HintCollectionSchema,
   HintPanelContentType,
-  HintSchema
+  HintSchema,
 } from '@/types/layout.types';
 import { Hint } from '.';
 import { HintCollection } from './collection';

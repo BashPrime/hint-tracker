@@ -9,5 +9,3 @@ export const CoverSchema = z.object({
   type: CoverTypeSchema,
 });
 export type Cover = z.infer<typeof CoverSchema>;
-
-
