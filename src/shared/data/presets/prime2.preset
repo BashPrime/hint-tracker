@@ -25,6 +25,9 @@
               "Key 7",
               "Key 8",
               "Key 9"
+            ],
+            "options": [
+              "locations"
             ]
           }
         ]

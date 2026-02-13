@@ -29,7 +29,7 @@ export const GameDataOptionsTransformSchema = GameDataSchema.transform(
     function locationMap(location: GameDataLocation) {
       return location.name;
     }
-    
+
     return {
       items: data.items.filter((item) => item.type !== 'feature').map(itemMap),
       progression: data.items
@@ -45,7 +45,10 @@ export const GameDataOptionsTransformSchema = GameDataSchema.transform(
         .map(locationMap),
       regions: data.locations
         .map((location) => location.region)
-        .filter((region, idx, self) => region && idx === self.indexOf(region)),
+        .filter(
+          (region, idx, self) =>
+            region !== undefined && idx === self.indexOf(region)
+        ),
       locationFeatures: data.locations
         .filter((location) => location.type === 'feature')
         .map(locationMap),

@@ -8,13 +8,24 @@ export const NumColumnsSchema = z.number().min(1);
 const HintStrAtomSchema: z.ZodType<PrimitiveAtom<string>> = z.any();
 const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
 
+export const HintOptionsSchema = z.enum([
+  'items',
+  'progression',
+  'useful',
+  'filler',
+  'itemFeatures',
+  'locations',
+  'regions',
+  'locationFeatures',
+]);
+
 export const HintSchema = z.object({
   name: z.string(),
   color: z.string().optional(),
   item: HintStrAtomSchema.nullable(),
   location: HintStrAtomSchema.nullable(),
   checked: HintBoolAtomSchema,
-  options: z.array(z.string()).optional(),
+  options: z.array(HintOptionsSchema).default([]),
   colSpan: ColSpanSchema,
   grow: z.boolean().default(false),
 });

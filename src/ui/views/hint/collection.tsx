@@ -27,10 +27,14 @@ export function HintCollection({ collection, className }: Props) {
       {collection.hints.map((hintsElem, idx) => {
         if (Array.isArray(hintsElem)) {
           return (
-            <div className="flex flex-col" data-name="nested-hints-container">
-              {hintsElem.map((hint) => (
+            <div
+              key={`collection-${idx}`}
+              className="flex flex-col"
+              data-name="nested-hints-container"
+            >
+              {hintsElem.map((hint, idx2) => (
                 <Hint
-                  key={`hint-${idx}`}
+                  key={`hint-${idx2}`}
                   hint={hint}
                   className={cn(collection.grow && 'grow')}
                 />

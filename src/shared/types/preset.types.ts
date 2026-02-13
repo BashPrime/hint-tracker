@@ -7,10 +7,21 @@ export const NumColumnsSchema = z.number().min(1);
 export const HintTypeSchema = z.enum(['item', 'location', 'item-location']);
 export type HintType = z.infer<typeof HintTypeSchema>;
 
+export const PresetHintOptionsSchema = z.enum([
+  'items',
+  'progression',
+  'useful',
+  'filler',
+  'itemFeatures',
+  'locations',
+  'regions',
+  'locationFeatures',
+]);
+
 export const PresetHintSchema = z.object({
   name: z.string(),
   type: HintTypeSchema,
-  options: z.array(z.string()).optional(),
+  options: z.array(PresetHintOptionsSchema).default([]),
   color: z.string().optional(),
   colSpan: ColSpanSchema,
   grow: z.boolean().default(false),
@@ -34,7 +45,7 @@ export const PresetHintCollectionSchema = z.object({
       ])
     )
     .nonempty(),
-  options: z.array(z.string()).optional(),
+  options: z.array(PresetHintOptionsSchema).default([]),
   type: HintTypeSchema,
   color: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),

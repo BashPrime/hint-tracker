@@ -38,8 +38,8 @@ export function HintPanel({ panel }: Props) {
         </p>
       )}
       {parsedContentArr.success &&
-        parsedContentArr.data.map((contentItem) => (
-          <HintPanelContent content={contentItem} className="mb-2 last:m-0" />
+        parsedContentArr.data.map((contentItem, idx) => (
+          <HintPanelContent content={contentItem} key={`panel-${idx}`} className="mb-2 last:m-0" />
         ))}
       {parsedContentObj.success && (
         <HintPanelContent content={parsedContentObj.data} />

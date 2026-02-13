@@ -1,10 +1,11 @@
 import { AtomCombobox } from '@/components/atom-combobox';
 import { useRightClick } from '@/hooks/useRightClick';
 import { cn } from '@/lib/utils';
-import { activeLayoutState } from '@/states/App.states';
+import { activeGameDataOptionsSelector } from '@/states/App.states';
 import { Hint as HintType } from '@/types/layout.types';
 import { useAtom, useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   hint: HintType;
@@ -14,10 +15,50 @@ type Props = {
 export function Hint({ hint, className }: Props) {
   // !STATE
   const [checked, setChecked] = useAtom(hint.checked);
-  const layout = useAtomValue(activeLayoutState)?.layout;
+  const gameOptions = useAtomValue(activeGameDataOptionsSelector);
+  const [itemOptions, setItemOptions] = useState<string[]>([]);
+  const [locationOptions, setLocationOptions] = useState<string[]>([]);
 
   // !HOOK
   const handleRightClick = useRightClick(() => setChecked(!checked));
+  useEffect(() => {
+    const itemOptions: string[] = [];
+    const locationOptions: string[] = [];
+
+    if (gameOptions) {
+      hint.options?.forEach((option) => {
+        switch (option) {
+          case 'items':
+            itemOptions.push(...gameOptions.items);
+            break;
+          case 'progression':
+            itemOptions.push(...gameOptions.progression);
+            break;
+          case 'useful':
+            itemOptions.push(...gameOptions.useful);
+            break;
+          case 'filler':
+            itemOptions.push(...gameOptions.filler);
+            break;
+          case 'itemFeatures':
+            itemOptions.push(...gameOptions.itemFeatures);
+            break;
+          case 'locations':
+            locationOptions.push(...gameOptions.locations);
+            break;
+          // case 'regions':
+          //   locationOptions.push(...gameOptions.regions);
+          //   break;
+          case 'locationFeatures':
+            locationOptions.push(...gameOptions.locationFeatures);
+            break;
+        }
+      });
+    }
+
+    setItemOptions(itemOptions);
+    setLocationOptions(locationOptions);
+  }, [hint.options, gameOptions]);
 
   return (
     <div
@@ -56,20 +97,14 @@ export function Hint({ hint, className }: Props) {
         <AtomCombobox
           atom={hint.item}
           placeholder={'Item'}
-          items={['Dark Beam', 'Light Beam', 'Annihilator Beam']}
+          items={itemOptions}
         />
       )}
       {hint.location && (
         <AtomCombobox
           atom={hint.location}
           placeholder={'Location'}
-          items={[
-            'Agon Temple',
-            'Torvus Temple',
-            'Sanctuary Temple',
-            'Sanctuary Energy Controller',
-            'Hall of Honored Dead',
-          ]}
+          items={locationOptions}
         />
       )}
     </div>
