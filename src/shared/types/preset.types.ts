@@ -10,6 +10,7 @@ export type HintType = z.infer<typeof HintTypeSchema>;
 export const PresetHintSchema = z.object({
   name: z.string(),
   type: HintTypeSchema,
+  options: z.array(z.string()).optional(),
   color: z.string().optional(),
   colSpan: ColSpanSchema,
   grow: z.boolean().default(false),
@@ -33,6 +34,7 @@ export const PresetHintCollectionSchema = z.object({
       ])
     )
     .nonempty(),
+  options: z.array(z.string()).optional(),
   type: HintTypeSchema,
   color: z.string().optional(),
   numColumns: NumColumnsSchema.optional(),

@@ -14,18 +14,11 @@ export const HintSchema = z.object({
   item: HintStrAtomSchema.nullable(),
   location: HintStrAtomSchema.nullable(),
   checked: HintBoolAtomSchema,
+  options: z.array(z.string()).optional(),
   colSpan: ColSpanSchema,
   grow: z.boolean().default(false),
 });
 export type Hint = z.infer<typeof HintSchema>;
-
-// export const HintCollectionSchema = z.object({
-//   hints: z.array(HintSchema).nonempty(),
-//   color: z.string().optional(),
-//   numColumns: NumColumnsSchema.optional(),
-//   grow: z.boolean().default(false),
-// });
-// export type HintCollection = z.infer<typeof HintCollectionSchema>;
 
 export const HintCollectionSchema = z.object({
   get hints() {
