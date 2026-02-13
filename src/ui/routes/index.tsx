@@ -38,11 +38,13 @@ function Index() {
               params={{ gameId: game.id }}
               key={game.id}
               className={cn(
-                'relative after:absolute after:inset-0 hover:after:bg-blue-400/50'
+                'flex flex-col items-center',
+                'relative',
+                'after:absolute after:inset-0 hover:after:bg-blue-400/50'
               )}
             >
-              <GameCover name={game.name} image={cover} className="h-84" />
-              <p className="text-center text-lg font-semibold">{game.name}</p>
+              <GameCover name={game.name} image={cover} className="h-72" />
+              <p className="text-center text-xl font-semibold">{game.name}</p>
             </Link>
           );
         })}
