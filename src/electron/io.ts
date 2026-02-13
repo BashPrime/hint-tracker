@@ -40,4 +40,6 @@ export function readDir(path: string) {
       getErrorMsg(err)
     );
   }
+
+  return null;
 }

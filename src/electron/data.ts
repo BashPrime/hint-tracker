@@ -8,8 +8,44 @@ import {
   DEFAULT_GAMES_PATH,
   DEFAULT_PRESETS_PATH,
   PRESET_FILENAME_EXT,
+  USER_GAMES_PATH,
 } from './constants.js';
 import { readDir } from './io.js';
+
+export function getAllGames() {
+  const defaultGames = getAllGamesInDir(DEFAULT_GAMES_PATH);
+  const userGames = getAllGamesInDir(USER_GAMES_PATH) ?? [];
+
+  if (!defaultGames) {
+    return [];
+  }
+
+  return [
+    ...defaultGames.map((game) => {
+      const match = userGames.find((uGame) => uGame.id === game.id);
+
+      return {
+        ...game,
+        // !WHY we always want to return the default layouts along with the user layouts
+        layouts: match
+          ? [
+              ...game.layouts,
+              ...match.layouts.filter(
+                (layout) => !game.layouts.includes(layout)
+              ),
+            ]
+          : game.layouts,
+        // !WHY the user's cover image and data override the defaults however
+        coverImg: match ? match.coverImg : game.coverImg,
+        data: match ? match.data : game.data,
+      };
+    }),
+    // !WHY we want to filter out the default games when appending the user games
+    ...userGames.filter(
+      (game) => !defaultGames.find((dGame) => dGame.id === game.id)
+    ),
+  ];
+}
 
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
   const files = readDir(dir);
@@ -20,7 +56,7 @@ export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
 
   return files
     .filter((file) => {
-      return path.extname(file).toLowerCase() === '.json';
+      return path.extname(file).toLowerCase() === '.game';
     })
     .map((file) => {
       return readAndParseJsonFile(path.join(dir, file), GameSchema);
