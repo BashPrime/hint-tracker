@@ -29,7 +29,12 @@ export const IPC_IDS = {
 
 // Menu
 export const MENU_IDS = {
-  alwaysOnTop: 'alwaysOnTop',
+  file: {
+    openUserDataFolder: 'openUserDataFolder',
+  },
+  toggles: {
+    alwaysOnTop: 'alwaysOnTop',
+  },
   theme: {
     system: 'system',
     light: 'light',

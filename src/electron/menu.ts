@@ -1,8 +1,28 @@
-import { app, Menu, MenuItemConstructorOptions, nativeTheme } from 'electron';
+import {
+  app,
+  Menu,
+  MenuItemConstructorOptions,
+  nativeTheme,
+  shell,
+} from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
-import { MENU_IDS } from './constants.js';
+import { MENU_IDS, USER_DATA_DIR } from './constants.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
+
+async function openUserDataFolder() {
+  try {
+    // Check if the path is valid and then open it
+    await shell.openPath(USER_DATA_DIR);
+    return { success: true };
+  } catch (error) {
+    console.error(
+      'openUserDataFolder(): Failed to open userData directory:',
+      error
+    );
+    return { success: false, error: error };
+  }
+}
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
@@ -25,10 +45,24 @@ const template: MenuItemConstructorOptions[] = [
   //   ],
   // },
   {
+    label: 'File',
+    submenu: [
+      {
+        id: MENU_IDS.file.openUserDataFolder,
+        label: 'Open User Data Folder',
+        click: async () => openUserDataFolder(),
+      },
+      {
+        label: 'Exit',
+        role: 'quit',
+      },
+    ],
+  },
+  {
     label: 'Toggles',
     submenu: [
       {
-        id: MENU_IDS.alwaysOnTop,
+        id: MENU_IDS.toggles.alwaysOnTop,
         label: 'Always on Top',
         type: 'checkbox',
         checked: false,
