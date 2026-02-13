@@ -22,7 +22,7 @@ import { getDefaultStore, useAtomValue } from 'jotai';
 import { ChevronRightIcon, Undo2 } from 'lucide-react';
 
 export const Route = createFileRoute('/games/$gameId')({
-  component: RouteComponent,
+  component: GameLayouts,
   pendingComponent: LoadingSpinner,
   beforeLoad: async () => {
     const store = getDefaultStore();
@@ -50,7 +50,7 @@ export const Route = createFileRoute('/games/$gameId')({
   },
 });
 
-function RouteComponent() {
+function GameLayouts() {
   // !STATE
   const game = useAtomValue(activeGameState);
   const presets = useAtomValue(presetsState);
@@ -81,7 +81,7 @@ function RouteComponent() {
       </div>
       <div className="flex flex-auto flex-col gap-2">
         <p className="text-center text-2xl font-bold uppercase">
-          Select a Layout
+          Select Layout
         </p>
         <ItemGroup className="overflow-auto">
           {presets?.map((preset) => (

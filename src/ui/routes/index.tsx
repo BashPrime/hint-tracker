@@ -27,7 +27,7 @@ function Index() {
   return (
     <div data-name="index-root">
       <p className="p-2 text-center text-2xl font-bold uppercase">
-        Select a Game
+        Select Game
       </p>
       <div className="flex flex-wrap justify-center gap-4 p-2">
         {games?.map((game) => {
