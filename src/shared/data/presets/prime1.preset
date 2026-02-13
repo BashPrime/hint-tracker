@@ -3,6 +3,7 @@
   "id": "667e61e4-2376-4b83-b675-0e68394f269d",
   "name": "Default",
   "description": "The default layout for Metroid Prime.",
+  "gameId": "f7ee2a91-67b0-4a8d-8c39-6ac32acc61e5",
   "layout": {
     "numColumns": 2,
     "columns": [
