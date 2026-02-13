@@ -1,5 +1,6 @@
 import { GameCover } from '@/components/game-cover';
 import { LoadingSpinner } from '@/components/loading-spinner';
+import { Button } from '@/components/ui/button';
 import {
   Item,
   ItemActions,
@@ -49,17 +50,11 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-auto gap-2 p-2">
       <div className="flex flex-none flex-col gap-1">
-        <Link
-          to="/"
-          className={cn(
-            'flex items-center gap-1',
-            'font-semibold',
-            'hover:text-blue-500 dark:hover:text-blue-400',
-            'mb-2'
-          )}
-        >
-          <Undo2 />
-          Back to Games
+        <Link to="/">
+          <Button variant="secondary" className={cn('font-bold cursor-pointer mb-2 border border-neutral-300 dark:border-neutral-700')}>
+            <Undo2 />
+            Back to Games
+          </Button>
         </Link>
         <GameCover name={game.name} image={game.cover} />
         {game.cover && (
