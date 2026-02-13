@@ -5,7 +5,6 @@ import './root.css';
 
 function RootLayout() {
   // !HOOKS
-  // useIpcHandlers();
   useThemeChanger();
 
   return (
