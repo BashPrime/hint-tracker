@@ -1,15 +1,13 @@
-import path from 'path';
+import fs from 'fs';
 import { z } from 'zod';
 import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
-import { GameSchema } from '../shared/types/game.types.js';
-import { PresetSchema } from '../shared/types/preset.types.js';
 import {
   CONFIG_PATH,
-  DEFAULT_GAMES_PATH,
-  DEFAULT_PRESETS_PATH,
-  PRESET_FILENAME_EXT,
+  USER_COVERS_PATH,
+  USER_GAMES_PATH,
+  USER_PRESETS_PATH,
 } from './constants.js';
-import { readDir, readJsonFile, writeJsonFile } from './io.js';
+import { readJsonFile, writeJsonFile } from './io.js';
 import { getErrorMsg } from './util.js';
 
 export function readAndParseJsonFile<T extends z.ZodTypeAny>(
@@ -49,38 +47,20 @@ export function writeConfigFile(
   writeJsonFile(path, json);
 }
 
-export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
-  const files = readDir(dir);
-
-  if (!files) {
-    return null;
+export function handleCreateUserDataDirs() {
+  function handleMkDir(dir: string) {
+    if (!fs.existsSync(dir)) {
+      fs.mkdir(dir, { recursive: true }, (err) => {
+        if (err) {
+          return console.error(err);
+        }
+      });
+    }
   }
 
-  return files
-    .filter((file) => {
-      return path.extname(file).toLowerCase() === '.json';
-    })
-    .map((file) => {
-      return readAndParseJsonFile(path.join(dir, file), GameSchema);
-    })
-    .filter((preset) => preset !== null);
-}
-
-export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
-  const files = readDir(dir);
-
-  if (!files) {
-    return null;
-  }
-
-  return files
-    .filter((file) => {
-      return path.extname(file).toLowerCase() === PRESET_FILENAME_EXT;
-    })
-    .map((file) => {
-      return readAndParseJsonFile(path.join(dir, file), PresetSchema);
-    })
-    .filter((preset) => preset !== null);
+  handleMkDir(USER_GAMES_PATH);
+  handleMkDir(USER_COVERS_PATH);
+  handleMkDir(USER_PRESETS_PATH);
 }
 
 // export function openUserProvidedTrackerFile() {

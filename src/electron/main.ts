@@ -1,6 +1,6 @@
 import { app } from 'electron';
 import path from 'path';
-import { readConfigFile } from './config.js';
+import { handleCreateUserDataDirs, readConfigFile } from './config.js';
 import { runIpcHandlers } from './ipc.js';
 import { isDev } from './util.js';
 import { createMainWindow } from './window.js';
@@ -29,5 +29,6 @@ app.on('ready', () => {
   // }
 });
 
-// IPC Handlers
+// Handlers
 runIpcHandlers();
+handleCreateUserDataDirs();

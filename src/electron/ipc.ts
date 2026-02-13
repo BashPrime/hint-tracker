@@ -1,7 +1,6 @@
 import { ipcMain } from 'electron';
-import { getAllPresetsInDir } from './config.js';
 import { IPC_IDS, USER_PRESETS_PATH } from './constants.js';
-import { getAllCovers, getAllGames } from './data.js';
+import { getAllCovers, getAllGames, getAllPresetsInDir } from './data.js';
 
 export function runIpcHandlers() {
   // Handle games request from renderer
