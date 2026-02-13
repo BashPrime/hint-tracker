@@ -14,7 +14,7 @@ export function GameCover({ name, image, className }: Props) {
       className={cn(
         'select-none',
         !image &&
-          `flex h-fit aspect-2/3 items-center justify-center bg-slate-800 ${className}`
+          `flex h-fit aspect-2/3 items-center justify-center bg-slate-800 dark:bg-slate-700 ${className}`
       )}
       data-name="game-cover"
     >
