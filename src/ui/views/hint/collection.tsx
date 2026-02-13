@@ -31,7 +31,7 @@ export function HintCollection({ collection, className }: Props) {
                   key={`hint-${idx}`}
                   hint={hint}
                   className={cn(
-                    'border-b border-neutral-600 dark:border-neutral-950',
+                    'border-b border-neutral-400 dark:border-neutral-800',
                     collection.grow && 'grow',
                     collection.numColumns && collection.numColumns > 1
                       ? 'border-r'
@@ -47,7 +47,7 @@ export function HintCollection({ collection, className }: Props) {
             key={`hint-${idx}`}
             hint={hintsElem}
             className={cn(
-              'border-b border-neutral-600 dark:border-neutral-950',
+              'border-b border-neutral-400 dark:border-neutral-800',
               collection.grow && 'grow',
               collection.numColumns && collection.numColumns > 1
                 ? 'border-r'
