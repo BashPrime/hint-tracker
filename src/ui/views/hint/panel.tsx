@@ -29,7 +29,7 @@ export function HintPanel({ panel }: Props) {
       {panel.header && (
         <p
           className={cn(
-            'bg-neutral-400 dark:bg-neutral-900',
+            'bg-gray-600 text-neutral-50 dark:bg-neutral-900 dark:text-foreground',
             'px-2 py-1',
             'text-lg font-bold uppercase select-none'
           )}
@@ -39,7 +39,7 @@ export function HintPanel({ panel }: Props) {
       )}
       {parsedContentArr.success &&
         parsedContentArr.data.map((contentItem) => (
-          <HintPanelContent content={contentItem} className="mb-1 last:m-0" />
+          <HintPanelContent content={contentItem} className="mb-2 last:m-0" />
         ))}
       {parsedContentObj.success && (
         <HintPanelContent content={parsedContentObj.data} />

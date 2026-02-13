@@ -16,6 +16,8 @@ export function HintCollection({ collection, className }: Props) {
           : undefined,
       }}
       className={cn(
+        'shadow-md dark:shadow-none',
+        'bg-neutral-200/90 dark:bg-neutral-700/90',
         collection.grow && 'flex h-full flex-col',
         collection.numColumns && 'grid',
         className
@@ -30,13 +32,7 @@ export function HintCollection({ collection, className }: Props) {
                 <Hint
                   key={`hint-${idx}`}
                   hint={hint}
-                  className={cn(
-                    'border-b border-neutral-400 dark:border-neutral-800',
-                    collection.grow && 'grow',
-                    collection.numColumns && collection.numColumns > 1
-                      ? 'border-r'
-                      : null
-                  )}
+                  className={cn(collection.grow && 'grow')}
                 />
               ))}
             </div>
@@ -46,13 +42,7 @@ export function HintCollection({ collection, className }: Props) {
           <Hint
             key={`hint-${idx}`}
             hint={hintsElem}
-            className={cn(
-              'border-b border-neutral-400 dark:border-neutral-800',
-              collection.grow && 'grow',
-              collection.numColumns && collection.numColumns > 1
-                ? 'border-r'
-                : null
-            )}
+            className={cn(collection.grow && 'grow')}
           />
         );
       })}

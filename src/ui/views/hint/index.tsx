@@ -24,7 +24,6 @@ export function Hint({ hint, className }: Props) {
       className={cn(
         'flex flex-col pl-2',
         'font-bold uppercase',
-        'bg-neutral-300/90 dark:bg-neutral-700/90',
         checked && 'bg-green-300/90 dark:bg-green-900/90',
         hint.grow && 'grow',
         className
