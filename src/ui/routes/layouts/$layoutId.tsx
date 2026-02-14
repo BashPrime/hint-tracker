@@ -2,6 +2,7 @@ import { LoadingSpinner } from '@/components/loading-spinner';
 import { fetchGames, fetchPresets } from '@/ipc';
 import { cn } from '@/lib/utils';
 import {
+  activeGameState,
   activeLayoutState,
   gamesState,
   presetsState,
@@ -18,12 +19,11 @@ export const Route = createFileRoute('/layouts/$layoutId')({
   pendingComponent: LoadingSpinner,
   beforeLoad: async () => {
     const store = getDefaultStore();
-    let games = store.get(gamesState);
+    const games = store.get(gamesState);
     const presets = store.get(presetsState);
 
     if (!games) {
       await fetchGames();
-      games = store.get(gamesState);
     }
 
     if (!presets) {
@@ -32,12 +32,22 @@ export const Route = createFileRoute('/layouts/$layoutId')({
   },
   loader: async ({ params }) => {
     const store = getDefaultStore();
+    const games = store.get(gamesState);
+    const activeGame = store.get(activeGameState);
     const presets = store.get(presetsState);
     const presetMatch = presets?.find(
       (preset) => preset.id === params.layoutId
     );
 
     if (presetMatch) {
+      // Need to set activeGameState to load in options
+      if (activeGame?.id !== presetMatch.gameId) {
+        store.set(
+          activeGameState,
+          games?.find((game) => game.id === presetMatch.gameId) ?? null
+        );
+      }
+
       try {
         const parsed = PresetToLayoutTransformSchema.parse(presetMatch);
         store.set(activeLayoutState, parsed);
