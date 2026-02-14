@@ -1,7 +1,11 @@
 import { LoadingSpinner } from '@/components/loading-spinner';
-import { fetchPresets } from '@/ipc';
+import { fetchGames, fetchPresets } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { activeLayoutState, presetsState } from '@/states/App.states';
+import {
+  activeLayoutState,
+  gamesState,
+  presetsState,
+} from '@/states/App.states';
 import { PresetToLayoutTransformSchema } from '@/types/transform.types';
 import { Column } from '@/views/layout/column';
 import { createFileRoute } from '@tanstack/react-router';
@@ -13,14 +17,22 @@ export const Route = createFileRoute('/layouts/$layoutId')({
   component: Layout,
   pendingComponent: LoadingSpinner,
   beforeLoad: async () => {
-    const presets = getDefaultStore().get(presetsState);
+    const store = getDefaultStore();
+    let games = store.get(gamesState);
+    const presets = store.get(presetsState);
+
+    if (!games) {
+      await fetchGames();
+      games = store.get(gamesState);
+    }
 
     if (!presets) {
       await fetchPresets();
     }
   },
   loader: async ({ params }) => {
-    const presets = getDefaultStore().get(presetsState);
+    const store = getDefaultStore();
+    const presets = store.get(presetsState);
     const presetMatch = presets?.find(
       (preset) => preset.id === params.layoutId
     );
@@ -28,7 +40,7 @@ export const Route = createFileRoute('/layouts/$layoutId')({
     if (presetMatch) {
       try {
         const parsed = PresetToLayoutTransformSchema.parse(presetMatch);
-        getDefaultStore().set(activeLayoutState, parsed);
+        store.set(activeLayoutState, parsed);
       } catch (err) {
         if (err instanceof z.ZodError) {
           console.error(
@@ -39,7 +51,7 @@ export const Route = createFileRoute('/layouts/$layoutId')({
         }
       }
     } else {
-      getDefaultStore().set(activeLayoutState, null);
+      store.set(activeLayoutState, null);
     }
   },
 });
