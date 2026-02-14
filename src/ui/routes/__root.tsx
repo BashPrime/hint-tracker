@@ -1,6 +1,11 @@
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { activeGameState, activeLayoutState } from '@/states/App.states';
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
+import {
+  createRootRoute,
+  Link,
+  Outlet,
+  useMatchRoute,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { useAtomValue } from 'jotai';
 import { ChevronRight, Home } from 'lucide-react';
@@ -13,6 +18,7 @@ function RootLayout() {
 
   // !HOOKS
   useThemeChanger();
+  const matchRoute = useMatchRoute();
 
   return (
     <>
@@ -20,7 +26,7 @@ function RootLayout() {
         <Link to="/">
           <Home />
         </Link>
-        {game && (
+        {game && !matchRoute({ to: '/' }) && (
           <>
             <ChevronRight />
             <Link
@@ -32,7 +38,8 @@ function RootLayout() {
             </Link>
           </>
         )}
-        {layout && (
+
+        {layout && matchRoute({ to: '/layouts/$layoutId' }) && (
           <>
             <ChevronRight />
             <Link
