@@ -37,14 +37,12 @@ export type PresetHintCollectionHintType = z.infer<
 >;
 
 export const PresetHintCollectionSchema = z.object({
-  hints: z
-    .array(
-      z.union([
-        PresetHintCollectionHintTypeSchema,
-        z.array(PresetHintCollectionHintTypeSchema),
-      ])
-    )
-    .nonempty(),
+  hints: z.array(
+    z.union([
+      PresetHintCollectionHintTypeSchema,
+      z.array(PresetHintCollectionHintTypeSchema),
+    ])
+  ),
   options: z.array(PresetHintOptionsSchema).default([]),
   type: HintTypeSchema,
   color: z.string().optional(),
@@ -62,7 +60,7 @@ export const PresetHintPanelContentTypeSchema = z.union([
 export const PresetHintPanelSchema = z.object({
   content: z.union([
     PresetHintPanelContentTypeSchema,
-    z.array(z.union([PresetHintPanelContentTypeSchema])).nonempty(),
+    z.array(z.union([PresetHintPanelContentTypeSchema])),
   ]),
   header: z.string().optional(),
   lineColor: z.string().optional(),
@@ -79,7 +77,7 @@ export const PresetColumnSchema = z.union([
 export type PresetColumn = z.infer<typeof PresetColumnSchema>;
 
 export const PresetGridSchema = z.object({
-  columns: z.array(PresetColumnSchema).nonempty(),
+  columns: z.array(PresetColumnSchema),
   numColumns: NumColumnsSchema,
 });
 export type PresetGrid = z.infer<typeof PresetGridSchema>;

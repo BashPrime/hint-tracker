@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { CoverSchema } from '../shared/types/cover.types.js';
 import { GameSchema } from '../shared/types/game.types.js';
-import { PresetSchema } from '../shared/types/preset.types.js';
+import { Preset, PresetSchema } from '../shared/types/preset.types.js';
 import { readAndParseJsonFile } from './config.js';
 import {
   DEFAULT_COVERS_PATH,
@@ -11,9 +11,11 @@ import {
   PRESET_FILENAME_EXT,
   USER_COVERS_PATH,
   USER_GAMES_PATH,
+  USER_PRESETS_PATH,
 } from './constants.js';
 import { readDir } from './io.js';
 import { CoverFileTypeTransformSchema } from './types/transform.types.js';
+import { getErrorMsg } from './util.js';
 
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
   const files = readDir(dir);
@@ -105,4 +107,22 @@ export function getAllPresetsInDir(dir: string = DEFAULT_PRESETS_PATH) {
       return readAndParseJsonFile(path.join(dir, file), PresetSchema);
     })
     .filter((preset) => preset !== null);
+}
+
+export function writeLayoutToFile(layout: Preset) {
+  const fileName = `${layout.id}${PRESET_FILENAME_EXT}`;
+  const json = JSON.stringify(layout, null, 2);
+
+  try {
+    fs.writeFileSync(path.join(USER_PRESETS_PATH, fileName), json);
+    return true;
+  } catch (err) {
+    console.error(
+      'writeLayoutToFile(): Error writing layout file:',
+      path,
+      getErrorMsg(err)
+    );
+  }
+
+  return false;
 }

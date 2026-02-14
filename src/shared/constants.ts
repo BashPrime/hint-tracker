@@ -5,3 +5,8 @@ export const GRID_BREAKPOINTS = {
   xl: 'xl:grid',
   '2xl': '2xl:grid',
 };
+
+export const SCHEMA_VERSIONS = {
+  preset: 1,
+  game: 1,
+};

@@ -51,7 +51,7 @@ export type HintPanelContentType = z.infer<typeof HintPanelContentTypeSchema>;
 export const HintPanelSchema = z.object({
   content: z.union([
     HintPanelContentTypeSchema,
-    z.array(HintPanelContentTypeSchema).nonempty(),
+    z.array(HintPanelContentTypeSchema),
   ]),
   header: z.string().optional(),
   lineColor: z.string().optional(),
@@ -68,7 +68,7 @@ export const ColumnSchema = z.union([
 export type Column = z.infer<typeof ColumnSchema>;
 
 export const GridSchema = z.object({
-  columns: z.array(ColumnSchema).nonempty(),
+  columns: z.array(ColumnSchema),
   numColumns: NumColumnsSchema,
 });
 export type Grid = z.infer<typeof GridSchema>;

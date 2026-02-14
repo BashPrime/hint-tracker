@@ -9,7 +9,12 @@ import {
   ItemGroup,
   ItemTitle,
 } from '@/components/ui/item';
-import { fetchCovers, fetchGames, fetchPresetsForGame } from '@/ipc';
+import {
+  createNewLayoutForGame,
+  fetchCovers,
+  fetchGames,
+  fetchPresetsForGame,
+} from '@/ipc';
 import { cn } from '@/lib/utils';
 import {
   activeGameState,
@@ -17,9 +22,9 @@ import {
   gamesState,
   presetsState,
 } from '@/states/App.states';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
-import { ChevronRightIcon, Undo2 } from 'lucide-react';
+import { ChevronRightIcon, Plus, Undo2 } from 'lucide-react';
 
 export const Route = createFileRoute('/games/$gameId')({
   component: GameLayouts,
@@ -56,6 +61,17 @@ function GameLayouts() {
   const presets = useAtomValue(presetsState);
   const covers = useAtomValue(coversState);
 
+  // !HOOKS
+  const router = useRouter();
+
+  // !FUNCTIONS
+  async function handleCreateNewPreset(gameId: string) {
+    const res = await createNewLayoutForGame(gameId);
+    if (res) {
+      await router.invalidate({ sync: true });
+    }
+  }
+
   if (!game || !presets) {
     return null;
   }
@@ -69,7 +85,8 @@ function GameLayouts() {
           <Button
             variant="secondary"
             className={cn(
-              'mb-2 cursor-pointer border border-neutral-300 font-bold dark:border-neutral-700'
+              'mb-2 cursor-pointer font-bold',
+              'border border-neutral-400 dark:border-neutral-700'
             )}
           >
             <Undo2 />
@@ -110,7 +127,27 @@ function GameLayouts() {
               </Item>
             </Link>
           ))}
+          {!presets.length && (
+            <p
+              className={cn(
+                'border border-neutral-400 text-center dark:border-inherit',
+                'p-2'
+              )}
+            >
+              No layouts were found for this game.
+            </p>
+          )}
         </ItemGroup>
+        <Button
+          onClick={async () => await handleCreateNewPreset(game.id)}
+          className={cn(
+            'cursor-pointer place-self-center uppercase',
+            'bg-slate-700 dark:bg-slate-300',
+            'border border-neutral-400 dark:border-neutral-700'
+          )}
+        >
+          <Plus /> New Layout
+        </Button>
       </div>
     </div>
   );

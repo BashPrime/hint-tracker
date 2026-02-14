@@ -56,3 +56,7 @@ export async function fetchPresetsForGame(gameId: string) {
     }
   }
 }
+
+export async function createNewLayoutForGame(gameId: string) {
+  return await window.electronApi.createNewLayoutForGame(gameId);
+}

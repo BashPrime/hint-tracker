@@ -29,6 +29,7 @@ export const IPC_IDS = {
   requestGames: 'request-games',
   requestCovers: 'request-covers',
   requestPresets: 'request-presets',
+  createNewLayoutForGame: 'create-new-layout-for-game',
   requestPresetsForGame: 'request-presets-for-game',
 };
 
