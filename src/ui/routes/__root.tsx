@@ -1,14 +1,11 @@
 import { useThemeChanger } from '@/hooks/useThemeChanger';
+import { cn } from '@/lib/utils';
 import { activeGameState, activeLayoutState } from '@/states/App.states';
-import {
-  createRootRoute,
-  Link,
-  Outlet,
-  useMatchRoute,
-} from '@tanstack/react-router';
+import { createRootRoute, Outlet, useMatchRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { useAtomValue } from 'jotai';
 import { ChevronRight, Home } from 'lucide-react';
+import { Breadcrumb } from './-components/breadcrumb';
 import './root.css';
 
 function RootLayout() {
@@ -22,33 +19,30 @@ function RootLayout() {
 
   return (
     <>
-      <nav className="flex flex-none items-center gap-2 font-bold">
-        <Link to="/">
+      <nav
+        className={cn('flex flex-none items-center gap-2', 'font-bold', 'p-2')}
+      >
+        <Breadcrumb to="/">
           <Home />
-        </Link>
+        </Breadcrumb>
         {game && !matchRoute({ to: '/' }) && (
           <>
-            <ChevronRight />
-            <Link
-              to="/games/$gameId"
-              params={{ gameId: game.id }}
-              className="hover:text-blue-400"
-            >
+            <ChevronRight size={16} />
+            <Breadcrumb to="/games/$gameId" params={{ gameId: game.id }}>
               {game.name}
-            </Link>
+            </Breadcrumb>
           </>
         )}
 
         {layout && matchRoute({ to: '/layouts/$layoutId' }) && (
           <>
-            <ChevronRight />
-            <Link
+            <ChevronRight size={16} />
+            <Breadcrumb
               to="/layouts/$layoutId"
               params={{ layoutId: layout.id }}
-              className="hover:text-blue-400"
             >
               {layout.name}
-            </Link>
+            </Breadcrumb>
           </>
         )}
       </nav>
