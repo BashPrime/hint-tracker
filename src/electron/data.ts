@@ -1,3 +1,4 @@
+import AdmZip from 'adm-zip';
 import fs from 'fs';
 import path from 'path';
 import { CoverSchema } from '../shared/types/cover.types.js';
@@ -11,11 +12,29 @@ import {
   PRESET_FILENAME_EXT,
   USER_COVERS_PATH,
   USER_GAMES_PATH,
+  USER_PACKS_PATH,
   USER_PRESETS_PATH,
 } from './constants.js';
 import { readDir } from './io.js';
 import { CoverFileTypeTransformSchema } from './types/transform.types.js';
 import { getErrorMsg } from './util.js';
+
+export function getAllPacksInDir(dir: string = USER_PACKS_PATH) {
+  const files = readDir(dir);
+
+  if (!files) {
+    return [];
+  }
+
+  return files.filter((file) => {
+    return path.extname(file).toLowerCase() === '.zip';
+  });
+}
+
+export function getPackTrackerJson(path: string) {
+  const zip = new AdmZip(path);
+  return zip.readAsText('tracker.json');
+}
 
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
   const files = readDir(dir);
