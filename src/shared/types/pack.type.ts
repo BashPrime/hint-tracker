@@ -17,9 +17,9 @@ export const PackTrackerJsonSchema = z.object({
 });
 export type PackTrackerJsonType = z.infer<typeof PackTrackerJsonSchema>;
 
-export const PackTrackerResponseSchema = z.object({
-  path: z.string(),
+export const BasicPackDataSchema = z.object({
+  fileName: z.string(),
   data: PackTrackerJsonSchema,
   cover: CoverSchema.nullable(),
 });
-export type PackTrackerResponse = z.infer<typeof PackTrackerResponseSchema>;
+export type BasicPackData = z.infer<typeof BasicPackDataSchema>;

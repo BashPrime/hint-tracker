@@ -3,9 +3,7 @@ import { z } from 'zod';
 import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
 import {
   CONFIG_PATH,
-  USER_COVERS_PATH,
-  USER_GAMES_PATH,
-  USER_PRESETS_PATH,
+  USER_PACKS_PATH
 } from './constants.js';
 import { readJsonFile, writeJsonFile } from './io.js';
 import { getErrorMsg } from './util.js';
@@ -58,9 +56,7 @@ export function handleCreateUserDataDirs() {
     }
   }
 
-  handleMkDir(USER_GAMES_PATH);
-  handleMkDir(USER_COVERS_PATH);
-  handleMkDir(USER_PRESETS_PATH);
+  handleMkDir(USER_PACKS_PATH);
 }
 
 // export function openUserProvidedTrackerFile() {

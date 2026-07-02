@@ -1,6 +1,6 @@
 import { GameCover } from '@/components/game-cover';
 import { LoadingSpinner } from '@/components/loading-spinner';
-import { fetchCovers, fetchGames } from '@/ipc';
+import { fetchPacks } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
@@ -11,9 +11,7 @@ export const Route = createFileRoute('/')({
   component: Index,
   pendingComponent: LoadingSpinner,
   loader: async () => {
-    // await fetchPacks();
-    await fetchGames();
-    await fetchCovers();
+    await fetchPacks();
   },
 });
 

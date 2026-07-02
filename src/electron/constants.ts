@@ -14,25 +14,14 @@ export const DEFAULT_DATA_DIR = path.join(
   'shared',
   'data'
 );
-// Default dirs
-export const DEFAULT_PRESETS_PATH = path.join(DEFAULT_DATA_DIR, 'presets');
-export const DEFAULT_GAMES_PATH = path.join(DEFAULT_DATA_DIR, 'games');
-export const DEFAULT_COVERS_PATH = path.join(DEFAULT_DATA_DIR, 'covers');
 // User dirs
 export const USER_DATA_DIR = path.join(app.getPath('userData'), 'data');
 export const USER_PACKS_PATH = path.join(USER_DATA_DIR, 'packs');
-export const USER_PRESETS_PATH = path.join(USER_DATA_DIR, 'presets');
-export const USER_GAMES_PATH = path.join(USER_DATA_DIR, 'games');
-export const USER_COVERS_PATH = path.join(USER_DATA_DIR, 'covers');
 
 // IPC
 export const IPC_IDS = {
-  requestPacks: 'request-packs',
-  requestGames: 'request-games',
-  requestCovers: 'request-covers',
-  requestPresets: 'request-presets',
-  createNewLayoutForGame: 'create-new-layout-for-game',
-  requestPresetsForGame: 'request-presets-for-game',
+  fetchPacks: 'fetch-packs',
+  fetchPackDetails: 'fetch-pack-details',
 };
 
 // Menu
