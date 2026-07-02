@@ -1,8 +1,8 @@
 import path from 'path';
 import z from 'zod';
 
-export const CoverFileTypeTransformSchema = z.string().transform((fileExt) => {
-  const parsed = path.parse(fileExt);
+export const CoverFileTypeTransformSchema = z.string().transform((file) => {
+  const parsed = path.parse(file);
 
   switch (parsed.ext) {
     case '.webp':

@@ -31,15 +31,39 @@ export function getAllPacksInDir(dir: string = USER_PACKS_PATH) {
     .filter((file) => {
       return path.extname(file).toLowerCase() === '.zip';
     })
-    .map((file) => {
-      const filePath = path.join(dir, file);
-      const zip = new AdmZip(filePath);
-      const parsed = PackTrackerJsonSchema.safeParse(
-        JSON.parse(zip.readAsText('tracker.json'))
-      );
-      return parsed.success ? { path: filePath, data: parsed.data } : null;
-    })
+    .map((file) => getPack(path.join(dir, file)))
     .filter((pack) => pack !== null);
+}
+
+export function getPack(filePath: string) {
+  const zip = new AdmZip(filePath);
+  const parsed = PackTrackerJsonSchema.safeParse(
+    JSON.parse(zip.readAsText('tracker.json'))
+  );
+
+  if (!parsed.success) {
+    return null;
+  }
+
+  return {
+    path: filePath,
+    data: parsed.data,
+    cover: parsed.data.cover ? getCover(zip, parsed.data.cover) : null,
+  };
+}
+
+export function getCover(zip: AdmZip, filePath: string) {
+  const buffer = zip.readFile(filePath);
+
+  if (!buffer) {
+    return null;
+  }
+
+  return CoverSchema.parse({
+    name: filePath,
+    data: buffer.toString('base64'),
+    type: CoverFileTypeTransformSchema.parse(filePath),
+  });
 }
 
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
