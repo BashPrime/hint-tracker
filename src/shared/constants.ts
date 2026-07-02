@@ -7,6 +7,7 @@ export const GRID_BREAKPOINTS = {
 };
 
 export const SCHEMA_VERSIONS = {
+  pack: 1,
   preset: 1,
   game: 1,
 };

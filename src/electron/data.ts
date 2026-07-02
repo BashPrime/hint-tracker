@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { CoverSchema } from '../shared/types/cover.types.js';
 import { GameSchema } from '../shared/types/game.types.js';
+import { PackTrackerJsonSchema } from '../shared/types/pack.type.js';
 import { Preset, PresetSchema } from '../shared/types/preset.types.js';
 import { readAndParseJsonFile } from './config.js';
 import {
@@ -26,14 +27,19 @@ export function getAllPacksInDir(dir: string = USER_PACKS_PATH) {
     return [];
   }
 
-  return files.filter((file) => {
-    return path.extname(file).toLowerCase() === '.zip';
-  });
-}
-
-export function getPackTrackerJson(path: string) {
-  const zip = new AdmZip(path);
-  return zip.readAsText('tracker.json');
+  return files
+    .filter((file) => {
+      return path.extname(file).toLowerCase() === '.zip';
+    })
+    .map((file) => {
+      const filePath = path.join(dir, file);
+      const zip = new AdmZip(filePath);
+      const parsed = PackTrackerJsonSchema.safeParse(
+        JSON.parse(zip.readAsText('tracker.json'))
+      );
+      return parsed.success ? { path: filePath, data: parsed.data } : null;
+    })
+    .filter((pack) => pack !== null);
 }
 
 export function getAllGamesInDir(dir: string = DEFAULT_GAMES_PATH) {
