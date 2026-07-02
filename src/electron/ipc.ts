@@ -6,11 +6,16 @@ import { IPC_IDS, USER_PRESETS_PATH } from './constants.js';
 import {
   getAllCovers,
   getAllGames,
+  getAllPacksInDir,
   getAllPresetsInDir,
   writeLayoutToFile,
 } from './data.js';
 
 export function runIpcHandlers() {
+  // Handle packs request from renderer
+  ipcMain.handle(IPC_IDS.requestPacks, () => {
+    return getAllPacksInDir();
+  });
   // Handle games request from renderer
   ipcMain.handle(IPC_IDS.requestGames, () => {
     return getAllGames();

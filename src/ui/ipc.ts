@@ -1,9 +1,27 @@
 import { getDefaultStore } from 'jotai';
 import { CoverSchema } from 'src/shared/types/cover.types';
 import { GameSchema } from 'src/shared/types/game.types';
+import { PackTrackerResponse } from 'src/shared/types/pack.type';
 import { PresetSchema } from 'src/shared/types/preset.types';
 import z from 'zod';
-import { coversState, gamesState, presetsState } from './states/App.states';
+import {
+  coversState,
+  gamesState,
+  packsState,
+  presetsState,
+} from './states/App.states';
+
+export async function fetchPacks() {
+  const data =
+    (await window.electronApi.requestPacks()) as PackTrackerResponse[];
+  try {
+    getDefaultStore().set(packsState, data);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error('fetchGames(): Error setting store:', data, err.issues);
+    }
+  }
+}
 
 export async function fetchGames() {
   const data = await window.electronApi.requestGames();

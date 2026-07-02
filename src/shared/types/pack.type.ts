@@ -1,5 +1,6 @@
 import z from 'zod';
 import { SemVerSchema } from './base.types.js';
+import { CoverSchema } from './cover.types.js';
 
 export const PackTrackerJsonSchema = z.object({
   schemaVersion: z.literal(1),
@@ -15,3 +16,10 @@ export const PackTrackerJsonSchema = z.object({
   features: z.array(z.string()),
 });
 export type PackTrackerJsonType = z.infer<typeof PackTrackerJsonSchema>;
+
+export const PackTrackerResponseSchema = z.object({
+  path: z.string(),
+  data: PackTrackerJsonSchema,
+  cover: CoverSchema.nullable(),
+});
+export type PackTrackerResponse = z.infer<typeof PackTrackerResponseSchema>;

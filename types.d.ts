@@ -1,5 +1,6 @@
 interface Window {
   electronApi: {
+    requestPacks: () => Promise<object[]>;
     requestGames: () => Promise<object[]>;
     requestCovers: () => Promise<object[]>;
     requestPresets: () => Promise<object[]>;

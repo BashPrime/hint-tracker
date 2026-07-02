@@ -1,8 +1,8 @@
 import { GameCover } from '@/components/game-cover';
 import { LoadingSpinner } from '@/components/loading-spinner';
-import { fetchCovers, fetchGames } from '@/ipc';
+import { fetchCovers, fetchGames, fetchPacks } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { coversState, gamesState } from '@/states/App.states';
+import { packsState } from '@/states/App.states';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useAtomValue } from 'jotai';
 
@@ -10,6 +10,7 @@ export const Route = createFileRoute('/')({
   component: Index,
   pendingComponent: LoadingSpinner,
   loader: async () => {
+    await fetchPacks();
     await fetchGames();
     await fetchCovers();
   },
@@ -17,10 +18,9 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   // !STATE
-  const games = useAtomValue(gamesState);
-  const covers = useAtomValue(coversState);
+  const packs = useAtomValue(packsState);
 
-  if (!games) {
+  if (!packs) {
     return null;
   }
 
@@ -30,22 +30,21 @@ function Index() {
         Select Game
       </p>
       <div className="flex flex-wrap justify-center gap-4 p-2">
-        {games?.map((game) => {
-          const cover = covers?.find((cover) => cover.name === game.coverImg);
+        {packs?.map((pack) => {
           return (
             <Link
               to="/games/$gameId"
-              params={{ gameId: game.id }}
-              key={game.id}
+              params={{ gameId: pack.data.id }}
+              key={pack.data.id}
               className={cn(
                 'flex flex-col items-center',
                 'relative',
                 'after:absolute after:inset-0 hover:after:bg-blue-400/50'
               )}
             >
-              <GameCover name={game.name} image={cover} className="h-72" />
+              {pack.cover && <GameCover name={pack.cover.name} image={pack.cover} className="h-72" />}
               <p className="max-w-48 text-center text-xl font-semibold">
-                {game.name}
+                {pack.data.name}
               </p>
             </Link>
           );

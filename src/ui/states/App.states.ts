@@ -3,7 +3,11 @@ import { GameDataOptionsTransformSchema } from '@/types/transform.types';
 import { atom } from 'jotai';
 import { Cover } from 'src/shared/types/cover.types';
 import { Game } from 'src/shared/types/game.types';
+import { PackTrackerResponse } from 'src/shared/types/pack.type';
 import { Preset } from 'src/shared/types/preset.types';
+
+export const packsState = atom<PackTrackerResponse[] | null>(null);
+export const activePackState = atom<PackTrackerResponse | null>(null);
 
 export const presetsState = atom<Preset[] | null>(null);
 export const activePresetState = atom<Preset | null>(null);

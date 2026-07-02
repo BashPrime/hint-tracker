@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 const electron = require('electron');
 
 electron.contextBridge.exposeInMainWorld('electronApi', {
+  requestPacks: () => ipcRenderer.invoke('request-packs'),
   requestGames: () => ipcRenderer.invoke('request-games'),
   requestCovers: () => ipcRenderer.invoke('request-covers'),
   requestPresets: () => ipcRenderer.invoke('request-presets'),

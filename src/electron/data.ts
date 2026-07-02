@@ -3,7 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import { CoverSchema } from '../shared/types/cover.types.js';
 import { GameSchema } from '../shared/types/game.types.js';
-import { PackTrackerJsonSchema } from '../shared/types/pack.type.js';
+import {
+  PackTrackerJsonSchema,
+  PackTrackerResponse,
+} from '../shared/types/pack.type.js';
 import { Preset, PresetSchema } from '../shared/types/preset.types.js';
 import { readAndParseJsonFile } from './config.js';
 import {
@@ -20,7 +23,9 @@ import { readDir } from './io.js';
 import { CoverFileTypeTransformSchema } from './types/transform.types.js';
 import { getErrorMsg } from './util.js';
 
-export function getAllPacksInDir(dir: string = USER_PACKS_PATH) {
+export function getAllPacksInDir(
+  dir: string = USER_PACKS_PATH
+): PackTrackerResponse[] {
   const files = readDir(dir);
 
   if (!files) {
@@ -35,7 +40,7 @@ export function getAllPacksInDir(dir: string = USER_PACKS_PATH) {
     .filter((pack) => pack !== null);
 }
 
-export function getPack(filePath: string) {
+export function getPack(filePath: string): PackTrackerResponse | null {
   const zip = new AdmZip(filePath);
   const parsed = PackTrackerJsonSchema.safeParse(
     JSON.parse(zip.readAsText('tracker.json'))
@@ -49,7 +54,7 @@ export function getPack(filePath: string) {
     path: filePath,
     data: parsed.data,
     cover: parsed.data.cover ? getCover(zip, parsed.data.cover) : null,
-  };
+  } satisfies PackTrackerResponse;
 }
 
 export function getCover(zip: AdmZip, filePath: string) {
