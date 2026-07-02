@@ -1,4 +1,4 @@
-import { fetchPacks } from '@/ipc';
+import { fetchPackDetails, fetchPacks } from '@/ipc';
 import { packsState } from '@/states/App.states';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore } from 'jotai';
@@ -13,17 +13,8 @@ export const Route = createFileRoute('/packs/$packId')({
       await fetchPacks();
     }
   },
-  loader: ({ params }) => {
-    const store = getDefaultStore();
-    const packs = store.get(packsState);
-    const games = store.get(gamesState);
-
-    store.set(
-      activeGameState,
-      games?.find((game) => game.id === params.gameId) ?? null
-    );
-
-    fetchPresetsForGame(params.gameId);
+  loader: async ({ params }) => {
+    await fetchPackDetails(params.packId);
   },
 });
 

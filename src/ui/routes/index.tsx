@@ -21,15 +21,16 @@ function Index() {
 
   return (
     <div data-name="index-root">
-      {!packs && (
-        <div className="flex flex-col items-center">
-          <p className="p-2 text-center text-2xl font-bold uppercase">
-            No Packs Installed!
-          </p>
-          <Frown size={48} />
-        </div>
-      )}
-      {packs && (
+      {!packs ||
+        (!packs.length && (
+          <div className="flex flex-col items-center">
+            <p className="p-2 text-center text-2xl font-bold uppercase">
+              No Packs Installed!
+            </p>
+            <Frown size={48} />
+          </div>
+        ))}
+      {packs && packs.length && (
         <>
           <p className="p-2 text-center text-2xl font-bold uppercase">
             Select Pack
@@ -38,8 +39,8 @@ function Index() {
             {packs.map((pack) => {
               return (
                 <Link
-                  to="/games/$gameId"
-                  params={{ gameId: pack.data.id }}
+                  to="/packs/$packId"
+                  params={{ packId: pack.data.id }}
                   key={pack.data.id}
                   className={cn(
                     'flex flex-col items-center',

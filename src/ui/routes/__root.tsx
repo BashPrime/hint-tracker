@@ -1,17 +1,15 @@
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { cn } from '@/lib/utils';
-import { activeGameState, activeLayoutState } from '@/states/App.states';
 import { createRootRoute, Outlet, useMatchRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { useAtomValue } from 'jotai';
 import { ChevronRight, Home } from 'lucide-react';
 import { Breadcrumb } from './-components/breadcrumb';
 import './root.css';
 
 function RootLayout() {
   // !STATE
-  const game = useAtomValue(activeGameState);
-  const layout = useAtomValue(activeLayoutState);
+  const game = null;
+  const layout = null;
 
   // !HOOKS
   useThemeChanger();

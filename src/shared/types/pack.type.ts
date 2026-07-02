@@ -18,8 +18,42 @@ export const PackTrackerJsonSchema = z.object({
 export type PackTrackerJsonType = z.infer<typeof PackTrackerJsonSchema>;
 
 export const BasicPackDataSchema = z.object({
-  fileName: z.string(),
+  path: z.string(),
   data: PackTrackerJsonSchema,
   cover: CoverSchema.nullable(),
 });
 export type BasicPackData = z.infer<typeof BasicPackDataSchema>;
+
+export const ItemSchema = z.object({
+  name: z.string(),
+  code: z.string(),
+  type: z.enum(['progression', 'useful', 'filler']),
+  features: z.array(z.string()),
+});
+export type Item = z.infer<typeof ItemSchema>;
+
+export const LocationSchema = z.object({
+  name: z.string(),
+  features: z.array(z.string()),
+});
+
+export const LocationParentSchema = z.object({
+  name: z.string(),
+  children: z.array(LocationSchema),
+});
+export type LocationParent = z.infer<typeof LocationParentSchema>;
+
+export const FeatureSchema = z.object({
+  name: z.string(),
+  code: z.string(),
+  type: z.enum(['feature:item', 'feature:location']),
+});
+export type Feature = z.infer<typeof FeatureSchema>;
+
+export const PackDetailsSchema = z.object({
+  id: z.string(),
+  items: z.array(ItemSchema),
+  locations: z.array(LocationParentSchema),
+  features: z.array(FeatureSchema),
+});
+export type PackDetails = z.infer<typeof PackDetailsSchema>;
