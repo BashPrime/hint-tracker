@@ -1,6 +1,7 @@
 import z from 'zod';
 import { SemVerSchema } from './base.types.js';
 import { CoverSchema } from './cover.types.js';
+import { LayoutRootSchema } from './layout.types.js';
 
 export const PackTrackerJsonSchema = z.object({
   schemaVersion: z.literal(1),
@@ -49,18 +50,6 @@ export const FeatureSchema = z.object({
   type: z.enum(['feature:item', 'feature:location']),
 });
 export type Feature = z.infer<typeof FeatureSchema>;
-
-export const LayoutPointerSchema = z.object({
-  key: z.string(),
-  type: z.literal('pointer'),
-});
-export type LayoutPointer = z.infer<typeof LayoutPointerSchema>;
-
-export const LayoutRootSchema = z.object({
-  type: z.literal('root'),
-  content: z.array(LayoutPointerSchema),
-});
-export type LayoutRoot = z.infer<typeof LayoutRootSchema>;
 
 export const PackDetailsSchema = z.object({
   id: z.string(),

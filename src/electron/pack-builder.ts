@@ -1,5 +1,7 @@
 import AdmZip from 'adm-zip';
+import z from 'zod';
 import {
+  LayoutGroupSchema,
   UnprocessedLayoutRoot,
   UnprocessedLayoutRootSchema,
 } from '../shared/types/layout.types.js';
@@ -60,12 +62,13 @@ function buildFeatures(pack: BasicPack): any[] {
   return features;
 }
 
-function getLayoutRoot(layout: object): UnprocessedLayoutRoot | null {
-  for (const [key, val] of Object.entries(layout)) {
-    const parsed = UnprocessedLayoutRootSchema.safeParse(val);
+const LayoutGroupJsonSchema = z.record(z.string(), LayoutGroupSchema);
+type LayoutGroupJson = z.infer<typeof LayoutGroupJsonSchema>;
 
-    if (parsed.success) {
-      return parsed.data;
+function getLayoutRoot(layout: LayoutGroupJson): UnprocessedLayoutRoot | null {
+  for (const [key, val] of Object.entries(layout)) {
+    if (val.type === 'root') {
+      return UnprocessedLayoutRootSchema.parse(val);
     }
   }
 
@@ -74,16 +77,21 @@ function getLayoutRoot(layout: object): UnprocessedLayoutRoot | null {
 
 function buildLayout(pack: BasicPack) {
   const zip = new AdmZip(pack.path);
-  const baseLayout: { [key: string]: object } = {};
+  const layoutGroups: LayoutGroupJson = {};
 
   // Build initial, unprocessed layout object
   for (const layoutPath of pack.layout) {
-    const layoutItem = JSON.parse(zip.readAsText(layoutPath));
-    Object.assign(baseLayout, layoutItem);
+    const json = JSON.parse(zip.readAsText(layoutPath));
+    const parsedGroup = LayoutGroupJsonSchema.safeParse(json);
+
+    if (parsedGroup.success) {
+      // Assign to groups
+      Object.assign(layoutGroups, parsedGroup.data);
+    }
   }
 
-  // Get the layout root
-  const layoutRoot = getLayoutRoot(baseLayout);
+  // Get layout root
+  const layoutRoot = getLayoutRoot(layoutGroups);
 
   if (!layoutRoot) {
     return {};
@@ -92,6 +100,6 @@ function buildLayout(pack: BasicPack) {
   // replace the pointers with the objects they represent
   return {
     ...layoutRoot,
-    content: layoutRoot.content.map((p) => baseLayout[p.key]),
+    content: layoutRoot.content.map((p) => layoutGroups[p.key]),
   };
 }

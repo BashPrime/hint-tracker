@@ -57,3 +57,4 @@ export const LayoutRootSchema = z.object({
   type: z.literal('root'),
   content: z.array(LayoutGroupSchema),
 });
+export type LayoutRoot = z.infer<typeof LayoutRootSchema>;
