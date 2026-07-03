@@ -55,5 +55,6 @@ export const PackDetailsSchema = z.object({
   items: z.array(ItemSchema),
   locations: z.array(LocationParentSchema),
   features: z.array(FeatureSchema),
+  layout: z.object(),
 });
 export type PackDetails = z.infer<typeof PackDetailsSchema>;

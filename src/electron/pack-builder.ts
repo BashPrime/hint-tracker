@@ -9,12 +9,14 @@ export function buildPackDetails(pack: BasicPack): PackDetails {
   const items = buildItems(pack);
   const locations = buildLocations(pack);
   const features = buildFeatures(pack);
+  const layout = buildLayout(pack);
 
   return PackDetailsSchema.parse({
     id: pack.id,
     items,
     locations,
     features,
+    layout,
   });
 }
 
@@ -54,13 +56,14 @@ function buildFeatures(pack: BasicPack): any[] {
   return features;
 }
 
-function buildLayout(pack: BasicPack): any[] {
+function buildLayout(pack: BasicPack): object {
   const zip = new AdmZip(pack.path);
-  const layoutData = {};
-  // const layout = [];
+  const layout = {};
 
   for (const layoutPath of pack.layout) {
+    const layoutItem = JSON.parse(zip.readAsText(layoutPath));
+    Object.assign(layout, layoutItem);
   }
 
-  return [];
+  return layout;
 }

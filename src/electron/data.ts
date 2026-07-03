@@ -43,7 +43,7 @@ export function getPackTrackerJson(filePath: string): BasicPack | null {
   }
 
   return BasicPackSchema.parse({
-    ...parsedJson,
+    ...parsedJson.data,
     path: filePath,
     cover: parsedJson.data.cover ? getCover(zip, parsedJson.data.cover) : null,
   })
