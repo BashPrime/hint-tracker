@@ -1,7 +1,7 @@
 import { fetchPackDetails, fetchPacks } from '@/ipc';
-import { packsState } from '@/states/App.states';
+import { activePackState, packsState } from '@/states/App.states';
 import { createFileRoute } from '@tanstack/react-router';
-import { getDefaultStore } from 'jotai';
+import { getDefaultStore, useAtomValue } from 'jotai';
 
 export const Route = createFileRoute('/packs/$packId')({
   component: PackLayout,
@@ -19,5 +19,7 @@ export const Route = createFileRoute('/packs/$packId')({
 });
 
 function PackLayout() {
-  return <div>Hello "/packs/$packId"!</div>;
+  const pack = useAtomValue(activePackState);
+
+  return <div>{pack?.layout.content.map((c) => <p>{c.header}</p>)}</div>;
 }

@@ -69,7 +69,7 @@ function getLayoutRoot(layout: object): LayoutRoot | null {
   return null;
 }
 
-function buildLayout(pack: BasicPack): object {
+function buildLayout(pack: BasicPack) {
   const zip = new AdmZip(pack.path);
   const baseLayout: { [key: string]: object } = {};
 
@@ -87,18 +87,8 @@ function buildLayout(pack: BasicPack): object {
   }
 
   // replace the pointers with the objects they represent
-  const finalLayout: { type: 'root'; content: any[] } = {
+  return {
     ...layoutRoot,
-    content: [],
+    content: layoutRoot.content.map((p) => baseLayout[p.key]),
   };
-
-  for (const pointer of layoutRoot.content) {
-    const match = baseLayout[pointer.key];
-
-    if (match) {
-      finalLayout.content.push(match);
-    }
-  }
-
-  return finalLayout;
 }
