@@ -1,9 +1,5 @@
-import {
-  LayoutGrid as LayoutGridType,
-  LayoutHintSchema,
-} from 'src/shared/types/layout.types';
-import { LayoutGroup } from './group';
-import { LayoutHint } from './hint';
+import { LayoutGrid as LayoutGridType } from 'src/shared/types/layout.types';
+import { LayoutElement } from './element';
 
 type RowProps = {
   row: any[];
@@ -13,15 +9,7 @@ function LayoutRow({ row }: RowProps) {
   return (
     <>
       {row.map((col, colIdx) => (
-        <div key={`grid-col-${colIdx}`}>
-          {col.type === 'hint' && (
-            <LayoutHint
-              hint={LayoutHintSchema.parse(col)}
-              autofills={col.autofills}
-            />
-          )}
-          {col.type !== 'hint' && <LayoutGroup group={col} />}
-        </div>
+        <LayoutElement elem={col} key={`grid-col-${colIdx}`} />
       ))}
     </>
   );
