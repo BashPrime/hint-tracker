@@ -12,8 +12,8 @@ type Props = {
 export function LayoutArray({ array }: Props) {
   return (
     <>
-      {array.content.map((elem) => (
-        <>
+      {array.content.map((elem, idx) => (
+        <div data-name="array-content" key={`array-${idx}`}>
           {elem.type === 'hint' && (
             <LayoutHint
               hint={LayoutHintSchema.parse(elem)}
@@ -21,7 +21,7 @@ export function LayoutArray({ array }: Props) {
             />
           )}
           {elem.type !== 'hint' && <LayoutGroup group={elem} />}
-        </>
+        </div>
       ))}
     </>
   );

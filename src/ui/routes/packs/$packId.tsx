@@ -31,8 +31,8 @@ function PackLayoutRoot() {
     // Pack Layouts use a horizontal orientation by default.
     // So, each group element is a column rather than a row.
     <div className="flex flex-row gap-4" data-name="pack-layout-root">
-      {layout.content.map((col) => (
-        <LayoutGroup group={col} />
+      {layout.content.map((col, idx) => (
+        <LayoutGroup group={col} key={`root-group-${idx}`} />
       ))}
     </div>
   );

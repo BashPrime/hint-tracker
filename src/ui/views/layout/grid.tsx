@@ -13,16 +13,15 @@ function LayoutRow({ row }: RowProps) {
   return (
     <>
       {row.map((col, colIdx) => (
-        <>
+        <div key={`grid-col-${colIdx}`}>
           {col.type === 'hint' && (
             <LayoutHint
               hint={LayoutHintSchema.parse(col)}
               autofills={col.autofills}
-              key={`col-${colIdx}`}
             />
           )}
           {col.type !== 'hint' && <LayoutGroup group={col} />}
-        </>
+        </div>
       ))}
     </>
   );
