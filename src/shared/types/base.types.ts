@@ -13,13 +13,9 @@ export type HintType = z.infer<typeof HintTypeSchema>;
 export const ThemeSchema = z.enum(['system', 'light', 'dark']);
 export type ThemeType = z.infer<typeof ThemeSchema>;
 
-export const SemVerSchema = z.string().transform((v) => {
-  const [major, minor, patch] = v.split('.').map(Number);
-
-  return {
-    major,
-    minor,
-    patch,
-  };
-});
+export const SemVerSchema = z
+  .string()
+  .regex(
+    /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+  );
 export type SemVer = z.infer<typeof SemVerSchema>;
