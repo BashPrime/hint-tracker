@@ -68,7 +68,7 @@ export function getPackDetails(packId: string) {
     getAllPacksInDir();
   }
 
-  const match = packs.find((p) => p.data.id === packId);
+  const match = packs.find((p) => p.id === packId);
 
   if (!match) {
     return null;
