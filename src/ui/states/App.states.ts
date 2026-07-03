@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { BasicPackData, PackDetails } from 'src/shared/types/pack.types';
+import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
-export const packsState = atom<BasicPackData[] | null>(null);
+export const packsState = atom<BasicPack[] | null>(null);
 export const activePackState = atom<PackDetails | null>(null);

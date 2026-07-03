@@ -1,28 +1,28 @@
 import AdmZip from 'adm-zip';
 import {
-  BasicPackData,
+  BasicPack,
   PackDetails,
   PackDetailsSchema,
-} from '../shared/types/pack.type.js';
+} from '../shared/types/pack.types.js';
 
-export function buildPackDetails(pack: BasicPackData): PackDetails {
+export function buildPackDetails(pack: BasicPack): PackDetails {
   const items = buildItems(pack);
   const locations = buildLocations(pack);
   const features = buildFeatures(pack);
 
   return PackDetailsSchema.parse({
-    id: pack.data.id,
+    id: pack.id,
     items,
     locations,
     features,
   });
 }
 
-function buildItems(pack: BasicPackData): any[] {
+function buildItems(pack: BasicPack): any[] {
   const zip = new AdmZip(pack.path);
   const items = [];
 
-  for (const itemPath of pack.data.items) {
+  for (const itemPath of pack.items) {
     const newItems = JSON.parse(zip.readAsText(itemPath));
     items.push(...newItems);
   }
@@ -30,11 +30,11 @@ function buildItems(pack: BasicPackData): any[] {
   return items;
 }
 
-function buildLocations(pack: BasicPackData): any[] {
+function buildLocations(pack: BasicPack): any[] {
   const zip = new AdmZip(pack.path);
   const locations = [];
 
-  for (const locationPath of pack.data.locations) {
+  for (const locationPath of pack.locations) {
     const newLocations = JSON.parse(zip.readAsText(locationPath));
     locations.push(...newLocations);
   }
@@ -42,14 +42,25 @@ function buildLocations(pack: BasicPackData): any[] {
   return locations;
 }
 
-function buildFeatures(pack: BasicPackData): any[] {
+function buildFeatures(pack: BasicPack): any[] {
   const zip = new AdmZip(pack.path);
   const features = [];
 
-  for (const featurePath of pack.data.features) {
+  for (const featurePath of pack.features) {
     const newFeatures = JSON.parse(zip.readAsText(featurePath));
     features.push(...newFeatures);
   }
 
   return features;
+}
+
+function buildLayout(pack: BasicPack): any[] {
+  const zip = new AdmZip(pack.path);
+  const layoutData = {};
+  // const layout = [];
+
+  for (const layoutPath of pack.layout) {
+  }
+
+  return [];
 }

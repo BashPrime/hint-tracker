@@ -2,19 +2,20 @@ import AdmZip from 'adm-zip';
 import path from 'path';
 import { CoverSchema } from '../shared/types/cover.types.js';
 import {
-  BasicPackData,
+  BasicPack,
+  BasicPackSchema,
   PackTrackerJsonSchema,
-} from '../shared/types/pack.type.js';
+} from '../shared/types/pack.types.js';
 import { USER_PACKS_PATH } from './constants.js';
 import { readDir } from './io.js';
 import { buildPackDetails } from './pack-builder.js';
 import { CoverFileTypeTransformSchema } from './types/transform.types.js';
 
-let packs: BasicPackData[];
+let packs: BasicPack[];
 
 export function getAllPacksInDir(
   dir: string = USER_PACKS_PATH
-): BasicPackData[] {
+): BasicPack[] {
   const files = readDir(dir);
 
   if (!files) {
@@ -31,21 +32,21 @@ export function getAllPacksInDir(
   return packs;
 }
 
-export function getPackTrackerJson(filePath: string): BasicPackData | null {
+export function getPackTrackerJson(filePath: string): BasicPack | null {
   const zip = new AdmZip(filePath);
-  const parsed = PackTrackerJsonSchema.safeParse(
+  const parsedJson = PackTrackerJsonSchema.safeParse(
     JSON.parse(zip.readAsText('tracker.json'))
   );
 
-  if (!parsed.success) {
+  if (!parsedJson.success) {
     return null;
   }
 
-  return {
+  return BasicPackSchema.parse({
+    ...parsedJson,
     path: filePath,
-    data: parsed.data,
-    cover: parsed.data.cover ? getCover(zip, parsed.data.cover) : null,
-  } satisfies BasicPackData;
+    cover: parsedJson.data.cover ? getCover(zip, parsedJson.data.cover) : null,
+  })
 }
 
 export function getCover(zip: AdmZip, filePath: string) {

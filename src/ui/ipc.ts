@@ -1,10 +1,10 @@
 import { getDefaultStore } from 'jotai';
-import { BasicPackData, PackDetails } from 'src/shared/types/pack.types';
+import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 import z from 'zod';
 import { activePackState, packsState } from './states/App.states';
 
 export async function fetchPacks() {
-  const data = (await window.electronApi.fetchPacks()) as BasicPackData[];
+  const data = (await window.electronApi.fetchPacks()) as BasicPack[];
   try {
     getDefaultStore().set(packsState, data);
   } catch (err) {

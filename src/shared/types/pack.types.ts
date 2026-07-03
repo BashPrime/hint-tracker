@@ -14,15 +14,15 @@ export const PackTrackerJsonSchema = z.object({
   items: z.array(z.string()),
   locations: z.array(z.string()),
   features: z.array(z.string()),
+  layout: z.array(z.string()),
 });
 export type PackTrackerJsonType = z.infer<typeof PackTrackerJsonSchema>;
 
-export const BasicPackDataSchema = z.object({
+export const BasicPackSchema = PackTrackerJsonSchema.extend({
   path: z.string(),
-  data: PackTrackerJsonSchema,
   cover: CoverSchema.nullable(),
 });
-export type BasicPackData = z.infer<typeof BasicPackDataSchema>;
+export type BasicPack = z.infer<typeof BasicPackSchema>;
 
 export const ItemSchema = z.object({
   name: z.string(),
