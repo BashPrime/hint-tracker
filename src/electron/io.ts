@@ -1,4 +1,5 @@
 import fs from 'fs';
+import z from 'zod';
 import { getErrorMsg } from './util.js';
 
 export function readJsonFile(path: string) {
@@ -39,6 +40,31 @@ export function readDir(path: string) {
       path,
       getErrorMsg(err)
     );
+  }
+
+  return null;
+}
+
+export function readAndParseJsonFile<T extends z.ZodTypeAny>(
+  path: string,
+  schema: T
+) {
+  const raw = readJsonFile(path);
+
+  if (raw) {
+    try {
+      const parsed = schema.parse(raw);
+      return parsed;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        console.error(
+          'readAndParseJsonFile(): Error trying to read json file:',
+          path,
+          schema.type,
+          err.issues
+        );
+      } else console.error(getErrorMsg(err));
+    }
   }
 
   return null;

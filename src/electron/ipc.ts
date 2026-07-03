@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 import { IPC_IDS } from './constants.js';
-import { getAllPacksInDir, getPackDetails } from './data.js';
+import { getAllPacksInDir, getPackDetails } from './packs.js';
 
 export function runIpcHandlers() {
   // Handle packs request from renderer

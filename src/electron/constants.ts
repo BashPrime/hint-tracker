@@ -1,19 +1,9 @@
 import { app } from 'electron';
 import path from 'path';
-import { isDev } from './util.js';
-
-// Filename extensions
-export const PRESET_FILENAME_EXT = '.preset';
-export const TRACKER_FILE_EXT = '.track';
 
 // Paths
 export const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
-export const DEFAULT_DATA_DIR = path.join(
-  app.getAppPath(),
-  isDev() ? './src' : '..',
-  'shared',
-  'data'
-);
+
 // User dirs
 export const USER_DATA_DIR = path.join(app.getPath('userData'), 'data');
 export const USER_PACKS_PATH = path.join(USER_DATA_DIR, 'packs');

@@ -1,15 +1,14 @@
 import AdmZip from 'adm-zip';
 import path from 'path';
-import { CoverSchema } from '../shared/types/cover.types.js';
 import {
   BasicPack,
   BasicPackSchema,
   PackTrackerJsonSchema,
 } from '../shared/types/pack.types.js';
 import { USER_PACKS_PATH } from './constants.js';
+import { getCover } from './covers.js';
 import { readDir } from './io.js';
 import { buildPackDetails } from './pack-builder.js';
-import { CoverFileTypeTransformSchema } from './types/transform.types.js';
 
 let packs: BasicPack[];
 
@@ -47,20 +46,6 @@ export function getPackTrackerJson(filePath: string): BasicPack | null {
     path: filePath,
     cover: parsedJson.data.cover ? getCover(zip, parsedJson.data.cover) : null,
   })
-}
-
-export function getCover(zip: AdmZip, filePath: string) {
-  const buffer = zip.readFile(filePath);
-
-  if (!buffer) {
-    return null;
-  }
-
-  return CoverSchema.parse({
-    name: filePath,
-    data: buffer.toString('base64'),
-    type: CoverFileTypeTransformSchema.parse(filePath),
-  });
 }
 
 export function getPackDetails(packId: string) {
