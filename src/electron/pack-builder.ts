@@ -1,4 +1,5 @@
 import AdmZip from 'adm-zip';
+import { LayoutRoot, LayoutRootSchema } from '../shared/types/layout.types.js';
 import {
   BasicPack,
   PackDetails,
@@ -56,14 +57,48 @@ function buildFeatures(pack: BasicPack): any[] {
   return features;
 }
 
-function buildLayout(pack: BasicPack): object {
-  const zip = new AdmZip(pack.path);
-  const layout = {};
+function getLayoutRoot(layout: object): LayoutRoot | null {
+  for (const [key, val] of Object.entries(layout)) {
+    const parsed = LayoutRootSchema.safeParse(val);
 
-  for (const layoutPath of pack.layout) {
-    const layoutItem = JSON.parse(zip.readAsText(layoutPath));
-    Object.assign(layout, layoutItem);
+    if (parsed.success) {
+      return parsed.data;
+    }
   }
 
-  return layout;
+  return null;
+}
+
+function buildLayout(pack: BasicPack): object {
+  const zip = new AdmZip(pack.path);
+  const baseLayout: { [key: string]: object } = {};
+
+  // Build initial, unprocessed layout object
+  for (const layoutPath of pack.layout) {
+    const layoutItem = JSON.parse(zip.readAsText(layoutPath));
+    Object.assign(baseLayout, layoutItem);
+  }
+
+  // Get the layout root
+  const layoutRoot = getLayoutRoot(baseLayout);
+
+  if (!layoutRoot) {
+    return {};
+  }
+
+  // replace the pointers with the objects they represent
+  const finalLayout: { type: 'root'; content: any[] } = {
+    ...layoutRoot,
+    content: [],
+  };
+
+  for (const pointer of layoutRoot.content) {
+    const match = baseLayout[pointer.key];
+
+    if (match) {
+      finalLayout.content.push(match);
+    }
+  }
+
+  return finalLayout;
 }

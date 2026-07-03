@@ -10,7 +10,10 @@ export const LayoutGroupSchema = z.object({
       location: z.array(z.string()).optional(),
     })
     .optional(),
+  type: z.string(),
+  content: z.array(z.any()),
 });
+export type LayoutGroup = z.infer<typeof LayoutGroupSchema>;
 
 export const LayoutGridSchema = LayoutGroupSchema.extend({
   type: z.literal('grid'),
