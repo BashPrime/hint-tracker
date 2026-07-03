@@ -40,8 +40,8 @@ function Index() {
               return (
                 <Link
                   to="/packs/$packId"
-                  params={{ packId: pack.data.id }}
-                  key={pack.data.id}
+                  params={{ packId: pack.id }}
+                  key={pack.id}
                   className={cn(
                     'flex flex-col items-center',
                     'relative',
@@ -56,7 +56,7 @@ function Index() {
                     />
                   )}
                   <p className="max-w-48 text-center text-xl font-semibold">
-                    {pack.data.name}
+                    {pack.name}
                   </p>
                 </Link>
               );
