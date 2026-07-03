@@ -2,8 +2,14 @@ import z from 'zod';
 
 export const LayoutGroupSchema = z.object({
   header: z.string().optional(),
+  color: z.string().optional(),
   borderColor: z.string().optional(),
-  autofills: z.array(z.string()).optional(),
+  autofills: z
+    .object({
+      item: z.array(z.string()).optional(),
+      location: z.array(z.string()).optional(),
+    })
+    .optional(),
 });
 
 export const LayoutGridSchema = LayoutGroupSchema.extend({
@@ -18,10 +24,16 @@ export const LayoutArraySchema = LayoutGroupSchema.extend({
 });
 export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 
-export const HintSchema = z.object({
+export const LayoutHintSchema = z.object({
   type: z.literal('hint'),
   name: z.string(),
-  color: z.string().optional(),
   hintType: z.enum(['item', 'location', 'itemAndLocation']),
-  autofills: z.array(z.string()).optional(),
+  color: z.string().optional(),
+  autofills: z
+    .object({
+      item: z.array(z.string()).optional(),
+      location: z.array(z.string()).optional(),
+    })
+    .optional(),
 });
+export type LayoutHint = z.infer<typeof LayoutHintSchema>;
