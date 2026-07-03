@@ -1,5 +1,5 @@
 import { getDefaultStore } from 'jotai';
-import { BasicPackData, PackDetails } from 'src/shared/types/pack.type';
+import { BasicPackData, PackDetails } from 'src/shared/types/pack.types';
 import z from 'zod';
 import { activePackState, packsState } from './states/App.states';
 
