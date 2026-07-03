@@ -11,7 +11,7 @@ type Props = {
 export function LayoutHint({ hint, autofills }: Props) {
   return (
     <div data-name="layout-hint">
-      <p>{hint.name}</p>
+      <p className="font-semibold">{hint.name}</p>
       {hint.hintType !== 'location' && <p>Item</p>}
       {hint.hintType !== 'item' && <p>Location</p>}
     </div>
