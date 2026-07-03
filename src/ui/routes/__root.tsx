@@ -1,19 +1,14 @@
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { cn } from '@/lib/utils';
-import { createRootRoute, Outlet, useMatchRoute } from '@tanstack/react-router';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { ChevronRight, Home } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { Breadcrumb } from './-components/breadcrumb';
 import './root.css';
 
 function RootLayout() {
-  // !STATE
-  const game = null;
-  const layout = null;
-
   // !HOOKS
   useThemeChanger();
-  const matchRoute = useMatchRoute();
 
   return (
     <>
@@ -21,28 +16,8 @@ function RootLayout() {
         className={cn('flex flex-none items-center gap-2', 'font-bold', 'p-2')}
       >
         <Breadcrumb to="/">
-          <Home />
+          <Home size={20} />
         </Breadcrumb>
-        {game && !matchRoute({ to: '/' }) && (
-          <>
-            <ChevronRight size={16} />
-            <Breadcrumb to="/games/$gameId" params={{ gameId: game.id }}>
-              {game.name}
-            </Breadcrumb>
-          </>
-        )}
-
-        {layout && matchRoute({ to: '/layouts/$layoutId' }) && (
-          <>
-            <ChevronRight size={16} />
-            <Breadcrumb
-              to="/layouts/$layoutId"
-              params={{ layoutId: layout.id }}
-            >
-              {layout.name}
-            </Breadcrumb>
-          </>
-        )}
       </nav>
       <div className="flex-auto overflow-auto">
         <Outlet />

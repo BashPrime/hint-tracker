@@ -1,15 +1,16 @@
 import z from 'zod';
 
+export const AutofillsSchema = z.object({
+  item: z.array(z.string()).optional(),
+  location: z.array(z.string()).optional(),
+});
+export type Autofills = z.infer<typeof AutofillsSchema>;
+
 export const LayoutGroupSchema = z.object({
   header: z.string().optional(),
   color: z.string().optional(),
   borderColor: z.string().optional(),
-  autofills: z
-    .object({
-      item: z.array(z.string()).optional(),
-      location: z.array(z.string()).optional(),
-    })
-    .optional(),
+  autofills: AutofillsSchema.optional(),
   type: z.string(),
   content: z.array(z.any()),
 });
@@ -32,12 +33,7 @@ export const LayoutHintSchema = z.object({
   name: z.string(),
   hintType: z.enum(['item', 'location', 'itemAndLocation']),
   color: z.string().optional(),
-  autofills: z
-    .object({
-      item: z.array(z.string()).optional(),
-      location: z.array(z.string()).optional(),
-    })
-    .optional(),
+  autofills: AutofillsSchema.optional(),
 });
 export type LayoutHint = z.infer<typeof LayoutHintSchema>;
 

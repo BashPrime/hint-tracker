@@ -1,10 +1,11 @@
 import { fetchPackDetails, fetchPacks } from '@/ipc';
 import { activePackState, packsState } from '@/states/App.states';
+import { LayoutGroup } from '@/views/layout/group';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 
 export const Route = createFileRoute('/packs/$packId')({
-  component: PackLayout,
+  component: PackLayoutRoot,
   beforeLoad: async () => {
     const store = getDefaultStore();
     const packs = store.get(packsState);
@@ -18,8 +19,21 @@ export const Route = createFileRoute('/packs/$packId')({
   },
 });
 
-function PackLayout() {
+function PackLayoutRoot() {
   const pack = useAtomValue(activePackState);
+  const layout = pack?.layout ?? null;
 
-  return <div>{pack?.layout.content.map((c) => <p>{c.header}</p>)}</div>;
+  if (!layout) {
+    return null;
+  }
+
+  return (
+    // Pack Layouts use a horizontal orientation by default.
+    // So, each group element is a column rather than a row.
+    <div className="flex flex-row gap-4" data-name="pack-layout-root">
+      {layout.content.map((g) => (
+        <LayoutGroup group={g} />
+      ))}
+    </div>
+  );
 }
