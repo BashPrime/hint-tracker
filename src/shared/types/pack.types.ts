@@ -50,14 +50,23 @@ export const FeatureSchema = z.object({
 });
 export type Feature = z.infer<typeof FeatureSchema>;
 
+export const LayoutPointerSchema = z.object({
+  key: z.string(),
+  type: z.literal('pointer'),
+});
+export type LayoutPointer = z.infer<typeof LayoutPointerSchema>;
+
+export const LayoutRootSchema = z.object({
+  type: z.literal('root'),
+  content: z.array(LayoutPointerSchema),
+});
+export type LayoutRoot = z.infer<typeof LayoutRootSchema>;
+
 export const PackDetailsSchema = z.object({
   id: z.string(),
   items: z.array(ItemSchema),
   locations: z.array(LocationParentSchema),
   features: z.array(FeatureSchema),
-  layout: z.object({
-    type: z.literal('root'),
-    content: z.array(z.any()),
-  }),
+  layout: LayoutRootSchema,
 });
 export type PackDetails = z.infer<typeof PackDetailsSchema>;

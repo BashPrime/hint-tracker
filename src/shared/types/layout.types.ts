@@ -47,8 +47,13 @@ export const LayoutPointerSchema = z.object({
 });
 export type LayoutPointer = z.infer<typeof LayoutPointerSchema>;
 
-export const LayoutRootSchema = z.object({
+export const UnprocessedLayoutRootSchema = z.object({
   type: z.literal('root'),
   content: z.array(LayoutPointerSchema),
 });
-export type LayoutRoot = z.infer<typeof LayoutRootSchema>;
+export type UnprocessedLayoutRoot = z.infer<typeof UnprocessedLayoutRootSchema>;
+
+export const LayoutRootSchema = z.object({
+  type: z.literal('root'),
+  content: z.array(LayoutGroupSchema),
+});

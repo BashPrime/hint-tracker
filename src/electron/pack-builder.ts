@@ -1,5 +1,8 @@
 import AdmZip from 'adm-zip';
-import { LayoutRoot, LayoutRootSchema } from '../shared/types/layout.types.js';
+import {
+  UnprocessedLayoutRoot,
+  UnprocessedLayoutRootSchema,
+} from '../shared/types/layout.types.js';
 import {
   BasicPack,
   PackDetails,
@@ -57,9 +60,9 @@ function buildFeatures(pack: BasicPack): any[] {
   return features;
 }
 
-function getLayoutRoot(layout: object): LayoutRoot | null {
+function getLayoutRoot(layout: object): UnprocessedLayoutRoot | null {
   for (const [key, val] of Object.entries(layout)) {
-    const parsed = LayoutRootSchema.safeParse(val);
+    const parsed = UnprocessedLayoutRootSchema.safeParse(val);
 
     if (parsed.success) {
       return parsed.data;
