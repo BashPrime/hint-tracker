@@ -19,7 +19,9 @@ export const LayoutArraySchema = LayoutGroupSchema.extend({
 export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 
 export const HintSchema = z.object({
-  key: z.string(),
-  type: z.enum(['item', 'location', 'itemAndLocation']),
+  type: z.literal('hint'),
+  name: z.string(),
+  color: z.string().optional(),
+  hintType: z.enum(['item', 'location', 'itemAndLocation']),
   autofills: z.array(z.string()).optional(),
 });
