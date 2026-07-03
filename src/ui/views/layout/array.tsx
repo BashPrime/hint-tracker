@@ -2,23 +2,25 @@ import {
   LayoutArray as LayoutArrayType,
   LayoutHintSchema,
 } from 'src/shared/types/layout.types';
+import { LayoutGroup } from './group';
 import { LayoutHint } from './hint';
 
 type Props = {
-  group: LayoutArrayType;
+  array: LayoutArrayType;
 };
 
-export function LayoutArray({ group }: Props) {
+export function LayoutArray({ array }: Props) {
   return (
     <>
-      {group.content.map((c) => (
+      {array.content.map((elem) => (
         <>
-          {c.type === 'hint' && (
+          {elem.type === 'hint' && (
             <LayoutHint
-              hint={LayoutHintSchema.parse(c)}
-              autofills={group.autofills}
+              hint={LayoutHintSchema.parse(elem)}
+              autofills={array.autofills}
             />
           )}
+          {elem.type !== 'hint' && <LayoutGroup group={elem} />}
         </>
       ))}
     </>

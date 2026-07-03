@@ -2,6 +2,7 @@ import {
   LayoutGrid as LayoutGridType,
   LayoutHintSchema,
 } from 'src/shared/types/layout.types';
+import { LayoutGroup } from './group';
 import { LayoutHint } from './hint';
 
 type RowProps = {
@@ -10,7 +11,7 @@ type RowProps = {
 
 function LayoutRow({ row }: RowProps) {
   return (
-    <div>
+    <>
       {row.map((col, colIdx) => (
         <>
           {col.type === 'hint' && (
@@ -20,9 +21,10 @@ function LayoutRow({ row }: RowProps) {
               key={`col-${colIdx}`}
             />
           )}
+          {col.type !== 'hint' && <LayoutGroup group={col} />}
         </>
       ))}
-    </div>
+    </>
   );
 }
 
