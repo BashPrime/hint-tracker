@@ -11,11 +11,10 @@ type Props = {
   comboboxOptions?: Autofills;
 };
 
-const itemAtom = atom('');
-const locationAtom = atom('');
-
 export function LayoutHint({ hint, comboboxOptions }: Props) {
   const optionsToUse = comboboxOptions ? comboboxOptions : hint.autofills;
+  const itemAtom = atom('');
+  const locationAtom = atom('');
 
   // !HOOKS
   const options = useComboboxOptions(optionsToUse ?? {});
