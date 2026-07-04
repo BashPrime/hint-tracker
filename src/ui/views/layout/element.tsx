@@ -22,7 +22,7 @@ export function LayoutElement({ elem }: Props) {
         <LayoutGrid grid={LayoutGridSchema.parse(elem)} />
       )}
       {elem.type === 'hint' && (
-        <LayoutHint hint={LayoutHintSchema.parse(elem)} />
+        <LayoutHint hint={LayoutHintSchema.parse(elem)} autofills={elem.autofills} />
       )}
     </>
   );

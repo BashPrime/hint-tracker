@@ -1,8 +1,17 @@
 import z from 'zod';
 
+export const AutofillOptionSchema = z.enum([
+  'items',
+  'locations',
+  'regions',
+  'features:item',
+  'features:location',
+]);
+export type AutofillOption = z.infer<typeof AutofillOptionSchema>;
+
 export const AutofillsSchema = z.object({
-  item: z.array(z.string()).optional(),
-  location: z.array(z.string()).optional(),
+  item: z.array(AutofillOptionSchema).optional(),
+  location: z.array(AutofillOptionSchema).optional(),
 });
 export type Autofills = z.infer<typeof AutofillsSchema>;
 

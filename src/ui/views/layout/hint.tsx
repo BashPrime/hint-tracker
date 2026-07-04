@@ -1,5 +1,5 @@
 import { AtomCombobox } from '@/components/atom-combobox';
-import { useAutofills } from '@/hooks/useAutofills';
+import { useComboboxOptions } from '@/hooks/useComboboxOptions';
 import { atom } from 'jotai';
 import {
   Autofills,
@@ -15,22 +15,32 @@ const itemAtom = atom('');
 const locationAtom = atom('');
 
 export function LayoutHint({ hint, autofills }: Props) {
-  // !STATE
-  
+  let autofillsToUse: Autofills = { item: [], location: []}
+
+  if (autofills) {
+    autofillsToUse = {...autofills}
+  } else if (hint.autofills) {
+    autofillsToUse = hint.autofills
+  }
+
   // !HOOKS
-  const { location } = useAutofills();
+  const options = useComboboxOptions(autofillsToUse ?? {});
 
   return (
     <div data-name="layout-hint">
       <p className="font-semibold">{hint.name}</p>
       {hint.hintType !== 'location' && (
-        <AtomCombobox atom={itemAtom} placeholder={'Item'} items={[]} />
+        <AtomCombobox
+          atom={itemAtom}
+          placeholder={'Item'}
+          items={options.item}
+        />
       )}
       {hint.hintType !== 'item' && (
         <AtomCombobox
           atom={locationAtom}
           placeholder={'Location'}
-          items={location.map((l) => l.name)}
+          items={options.location}
         />
       )}
     </div>
