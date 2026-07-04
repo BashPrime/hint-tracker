@@ -1,25 +1,35 @@
 import { activePackState } from '@/states/App.states';
 import { useAtomValue } from 'jotai';
 import { AutofillOption, Autofills } from 'src/shared/types/layout.types';
-import { Item, LocationParent, PackDetails } from 'src/shared/types/pack.types';
+import {
+  Feature,
+  Item,
+  LocationParent,
+  PackDetails,
+} from 'src/shared/types/pack.types';
 
 function buildItemsOptions(items: Item[]): string[] {
   return items.map((i) => i.name);
 }
 
 function buildLocationsOptions(locations: LocationParent[]): string[] {
-  const options = [];
-  for (const region of locations) {
-    for (const location of region.children) {
-      options.push(location.name);
-    }
-  }
-
-  return options.sort((a, b) => a.localeCompare(b));
+  return locations
+    .map((parent) => parent.children.map((c) => c.name))
+    .reduce((acc, locations) => acc.concat(...locations), []);
 }
 
 function buildRegionsOptions(locations: LocationParent[]): string[] {
   return locations.map((l) => l.name);
+}
+
+function buildItemFeatureOptions(features: Feature[]): string[] {
+  return features.filter((f) => f.type === 'feature:item').map((f) => f.name);
+}
+
+function buildLocationFeatureOptions(features: Feature[]): string[] {
+  return features
+    .filter((f) => f.type === 'feature:location')
+    .map((f) => f.name);
 }
 
 function parseOptions(pack: PackDetails, optionKeys: AutofillOption[]) {
@@ -37,13 +47,15 @@ function parseOptions(pack: PackDetails, optionKeys: AutofillOption[]) {
         options.push(...buildRegionsOptions(pack.locations));
         break;
       case 'features:item':
+        options.push(...buildItemFeatureOptions(pack.features));
         break;
       case 'features:location':
+        options.push(...buildLocationFeatureOptions(pack.features));
         break;
     }
   }
 
-  return options;
+  return options.sort((a, b) => a.localeCompare(b));
 }
 
 export function useComboboxOptions(comboOptions: Autofills) {

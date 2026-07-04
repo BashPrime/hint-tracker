@@ -9,7 +9,11 @@ export function LayoutArray({ array }: Props) {
   return (
     <>
       {array.content.map((elem, idx) => (
-        <LayoutElement elem={elem} key={`array-${idx}`} />
+        <LayoutElement
+          elem={elem}
+          comboboxOptions={array.autofills}
+          key={`array-${idx}`}
+        />
       ))}
     </>
   );

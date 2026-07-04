@@ -8,23 +8,17 @@ import {
 
 type Props = {
   hint: LayoutHintType;
-  autofills?: Autofills;
+  comboboxOptions?: Autofills;
 };
 
 const itemAtom = atom('');
 const locationAtom = atom('');
 
-export function LayoutHint({ hint, autofills }: Props) {
-  let autofillsToUse: Autofills = { item: [], location: []}
-
-  if (autofills) {
-    autofillsToUse = {...autofills}
-  } else if (hint.autofills) {
-    autofillsToUse = hint.autofills
-  }
+export function LayoutHint({ hint, comboboxOptions }: Props) {
+  const optionsToUse = comboboxOptions ? comboboxOptions : hint.autofills;
 
   // !HOOKS
-  const options = useComboboxOptions(autofillsToUse ?? {});
+  const options = useComboboxOptions(optionsToUse ?? {});
 
   return (
     <div data-name="layout-hint">

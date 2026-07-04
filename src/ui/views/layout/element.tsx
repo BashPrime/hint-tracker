@@ -1,4 +1,5 @@
 import {
+  Autofills,
   LayoutArraySchema,
   LayoutGridSchema,
   LayoutGroup,
@@ -10,9 +11,10 @@ import { LayoutHint } from './hint';
 
 type Props = {
   elem: LayoutGroup;
+  comboboxOptions?: Autofills;
 };
 
-export function LayoutElement({ elem }: Props) {
+export function LayoutElement({ elem, comboboxOptions }: Props) {
   return (
     <>
       {elem.type === 'array' && (
@@ -22,7 +24,10 @@ export function LayoutElement({ elem }: Props) {
         <LayoutGrid grid={LayoutGridSchema.parse(elem)} />
       )}
       {elem.type === 'hint' && (
-        <LayoutHint hint={LayoutHintSchema.parse(elem)} autofills={elem.autofills} />
+        <LayoutHint
+          hint={LayoutHintSchema.parse(elem)}
+          comboboxOptions={comboboxOptions}
+        />
       )}
     </>
   );
