@@ -1,5 +1,9 @@
 import { fetchPackDetails, fetchPacks } from '@/ipc';
-import { activePackState, packsState } from '@/states/App.states';
+import {
+  activePackState,
+  buildLayoutState,
+  packsState,
+} from '@/states/App.states';
 import { LayoutGroup } from '@/views/layout/group';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
@@ -15,7 +19,14 @@ export const Route = createFileRoute('/packs/$packId')({
     }
   },
   loader: async ({ params }) => {
+    const store = getDefaultStore();
     await fetchPackDetails(params.packId);
+
+    const pack = store.get(activePackState);
+
+    if (pack) {
+      const asdf = buildLayoutState(pack.layout);
+    }
   },
 });
 
