@@ -1,8 +1,6 @@
+import { buildLayoutState } from '@/helpers/layoutStateBuilder';
 import { fetchPackDetails, fetchPacks } from '@/ipc';
-import {
-  activePackState,
-  packsState
-} from '@/states/App.states';
+import { activePackState, packsState } from '@/states/App.states';
 import { LayoutGroup } from '@/views/layout/group';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
@@ -24,8 +22,8 @@ export const Route = createFileRoute('/packs/$packId')({
     const pack = store.get(activePackState);
 
     if (pack) {
-      // const asdf = buildLayoutState(pack.layout);
-      // console.log(true)
+      const asdf = buildLayoutState(pack.layout);
+      console.log(true);
     }
   },
 });
