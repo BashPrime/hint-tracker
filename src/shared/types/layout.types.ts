@@ -21,17 +21,15 @@ export const LayoutObjectSchema = z.object({
   borderColor: z.string().optional(),
   comboboxOptions: ComboboxOptionKeysSchema.optional(),
   type: z.string(),
-  get content() {
-    return z.array(LayoutObjectSchema);
-  },
+  // !WHY having a hard time getting the union types to work, so using any for now
+  content: z.array(z.any()),
 });
 export type LayoutObject = z.infer<typeof LayoutObjectSchema>;
 
 export const LayoutGridSchema = LayoutObjectSchema.extend({
   type: z.literal('grid'),
-  get content() {
-    return z.array(z.array(LayoutObjectSchema));
-  },
+  // !WHY having a hard time getting the union types to work, so using any for now
+  content: z.array(z.array(z.any())),
 });
 export type LayoutGrid = z.infer<typeof LayoutGridSchema>;
 

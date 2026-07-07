@@ -26,6 +26,7 @@ export async function fetchPackDetails(packId: string) {
     store.set(activePackState, pack);
 
     // build combobox options db
+    const optionsDb = buildComboboxOptionsDatabase(pack);
     store.set(comboboxOptionsDbState, buildComboboxOptionsDatabase(pack));
   } catch (err) {
     if (err instanceof z.ZodError) {

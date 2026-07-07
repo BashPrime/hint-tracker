@@ -1,8 +1,8 @@
-import { LayoutObject as LayoutGroupType } from 'src/shared/types/layout.types';
+import { LayoutObject } from 'src/shared/types/layout.types';
 import { LayoutElement } from './element';
 
 type Props = {
-  group: LayoutGroupType;
+  group: LayoutObject;
 };
 
 export function LayoutGroup({ group }: Props) {

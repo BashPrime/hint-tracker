@@ -1,8 +1,7 @@
 import { fetchPackDetails, fetchPacks } from '@/ipc';
 import {
   activePackState,
-  buildLayoutState,
-  packsState,
+  packsState
 } from '@/states/App.states';
 import { LayoutGroup } from '@/views/layout/group';
 import { createFileRoute } from '@tanstack/react-router';
@@ -25,8 +24,8 @@ export const Route = createFileRoute('/packs/$packId')({
     const pack = store.get(activePackState);
 
     if (pack) {
-      const asdf = buildLayoutState(pack.layout);
-      console.log(true)
+      // const asdf = buildLayoutState(pack.layout);
+      // console.log(true)
     }
   },
 });

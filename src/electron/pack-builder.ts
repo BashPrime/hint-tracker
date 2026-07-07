@@ -1,14 +1,14 @@
 import AdmZip from 'adm-zip';
 import z from 'zod';
 import {
-    LayoutObjectSchema,
-    UnprocessedLayoutRoot,
-    UnprocessedLayoutRootSchema,
+  LayoutObjectSchema,
+  UnprocessedLayoutRoot,
+  UnprocessedLayoutRootSchema,
 } from '../shared/types/layout.types.js';
 import {
-    BasicPack,
-    PackDetails,
-    PackDetailsSchema,
+  BasicPack,
+  PackDetails,
+  PackDetailsSchema,
 } from '../shared/types/pack.types.js';
 
 export function buildPackDetails(pack: BasicPack): PackDetails {
@@ -62,10 +62,13 @@ function buildFeatures(pack: BasicPack): any[] {
   return features;
 }
 
-const LayoutGroupJsonSchema = z.record(z.string(), LayoutObjectSchema);
-type LayoutGroupJson = z.infer<typeof LayoutGroupJsonSchema>;
+const LayoutObjectJsonSchema = z.record(
+  z.string(),
+  z.union([LayoutObjectSchema, UnprocessedLayoutRootSchema])
+);
+type LayoutObjectJson = z.infer<typeof LayoutObjectJsonSchema>;
 
-function getLayoutRoot(layout: LayoutGroupJson): UnprocessedLayoutRoot | null {
+function getLayoutRoot(layout: LayoutObjectJson): UnprocessedLayoutRoot | null {
   for (const [key, val] of Object.entries(layout)) {
     if (val.type === 'root') {
       return UnprocessedLayoutRootSchema.parse(val);
@@ -77,21 +80,21 @@ function getLayoutRoot(layout: LayoutGroupJson): UnprocessedLayoutRoot | null {
 
 function buildLayout(pack: BasicPack) {
   const zip = new AdmZip(pack.path);
-  const layoutGroups: LayoutGroupJson = {};
+  const layoutObjects: LayoutObjectJson = {};
 
   // Build initial, unprocessed layout object
   for (const layoutPath of pack.layout) {
     const json = JSON.parse(zip.readAsText(layoutPath));
-    const parsedGroup = LayoutGroupJsonSchema.safeParse(json);
+    const parsedGroup = LayoutObjectJsonSchema.safeParse(json);
 
     if (parsedGroup.success) {
       // Assign to groups
-      Object.assign(layoutGroups, parsedGroup.data);
+      Object.assign(layoutObjects, parsedGroup.data);
     }
   }
 
   // Get layout root
-  const layoutRoot = getLayoutRoot(layoutGroups);
+  const layoutRoot = getLayoutRoot(layoutObjects);
 
   if (!layoutRoot) {
     return {};
@@ -100,6 +103,6 @@ function buildLayout(pack: BasicPack) {
   // replace the pointers with the objects they represent
   return {
     ...layoutRoot,
-    content: layoutRoot.content.map((p) => layoutGroups[p.key]),
+    content: layoutRoot.content.map((p) => layoutObjects[p.key]),
   };
 }
