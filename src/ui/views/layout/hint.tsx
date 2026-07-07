@@ -1,9 +1,9 @@
 import { AtomCombobox } from '@/components/atom-combobox';
-import { useComboboxOptions } from '@/hooks/useComboboxOptions';
+import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { atom } from 'jotai';
 import {
-    ComboboxOptionKeys,
-    LayoutHint as LayoutHintType,
+  ComboboxOptionKeys,
+  LayoutHint as LayoutHintType,
 } from 'src/shared/types/layout.types';
 
 type Props = {
@@ -17,7 +17,11 @@ export function LayoutHint({ hint, comboboxOptions }: Props) {
   const locationAtom = atom('');
 
   // !HOOKS
-  const options = useComboboxOptions(optionsToUse ?? {});
+  const { buildOptions } = useComboboxOptionsBuilder();
+
+  // !OPTIONS
+  const itemOptions = buildOptions(optionsToUse?.item ?? []);
+  const locationOptions = buildOptions(optionsToUse?.location ?? []);
 
   return (
     <div data-name="layout-hint">
@@ -26,14 +30,14 @@ export function LayoutHint({ hint, comboboxOptions }: Props) {
         <AtomCombobox
           atom={itemAtom}
           placeholder={'Item'}
-          items={options.item}
+          items={itemOptions}
         />
       )}
       {hint.hintType !== 'item' && (
         <AtomCombobox
           atom={locationAtom}
           placeholder={'Location'}
-          items={options.location}
+          items={locationOptions}
         />
       )}
     </div>
