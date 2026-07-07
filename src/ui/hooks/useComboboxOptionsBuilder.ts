@@ -27,7 +27,7 @@ export function useComboboxOptionsBuilder() {
       }
     }
 
-    return options;
+    return options.sort((a, b) => a.localeCompare(b));
   }
 
   return {
