@@ -22,7 +22,7 @@ export const LayoutObjectSchema = z.object({
   comboboxOptions: ComboboxOptionKeysSchema.optional(),
   type: z.string(),
   get content() {
-    return z.array(LayoutContentUnionSchema);
+    return z.array(LayoutObjectSchema);
   },
 });
 export type LayoutObject = z.infer<typeof LayoutObjectSchema>;
@@ -30,7 +30,7 @@ export type LayoutObject = z.infer<typeof LayoutObjectSchema>;
 export const LayoutGridSchema = LayoutObjectSchema.extend({
   type: z.literal('grid'),
   get content() {
-    return z.array(z.array(LayoutContentUnionSchema));
+    return z.array(z.array(LayoutObjectSchema));
   },
 });
 export type LayoutGrid = z.infer<typeof LayoutGridSchema>;
@@ -66,9 +66,3 @@ export const LayoutRootSchema = z.object({
   content: z.array(LayoutObjectSchema),
 });
 export type LayoutRoot = z.infer<typeof LayoutRootSchema>;
-
-export const LayoutContentUnionSchema = z.union([
-  LayoutHintSchema,
-  LayoutArraySchema,
-  LayoutGridSchema,
-]);

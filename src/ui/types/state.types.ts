@@ -25,7 +25,7 @@ export const LayoutStateObjectSchema = z.object({
   comboBoxOptions: z.array(z.string()).optional(),
   type: z.string(),
   get content() {
-    return z.array(LayoutStateContentUnionSchema);
+    return z.array(LayoutStateObjectSchema);
   },
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;

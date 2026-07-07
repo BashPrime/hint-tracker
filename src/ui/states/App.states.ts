@@ -1,19 +1,23 @@
 import {
-    HintWithState,
-    HintWithStateSchema,
-    LayoutStateRoot,
+  HintWithState,
+  HintWithStateSchema,
+  LayoutStateArray,
+  LayoutStateArraySchema,
+  LayoutStateGrid,
+  LayoutStateGridSchema,
+  LayoutStateRoot,
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import {
-    ComboboxOptionKeys,
-    LayoutArray,
-    LayoutArraySchema,
-    LayoutGrid,
-    LayoutGridSchema,
-    LayoutHint,
-    LayoutHintSchema,
-    LayoutObject,
-    LayoutRoot,
+  ComboboxOptionKeys,
+  LayoutArray,
+  LayoutArraySchema,
+  LayoutGrid,
+  LayoutGridSchema,
+  LayoutHint,
+  LayoutHintSchema,
+  LayoutObject,
+  LayoutRoot,
 } from 'src/shared/types/layout.types';
 import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
@@ -22,31 +26,43 @@ export const activePackState = atom<PackDetails | null>(null);
 
 function buildHintState(
   hint: LayoutHint,
-  autofills?: ComboboxOptionKeys
-): HintWithState | null {
-  const parsed = HintWithStateSchema.safeParse({
+  optionKeys?: ComboboxOptionKeys
+): HintWithState {
+  return HintWithStateSchema.parse({
     name: hint.name,
     color: hint.color,
-    autofills: autofills ? autofills : hint.comboboxOptions,
     item: hint.hintType !== 'location' ? atom('') : null,
     location: hint.hintType !== 'item' ? atom('') : null,
     checked: atom(false),
   });
-
-  return parsed.success ? parsed.data : null;
 }
 
-function processArray(arr: LayoutArray) {
-  return arr.content.map((elem) => processElement(elem, arr.comboboxOptions));
+function processArray(arr: LayoutArray): LayoutStateArray {
+  return LayoutStateArraySchema.parse({
+    type: 'array',
+    header: arr.header,
+    color: arr.color,
+    borderColor: arr.borderColor,
+    content: arr.content.map((c) => processElement(c, arr.comboboxOptions)),
+  });
 }
 
-function processGrid(grid: LayoutGrid) {
-  return grid.content.map((row) =>
-    row.map((col) => processElement(col, grid.comboboxOptions))
-  );
+function processGrid(grid: LayoutGrid): LayoutStateGrid {
+  return LayoutStateGridSchema.parse({
+    type: 'grid',
+    header: grid.header,
+    color: grid.color,
+    borderColor: grid.borderColor,
+    content: grid.content.map((row) =>
+      row.map((col) => processElement(col, grid.comboboxOptions))
+    ),
+  });
 }
 
-function processElement(elem: LayoutObject, autofills?: ComboboxOptionKeys): any {
+function processElement(
+  elem: LayoutObject,
+  optionKeys?: ComboboxOptionKeys
+): any {
   let parsed;
 
   switch (elem.type) {
@@ -58,7 +74,7 @@ function processElement(elem: LayoutObject, autofills?: ComboboxOptionKeys): any
       return parsed.success ? processGrid(parsed.data) : [];
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
-      return parsed.success ? buildHintState(parsed.data, autofills) : {};
+      return parsed.success ? buildHintState(parsed.data, optionKeys) : {};
     default:
       return null;
   }
