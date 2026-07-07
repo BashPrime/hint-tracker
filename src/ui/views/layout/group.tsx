@@ -1,4 +1,4 @@
-import { LayoutGroup as LayoutGroupType } from 'src/shared/types/layout.types';
+import { LayoutObject as LayoutGroupType } from 'src/shared/types/layout.types';
 import { LayoutElement } from './element';
 
 type Props = {

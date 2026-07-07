@@ -1,11 +1,11 @@
 import { activePackState } from '@/states/App.states';
 import { useAtomValue } from 'jotai';
-import { AutofillOption, Autofills } from 'src/shared/types/layout.types';
+import { ComboboxOptionKey, ComboboxOptionKeys } from 'src/shared/types/layout.types';
 import {
-  Feature,
-  Item,
-  LocationParent,
-  PackDetails,
+    Feature,
+    Item,
+    LocationParent,
+    PackDetails,
 } from 'src/shared/types/pack.types';
 
 function buildItemsOptions(items: Item[]): string[] {
@@ -32,7 +32,7 @@ function buildLocationFeatureOptions(features: Feature[]): string[] {
     .map((f) => f.name);
 }
 
-function parseOptions(pack: PackDetails, optionKeys: AutofillOption[]) {
+function parseOptions(pack: PackDetails, optionKeys: ComboboxOptionKey[]) {
   const options: string[] = [];
 
   for (const af of optionKeys) {
@@ -58,7 +58,7 @@ function parseOptions(pack: PackDetails, optionKeys: AutofillOption[]) {
   return options.sort((a, b) => a.localeCompare(b));
 }
 
-export function useComboboxOptions(comboOptions: Autofills) {
+export function useComboboxOptions(comboOptions: ComboboxOptionKeys) {
   // !STATE
   const pack = useAtomValue(activePackState);
 

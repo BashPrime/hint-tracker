@@ -26,6 +26,7 @@ export const Route = createFileRoute('/packs/$packId')({
 
     if (pack) {
       const asdf = buildLayoutState(pack.layout);
+      console.log(true)
     }
   },
 });

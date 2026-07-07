@@ -1,12 +1,12 @@
 import {
-  Autofills,
-  LayoutGrid as LayoutGridType,
+    ComboboxOptionKeys,
+    LayoutGrid as LayoutGridType,
 } from 'src/shared/types/layout.types';
 import { LayoutElement } from './element';
 
 type RowProps = {
   row: any[];
-  comboboxOptions?: Autofills;
+  comboboxOptions?: ComboboxOptionKeys;
 };
 
 function LayoutRow({ row, comboboxOptions }: RowProps) {
@@ -33,7 +33,7 @@ export function LayoutGrid({ grid }: Props) {
       {grid.content.map((row, rowIdx) => (
         <LayoutRow
           row={row}
-          comboboxOptions={grid.autofills}
+          comboboxOptions={grid.comboboxOptions}
           key={`row-${rowIdx}`}
         />
       ))}

@@ -11,7 +11,7 @@ export function LayoutArray({ array }: Props) {
       {array.content.map((elem, idx) => (
         <LayoutElement
           elem={elem}
-          comboboxOptions={array.autofills}
+          comboboxOptions={array.comboboxOptions}
           key={`array-${idx}`}
         />
       ))}

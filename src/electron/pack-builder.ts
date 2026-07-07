@@ -1,14 +1,14 @@
 import AdmZip from 'adm-zip';
 import z from 'zod';
 import {
-  LayoutGroupSchema,
-  UnprocessedLayoutRoot,
-  UnprocessedLayoutRootSchema,
+    LayoutObjectSchema,
+    UnprocessedLayoutRoot,
+    UnprocessedLayoutRootSchema,
 } from '../shared/types/layout.types.js';
 import {
-  BasicPack,
-  PackDetails,
-  PackDetailsSchema,
+    BasicPack,
+    PackDetails,
+    PackDetailsSchema,
 } from '../shared/types/pack.types.js';
 
 export function buildPackDetails(pack: BasicPack): PackDetails {
@@ -62,7 +62,7 @@ function buildFeatures(pack: BasicPack): any[] {
   return features;
 }
 
-const LayoutGroupJsonSchema = z.record(z.string(), LayoutGroupSchema);
+const LayoutGroupJsonSchema = z.record(z.string(), LayoutObjectSchema);
 type LayoutGroupJson = z.infer<typeof LayoutGroupJsonSchema>;
 
 function getLayoutRoot(layout: LayoutGroupJson): UnprocessedLayoutRoot | null {

@@ -1,39 +1,42 @@
 import z from 'zod';
 
-export const AutofillOptionSchema = z.enum([
+export const ComboboxOptionKeySchema = z.enum([
   'items',
   'locations',
   'regions',
   'features:item',
   'features:location',
 ]);
-export type AutofillOption = z.infer<typeof AutofillOptionSchema>;
+export type ComboboxOptionKey = z.infer<typeof ComboboxOptionKeySchema>;
 
-export const AutofillsSchema = z.object({
-  item: z.array(AutofillOptionSchema).optional(),
-  location: z.array(AutofillOptionSchema).optional(),
+export const ComboboxOptionKeysSchema = z.object({
+  item: z.array(ComboboxOptionKeySchema).optional(),
+  location: z.array(ComboboxOptionKeySchema).optional(),
 });
-export type Autofills = z.infer<typeof AutofillsSchema>;
+export type ComboboxOptionKeys = z.infer<typeof ComboboxOptionKeysSchema>;
 
-export const LayoutGroupSchema = z.object({
+export const LayoutObjectSchema = z.object({
   header: z.string().optional(),
   color: z.string().optional(),
   borderColor: z.string().optional(),
-  autofills: AutofillsSchema.optional(),
+  comboboxOptions: ComboboxOptionKeysSchema.optional(),
   type: z.string(),
-  content: z.array(z.any()),
+  get content() {
+    return z.array(LayoutContentUnionSchema);
+  },
 });
-export type LayoutGroup = z.infer<typeof LayoutGroupSchema>;
+export type LayoutObject = z.infer<typeof LayoutObjectSchema>;
 
-export const LayoutGridSchema = LayoutGroupSchema.extend({
+export const LayoutGridSchema = LayoutObjectSchema.extend({
   type: z.literal('grid'),
-  content: z.array(z.array(z.any())),
+  get content() {
+    return z.array(z.array(LayoutContentUnionSchema));
+  },
 });
 export type LayoutGrid = z.infer<typeof LayoutGridSchema>;
 
-export const LayoutArraySchema = LayoutGroupSchema.extend({
+export const LayoutArraySchema = LayoutObjectSchema.extend({
   type: z.literal('array'),
-  content: z.array(z.any()),
 });
 export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 
@@ -42,7 +45,7 @@ export const LayoutHintSchema = z.object({
   name: z.string(),
   hintType: z.enum(['item', 'location', 'itemAndLocation']),
   color: z.string().optional(),
-  autofills: AutofillsSchema.optional(),
+  comboboxOptions: ComboboxOptionKeysSchema.optional(),
 });
 export type LayoutHint = z.infer<typeof LayoutHintSchema>;
 
@@ -60,6 +63,12 @@ export type UnprocessedLayoutRoot = z.infer<typeof UnprocessedLayoutRootSchema>;
 
 export const LayoutRootSchema = z.object({
   type: z.literal('root'),
-  content: z.array(LayoutGroupSchema),
+  content: z.array(LayoutObjectSchema),
 });
 export type LayoutRoot = z.infer<typeof LayoutRootSchema>;
+
+export const LayoutContentUnionSchema = z.union([
+  LayoutHintSchema,
+  LayoutArraySchema,
+  LayoutGridSchema,
+]);

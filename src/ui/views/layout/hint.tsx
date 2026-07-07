@@ -2,17 +2,17 @@ import { AtomCombobox } from '@/components/atom-combobox';
 import { useComboboxOptions } from '@/hooks/useComboboxOptions';
 import { atom } from 'jotai';
 import {
-  Autofills,
-  LayoutHint as LayoutHintType,
+    ComboboxOptionKeys,
+    LayoutHint as LayoutHintType,
 } from 'src/shared/types/layout.types';
 
 type Props = {
   hint: LayoutHintType;
-  comboboxOptions?: Autofills;
+  comboboxOptions?: ComboboxOptionKeys;
 };
 
 export function LayoutHint({ hint, comboboxOptions }: Props) {
-  const optionsToUse = comboboxOptions ? comboboxOptions : hint.autofills;
+  const optionsToUse = comboboxOptions ? comboboxOptions : hint.comboboxOptions;
   const itemAtom = atom('');
   const locationAtom = atom('');
 

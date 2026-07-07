@@ -1,17 +1,17 @@
 import {
-  Autofills,
-  LayoutArraySchema,
-  LayoutGridSchema,
-  LayoutGroup,
-  LayoutHintSchema,
+    ComboboxOptionKeys,
+    LayoutArraySchema,
+    LayoutGridSchema,
+    LayoutHintSchema,
+    LayoutObject,
 } from 'src/shared/types/layout.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
 import { LayoutHint } from './hint';
 
 type Props = {
-  elem: LayoutGroup;
-  comboboxOptions?: Autofills;
+  elem: LayoutObject;
+  comboboxOptions?: ComboboxOptionKeys;
 };
 
 export function LayoutElement({ elem, comboboxOptions }: Props) {

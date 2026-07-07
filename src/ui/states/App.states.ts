@@ -1,19 +1,19 @@
 import {
-  HintWithState,
-  HintWithStateSchema,
-  LayoutStateRoot,
+    HintWithState,
+    HintWithStateSchema,
+    LayoutStateRoot,
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import {
-  Autofills,
-  LayoutArray,
-  LayoutArraySchema,
-  LayoutGrid,
-  LayoutGridSchema,
-  LayoutGroup,
-  LayoutHint,
-  LayoutHintSchema,
-  LayoutRoot,
+    ComboboxOptionKeys,
+    LayoutArray,
+    LayoutArraySchema,
+    LayoutGrid,
+    LayoutGridSchema,
+    LayoutHint,
+    LayoutHintSchema,
+    LayoutObject,
+    LayoutRoot,
 } from 'src/shared/types/layout.types';
 import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
@@ -22,12 +22,12 @@ export const activePackState = atom<PackDetails | null>(null);
 
 function buildHintState(
   hint: LayoutHint,
-  autofills?: Autofills
+  autofills?: ComboboxOptionKeys
 ): HintWithState | null {
   const parsed = HintWithStateSchema.safeParse({
     name: hint.name,
     color: hint.color,
-    autofills: autofills ? autofills : hint.autofills,
+    autofills: autofills ? autofills : hint.comboboxOptions,
     item: hint.hintType !== 'location' ? atom('') : null,
     location: hint.hintType !== 'item' ? atom('') : null,
     checked: atom(false),
@@ -37,16 +37,16 @@ function buildHintState(
 }
 
 function processArray(arr: LayoutArray) {
-  return arr.content.map((elem) => processElement(elem, arr.autofills));
+  return arr.content.map((elem) => processElement(elem, arr.comboboxOptions));
 }
 
 function processGrid(grid: LayoutGrid) {
   return grid.content.map((row) =>
-    row.map((col) => processElement(col, grid.autofills))
+    row.map((col) => processElement(col, grid.comboboxOptions))
   );
 }
 
-function processElement(elem: LayoutGroup, autofills?: Autofills): any {
+function processElement(elem: LayoutObject, autofills?: ComboboxOptionKeys): any {
   let parsed;
 
   switch (elem.type) {
