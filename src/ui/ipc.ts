@@ -18,20 +18,20 @@ export async function fetchPacks() {
 
 export async function fetchPackDetails(packId: string) {
   const store = getDefaultStore();
-  const data = (await window.electronApi.fetchPackDetails(
+  const pack = (await window.electronApi.fetchPackDetails(
     packId
   )) as PackDetails;
   try {
     // set active pack
-    store.set(activePackState, data);
+    store.set(activePackState, pack);
 
     // build combobox options db
-    store.set(comboboxOptionsDbState, buildComboboxOptionsDatabase(data));
+    store.set(comboboxOptionsDbState, buildComboboxOptionsDatabase(pack));
   } catch (err) {
     if (err instanceof z.ZodError) {
       console.error(
         'fetchPackDetails(): Error setting store:',
-        data,
+        pack,
         err.issues
       );
     }
