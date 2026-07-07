@@ -1,19 +1,15 @@
-import { LayoutArray as LayoutArrayType } from 'src/shared/types/layout.types';
-import { LayoutElement } from './element';
+import { LayoutStateArray } from '@/types/state.types';
+import { LayoutParser } from './parser';
 
 type Props = {
-  array: LayoutArrayType;
+  array: LayoutStateArray;
 };
 
 export function LayoutArray({ array }: Props) {
   return (
     <>
       {array.content.map((elem, idx) => (
-        <LayoutElement
-          elem={elem}
-          comboboxOptions={array.comboboxOptions}
-          key={`array-${idx}`}
-        />
+        <LayoutParser elem={elem} key={`array-${idx}`} />
       ))}
     </>
   );

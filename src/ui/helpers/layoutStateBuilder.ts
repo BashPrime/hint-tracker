@@ -25,6 +25,7 @@ function buildHintState(
   optionKeys?: ComboboxOptionKeys
 ): HintWithState {
   return HintWithStateSchema.parse({
+    type: 'hint',
     name: hint.name,
     color: hint.color,
     comboboxOptions: optionKeys ?? hint.comboboxOptions,
@@ -78,6 +79,5 @@ function processElement(
 }
 
 export function buildLayoutState(layout: LayoutRoot): LayoutStateRoot {
-  const asdf = layout.content.map((c) => processElement(c));
-  return asdf;
+  return layout.content.map((c) => processElement(c));
 }

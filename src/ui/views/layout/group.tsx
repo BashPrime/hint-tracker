@@ -1,8 +1,8 @@
-import { LayoutObject } from 'src/shared/types/layout.types';
-import { LayoutElement } from './element';
+import { LayoutStateObject } from '@/types/state.types';
+import { LayoutParser } from './parser';
 
 type Props = {
-  group: LayoutObject;
+  group: LayoutStateObject;
 };
 
 export function LayoutGroup({ group }: Props) {
@@ -11,7 +11,7 @@ export function LayoutGroup({ group }: Props) {
       {group.header && (
         <p className="text-xl font-bold uppercase">{group.header}</p>
       )}
-      <LayoutElement elem={group} />
+      <LayoutParser elem={group} />
     </div>
   );
 }

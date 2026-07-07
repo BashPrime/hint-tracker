@@ -1,41 +1,32 @@
 import { AtomCombobox } from '@/components/atom-combobox';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
-import { atom } from 'jotai';
-import {
-  ComboboxOptionKeys,
-  LayoutHint as LayoutHintType,
-} from 'src/shared/types/layout.types';
+import { HintWithState } from '@/types/state.types';
 
 type Props = {
-  hint: LayoutHintType;
-  comboboxOptions?: ComboboxOptionKeys;
+  hint: HintWithState;
 };
 
-export function LayoutHint({ hint, comboboxOptions }: Props) {
-  const optionsToUse = comboboxOptions ? comboboxOptions : hint.comboboxOptions;
-  const itemAtom = atom('');
-  const locationAtom = atom('');
-
+export function LayoutHint({ hint }: Props) {
   // !HOOKS
   const { buildOptions } = useComboboxOptionsBuilder();
 
   // !OPTIONS
-  const itemOptions = buildOptions(optionsToUse?.item ?? []);
-  const locationOptions = buildOptions(optionsToUse?.location ?? []);
+  const itemOptions = buildOptions(hint.comboboxOptions?.item ?? []);
+  const locationOptions = buildOptions(hint.comboboxOptions?.location ?? []);
 
   return (
     <div data-name="layout-hint">
       <p className="font-semibold">{hint.name}</p>
-      {hint.hintType !== 'location' && (
+      {hint.item && (
         <AtomCombobox
-          atom={itemAtom}
+          atom={hint.item}
           placeholder={'Item'}
           items={itemOptions}
         />
       )}
-      {hint.hintType !== 'item' && (
+      {hint.location && (
         <AtomCombobox
-          atom={locationAtom}
+          atom={hint.location}
           placeholder={'Location'}
           items={locationOptions}
         />

@@ -1,6 +1,6 @@
 import { buildLayoutState } from '@/helpers/layoutStateBuilder';
 import { fetchPackDetails, fetchPacks } from '@/ipc';
-import { activePackState, packsState } from '@/states/App.states';
+import { activePackState, layoutState, packsState } from '@/states/App.states';
 import { LayoutGroup } from '@/views/layout/group';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
@@ -22,15 +22,13 @@ export const Route = createFileRoute('/packs/$packId')({
     const pack = store.get(activePackState);
 
     if (pack) {
-      const asdf = buildLayoutState(pack.layout);
-      console.log(true);
+      store.set(layoutState, buildLayoutState(pack.layout));
     }
   },
 });
 
 function PackLayoutRoot() {
-  const pack = useAtomValue(activePackState);
-  const layout = pack?.layout ?? null;
+  const layout = useAtomValue(layoutState);
 
   if (!layout) {
     return null;
@@ -40,7 +38,7 @@ function PackLayoutRoot() {
     // Pack Layouts use a horizontal orientation by default.
     // So, each group element is a column rather than a row.
     <div className="flex flex-row gap-4" data-name="pack-layout-root">
-      {layout.content.map((col, idx) => (
+      {layout.map((col, idx) => (
         <LayoutGroup group={col} key={`root-group-${idx}`} />
       ))}
     </div>
