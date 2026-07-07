@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import {
   HintWithStateSchema,
   LayoutStateArraySchema,
@@ -44,7 +45,15 @@ export function LayoutParser({ elem }: Props) {
             : undefined,
         }}
       >
-        <p className="text-xl font-bold uppercase">{elem.header}</p>
+        <p
+          className={cn(
+            'dark:text-foreground bg-gray-600 text-neutral-50 dark:bg-neutral-900',
+            'px-2 py-1',
+            'text-lg font-bold uppercase select-none'
+          )}
+        >
+          {elem.header}
+        </p>
         <ParserBody elem={elem} />
       </div>
     );
