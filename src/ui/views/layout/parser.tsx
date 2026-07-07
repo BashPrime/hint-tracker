@@ -1,17 +1,18 @@
-import { HintWithStateSchema, LayoutStateArraySchema, LayoutStateGridSchema, LayoutStateObject } from '@/types/state.types';
 import {
-  ComboboxOptionKeys
-} from 'src/shared/types/layout.types';
+  HintWithStateSchema,
+  LayoutStateArraySchema,
+  LayoutStateGridSchema,
+  LayoutStateObject,
+} from '@/types/state.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
 import { LayoutHint } from './hint';
 
-type Props = {
+type BodyProps = {
   elem: LayoutStateObject;
-  comboboxOptions?: ComboboxOptionKeys;
 };
 
-export function LayoutParser({ elem }: Props) {
+function ParserBody({ elem }: BodyProps) {
   return (
     <>
       {elem.type === 'array' && (
@@ -25,4 +26,21 @@ export function LayoutParser({ elem }: Props) {
       )}
     </>
   );
+}
+
+type Props = {
+  elem: LayoutStateObject;
+};
+
+export function LayoutParser({ elem }: Props) {
+  if (elem.header) {
+    return (
+      <div className="flex flex-col gap-2 bg-black" data-name="layout-group">
+        <p className="text-xl font-bold uppercase">{elem.header}</p>
+        <ParserBody elem={elem} />
+      </div>
+    );
+  }
+
+  return <ParserBody elem={elem} />;
 }

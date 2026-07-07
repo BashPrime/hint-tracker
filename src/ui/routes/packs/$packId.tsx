@@ -1,7 +1,7 @@
 import { buildLayoutState } from '@/helpers/layoutStateBuilder';
 import { fetchPackDetails, fetchPacks } from '@/ipc';
 import { activePackState, layoutState, packsState } from '@/states/App.states';
-import { LayoutGroup } from '@/views/layout/group';
+import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 
@@ -39,7 +39,7 @@ function PackLayoutRoot() {
     // So, each group element is a column rather than a row.
     <div className="flex flex-row gap-4" data-name="pack-layout-root">
       {layout.map((col, idx) => (
-        <LayoutGroup group={col} key={`root-group-${idx}`} />
+        <LayoutParser elem={col} key={`root-elem-${idx}`} />
       ))}
     </div>
   );
