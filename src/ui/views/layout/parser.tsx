@@ -35,7 +35,15 @@ type Props = {
 export function LayoutParser({ elem }: Props) {
   if (elem.header) {
     return (
-      <div className="flex flex-col gap-2 bg-black" data-name="layout-group">
+      <div
+        className="flex flex-col gap-2 bg-black"
+        data-name="layout-group"
+        style={{
+          borderLeft: elem.borderColor
+            ? `2px solid ${elem.borderColor}`
+            : undefined,
+        }}
+      >
         <p className="text-xl font-bold uppercase">{elem.header}</p>
         <ParserBody elem={elem} />
       </div>
