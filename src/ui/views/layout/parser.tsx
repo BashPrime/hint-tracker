@@ -37,7 +37,11 @@ export function LayoutParser({ elem }: Props) {
   if (elem.header) {
     return (
       <div
-        className="flex flex-col gap-2 bg-black"
+        className={cn(
+          'shadow-md dark:shadow-none',
+          'bg-neutral-200/90 dark:bg-neutral-700/90',
+          'flex flex-col gap-2'
+        )}
         data-name="layout-group"
         style={{
           borderLeft: elem.borderColor
