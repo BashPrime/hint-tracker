@@ -33,7 +33,7 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
       <ComboboxInput
         showTrigger={false}
         placeholder={placeholder}
-        className="mr-3"
+        className="font-semibold"
       />
       <ComboboxContent>
         <ComboboxEmpty>{emptyStr ? emptyStr : 'No items found.'}</ComboboxEmpty>
