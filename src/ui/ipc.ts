@@ -1,4 +1,5 @@
 import { getDefaultStore } from 'jotai';
+import { Image } from 'src/shared/types/image.types';
 import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 import z from 'zod';
 import { buildComboboxOptionsDatabase } from './helpers/comboboxOptions';
@@ -26,7 +27,6 @@ export async function fetchPackDetails(packId: string) {
     store.set(activePackState, pack);
 
     // build combobox options db
-    const optionsDb = buildComboboxOptionsDatabase(pack);
     store.set(comboboxOptionsDbState, buildComboboxOptionsDatabase(pack));
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -37,4 +37,8 @@ export async function fetchPackDetails(packId: string) {
       );
     }
   }
+}
+
+export async function fetchImage(packId: string, imgPath: string) {
+  return await window.electronApi.fetchImage(packId, imgPath) as Image
 }

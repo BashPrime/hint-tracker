@@ -8,6 +8,7 @@ const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
 export const HintWithStateSchema = z.object({
   type: z.literal('hint'),
   name: z.string(),
+  image: z.string().optional(),
   color: z.string().optional(),
   comboboxOptions: ComboboxOptionKeysSchema.optional(),
   item: HintStrAtomSchema.nullable(),

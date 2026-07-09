@@ -6,29 +6,37 @@ import {
   PackTrackerJsonSchema,
 } from '../shared/types/pack.types.js';
 import { USER_PACKS_PATH } from './constants.js';
-import { getCover } from './covers.js';
+import { getImage } from './images.js';
 import { readDir } from './io.js';
 import { buildPackDetails } from './pack-builder.js';
 
 let packs: BasicPack[];
 
-export function getAllPacksInDir(
-  dir: string = USER_PACKS_PATH
-): BasicPack[] {
+export function getAllPacksInDir(dir: string = USER_PACKS_PATH): BasicPack[] {
   const files = readDir(dir);
 
-  if (!files) {
-    return [];
+  if (!packs) {
+    if (!files) {
+      return [];
+    }
+
+    packs = files
+      .filter((file) => {
+        return path.extname(file).toLowerCase() === '.zip';
+      })
+      .map((file) => getPackTrackerJson(path.join(dir, file)))
+      .filter((pack) => pack !== null);
   }
 
-  packs = files
-    .filter((file) => {
-      return path.extname(file).toLowerCase() === '.zip';
-    })
-    .map((file) => getPackTrackerJson(path.join(dir, file)))
-    .filter((pack) => pack !== null);
-
   return packs;
+}
+
+export function getBasicPack(packId: string) {
+  if (!packs) {
+    getAllPacksInDir();
+  }
+
+  return packs.find((pack) => pack.id === packId);
 }
 
 export function getPackTrackerJson(filePath: string): BasicPack | null {
@@ -44,8 +52,8 @@ export function getPackTrackerJson(filePath: string): BasicPack | null {
   return BasicPackSchema.parse({
     ...parsedJson.data,
     path: filePath,
-    cover: parsedJson.data.cover ? getCover(zip, parsedJson.data.cover) : null,
-  })
+    cover: parsedJson.data.cover ? getImage(zip, parsedJson.data.cover) : null,
+  });
 }
 
 export function getPackDetails(packId: string) {

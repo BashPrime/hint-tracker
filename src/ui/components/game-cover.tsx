@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 import { CircleQuestionMark } from 'lucide-react';
-import { Cover } from 'src/shared/types/cover.types';
+import { Image } from 'src/shared/types/image.types';
 
 type Props = {
   name: string;
-  image?: Cover;
+  image?: Image;
   className?: string;
 };
 

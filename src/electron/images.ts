@@ -1,15 +1,15 @@
 import AdmZip from 'adm-zip';
-import { CoverSchema } from '../shared/types/cover.types.js';
+import { ImageSchema } from '../shared/types/image.types.js';
 import { CoverFileTypeTransformSchema } from './types/transform.types.js';
 
-export function getCover(zip: AdmZip, filePath: string) {
+export function getImage(zip: AdmZip, filePath: string) {
   const buffer = zip.readFile(filePath);
 
   if (!buffer) {
     return null;
   }
 
-  return CoverSchema.parse({
+  return ImageSchema.parse({
     name: filePath,
     data: buffer.toString('base64'),
     type: CoverFileTypeTransformSchema.parse(filePath),

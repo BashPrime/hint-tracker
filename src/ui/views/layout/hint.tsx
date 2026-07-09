@@ -1,10 +1,14 @@
 import { AtomCombobox } from '@/components/atom-combobox';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { useRightClick } from '@/hooks/useRightClick';
+import { fetchImage } from '@/ipc';
 import { cn } from '@/lib/utils';
+import { activePackState } from '@/states/App.states';
 import { HintWithState } from '@/types/state.types';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Image } from 'src/shared/types/image.types';
 
 type Props = {
   hint: HintWithState;
@@ -12,11 +16,25 @@ type Props = {
 
 export function LayoutHint({ hint }: Props) {
   // !STATE
+  const pack = useAtomValue(activePackState);
   const [checked, setChecked] = useAtom(hint.checked);
+  const [image, setImage] = useState<Image | null>(null);
 
   // !HOOKS
   const handleRightClick = useRightClick(() => setChecked(!checked));
   const { buildOptions } = useComboboxOptionsBuilder();
+
+  useEffect(() => {
+    async function fetchHintImage() {
+      if (pack && hint.image) {
+        setImage(await fetchImage(pack.id, hint.image));
+      }
+
+      return null;
+    }
+
+    fetchHintImage();
+  }, []);
 
   // !OPTIONS
   const itemOptions = buildOptions(hint.comboboxOptions?.item ?? []);
@@ -33,11 +51,20 @@ export function LayoutHint({ hint }: Props) {
       onMouseDown={handleRightClick}
       data-name="layout-hint"
     >
+      {image && (
+        <div className="w-24 select-none" data-name="boss-img">
+          <img
+            src={`data:image/${image.type};base64,${image.data}`}
+            title={hint.name}
+            alt={`Image for ${hint.name}`}
+          />
+        </div>
+      )}
       <div className={cn('flex flex-row justify-between')}>
         <p
           style={{ color: !checked ? hint.color : '' }}
           className={cn(
-            'select-none text-sm font-bold uppercase',
+            'text-sm font-bold uppercase select-none',
             hint.color && !checked && 'brightness-75 dark:brightness-100',
             checked && 'text-green-800 dark:text-green-400'
           )}

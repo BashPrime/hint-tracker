@@ -41,6 +41,7 @@ export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 export const LayoutHintSchema = z.object({
   type: z.literal('hint'),
   name: z.string(),
+  image: z.string().optional(),
   hintType: z.enum(['item', 'location', 'itemAndLocation']),
   color: z.string().optional(),
   comboboxOptions: ComboboxOptionKeysSchema.optional(),

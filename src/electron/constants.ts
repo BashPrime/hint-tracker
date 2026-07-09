@@ -12,6 +12,7 @@ export const USER_PACKS_PATH = path.join(USER_DATA_DIR, 'packs');
 export const IPC_IDS = {
   fetchPacks: 'fetch-packs',
   fetchPackDetails: 'fetch-pack-details',
+  fetchImage: 'fetch-image',
 };
 
 // Menu
