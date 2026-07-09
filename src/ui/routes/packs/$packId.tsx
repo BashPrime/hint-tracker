@@ -5,6 +5,8 @@ import { activePackState, layoutState, packsState } from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
+import { useMediaQuery } from 'usehooks-ts';
+
 
 export const Route = createFileRoute('/packs/$packId')({
   component: PackLayoutRoot,
@@ -29,7 +31,11 @@ export const Route = createFileRoute('/packs/$packId')({
 });
 
 function PackLayoutRoot() {
+  // !STATE
   const layout = useAtomValue(layoutState);
+
+  // !HOOKS
+  const mediaQueryMatches = useMediaQuery('(min-width: 64rem)');
 
   if (!layout) {
     return null;
@@ -39,6 +45,12 @@ function PackLayoutRoot() {
     // Pack Layouts use a horizontal orientation by default.
     // So, each group element is a column rather than a row.
     <div
+      style={{
+        gridTemplateColumns:
+          mediaQueryMatches && layout.length > 3
+            ? `repeat(${layout.length}, minmax(0, 1fr))`
+            : undefined,
+      }}
       className={cn(
         'grid h-full grid-cols-1 gap-2',
         'overflow-none',
