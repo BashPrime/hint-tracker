@@ -40,7 +40,7 @@ export function LayoutParser({ elem }: Props) {
         className={cn(
           'shadow-md dark:shadow-none',
           'bg-neutral-200/90 dark:bg-neutral-700/90',
-          'flex flex-col'
+          'flex h-full flex-col'
         )}
         data-name="layout-group"
         style={{
