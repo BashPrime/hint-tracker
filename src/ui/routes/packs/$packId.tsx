@@ -45,6 +45,7 @@ function PackLayoutRoot() {
         layout.length >= 2 && 'sm:grid-cols-2',
         layout.length >= 3 && 'md:grid-cols-3'
       )}
+      id="layout-root"
       data-name="pack-layout-root"
     >
       {layout.map((col, idx) => (

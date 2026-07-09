@@ -8,6 +8,7 @@ import {
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
 import { LayoutHint } from './hint';
+import './parser.css';
 
 type BodyProps = {
   elem: LayoutStateObject;
@@ -39,8 +40,8 @@ export function LayoutParser({ elem }: Props) {
       <div
         className={cn(
           'shadow-md dark:shadow-none',
-          'bg-neutral-200/90 dark:bg-neutral-700/90',
-          'flex h-full flex-col'
+          'flex h-full flex-col flex-1',
+          'layout-group'
         )}
         data-name="layout-group"
         style={{

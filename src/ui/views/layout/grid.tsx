@@ -21,7 +21,7 @@ type Props = {
 
 export function LayoutGrid({ grid }: Props) {
   return (
-    <div className="flex flex-col" data-name="layout-grid">
+    <div className="flex flex-col layout-grid" data-name="layout-grid">
       {grid.content.map((row, rowIdx) => (
         <LayoutRow row={row} key={`row-${rowIdx}`} />
       ))}

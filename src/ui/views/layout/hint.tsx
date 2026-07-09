@@ -25,8 +25,10 @@ export function LayoutHint({ hint }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-col pl-2',
+        'bg-zinc-200 dark:bg-zinc-800',
+        'flex flex-auto flex-col px-2 py-0.5',
         'font-bold uppercase',
+        'border border-zinc-300 dark:border-zinc-900',
         checked && 'bg-green-300/90 dark:bg-green-900/90'
       )}
       onMouseDown={handleRightClick}
