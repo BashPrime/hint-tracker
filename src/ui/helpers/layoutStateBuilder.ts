@@ -27,6 +27,7 @@ function buildHintState(
   return HintWithStateSchema.parse({
     type: 'hint',
     name: hint.name,
+    image: hint.image,
     color: hint.color,
     comboboxOptions: optionKeys ?? hint.comboboxOptions,
     item: hint.hintType !== 'location' ? atom('') : null,

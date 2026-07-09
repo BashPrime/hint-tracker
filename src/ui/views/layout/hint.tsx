@@ -34,7 +34,7 @@ export function LayoutHint({ hint }: Props) {
     }
 
     fetchHintImage();
-  }, []);
+  }, [pack]);
 
   // !OPTIONS
   const itemOptions = buildOptions(hint.comboboxOptions?.item ?? []);
