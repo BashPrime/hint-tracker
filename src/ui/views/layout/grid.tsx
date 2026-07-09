@@ -7,11 +7,11 @@ type RowProps = {
 
 function LayoutRow({ row }: RowProps) {
   return (
-    <>
+    <div className="flex flex-row" data-name="layout-grid-row">
       {row.map((col, colIdx) => (
         <LayoutParser elem={col} key={`grid-col-${colIdx}`} />
       ))}
-    </>
+    </div>
   );
 }
 
@@ -21,7 +21,7 @@ type Props = {
 
 export function LayoutGrid({ grid }: Props) {
   return (
-    <div className="flex flex-row" data-name="layout-grid">
+    <div className="flex flex-col" data-name="layout-grid">
       {grid.content.map((row, rowIdx) => (
         <LayoutRow row={row} key={`row-${rowIdx}`} />
       ))}
