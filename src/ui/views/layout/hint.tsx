@@ -26,8 +26,7 @@ export function LayoutHint({ hint }: Props) {
     <div
       className={cn(
         'bg-zinc-200 dark:bg-zinc-800',
-        'flex flex-auto flex-col px-2 py-0.5',
-        'font-bold uppercase',
+        'flex flex-auto flex-col px-1.5 py-1',
         'border border-zinc-300 dark:border-zinc-900',
         checked && 'bg-green-300/90 dark:bg-green-900/90'
       )}
@@ -38,7 +37,7 @@ export function LayoutHint({ hint }: Props) {
         <p
           style={{ color: !checked ? hint.color : '' }}
           className={cn(
-            'select-none',
+            'select-none text-sm font-bold uppercase',
             hint.color && !checked && 'brightness-75 dark:brightness-100',
             checked && 'text-green-800 dark:text-green-400'
           )}
