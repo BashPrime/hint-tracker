@@ -54,7 +54,7 @@ export function LayoutParser({ elem }: Props) {
           className={cn(
             'dark:text-foreground bg-gray-600 text-neutral-50 dark:bg-neutral-900',
             'px-2 py-1',
-            'text-lg font-bold uppercase select-none'
+            'text-md font-bold uppercase select-none'
           )}
         >
           {elem.header}
