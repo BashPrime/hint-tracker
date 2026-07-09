@@ -1,5 +1,6 @@
 import { buildLayoutState } from '@/helpers/layoutStateBuilder';
 import { fetchPackDetails, fetchPacks } from '@/ipc';
+import { cn } from '@/lib/utils';
 import { activePackState, layoutState, packsState } from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute } from '@tanstack/react-router';
@@ -37,7 +38,15 @@ function PackLayoutRoot() {
   return (
     // Pack Layouts use a horizontal orientation by default.
     // So, each group element is a column rather than a row.
-    <div className="flex flex-row gap-4" data-name="pack-layout-root">
+    <div
+      className={cn(
+        'grid h-full grid-cols-1 gap-2',
+        'overflow-none',
+        layout.length >= 2 && 'sm:grid-cols-2',
+        layout.length >= 3 && 'md:grid-cols-3'
+      )}
+      data-name="pack-layout-root"
+    >
       {layout.map((col, idx) => (
         <LayoutParser elem={col} key={`root-elem-${idx}`} />
       ))}
