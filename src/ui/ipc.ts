@@ -40,5 +40,9 @@ export async function fetchPackDetails(packId: string) {
 }
 
 export async function fetchImage(packId: string, imgPath: string) {
-  return await window.electronApi.fetchImage(packId, imgPath) as Image
+  return (await window.electronApi.fetchImage(packId, imgPath)) as Image;
+}
+
+export function autosaveTrackerState(state: object, packId: string) {
+  window.electronApi.autosaveTrackerState(state, packId);
 }
