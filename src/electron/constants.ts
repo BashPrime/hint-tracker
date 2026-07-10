@@ -7,12 +7,14 @@ export const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
 // User dirs
 export const USER_DATA_DIR = path.join(app.getPath('userData'), 'data');
 export const USER_PACKS_PATH = path.join(USER_DATA_DIR, 'packs');
+export const USER_TRACKER_SAVES_PATH = path.join(USER_DATA_DIR, 'saves');
 
 // IPC
 export const IPC_IDS = {
   fetchPacks: 'fetch-packs',
   fetchPackDetails: 'fetch-pack-details',
   fetchImage: 'fetch-image',
+  autosaveTrackerState: 'autosave-tracker-state',
 };
 
 // Menu

@@ -2,9 +2,11 @@ import fs from 'fs';
 import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
 import {
   CONFIG_PATH,
-  USER_PACKS_PATH
+  USER_PACKS_PATH,
+  USER_TRACKER_SAVES_PATH,
 } from './constants.js';
 import { readAndParseJsonFile, writeJsonFile } from './io.js';
+import { getErrorMsg } from './util.js';
 
 export function readConfigFile(path: string = CONFIG_PATH) {
   return readAndParseJsonFile(path, ConfigSchema);
@@ -30,6 +32,20 @@ export function handleCreateUserDataDirs() {
   }
 
   handleMkDir(USER_PACKS_PATH);
+  handleMkDir(USER_TRACKER_SAVES_PATH);
+}
+
+export function saveTrackerState(state: object, path: string) {
+  const json = JSON.stringify(state, null, 2);
+  fs.writeFile(path, json, (err) => {
+    if (err) {
+      console.error(
+        'saveTrackerState(): Error writing json file:',
+        path,
+        getErrorMsg(err)
+      );
+    }
+  });
 }
 
 // export function openUserProvidedTrackerFile() {
