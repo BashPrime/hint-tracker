@@ -19,6 +19,7 @@ import {
   LayoutObject,
   LayoutRoot,
 } from 'src/shared/types/layout.types';
+import { v4 as uuidv4 } from 'uuid';
 
 function buildHintState(
   hint: LayoutHint,
@@ -26,6 +27,7 @@ function buildHintState(
 ): HintWithState {
   return HintWithStateSchema.parse({
     type: 'hint',
+    id: uuidv4(),
     name: hint.name,
     image: hint.image,
     color: hint.color,
@@ -39,6 +41,7 @@ function buildHintState(
 function processArray(arr: LayoutArray): LayoutStateArray {
   return LayoutStateArraySchema.parse({
     type: 'array',
+    id: uuidv4(),
     header: arr.header,
     color: arr.color,
     borderColor: arr.borderColor,
@@ -49,6 +52,7 @@ function processArray(arr: LayoutArray): LayoutStateArray {
 function processGrid(grid: LayoutGrid): LayoutStateGrid {
   return LayoutStateGridSchema.parse({
     type: 'grid',
+    id: uuidv4(),
     header: grid.header,
     color: grid.color,
     borderColor: grid.borderColor,

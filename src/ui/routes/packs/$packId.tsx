@@ -7,7 +7,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 import { useMediaQuery } from 'usehooks-ts';
 
-
 export const Route = createFileRoute('/packs/$packId')({
   component: PackLayoutRoot,
   beforeLoad: async () => {
@@ -60,8 +59,8 @@ function PackLayoutRoot() {
       id="layout-root"
       data-name="pack-layout-root"
     >
-      {layout.map((col, idx) => (
-        <LayoutParser elem={col} key={`root-elem-${idx}`} />
+      {layout.map((col) => (
+        <LayoutParser elem={col} key={col.id} />
       ))}
     </div>
   );
