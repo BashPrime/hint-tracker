@@ -27,7 +27,7 @@ function buildHintState(
 ): HintWithState {
   return HintWithStateSchema.parse({
     type: 'hint',
-    id: uuidv4(),
+    code: hint.code,
     name: hint.name,
     image: hint.image,
     color: hint.color,

@@ -1,9 +1,8 @@
 import { cn } from '@/lib/utils';
 import {
-  HintWithStateSchema,
-  LayoutStateArraySchema,
-  LayoutStateGridSchema,
-  LayoutStateObject,
+  LayoutStateArray,
+  LayoutStateGrid,
+  LayoutStateObject
 } from '@/types/state.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
@@ -18,14 +17,10 @@ function ParserBody({ elem }: BodyProps) {
   return (
     <>
       {elem.type === 'array' && (
-        <LayoutArray array={LayoutStateArraySchema.parse(elem)} />
+        <LayoutArray array={elem as LayoutStateArray} />
       )}
-      {elem.type === 'grid' && (
-        <LayoutGrid grid={LayoutStateGridSchema.parse(elem)} />
-      )}
-      {elem.type === 'hint' && (
-        <LayoutHint hint={HintWithStateSchema.parse(elem)} />
-      )}
+      {elem.type === 'grid' && <LayoutGrid grid={elem as LayoutStateGrid} />}
+      {elem.type === 'hint' && <LayoutHint hint={elem as any} />}
     </>
   );
 }
@@ -40,7 +35,7 @@ export function LayoutParser({ elem }: Props) {
       <div
         className={cn(
           'shadow-md dark:shadow-none',
-          'flex h-full flex-col flex-1',
+          'flex h-full flex-1 flex-col',
           'layout-group'
         )}
         data-name="layout-group"

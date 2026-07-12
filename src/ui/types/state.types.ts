@@ -5,19 +5,6 @@ import z from 'zod';
 const HintStrAtomSchema: z.ZodType<PrimitiveAtom<string>> = z.any();
 const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
 
-export const HintWithStateSchema = z.object({
-  type: z.literal('hint'),
-  name: z.string(),
-  id: z.uuidv4(),
-  image: z.string().optional(),
-  color: z.string().optional(),
-  comboboxOptions: ComboboxOptionKeysSchema.optional(),
-  item: HintStrAtomSchema.nullable(),
-  location: HintStrAtomSchema.nullable(),
-  checked: HintBoolAtomSchema,
-});
-export type HintWithState = z.infer<typeof HintWithStateSchema>;
-
 export const LayoutStateObjectSchema = z.object({
   header: z.string().optional(),
   id: z.uuidv4(),
@@ -27,6 +14,21 @@ export const LayoutStateObjectSchema = z.object({
   content: z.array(z.any()),
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;
+
+export const HintWithStateSchema = LayoutStateObjectSchema.omit({
+  id: true,
+  content: true,
+}).extend({
+  type: z.literal('hint'),
+  name: z.string(),
+  code: z.string(),
+  image: z.string().optional(),
+  comboboxOptions: ComboboxOptionKeysSchema.optional(),
+  item: HintStrAtomSchema.nullable(),
+  location: HintStrAtomSchema.nullable(),
+  checked: HintBoolAtomSchema,
+});
+export type HintWithState = z.infer<typeof HintWithStateSchema>;
 
 export const LayoutStateArraySchema = LayoutStateObjectSchema.extend({
   type: z.literal('array'),

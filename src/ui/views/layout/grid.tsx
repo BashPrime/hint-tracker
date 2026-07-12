@@ -9,7 +9,10 @@ function LayoutRow({ row }: RowProps) {
   return (
     <div className="flex flex-row" data-name="layout-grid-row">
       {row.map((col) => (
-        <LayoutParser elem={col} key={col.id} />
+        <LayoutParser
+          elem={col}
+          key={col.type === 'hint' ? col.code : col.id}
+        />
       ))}
     </div>
   );

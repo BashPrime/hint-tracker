@@ -1,5 +1,6 @@
 import {
   HintWithStateSchema,
+  LayoutStateGrid,
   LayoutStateObject,
   LayoutStateRoot,
 } from '@/types/state.types';
@@ -20,15 +21,15 @@ export const trackerSaveFormatted = atom((get) => {
     switch (layoutStateObj.type) {
       case 'hint':
         const hint = HintWithStateSchema.parse(layoutStateObj);
-        finalState[hint.name] = {
-          id: hint.id,
+        finalState[hint.code] = {
           item: hint.item ? get(hint.item) : null,
           location: hint.location ? get(hint.location) : null,
           checked: get(hint.checked),
         };
         return;
       case 'grid':
-        return layoutStateObj.content.map((row) => row.map(processObject));
+        const grid = layoutStateObj as LayoutStateGrid;
+        return grid.content.map((row) => row.map(processObject));
       default:
         return layoutStateObj.content.map((obj) => processObject(obj));
     }
