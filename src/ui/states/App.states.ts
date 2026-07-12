@@ -5,6 +5,7 @@ import {
   LayoutStateRoot,
 } from '@/types/state.types';
 import { atom } from 'jotai';
+import { TrackerSaveState } from 'src/shared/types/config.types';
 import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
 export const packsState = atom<BasicPack[] | null>(null);
@@ -14,14 +15,14 @@ export const layoutState = atom<LayoutStateRoot | null>(null);
 export const trackerSaveFormatted = atom((get) => {
   // !STATE
   const layout = get(layoutState);
-  const finalState: any = {};
+  const trackerSaveState: TrackerSaveState = {};
 
   // !FUNCTION
   function processObject(layoutStateObj: LayoutStateObject): any {
     switch (layoutStateObj.type) {
       case 'hint':
         const hint = layoutStateObj as HintWithState;
-        finalState[hint.code] = {
+        trackerSaveState[hint.code] = {
           item: hint.item ? get(hint.item) : null,
           location: hint.location ? get(hint.location) : null,
           checked: get(hint.checked),
@@ -39,6 +40,7 @@ export const trackerSaveFormatted = atom((get) => {
     return null;
   }
 
+  // build save state and return
   layout.map(processObject);
-  return finalState;
+  return trackerSaveState;
 });

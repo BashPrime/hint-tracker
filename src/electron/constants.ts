@@ -17,6 +17,9 @@ export const IPC_IDS = {
   autosaveTrackerState: 'autosave-tracker-state',
 };
 
+// Tracker
+export const TRACKER_AUTOSAVE_JSON = 'autosave.json';
+
 // Menu
 export const MENU_IDS = {
   file: {

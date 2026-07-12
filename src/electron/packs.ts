@@ -5,7 +5,11 @@ import {
   BasicPackSchema,
   PackTrackerJsonSchema,
 } from '../shared/types/pack.types.js';
-import { USER_PACKS_PATH } from './constants.js';
+import {
+  TRACKER_AUTOSAVE_JSON,
+  USER_PACKS_PATH,
+  USER_TRACKER_SAVES_PATH,
+} from './constants.js';
 import { getImage } from './images.js';
 import { readDir } from './io.js';
 import { buildPackDetails } from './pack-builder.js';
@@ -68,4 +72,14 @@ export function getPackDetails(packId: string) {
   }
 
   return buildPackDetails(match);
+}
+
+export function buildTrackerAutosavePath(pack: BasicPack) {
+  // ${userDataDir}/saves/{packId}/{packVersion}/autosave.json
+  return path.join(
+    USER_TRACKER_SAVES_PATH,
+    pack.id,
+    pack.version,
+    TRACKER_AUTOSAVE_JSON
+  );
 }

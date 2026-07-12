@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { dirname } from 'path';
-import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
+import { ConfigSchema, ConfigType, TrackerSaveStateSchema } from '../shared/types/config.types.js';
 import {
   CONFIG_PATH,
   USER_PACKS_PATH,
@@ -56,6 +56,10 @@ export function saveTrackerState(state: object, path: string) {
       });
     }
   });
+}
+
+export function loadTrackerState(path: string) {
+  return readAndParseJsonFile(path, TrackerSaveStateSchema);
 }
 
 // export function openUserProvidedTrackerFile() {

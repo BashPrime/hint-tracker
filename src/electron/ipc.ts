@@ -1,10 +1,14 @@
 import AdmZip from 'adm-zip';
 import { ipcMain } from 'electron';
-import path from 'path';
 import { saveTrackerState } from './config.js';
-import { IPC_IDS, USER_TRACKER_SAVES_PATH } from './constants.js';
+import { IPC_IDS } from './constants.js';
 import { getImage } from './images.js';
-import { getAllPacksInDir, getBasicPack, getPackDetails } from './packs.js';
+import {
+  buildTrackerAutosavePath,
+  getAllPacksInDir,
+  getBasicPack,
+  getPackDetails,
+} from './packs.js';
 
 export function runIpcHandlers() {
   // get all basic packs data
@@ -36,15 +40,7 @@ export function runIpcHandlers() {
       const pack = getBasicPack(packId);
 
       if (pack) {
-        // ${userDataDir}/saves/{packId}/{packVersion}/autosave.json
-        const autosavePackPath = path.join(
-          USER_TRACKER_SAVES_PATH,
-          pack.id,
-          pack.version,
-          'autosave.json'
-        );
-
-        saveTrackerState(state, autosavePackPath);
+        saveTrackerState(state, buildTrackerAutosavePath(pack));
       }
     }
   );
