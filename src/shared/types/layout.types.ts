@@ -38,7 +38,10 @@ export const LayoutArraySchema = LayoutObjectSchema.extend({
 });
 export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 
-export const LayoutHintSchema = z.object({
+export const LayoutHintSchema = LayoutObjectSchema.omit({
+  content: true,
+  header: true,
+}).extend({
   type: z.literal('hint'),
   name: z.string(),
   code: z.string(),

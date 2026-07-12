@@ -12,12 +12,19 @@ export const LayoutStateObjectSchema = z.object({
   borderColor: z.string().optional(),
   type: z.string(),
   content: z.array(z.any()),
+  // Hint stuff
+  name: z.string().optional(),
+  code: z.string().optional(),
+  item: HintStrAtomSchema.nullish(),
+  location: HintStrAtomSchema.nullish(),
+  checked: HintBoolAtomSchema.optional(),
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;
 
 export const HintWithStateSchema = LayoutStateObjectSchema.omit({
   id: true,
   content: true,
+  header: true,
 }).extend({
   type: z.literal('hint'),
   name: z.string(),
