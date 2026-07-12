@@ -13,7 +13,11 @@ export default defineConfig({
       routesDirectory: './src/ui/routes',
       generatedRouteTree: './src/ui/routeTree.gen.ts',
     }),
-    react(),
+    react({
+      babel: {
+        presets: ['jotai-babel/preset'],
+      },
+    }),
     tailwindcss(),
   ],
   base: './',
