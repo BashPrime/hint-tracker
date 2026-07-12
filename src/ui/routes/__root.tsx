@@ -1,3 +1,4 @@
+import { useAutosaveTracker } from '@/hooks/useAutosaveTracker';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { cn } from '@/lib/utils';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
@@ -8,6 +9,7 @@ import './root.css';
 
 function RootLayout() {
   // !HOOKS
+  useAutosaveTracker();
   useThemeChanger();
 
   return (
