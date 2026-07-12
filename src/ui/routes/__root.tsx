@@ -26,8 +26,12 @@ function RootLayout() {
       <div className="flex-auto overflow-auto">
         <Outlet />
       </div>
-      <TanStackRouterDevtools />
-      <DevTools isInitialOpen={true} />
+      {process.env.NODE_ENV !== 'production' && (
+        <>
+          <TanStackRouterDevtools position="bottom-left" />
+          <DevTools isInitialOpen={true} position="bottom-right" />
+        </>
+      )}
     </>
   );
 }
