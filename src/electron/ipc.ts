@@ -1,6 +1,6 @@
 import AdmZip from 'adm-zip';
 import { ipcMain } from 'electron';
-import { saveTrackerState } from './config.js';
+import { loadTrackerState, saveTrackerState } from './config.js';
 import { IPC_IDS } from './constants.js';
 import { getImage } from './images.js';
 import {
@@ -33,7 +33,7 @@ export function runIpcHandlers() {
     return null;
   });
 
-  // save tracker state
+  // autosave tracker state
   ipcMain.handle(
     IPC_IDS.autosaveTrackerState,
     (_, state: object, packId: string) => {
@@ -44,4 +44,13 @@ export function runIpcHandlers() {
       }
     }
   );
+
+  // load tracker autosave state
+  ipcMain.handle(IPC_IDS.loadTrackerAutosave, (_, packId: string) => {
+    const pack = getBasicPack(packId);
+
+    if (pack) {
+      return loadTrackerState(buildTrackerAutosavePath(pack));
+    }
+  });
 }

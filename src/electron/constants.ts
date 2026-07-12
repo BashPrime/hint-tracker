@@ -15,6 +15,7 @@ export const IPC_IDS = {
   fetchPackDetails: 'fetch-pack-details',
   fetchImage: 'fetch-image',
   autosaveTrackerState: 'autosave-tracker-state',
+  loadTrackerAutosave: 'load-tracker-autosave',
 };
 
 // Tracker
