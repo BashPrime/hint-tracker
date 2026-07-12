@@ -21,10 +21,9 @@ export const trackerSaveFormatted = atom((get) => {
       case 'hint':
         const hint = HintWithStateSchema.parse(layoutStateObj);
         finalState[hint.name] = {
-          name: hint.name,
           item: hint.item ? get(hint.item) : null,
           location: hint.location ? get(hint.location) : null,
-          checked: hint.checked ? get(hint.checked) : null,
+          checked: get(hint.checked),
         };
         return;
       case 'grid':
