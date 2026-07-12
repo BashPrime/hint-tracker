@@ -29,7 +29,7 @@ function RootLayout() {
       {process.env.NODE_ENV !== 'production' && (
         <>
           <TanStackRouterDevtools position="bottom-left" />
-          <DevTools isInitialOpen={true} position="bottom-right" />
+          <DevTools position="bottom-right" />
         </>
       )}
     </>
