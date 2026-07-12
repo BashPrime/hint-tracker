@@ -16,7 +16,6 @@ export function useAutosaveTracker() {
       }
     }
 
-    // autosave every minute
     saveTracker();
-  }, []);
+  }, [parsedTracker]);
 }
