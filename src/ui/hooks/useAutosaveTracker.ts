@@ -17,6 +17,6 @@ export function useAutosaveTracker() {
     }
 
     // autosave every minute
-    setInterval(saveTracker, 60000);
+    saveTracker();
   }, []);
 }
