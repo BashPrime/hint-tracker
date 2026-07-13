@@ -1,4 +1,5 @@
 import { LayoutStateGrid } from '@/types/state.types';
+import './grid.css';
 import { LayoutParser } from './parser';
 
 type RowProps = {
@@ -7,7 +8,7 @@ type RowProps = {
 
 function LayoutRow({ row }: RowProps) {
   return (
-    <div className="flex flex-row" data-name="layout-grid-row">
+    <div className="layout-grid-row flex flex-row" data-name="layout-grid-row">
       {row.map((col) => (
         <LayoutParser
           elem={col}
