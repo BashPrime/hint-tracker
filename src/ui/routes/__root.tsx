@@ -5,9 +5,25 @@ import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { DevTools } from 'jotai-devtools';
 import 'jotai-devtools/styles.css';
+import css from 'jotai-devtools/styles.css?inline';
 import { Home } from 'lucide-react';
 import { Breadcrumb } from './-components/breadcrumb';
 import './root.css';
+
+function RouterDevTools() {
+  return process.env.NODE_ENV !== 'production' ? (
+    <TanStackRouterDevtools position="bottom-left" />
+  ) : null;
+}
+
+function JotaiDevTools() {
+  return process.env.NODE_ENV !== 'production' ? (
+    <>
+      <style>{css}</style>
+      <DevTools position="bottom-right" />
+    </>
+  ) : null;
+}
 
 function RootLayout() {
   // !HOOKS
@@ -26,12 +42,8 @@ function RootLayout() {
       <div className="flex-auto overflow-auto">
         <Outlet />
       </div>
-      {process.env.NODE_ENV !== 'production' && (
-        <>
-          <TanStackRouterDevtools position="bottom-left" />
-          <DevTools position="bottom-right" />
-        </>
-      )}
+      <RouterDevTools />
+      <JotaiDevTools />
     </>
   );
 }
