@@ -1,3 +1,4 @@
+import { LoadingSpinner } from '@/components/loading-spinner';
 import { buildLayoutState } from '@/helpers/layoutStateBuilder';
 import { fetchPackDetails, fetchPacks, fetchTrackerAutosave } from '@/ipc';
 import { cn } from '@/lib/utils';
@@ -9,6 +10,10 @@ import { useMediaQuery } from 'usehooks-ts';
 
 export const Route = createFileRoute('/packs/$packId')({
   component: PackLayoutRoot,
+  pendingComponent: () => <LoadingSpinner text="Loading Tracker..." />,
+  pendingMs: 0,
+  pendingMinMs: 300,
+  gcTime: 0,
   beforeLoad: async () => {
     const store = getDefaultStore();
     const packs = store.get(packsState);
@@ -30,6 +35,11 @@ export const Route = createFileRoute('/packs/$packId')({
         buildLayoutState(pack.layout, trackerAutosaveState)
       );
     }
+  },
+  onLeave: async () => {
+    const store = getDefaultStore();
+    store.set(activePackState, null);
+    store.set(layoutState, null);
   },
 });
 
