@@ -52,7 +52,7 @@ export function LayoutHint({ hint }: Props) {
       data-name="layout-hint"
     >
       {image && (
-        <div className="w-24 select-none" data-name="boss-img">
+        <div className="w-24 mb-1 select-none" data-name="boss-img">
           <img
             src={`data:image/${image.type};base64,${image.data}`}
             title={hint.name}
