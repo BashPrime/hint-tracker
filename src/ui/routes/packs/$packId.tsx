@@ -1,5 +1,5 @@
 import { buildLayoutState } from '@/helpers/layoutStateBuilder';
-import { fetchPackDetails, fetchPacks } from '@/ipc';
+import { fetchPackDetails, fetchPacks, fetchTrackerAutosave } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { activePackState, layoutState, packsState } from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
@@ -20,11 +20,15 @@ export const Route = createFileRoute('/packs/$packId')({
   loader: async ({ params }) => {
     const store = getDefaultStore();
     await fetchPackDetails(params.packId);
+    const trackerAutosaveState = await fetchTrackerAutosave(params.packId);
 
     const pack = store.get(activePackState);
 
     if (pack) {
-      store.set(layoutState, buildLayoutState(pack.layout));
+      store.set(
+        layoutState,
+        buildLayoutState(pack.layout, trackerAutosaveState)
+      );
     }
   },
 });

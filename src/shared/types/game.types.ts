@@ -36,7 +36,7 @@ export const GameSchema = z.object({
   schemaVersion: z.number(),
   id: z.uuidv4(),
   name: z.string(),
-  coverImg: z.string().default(""),
+  coverImg: z.string().default(''),
   data: GameDataSchema,
 });
 export type Game = z.infer<typeof GameSchema>;

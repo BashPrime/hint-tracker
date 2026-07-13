@@ -19,7 +19,7 @@ type Props = {
 export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
   // !STATE
   const [value, setValue] = useAtom(atom);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value ?? '');
 
   return (
     <Combobox

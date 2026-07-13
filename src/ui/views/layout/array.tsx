@@ -7,9 +7,16 @@ type Props = {
 
 export function LayoutArray({ array }: Props) {
   return (
-    <div className="flex flex-col h-full" data-name="layout-array" key={array.id}>
+    <div
+      className="flex h-full flex-col"
+      data-name="layout-array"
+      key={array.id}
+    >
       {array.content.map((elem) => (
-        <LayoutParser elem={elem} key={elem.type === 'hint' ? elem.code : elem.id} />
+        <LayoutParser
+          elem={elem}
+          key={elem.type === 'hint' ? elem.code : elem.id}
+        />
       ))}
     </div>
   );

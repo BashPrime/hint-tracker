@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import {
   LayoutStateArray,
   LayoutStateGrid,
-  LayoutStateObject
+  LayoutStateObject,
 } from '@/types/state.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';

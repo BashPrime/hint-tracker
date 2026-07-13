@@ -8,6 +8,7 @@ import {
   LayoutStateRoot,
 } from '@/types/state.types';
 import { atom } from 'jotai';
+import { TrackerSaveState } from 'src/shared/types/config.types';
 import {
   ComboboxOptionKeys,
   LayoutArray,
@@ -23,8 +24,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 function buildHintState(
   hint: LayoutHint,
-  optionKeys?: ComboboxOptionKeys
+  optionKeys?: ComboboxOptionKeys,
+  saveState?: TrackerSaveState
 ): HintWithState {
+  const match = saveState ? saveState[hint.code] : null;
+
   return HintWithStateSchema.parse({
     type: 'hint',
     code: hint.code,
@@ -32,24 +36,32 @@ function buildHintState(
     image: hint.image,
     color: hint.color,
     comboboxOptions: optionKeys ?? hint.comboboxOptions,
-    item: hint.hintType !== 'location' ? atom('') : null,
-    location: hint.hintType !== 'item' ? atom('') : null,
-    checked: atom(false),
+    item: hint.hintType !== 'location' ? atom(match?.item ?? '') : null,
+    location: hint.hintType !== 'item' ? atom(match?.location ?? '') : null,
+    checked: atom(match?.checked ?? false),
   });
 }
 
-function processArray(arr: LayoutArray): LayoutStateArray {
+function processArray(
+  arr: LayoutArray,
+  saveState?: TrackerSaveState
+): LayoutStateArray {
   return LayoutStateArraySchema.parse({
     type: 'array',
     id: uuidv4(),
     header: arr.header,
     color: arr.color,
     borderColor: arr.borderColor,
-    content: arr.content.map((c) => processElement(c, arr.comboboxOptions)),
+    content: arr.content.map((c) =>
+      processElement(c, saveState, arr.comboboxOptions)
+    ),
   });
 }
 
-function processGrid(grid: LayoutGrid): LayoutStateGrid {
+function processGrid(
+  grid: LayoutGrid,
+  saveState?: TrackerSaveState
+): LayoutStateGrid {
   return LayoutStateGridSchema.parse({
     type: 'grid',
     id: uuidv4(),
@@ -57,13 +69,14 @@ function processGrid(grid: LayoutGrid): LayoutStateGrid {
     color: grid.color,
     borderColor: grid.borderColor,
     content: grid.content.map((row) =>
-      row.map((col) => processElement(col, grid.comboboxOptions))
+      row.map((col) => processElement(col, saveState, grid.comboboxOptions))
     ),
   });
 }
 
 function processElement(
   elem: LayoutObject,
+  saveState?: TrackerSaveState,
   optionKeys?: ComboboxOptionKeys
 ): any {
   let parsed;
@@ -71,18 +84,23 @@ function processElement(
   switch (elem.type) {
     case 'array':
       parsed = LayoutArraySchema.safeParse(elem);
-      return parsed.success ? processArray(parsed.data) : [];
+      return parsed.success ? processArray(parsed.data, saveState) : [];
     case 'grid':
       parsed = LayoutGridSchema.safeParse(elem);
-      return parsed.success ? processGrid(parsed.data) : [];
+      return parsed.success ? processGrid(parsed.data, saveState) : [];
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
-      return parsed.success ? buildHintState(parsed.data, optionKeys) : {};
+      return parsed.success
+        ? buildHintState(parsed.data, optionKeys, saveState)
+        : {};
     default:
       return null;
   }
 }
 
-export function buildLayoutState(layout: LayoutRoot): LayoutStateRoot {
-  return layout.content.map((c) => processElement(c));
+export function buildLayoutState(
+  layout: LayoutRoot,
+  saveState?: TrackerSaveState
+): LayoutStateRoot {
+  return layout.content.map((c) => processElement(c, saveState));
 }

@@ -12,21 +12,16 @@ export const packsState = atom<BasicPack[] | null>(null);
 export const activePackState = atom<PackDetails | null>(null);
 export const layoutState = atom<LayoutStateRoot | null>(null);
 
-export const trackerSaveFormatted = atom((get) => {
+export const trackerHintsAtom = atom((get) => {
   // !STATE
   const layout = get(layoutState);
-  const trackerSaveState: TrackerSaveState = {};
+  const hints: HintWithState[] = [];
 
   // !FUNCTION
   function processObject(layoutStateObj: LayoutStateObject): any {
     switch (layoutStateObj.type) {
       case 'hint':
-        const hint = layoutStateObj as HintWithState;
-        trackerSaveState[hint.code] = {
-          item: hint.item ? get(hint.item) : null,
-          location: hint.location ? get(hint.location) : null,
-          checked: get(hint.checked),
-        };
+        hints.push(layoutStateObj as HintWithState);
         return;
       case 'grid':
         const grid = layoutStateObj as LayoutStateGrid;
@@ -42,5 +37,23 @@ export const trackerSaveFormatted = atom((get) => {
 
   // build save state and return
   layout.map(processObject);
+  return hints;
+});
+
+export const trackerSaveFormatted = atom((get) => {
+  // !STATE
+  const hints = get(trackerHintsAtom);
+  const trackerSaveState: TrackerSaveState = {};
+
+  if (hints) {
+    for (const hint of hints) {
+      trackerSaveState[hint.code] = {
+        item: hint.item ? get(hint.item) : null,
+        location: hint.location ? get(hint.location) : null,
+        checked: get(hint.checked),
+      };
+    }
+  }
+
   return trackerSaveState;
 });
