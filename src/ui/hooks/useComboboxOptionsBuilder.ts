@@ -1,4 +1,4 @@
-import { comboboxOptionsDbState } from '@/states/combobox.states';
+import { comboboxOptionsDbState } from '@/states/Combobox.states';
 import { useAtomValue } from 'jotai';
 
 export function useComboboxOptionsBuilder() {
