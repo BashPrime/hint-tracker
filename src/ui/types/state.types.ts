@@ -48,5 +48,22 @@ export const LayoutStateGridSchema = LayoutStateObjectSchema.extend({
 });
 export type LayoutStateGrid = z.infer<typeof LayoutStateGridSchema>;
 
+export const LayoutStateUnhintedItemsSchema = LayoutStateObjectSchema.omit({
+  name: true,
+  code: true,
+  item: true,
+  location: true,
+  checked: true,
+}).extend({
+  type: z.literal('unhinted'),
+  content: z.array(z.object({
+    id: z.uuidv4(),
+    item: HintStrAtomSchema.nullable(),
+    location: HintStrAtomSchema.nullable(),
+    checked: HintBoolAtomSchema,
+  }))
+})
+export type LayoutStateUnhintedItems = z.infer<typeof LayoutStateUnhintedItemsSchema>
+
 export const LayoutStateRootSchema = z.array(LayoutStateObjectSchema);
 export type LayoutStateRoot = z.infer<typeof LayoutStateRootSchema>;

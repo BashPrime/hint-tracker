@@ -6,6 +6,7 @@ import {
   LayoutStateGrid,
   LayoutStateGridSchema,
   LayoutStateRoot,
+  LayoutStateUnhintedItemsSchema
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';
@@ -19,6 +20,8 @@ import {
   LayoutHintSchema,
   LayoutObject,
   LayoutRoot,
+  LayoutUnhintedItems,
+  LayoutUnhintedItemsSchema
 } from 'src/shared/types/layout.types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -74,6 +77,20 @@ function processGrid(
   });
 }
 
+function processUnhinted(
+  unhinted: LayoutUnhintedItems,
+  saveState?: TrackerSaveState,
+) {
+  return LayoutStateUnhintedItemsSchema.parse({
+    type: 'unhinted',
+    id: uuidv4(),
+    header: unhinted.header,
+    color: unhinted.color,
+    borderColor: unhinted.borderColor,
+    content: [],
+  })
+}
+
 function processElement(
   elem: LayoutObject,
   saveState?: TrackerSaveState,
@@ -88,6 +105,9 @@ function processElement(
     case 'grid':
       parsed = LayoutGridSchema.safeParse(elem);
       return parsed.success ? processGrid(parsed.data, saveState) : [];
+    case 'unhinted':
+      parsed = LayoutUnhintedItemsSchema.safeParse(elem);
+
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
       return parsed.success
