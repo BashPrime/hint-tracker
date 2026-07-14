@@ -1,5 +1,6 @@
 {
   "name": "bashprime-hint-tracker",
+  "productName": "BashPrime Hint Tracker",
   "private": true,
   "author": "BashPrime",
   "version": "3.0.0",
