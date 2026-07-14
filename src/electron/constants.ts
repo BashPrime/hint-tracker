@@ -16,6 +16,7 @@ export const IPC_IDS = {
   fetchImage: 'fetch-image',
   autosaveTrackerState: 'autosave-tracker-state',
   loadTrackerAutosave: 'load-tracker-autosave',
+  resetTracker: 'reset-tracker',
 };
 
 // Tracker
@@ -25,6 +26,7 @@ export const TRACKER_AUTOSAVE_JSON = 'autosave.json';
 export const MENU_IDS = {
   file: {
     openUserDataFolder: 'openUserDataFolder',
+    resetTracker: 'resetTracker',
   },
   toggles: {
     alwaysOnTop: 'alwaysOnTop',

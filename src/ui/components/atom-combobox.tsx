@@ -1,5 +1,5 @@
 import { PrimitiveAtom, useAtom } from 'jotai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Combobox,
   ComboboxContent,
@@ -20,6 +20,11 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
   // !STATE
   const [value, setValue] = useAtom(atom);
   const [inputValue, setInputValue] = useState(value ?? '');
+
+  // !HOOK
+  useEffect(() => {
+    setInputValue(value)
+  }, [value])
 
   return (
     <Combobox

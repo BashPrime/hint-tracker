@@ -7,6 +7,7 @@ import {
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
+import { resetTracker } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
@@ -51,6 +52,11 @@ const template: MenuItemConstructorOptions[] = [
         id: MENU_IDS.file.openUserDataFolder,
         label: 'Open User Data Folder',
         click: async () => openUserDataFolder(),
+      },
+      {
+        id: MENU_IDS.file.resetTracker,
+        label: 'Reset Tracker',
+        click: () => resetTracker(),
       },
       {
         label: 'Exit',
@@ -99,13 +105,13 @@ const template: MenuItemConstructorOptions[] = [
   isDev()
     ? { role: 'viewMenu' }
     : {
-        label: 'View',
-        submenu: [
-          { role: 'resetZoom' },
-          { role: 'zoomIn' },
-          { role: 'zoomOut' },
-        ],
-      },
+      label: 'View',
+      submenu: [
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+      ],
+    },
   { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];

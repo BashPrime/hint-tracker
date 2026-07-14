@@ -1,5 +1,6 @@
 import { LoadingSpinner } from '@/components/loading-spinner';
 import { buildLayoutState } from '@/helpers/layoutStateBuilder';
+import { useResetTracker } from '@/hooks/useResetTracker';
 import { fetchPackDetails, fetchPacks, fetchTrackerAutosave } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { activePackState, layoutState, packsState } from '@/states/App.states';
@@ -48,6 +49,7 @@ function PackLayoutRoot() {
   const layout = useAtomValue(layoutState);
 
   // !HOOKS
+  useResetTracker();
   const mediaQueryMatches = useMediaQuery('(min-width: 64rem)');
 
   if (!layout) {

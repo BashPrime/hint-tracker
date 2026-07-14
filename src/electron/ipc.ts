@@ -1,5 +1,5 @@
 import AdmZip from 'adm-zip';
-import { ipcMain } from 'electron';
+import { dialog, ipcMain } from 'electron';
 import { loadTrackerState, saveTrackerState } from './config.js';
 import { IPC_IDS } from './constants.js';
 import { getImage } from './images.js';
@@ -9,6 +9,7 @@ import {
   getBasicPack,
   getPackDetails,
 } from './packs.js';
+import { getMainWindow } from './window.js';
 
 export function runIpcHandlers() {
   // get all basic packs data
@@ -53,4 +54,26 @@ export function runIpcHandlers() {
       return loadTrackerState(buildTrackerAutosavePath(pack));
     }
   });
+}
+
+// these calls originate from ipcMain.
+export function resetTracker() {
+  const mainWindow = getMainWindow();
+  const cancelId = 0;
+  if (mainWindow) {
+    dialog
+      .showMessageBox(mainWindow, {
+        title: "Confirm Reset",
+        message:
+          "This will reset the tracker and clear its autosave.\n\nDo you want to continue?",
+        type: "warning",
+        buttons: ["Cancel", "Yes"],
+        cancelId,
+      })
+      .then((value) => {
+        if (value.response !== cancelId) {
+          mainWindow?.webContents.send(IPC_IDS.resetTracker);
+        }
+      });
+  }
 }

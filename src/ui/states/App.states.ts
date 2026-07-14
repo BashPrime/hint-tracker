@@ -11,6 +11,7 @@ import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 export const packsState = atom<BasicPack[] | null>(null);
 export const activePackState = atom<PackDetails | null>(null);
 export const layoutState = atom<LayoutStateRoot | null>(null);
+export const pauseAutosaveState = atom<boolean>(false);
 
 export const trackerHintsAtom = atom((get) => {
   // !STATE
