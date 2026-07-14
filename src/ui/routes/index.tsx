@@ -30,7 +30,7 @@ function Index() {
             <Frown size={48} />
           </div>
         ))}
-      {packs && packs.length && (
+      {packs && packs.length ? (
         <>
           <p className="p-2 text-center text-2xl font-bold uppercase">
             Select Pack
@@ -63,7 +63,7 @@ function Index() {
             })}
           </div>
         </>
-      )}
+      ) : null}
     </div>
   );
 }
