@@ -7,7 +7,7 @@ import {
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
-import { resetTracker } from './ipc.js';
+import { resetTracker, trackerHome } from './ipc.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
@@ -49,9 +49,14 @@ const template: MenuItemConstructorOptions[] = [
     label: 'File',
     submenu: [
       {
+        id: MENU_IDS.file.trackerHome,
+        label: 'Tracker Home',
+        click: () => trackerHome(),
+      },
+      {
         id: MENU_IDS.file.openUserDataFolder,
         label: 'Open User Data Folder',
-        click: async () => openUserDataFolder(),
+        click: () => openUserDataFolder(),
       },
       {
         id: MENU_IDS.file.resetTracker,

@@ -14,4 +14,6 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     ipcRenderer.invoke('load-tracker-autosave', packId),
   resetTracker: (callback: () => void) =>
     ipcRenderer.once('reset-tracker', () => callback()),
+  trackerHome: (callback: () => void) =>
+    ipcRenderer.once('tracker-home', () => callback()),
 });

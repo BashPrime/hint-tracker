@@ -1,13 +1,11 @@
 import { useAutosaveTracker } from '@/hooks/useAutosaveTracker';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
-import { cn } from '@/lib/utils';
+import { useTrackerHome } from '@/hooks/useTrackerHome';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { DevTools } from 'jotai-devtools';
 import 'jotai-devtools/styles.css';
 import css from 'jotai-devtools/styles.css?inline';
-import { Home } from 'lucide-react';
-import { Breadcrumb } from './-components/breadcrumb';
 import './root.css';
 
 function RouterDevTools() {
@@ -27,18 +25,12 @@ function JotaiDevTools() {
 
 function RootLayout() {
   // !HOOKS
+  useTrackerHome();
   useAutosaveTracker();
   useThemeChanger();
 
   return (
     <>
-      <nav
-        className={cn('flex flex-none items-center gap-2', 'font-bold', 'p-2')}
-      >
-        <Breadcrumb to="/">
-          <Home size={20} />
-        </Breadcrumb>
-      </nav>
       <div className="flex-auto overflow-auto">
         <Outlet />
       </div>

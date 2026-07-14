@@ -17,6 +17,7 @@ export const IPC_IDS = {
   autosaveTrackerState: 'autosave-tracker-state',
   loadTrackerAutosave: 'load-tracker-autosave',
   resetTracker: 'reset-tracker',
+  trackerHome: 'tracker-home',
 };
 
 // Tracker
@@ -25,6 +26,7 @@ export const TRACKER_AUTOSAVE_JSON = 'autosave.json';
 // Menu
 export const MENU_IDS = {
   file: {
+    trackerHome: 'trackerHome',
     openUserDataFolder: 'openUserDataFolder',
     resetTracker: 'resetTracker',
   },

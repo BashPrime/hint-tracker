@@ -77,3 +77,8 @@ export function resetTracker() {
       });
   }
 }
+
+export function trackerHome() {
+  const mainWindow = getMainWindow();
+  mainWindow?.webContents.send(IPC_IDS.trackerHome);
+}
