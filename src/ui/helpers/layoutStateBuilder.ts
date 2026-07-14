@@ -107,7 +107,7 @@ function processElement(
       return parsed.success ? processGrid(parsed.data, saveState) : [];
     case 'unhinted':
       parsed = LayoutUnhintedItemsSchema.safeParse(elem);
-
+      return parsed.success ? processUnhinted(parsed.data, saveState) : {}
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
       return parsed.success
