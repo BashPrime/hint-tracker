@@ -1,5 +1,9 @@
 import { autosaveTrackerState } from '@/ipc';
-import { activePackState, pauseAutosaveState, trackerSaveFormatted } from '@/states/App.states';
+import {
+  activePackState,
+  pauseAutosaveState,
+  trackerSaveFormatted,
+} from '@/states/App.states';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 

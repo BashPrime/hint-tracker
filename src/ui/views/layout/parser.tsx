@@ -24,7 +24,9 @@ function ParserBody({ elem }: BodyProps) {
       )}
       {elem.type === 'grid' && <LayoutGrid grid={elem as LayoutStateGrid} />}
       {elem.type === 'hint' && <LayoutHint hint={elem as HintWithState} />}
-      {elem.type === 'unhinted' && <UnhintedItems unhinted={elem as LayoutStateUnhintedItems} />}
+      {elem.type === 'unhinted' && (
+        <UnhintedItems unhinted={elem as LayoutStateUnhintedItems} />
+      )}
     </>
   );
 }

@@ -53,10 +53,10 @@ export const LayoutHintSchema = LayoutObjectSchema.omit({
 export type LayoutHint = z.infer<typeof LayoutHintSchema>;
 
 export const LayoutUnhintedItemsSchema = LayoutObjectSchema.omit({
-  content: true
+  content: true,
 }).extend({
   type: z.literal('unhinted'),
-})
+});
 export type LayoutUnhintedItems = z.infer<typeof LayoutUnhintedItemsSchema>;
 
 export const LayoutPointerSchema = z.object({

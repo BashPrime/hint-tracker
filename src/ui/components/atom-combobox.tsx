@@ -23,8 +23,8 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
 
   // !HOOK
   useEffect(() => {
-    setInputValue(value)
-  }, [value])
+    setInputValue(value);
+  }, [value]);
 
   return (
     <Combobox

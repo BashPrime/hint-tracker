@@ -63,11 +63,11 @@ export function resetTracker() {
   if (mainWindow) {
     dialog
       .showMessageBox(mainWindow, {
-        title: "Confirm Reset",
+        title: 'Confirm Reset',
         message:
-          "This will reset the tracker and clear its autosave.\n\nDo you want to continue?",
-        type: "warning",
-        buttons: ["Cancel", "Yes"],
+          'This will reset the tracker and clear its autosave.\n\nDo you want to continue?',
+        type: 'warning',
+        buttons: ['Cancel', 'Yes'],
         cancelId,
       })
       .then((value) => {

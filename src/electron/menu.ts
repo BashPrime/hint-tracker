@@ -110,13 +110,13 @@ const template: MenuItemConstructorOptions[] = [
   isDev()
     ? { role: 'viewMenu' }
     : {
-      label: 'View',
-      submenu: [
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
-      ],
-    },
+        label: 'View',
+        submenu: [
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
+        ],
+      },
   { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];
