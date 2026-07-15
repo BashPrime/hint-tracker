@@ -2,7 +2,7 @@ import {
   HintWithState,
   LayoutStateGrid,
   LayoutStateObject,
-  LayoutStateRoot,
+  LayoutStateRoot
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';

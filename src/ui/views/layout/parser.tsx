@@ -1,13 +1,16 @@
 import { cn } from '@/lib/utils';
 import {
+  HintWithState,
   LayoutStateArray,
   LayoutStateGrid,
   LayoutStateObject,
+  LayoutStateUnhintedItems,
 } from '@/types/state.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
 import { LayoutHint } from './hint';
 import './parser.css';
+import { UnhintedItems } from './unhinted-items';
 
 type BodyProps = {
   elem: LayoutStateObject;
@@ -20,7 +23,8 @@ function ParserBody({ elem }: BodyProps) {
         <LayoutArray array={elem as LayoutStateArray} />
       )}
       {elem.type === 'grid' && <LayoutGrid grid={elem as LayoutStateGrid} />}
-      {elem.type === 'hint' && <LayoutHint hint={elem as any} />}
+      {elem.type === 'hint' && <LayoutHint hint={elem as HintWithState} />}
+      {elem.type === 'unhinted' && <UnhintedItems unhinted={elem as LayoutStateUnhintedItems} />}
     </>
   );
 }

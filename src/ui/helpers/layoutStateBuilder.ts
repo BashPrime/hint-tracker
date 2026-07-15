@@ -87,7 +87,15 @@ function processUnhinted(
     header: unhinted.header,
     color: unhinted.color,
     borderColor: unhinted.borderColor,
-    content: [],
+    content: [
+      {
+        code: uuidv4(),
+        item: atom(''),
+        location: atom(''),
+        checked: atom(false),
+        comboboxOptions: unhinted.comboboxOptions,
+      }
+    ],
   })
 }
 
