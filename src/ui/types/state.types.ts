@@ -57,15 +57,15 @@ export const UnhintedItemHintSchema = HintWithStateSchema.extend({
 export type UnhintedItemHint = z.infer<typeof UnhintedItemHintSchema>;
 
 export const LayoutStateUnhintedItemsSchema = LayoutStateObjectSchema.omit({
-  id: true,
   name: true,
+  content: true,
   code: true,
   item: true,
   location: true,
   checked: true,
 }).extend({
   type: z.literal('unhinted'),
-  content: z.array(UnhintedItemHintSchema),
+  comboboxOptions: ComboboxOptionKeysSchema.optional(),
 });
 export type LayoutStateUnhintedItems = z.infer<
   typeof LayoutStateUnhintedItemsSchema

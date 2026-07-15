@@ -1,9 +1,17 @@
 import { LoadingSpinner } from '@/components/loading-spinner';
-import { buildLayoutState } from '@/helpers/layoutStateBuilder';
+import {
+  buildLayoutState,
+  buildUnhintedState,
+} from '@/helpers/layoutStateBuilder';
 import { useResetTracker } from '@/hooks/useResetTracker';
 import { fetchPackDetails, fetchPacks, fetchTrackerAutosave } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { activePackState, layoutState, packsState } from '@/states/App.states';
+import {
+  activePackState,
+  layoutState,
+  packsState,
+  unhintedHintsState,
+} from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
@@ -35,6 +43,7 @@ export const Route = createFileRoute('/packs/$packId')({
         layoutState,
         buildLayoutState(pack.layout, trackerAutosaveState)
       );
+      store.set(unhintedHintsState, buildUnhintedState(trackerAutosaveState));
     }
   },
   onLeave: async () => {

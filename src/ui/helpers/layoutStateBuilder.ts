@@ -7,6 +7,8 @@ import {
   LayoutStateGridSchema,
   LayoutStateRoot,
   LayoutStateUnhintedItemsSchema,
+  UnhintedItemHint,
+  UnhintedItemHintSchema
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';
@@ -21,7 +23,7 @@ import {
   LayoutObject,
   LayoutRoot,
   LayoutUnhintedItems,
-  LayoutUnhintedItemsSchema,
+  LayoutUnhintedItemsSchema
 } from 'src/shared/types/layout.types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -79,23 +81,14 @@ function processGrid(
 
 function processUnhinted(
   unhinted: LayoutUnhintedItems,
-  saveState?: TrackerSaveState
 ) {
-  const matches = saveState
-    ? Object.entries(saveState).filter(([key, val]) => key.includes('unhinted'))
-    : [];
   return LayoutStateUnhintedItemsSchema.parse({
+    id: uuidv4(),
     type: 'unhinted',
     header: unhinted.header,
     color: unhinted.color,
     borderColor: unhinted.borderColor,
-    content: matches.map(([key, val]) => ({
-      code: key,
-      item: val.item ? atom(val.item) : null,
-      location: val.location ? atom(val.location) : null,
-      checked: atom(val.checked),
-      comboboxOptions: unhinted.comboboxOptions,
-    })),
+    comboboxOptions: unhinted.comboboxOptions
   });
 }
 
@@ -115,14 +108,14 @@ function processElement(
       return parsed.success ? processGrid(parsed.data, saveState) : [];
     case 'unhinted':
       parsed = LayoutUnhintedItemsSchema.safeParse(elem);
-      return parsed.success ? processUnhinted(parsed.data, saveState) : {};
+      return parsed.success ? processUnhinted(parsed.data) : {};
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
       return parsed.success
         ? buildHintState(parsed.data, optionKeys, saveState)
         : {};
     default:
-      return null;
+      return {};
   }
 }
 
@@ -131,4 +124,17 @@ export function buildLayoutState(
   saveState?: TrackerSaveState
 ): LayoutStateRoot {
   return layout.content.map((c) => processElement(c, saveState));
+}
+
+export function buildUnhintedState(
+  saveState?: TrackerSaveState
+): UnhintedItemHint[] {
+  const unhinted = saveState ? Object.entries(saveState).filter(([key]) => key.includes('unhinted')) : []
+
+  return unhinted.map(([key, val]) => UnhintedItemHintSchema.parse({
+    code: key,
+    item: atom(val.item ?? ''),
+    location: atom(val.location ?? ''),
+    checked: atom(val.checked ?? false)
+  }))
 }
