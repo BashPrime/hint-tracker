@@ -3,7 +3,7 @@ import {
   LayoutStateGrid,
   LayoutStateObject,
   LayoutStateRoot,
-  UnhintedItemHint
+  UnhintedItemHint,
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';
@@ -13,7 +13,7 @@ export const packsState = atom<BasicPack[] | null>(null);
 export const activePackState = atom<PackDetails | null>(null);
 export const layoutState = atom<LayoutStateRoot | null>(null);
 export const pauseAutosaveState = atom<boolean>(false);
-export const unhintedHintsState = atom<UnhintedItemHint[]>([])
+export const unhintedHintsState = atom<UnhintedItemHint[]>([]);
 
 export const trackerHintsAtom = atom((get) => {
   // !STATE
@@ -22,7 +22,7 @@ export const trackerHintsAtom = atom((get) => {
 
   // !FUNCTION
   function processHint(hint: HintWithState): void {
-    hints.push(hint)
+    hints.push(hint);
   }
 
   function processObject(layoutStateObj: LayoutStateObject): void {
@@ -31,7 +31,7 @@ export const trackerHintsAtom = atom((get) => {
         processHint(layoutStateObj as HintWithState);
         break;
       case 'array':
-        layoutStateObj.content.map(processObject)
+        layoutStateObj.content.map(processObject);
         break;
       case 'grid':
         const grid = layoutStateObj as LayoutStateGrid;

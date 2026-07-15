@@ -8,7 +8,7 @@ import {
   LayoutStateRoot,
   LayoutStateUnhintedItemsSchema,
   UnhintedItemHint,
-  UnhintedItemHintSchema
+  UnhintedItemHintSchema,
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';
@@ -23,7 +23,7 @@ import {
   LayoutObject,
   LayoutRoot,
   LayoutUnhintedItems,
-  LayoutUnhintedItemsSchema
+  LayoutUnhintedItemsSchema,
 } from 'src/shared/types/layout.types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -79,16 +79,14 @@ function processGrid(
   });
 }
 
-function processUnhinted(
-  unhinted: LayoutUnhintedItems,
-) {
+function processUnhinted(unhinted: LayoutUnhintedItems) {
   return LayoutStateUnhintedItemsSchema.parse({
     id: uuidv4(),
     type: 'unhinted',
     header: unhinted.header,
     color: unhinted.color,
     borderColor: unhinted.borderColor,
-    comboboxOptions: unhinted.comboboxOptions
+    comboboxOptions: unhinted.comboboxOptions,
   });
 }
 
@@ -129,12 +127,16 @@ export function buildLayoutState(
 export function buildUnhintedState(
   saveState?: TrackerSaveState
 ): UnhintedItemHint[] {
-  const unhinted = saveState ? Object.entries(saveState).filter(([key]) => key.includes('unhinted')) : []
+  const unhinted = saveState
+    ? Object.entries(saveState).filter(([key]) => key.includes('unhinted'))
+    : [];
 
-  return unhinted.map(([key, val]) => UnhintedItemHintSchema.parse({
-    code: key,
-    item: atom(val.item ?? ''),
-    location: atom(val.location ?? ''),
-    checked: atom(val.checked ?? false)
-  }))
+  return unhinted.map(([key, val]) =>
+    UnhintedItemHintSchema.parse({
+      code: key,
+      item: atom(val.item ?? ''),
+      location: atom(val.location ?? ''),
+      checked: atom(val.checked ?? false),
+    })
+  );
 }
