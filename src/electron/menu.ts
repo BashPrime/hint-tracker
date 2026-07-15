@@ -50,7 +50,7 @@ const template: MenuItemConstructorOptions[] = [
     submenu: [
       {
         id: MENU_IDS.file.trackerHome,
-        label: 'Tracker Home',
+        label: 'Home',
         click: () => trackerHome(),
       },
       {

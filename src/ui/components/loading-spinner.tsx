@@ -7,8 +7,8 @@ type Props = {
 
 export function LoadingSpinner({ text }: Props) {
   return (
-    <div className={cn('flex justify-center')} data-name="loading-spinner">
-      <div className="flex flex-col items-center">
+    <div className="flex h-full justify-center" data-name="loading-spinner">
+      <div className="flex flex-col items-center justify-center">
         <Spinner className="size-32" />
         <p className={cn('text-4xl')}>{text ? text : 'Loading...'}</p>
       </div>
