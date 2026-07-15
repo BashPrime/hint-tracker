@@ -118,7 +118,7 @@ export function UnhintedItems({ unhinted }: Props) {
         variant="outline"
         className={cn('cursor-pointer place-self-center')}
       >
-        <Plus /> Add new hint{' '}
+        <Plus /> Add new hint
       </Button>
     </div>
   );
