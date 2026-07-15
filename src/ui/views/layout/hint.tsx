@@ -12,15 +12,17 @@ import { Image } from 'src/shared/types/image.types';
 
 type HintCheckedProps = {
   checked: boolean;
+  className?: string;
 };
 
-function HintChecked({ checked }: HintCheckedProps) {
+export function HintChecked({ checked, className }: HintCheckedProps) {
   return (
     <Check
       className={cn(
         'text-green-800 dark:text-green-300',
         'mx-1 my-0.5 h-4 w-4',
-        !checked && 'opacity-0'
+        !checked && 'opacity-0',
+        className
       )}
     />
   );
