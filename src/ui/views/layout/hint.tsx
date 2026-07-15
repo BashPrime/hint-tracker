@@ -10,6 +10,22 @@ import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Image } from 'src/shared/types/image.types';
 
+type HintCheckedProps = {
+  checked: boolean;
+};
+
+function HintChecked({ checked }: HintCheckedProps) {
+  return (
+    <Check
+      className={cn(
+        'text-green-800 dark:text-green-300',
+        'mx-1 my-0.5 h-4 w-4',
+        !checked && 'opacity-0'
+      )}
+    />
+  );
+}
+
 type Props = {
   hint: HintWithState;
 };
@@ -52,7 +68,7 @@ export function LayoutHint({ hint }: Props) {
       data-name="layout-hint"
     >
       {image && (
-        <div className="w-24 mb-1 select-none" data-name="boss-img">
+        <div className="mb-1 w-24 select-none" data-name="boss-img">
           <img
             src={`data:image/${image.type};base64,${image.data}`}
             title={hint.name}
@@ -60,38 +76,57 @@ export function LayoutHint({ hint }: Props) {
           />
         </div>
       )}
-      <div className={cn('flex flex-row justify-between')}>
-        <p
-          style={{ color: !checked ? hint.color : '' }}
-          className={cn(
-            'text-sm font-bold uppercase select-none',
-            hint.color && !checked && 'brightness-75 dark:brightness-100',
-            checked && 'text-green-800 dark:text-green-400'
+      {hint.name && (
+        <>
+          <div className={cn('flex flex-row justify-between')}>
+            <p
+              style={{ color: !checked ? hint.color : '' }}
+              className={cn(
+                'text-sm font-bold uppercase select-none',
+                hint.color && !checked && 'brightness-75 dark:brightness-100',
+                checked && 'text-green-800 dark:text-green-400'
+              )}
+            >
+              {hint.name}
+            </p>
+            <HintChecked checked={checked} />
+          </div>
+          {hint.item && (
+            <AtomCombobox
+              atom={hint.item}
+              placeholder={'Item'}
+              items={itemOptions}
+            />
           )}
-        >
-          {hint.name}
-        </p>
-        <Check
-          className={cn(
-            'text-green-800 dark:text-green-300',
-            'mx-1 my-0.5 h-4 w-4',
-            !checked && 'opacity-0'
+          {hint.location && (
+            <AtomCombobox
+              atom={hint.location}
+              placeholder={'Location'}
+              items={locationOptions}
+            />
           )}
-        />
-      </div>
-      {hint.item && (
-        <AtomCombobox
-          atom={hint.item}
-          placeholder={'Item'}
-          items={itemOptions}
-        />
+        </>
       )}
-      {hint.location && (
-        <AtomCombobox
-          atom={hint.location}
-          placeholder={'Location'}
-          items={locationOptions}
-        />
+      {!hint.name && (
+        <div className={cn('flex flex-row justify-between')}>
+          <div data-name="hints-container-no-name">
+            {hint.item && (
+              <AtomCombobox
+                atom={hint.item}
+                placeholder={'Item'}
+                items={itemOptions}
+              />
+            )}
+            {hint.location && (
+              <AtomCombobox
+                atom={hint.location}
+                placeholder={'Location'}
+                items={locationOptions}
+              />
+            )}
+          </div>
+          <HintChecked checked={checked} />
+        </div>
       )}
     </div>
   );
