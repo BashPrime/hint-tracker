@@ -63,6 +63,10 @@ const template: MenuItemConstructorOptions[] = [
         label: 'Reset Tracker',
         click: () => resetTracker(),
       },
+      { type: 'separator' },
+      { label: 'Import State' },
+      { label: 'Export State' },
+      { type: 'separator' },
       {
         label: 'Exit',
         role: 'quit',
@@ -110,13 +114,13 @@ const template: MenuItemConstructorOptions[] = [
   isDev()
     ? { role: 'viewMenu' }
     : {
-        label: 'View',
-        submenu: [
-          { role: 'resetZoom' },
-          { role: 'zoomIn' },
-          { role: 'zoomOut' },
-        ],
-      },
+      label: 'View',
+      submenu: [
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+      ],
+    },
   { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];
