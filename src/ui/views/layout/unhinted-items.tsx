@@ -116,7 +116,7 @@ export function UnhintedItems({ unhinted }: Props) {
       <Button
         onClick={addHint}
         variant="outline"
-        className={cn('cursor-pointer place-self-center py-6 text-base')}
+        className={cn('cursor-pointer place-self-center')}
       >
         <Plus /> Add new hint{' '}
       </Button>
