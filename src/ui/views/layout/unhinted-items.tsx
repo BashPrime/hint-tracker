@@ -9,7 +9,7 @@ import {
   UnhintedItemHint,
 } from '@/types/state.types';
 import { atom, useAtom } from 'jotai';
-import { CircleMinus } from 'lucide-react';
+import { CircleMinus, Plus } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { HintChecked } from './hint';
 
@@ -113,7 +113,13 @@ export function UnhintedItems({ unhinted }: Props) {
           <Hint hint={hint} key={hint.code} onDelete={deleteHint} />
         ))}
       </div>
-      <Button onClick={addHint}>Add new</Button>
+      <Button
+        onClick={addHint}
+        variant="outline"
+        className={cn('cursor-pointer place-self-center py-6 text-base')}
+      >
+        <Plus /> Add new hint{' '}
+      </Button>
     </div>
   );
 }
