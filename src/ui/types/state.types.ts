@@ -60,7 +60,6 @@ export type LayoutStateGrid = z.infer<typeof LayoutStateGridSchema>;
 // })
 export const UnhintedItemHintSchema = HintWithStateSchema.extend({
     name: z.literal('').default(''),
-    code: z.uuidv4(),
     type: z.literal('hint').default('hint'),
     item: HintStrAtomSchema,
     location: HintStrAtomSchema
@@ -68,6 +67,7 @@ export const UnhintedItemHintSchema = HintWithStateSchema.extend({
 export type UnhintedItemHint = z.infer<typeof UnhintedItemHintSchema>
 
 export const LayoutStateUnhintedItemsSchema = LayoutStateObjectSchema.omit({
+  id: true,
   name: true,
   code: true,
   item: true,

@@ -81,21 +81,19 @@ function processUnhinted(
   unhinted: LayoutUnhintedItems,
   saveState?: TrackerSaveState,
 ) {
+  const matches = saveState ? Object.entries(saveState).filter(([key, val]) => key.includes('unhinted')) : []
   return LayoutStateUnhintedItemsSchema.parse({
     type: 'unhinted',
-    id: uuidv4(),
     header: unhinted.header,
     color: unhinted.color,
     borderColor: unhinted.borderColor,
-    content: [
-      {
-        code: uuidv4(),
-        item: atom(''),
-        location: atom(''),
-        checked: atom(false),
-        comboboxOptions: unhinted.comboboxOptions,
-      }
-    ],
+    content: matches.map(([key, val]) => ({
+      code: key,
+      item: val.item ? atom(val.item) : null,
+      location: val.location ? atom(val.location) : null,
+      checked: atom(val.checked),
+      comboboxOptions: unhinted.comboboxOptions,
+    }))
   })
 }
 
