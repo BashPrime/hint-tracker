@@ -12,8 +12,16 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     ipcRenderer.invoke('autosave-tracker-state', state, packId),
   loadTrackerAutosave: (packId: string) =>
     ipcRenderer.invoke('load-tracker-autosave', packId),
-  resetTracker: (callback: () => void) =>
-    ipcRenderer.once('reset-tracker', () => callback()),
-  trackerHome: (callback: () => void) =>
-    ipcRenderer.once('tracker-home', () => callback()),
+  resetTracker: (callback: () => void) => {
+    const subscription = (_event: any) => callback();
+    ipcRenderer.on('reset-tracker', subscription);
+
+    return () => ipcRenderer.removeListener('reset-tracker', subscription);
+  },
+  trackerHome: (callback: () => void) => {
+    const subscription = (_event: any) => callback();
+    ipcRenderer.on('tracker-home', subscription);
+
+    return () => ipcRenderer.removeListener('tracker-home', subscription);
+  },
 });

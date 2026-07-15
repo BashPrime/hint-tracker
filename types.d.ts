@@ -6,7 +6,7 @@ interface Window {
     autosaveTrackerState: (state: object, packId: string) => void;
     loadTrackerAutosave: (packId: string) => Promise<object>;
     // ipcMain functions
-    resetTracker: (callback: () => void) => void;
-    trackerHome: (callback: () => void) => void;
+    resetTracker: (callback: () => void) => () => void;
+    trackerHome: (callback: () => void) => () => void;
   };
 }

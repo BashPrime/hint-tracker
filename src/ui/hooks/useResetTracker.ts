@@ -4,6 +4,7 @@ import {
   unhintedHintsState,
 } from '@/states/App.states';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 
 export function useResetTracker() {
   // !STATE
@@ -20,17 +21,24 @@ export function useResetTracker() {
       }))
     : null;
 
-  // !IPC
-  window.electronApi.resetTracker(() => {
-    setPauseAutosave(true);
-    if (resettableHints) {
-      for (const hint of resettableHints) {
-        hint.setItem?.('');
-        hint.setLocation?.('');
-        hint.setChecked(false);
+  useEffect(() => {
+    // !IPC
+    const cleanup = window.electronApi.resetTracker(() => {
+      setPauseAutosave(true);
+      if (resettableHints) {
+        for (const hint of resettableHints) {
+          hint.setItem?.('');
+          hint.setLocation?.('');
+          hint.setChecked(false);
+        }
       }
-    }
-    setUnhintedHints([]);
-    setPauseAutosave(false);
-  });
+      setUnhintedHints([]);
+      setPauseAutosave(false);
+    });
+
+    // Execute both cleanups when the component unmounts
+    return () => {
+      cleanup();
+    };
+  }, []);
 }
