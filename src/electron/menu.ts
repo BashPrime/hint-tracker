@@ -8,7 +8,7 @@ import {
 import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
 import { resetTracker, trackerHome } from './ipc.js';
-import { installPack } from './packs.js';
+import { installPackDialog } from './packs.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
@@ -54,7 +54,7 @@ const template: MenuItemConstructorOptions[] = [
         label: 'Home',
         click: () => trackerHome(),
       },
-      { label: 'Install Pack', click: () => installPack() },
+      { label: 'Install Pack', click: () => installPackDialog() },
       {
         id: MENU_IDS.file.openUserDataFolder,
         label: 'Open User Data Folder',

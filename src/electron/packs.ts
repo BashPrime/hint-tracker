@@ -1,5 +1,6 @@
 import AdmZip from 'adm-zip';
 import { dialog } from 'electron';
+import fs from 'fs';
 import fsPromises from 'fs/promises';
 import path, { basename } from 'path';
 import {
@@ -99,7 +100,49 @@ export function buildTrackerAutosavePath(pack: BasicPack) {
   );
 }
 
-export function installPack() {
+export function installPack(srcFilePath: string, window: Electron.BaseWindow) {
+  const packFileName = basename(srcFilePath);
+  const destination = path.join(USER_PACKS_PATH, packFileName);
+  const confirmOverwriteCancelId = 0;
+
+  // Confirm if the pack file already exists
+  if (fs.existsSync(destination)) {
+    const confirmButtonId = dialog.showMessageBoxSync(window, {
+      title: 'Pack Exists',
+      message: 'A pack with this file name exists. Overwrite?',
+      type: 'warning',
+      buttons: ['No, cancel', 'Yes, overwrite'],
+      cancelId: confirmOverwriteCancelId,
+    });
+
+    // If the user cancels, just return immediately/abort
+    if (confirmButtonId === confirmOverwriteCancelId) {
+      return;
+    }
+  }
+
+  fsPromises
+    .cp(srcFilePath, destination, { force: false })
+    .then(() =>
+      dialog.showMessageBox(window, {
+        title: 'Success',
+        message: `${packFileName} installed successfully.`,
+        type: 'info',
+        buttons: ['OK'],
+      })
+    )
+    .catch((err: any) => {
+      dialog.showErrorBox(
+        'Error Installing',
+        `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`
+      );
+      console.error(
+        `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`
+      );
+    });
+}
+
+export function installPackDialog() {
   const mainWindow = getMainWindow();
   if (mainWindow) {
     dialog
@@ -119,29 +162,12 @@ export function installPack() {
               'Invalid Pack',
               `${packFileName} is invalid and cannot be installed.`
             );
-            console.error('installPack(): packTrackerJson is null');
+            console.error('installPackDialog(): packTrackerJson is null');
             return;
           }
 
           // Pack seems valid, install in packs dir
-          const destination = path.join(USER_PACKS_PATH, packFileName);
-          fsPromises
-            .cp(filePath, destination)
-            .then(() =>
-              dialog.showMessageBox(mainWindow, {
-                title: 'Success',
-                message: `${packFileName} installed successfully.`,
-                type: 'info',
-                buttons: ['OK'],
-              })
-            )
-
-            .catch((err: any) =>
-              dialog.showErrorBox(
-                'Error Installing',
-                `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`
-              )
-            );
+          installPack(filePath, mainWindow);
         }
       })
       .catch((err: any) => {
