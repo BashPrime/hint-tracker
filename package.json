@@ -33,6 +33,7 @@
     "jotai": "^2.20.1",
     "jotai-devtools": "^0.14.0",
     "lucide-react": "^0.563.0",
+    "radix-ui": "^1.6.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "tailwind-merge": "^3.6.0",
