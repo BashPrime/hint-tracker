@@ -128,7 +128,7 @@ export function installPack(srcFilePath: string) {
   }
 
   fsPromises
-    .cp(srcFilePath, destination, { force: false })
+    .cp(srcFilePath, destination)
     .then(() => {
       dialog.showMessageBox(mainWindow, {
         title: 'Success',
