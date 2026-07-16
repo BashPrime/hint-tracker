@@ -57,6 +57,7 @@ function processArray(
     header: arr.header,
     color: arr.color,
     borderColor: arr.borderColor,
+    grow: arr.grow,
     content: arr.content.map((c) =>
       processElement(c, saveState, arr.comboboxOptions)
     ),
@@ -73,6 +74,7 @@ function processGrid(
     header: grid.header,
     color: grid.color,
     borderColor: grid.borderColor,
+    grow: grid.grow,
     content: grid.content.map((row) =>
       row.map((col) => processElement(col, saveState, grid.comboboxOptions))
     ),
@@ -87,6 +89,7 @@ function processUnhinted(unhinted: LayoutUnhintedItems) {
     color: unhinted.color,
     borderColor: unhinted.borderColor,
     comboboxOptions: unhinted.comboboxOptions,
+    grow: unhinted.grow,
   });
 }
 

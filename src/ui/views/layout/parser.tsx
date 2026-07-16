@@ -41,7 +41,8 @@ export function LayoutParser({ elem }: Props) {
       <div
         className={cn(
           'shadow-md dark:shadow-none',
-          'flex h-full flex-1 flex-col',
+          'flex flex-col',
+          elem.grow && 'h-full',
           'layout-group'
         )}
         data-name="layout-group"

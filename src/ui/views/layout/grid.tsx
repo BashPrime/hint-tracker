@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { LayoutStateGrid } from '@/types/state.types';
 import './grid.css';
 import { LayoutParser } from './parser';
@@ -26,7 +27,7 @@ type Props = {
 export function LayoutGrid({ grid }: Props) {
   return (
     <div
-      className="layout-grid flex flex-col"
+      className={cn('layout-grid flex flex-col', grid.grow && 'h-full')}
       data-name="layout-grid"
       key={grid.id}
     >

@@ -19,6 +19,7 @@ export const LayoutObjectSchema = z.object({
   header: z.string().optional(),
   color: z.string().optional(),
   borderColor: z.string().optional(),
+  grow: z.boolean().optional(),
   comboboxOptions: ComboboxOptionKeysSchema.optional(),
   type: z.string(),
   // !WHY having a hard time getting the union types to work, so using any for now

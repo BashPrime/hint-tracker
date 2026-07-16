@@ -10,6 +10,7 @@ export const LayoutStateObjectSchema = z.object({
   id: z.uuidv4(),
   color: z.string().optional(),
   borderColor: z.string().optional(),
+  grow: z.boolean().optional(),
   type: z.string(),
   content: z.array(z.any()),
   // Hint stuff
@@ -25,6 +26,7 @@ export const HintWithStateSchema = LayoutStateObjectSchema.omit({
   id: true,
   content: true,
   header: true,
+  grow: true,
 }).extend({
   type: z.literal('hint'),
   name: z.string(),

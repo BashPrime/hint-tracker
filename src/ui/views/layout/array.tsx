@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { LayoutStateArray } from '@/types/state.types';
 import { LayoutParser } from './parser';
 
@@ -8,7 +9,7 @@ type Props = {
 export function LayoutArray({ array }: Props) {
   return (
     <div
-      className="flex h-full flex-col"
+      className={cn('flex flex-col', array.grow && 'h-full')}
       data-name="layout-array"
       key={array.id}
     >
