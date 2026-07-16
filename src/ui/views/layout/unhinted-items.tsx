@@ -107,7 +107,10 @@ export function UnhintedItems({ unhinted }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-2" data-name="unhinted-items">
+    <div
+      className={cn('flex flex-col gap-2', unhinted.grow && 'h-full')}
+      data-name="unhinted-items"
+    >
       <div data-name="unhinted-hints-container">
         {parsedHints.map((hint) => (
           <Hint hint={hint} key={hint.code} onDelete={deleteHint} />

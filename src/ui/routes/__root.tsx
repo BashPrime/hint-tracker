@@ -31,7 +31,7 @@ function RootLayout() {
 
   return (
     <>
-      <div className="flex-auto overflow-auto">
+      <div className="h-full" data-name="_root">
         <Outlet />
       </div>
       <RouterDevTools />

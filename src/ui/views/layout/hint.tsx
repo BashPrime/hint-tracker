@@ -66,6 +66,11 @@ export function LayoutHint({ hint }: Props) {
         'border border-zinc-300 dark:border-zinc-900',
         checked && 'bg-green-300/90 dark:bg-green-900/90'
       )}
+      style={{
+        borderLeft: hint.borderColor
+          ? `2px solid ${hint.borderColor}`
+          : undefined,
+      }}
       onMouseDown={handleRightClick}
       data-name="layout-hint"
     >

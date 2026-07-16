@@ -40,6 +40,7 @@ function buildHintState(
     name: hint.name,
     image: hint.image,
     color: hint.color,
+    borderColor: hint.borderColor,
     comboboxOptions: optionKeys ?? hint.comboboxOptions,
     item: hint.hintType !== 'location' ? atom(match?.item ?? '') : null,
     location: hint.hintType !== 'item' ? atom(match?.location ?? '') : null,
