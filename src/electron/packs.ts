@@ -1,5 +1,7 @@
 import AdmZip from 'adm-zip';
-import path from 'path';
+import { dialog } from 'electron';
+import fsPromises from 'fs/promises';
+import path, { basename } from 'path';
 import {
   BasicPack,
   BasicPackSchema,
@@ -13,24 +15,24 @@ import {
 import { getImage } from './images.js';
 import { readDir } from './io.js';
 import { buildPackDetails } from './pack-builder.js';
+import { getErrorMsg } from './util.js';
+import { getMainWindow } from './window.js';
 
 let packs: BasicPack[];
 
 export function getAllPacksInDir(dir: string = USER_PACKS_PATH): BasicPack[] {
   const files = readDir(dir);
 
-  if (!packs) {
-    if (!files) {
-      return [];
-    }
-
-    packs = files
-      .filter((file) => {
-        return path.extname(file).toLowerCase() === '.zip';
-      })
-      .map((file) => getPackTrackerJson(path.join(dir, file)))
-      .filter((pack) => pack !== null);
+  if (!files) {
+    return [];
   }
+
+  packs = files
+    .filter((file) => {
+      return path.extname(file).toLowerCase() === '.zip';
+    })
+    .map((file) => getPackTrackerJson(path.join(dir, file)))
+    .filter((pack) => pack !== null);
 
   return packs;
 }
@@ -45,19 +47,32 @@ export function getBasicPack(packId: string) {
 
 export function getPackTrackerJson(filePath: string): BasicPack | null {
   const zip = new AdmZip(filePath);
+
+  const trackerJsonRaw = zip.readAsText('tracker.json');
+
+  if (!trackerJsonRaw) {
+    return null;
+  }
+
   const parsedJson = PackTrackerJsonSchema.safeParse(
-    JSON.parse(zip.readAsText('tracker.json'))
+    JSON.parse(trackerJsonRaw)
   );
 
   if (!parsedJson.success) {
     return null;
   }
 
-  return BasicPackSchema.parse({
+  const parsed = BasicPackSchema.safeParse({
     ...parsedJson.data,
     path: filePath,
     cover: parsedJson.data.cover ? getImage(zip, parsedJson.data.cover) : null,
   });
+
+  if (!parsed.success) {
+    return null;
+  }
+
+  return parsed.data;
 }
 
 export function getPackDetails(packId: string) {
@@ -82,4 +97,55 @@ export function buildTrackerAutosavePath(pack: BasicPack) {
     pack.version,
     TRACKER_AUTOSAVE_JSON
   );
+}
+
+export function installPack() {
+  const mainWindow = getMainWindow();
+  if (mainWindow) {
+    dialog
+      .showOpenDialog(mainWindow, {
+        title: 'Install Pack',
+        filters: [{ name: 'Tracker Packs', extensions: ['zip'] }],
+        properties: ['openFile'],
+      })
+      .then((value) => {
+        if (!value.canceled) {
+          const filePath = value.filePaths[0];
+          const packFileName = basename(filePath);
+          const packTrackerJson = getPackTrackerJson(filePath);
+
+          if (!packTrackerJson) {
+            dialog.showErrorBox(
+              'Invalid Pack',
+              `${packFileName} is invalid and cannot be installed.`
+            );
+            console.error('installPack(): packTrackerJson is null');
+            return;
+          }
+
+          // Pack seems valid, install in packs dir
+          const destination = path.join(USER_PACKS_PATH, packFileName);
+          fsPromises
+            .cp(filePath, destination)
+            .then(() =>
+              dialog.showMessageBox(mainWindow, {
+                title: 'Success',
+                message: `${packFileName} installed successfully.`,
+                type: 'info',
+                buttons: ['OK'],
+              })
+            )
+
+            .catch((err: any) =>
+              dialog.showErrorBox(
+                'Error Installing',
+                `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`
+              )
+            );
+        }
+      })
+      .catch((err: any) => {
+        dialog.showErrorBox('Error', getErrorMsg(err));
+      });
+  }
 }

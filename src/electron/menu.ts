@@ -8,6 +8,7 @@ import {
 import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
 import { resetTracker, trackerHome } from './ipc.js';
+import { installPack } from './packs.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
 
@@ -53,6 +54,7 @@ const template: MenuItemConstructorOptions[] = [
         label: 'Home',
         click: () => trackerHome(),
       },
+      { label: 'Install Pack', click: () => installPack() },
       {
         id: MENU_IDS.file.openUserDataFolder,
         label: 'Open User Data Folder',
@@ -114,13 +116,13 @@ const template: MenuItemConstructorOptions[] = [
   isDev()
     ? { role: 'viewMenu' }
     : {
-      label: 'View',
-      submenu: [
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
-      ],
-    },
+        label: 'View',
+        submenu: [
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
+        ],
+      },
   { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];
