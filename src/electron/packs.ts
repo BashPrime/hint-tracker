@@ -9,6 +9,7 @@ import {
   PackTrackerJsonSchema,
 } from '../shared/types/pack.types.js';
 import {
+  IPC_IDS,
   TRACKER_AUTOSAVE_JSON,
   USER_PACKS_PATH,
   USER_TRACKER_SAVES_PATH,
@@ -100,14 +101,19 @@ export function buildTrackerAutosavePath(pack: BasicPack) {
   );
 }
 
-export function installPack(srcFilePath: string, window: Electron.BaseWindow) {
+export function installPack(srcFilePath: string) {
+  const mainWindow = getMainWindow();
   const packFileName = basename(srcFilePath);
   const destination = path.join(USER_PACKS_PATH, packFileName);
   const confirmOverwriteCancelId = 0;
 
+  if (!mainWindow) {
+    return;
+  }
+
   // Confirm if the pack file already exists
   if (fs.existsSync(destination)) {
-    const confirmButtonId = dialog.showMessageBoxSync(window, {
+    const confirmButtonId = dialog.showMessageBoxSync(mainWindow, {
       title: 'Pack Exists',
       message: 'A pack with this file name exists. Overwrite?',
       type: 'warning',
@@ -123,14 +129,17 @@ export function installPack(srcFilePath: string, window: Electron.BaseWindow) {
 
   fsPromises
     .cp(srcFilePath, destination, { force: false })
-    .then(() =>
-      dialog.showMessageBox(window, {
+    .then(() => {
+      dialog.showMessageBox(mainWindow, {
         title: 'Success',
         message: `${packFileName} installed successfully.`,
         type: 'info',
         buttons: ['OK'],
       })
-    )
+
+      // Show tracker home after install
+      mainWindow?.webContents.send(IPC_IDS.trackerHome);
+    })
     .catch((err: any) => {
       dialog.showErrorBox(
         'Error Installing',
@@ -144,34 +153,37 @@ export function installPack(srcFilePath: string, window: Electron.BaseWindow) {
 
 export function installPackDialog() {
   const mainWindow = getMainWindow();
-  if (mainWindow) {
-    dialog
-      .showOpenDialog(mainWindow, {
-        title: 'Install Pack',
-        filters: [{ name: 'Tracker Packs', extensions: ['zip'] }],
-        properties: ['openFile'],
-      })
-      .then((value) => {
-        if (!value.canceled) {
-          const filePath = value.filePaths[0];
-          const packFileName = basename(filePath);
-          const packTrackerJson = getPackTrackerJson(filePath);
 
-          if (!packTrackerJson) {
-            dialog.showErrorBox(
-              'Invalid Pack',
-              `${packFileName} is invalid and cannot be installed.`
-            );
-            console.error('installPackDialog(): packTrackerJson is null');
-            return;
-          }
-
-          // Pack seems valid, install in packs dir
-          installPack(filePath, mainWindow);
-        }
-      })
-      .catch((err: any) => {
-        dialog.showErrorBox('Error', getErrorMsg(err));
-      });
+  if (!mainWindow) {
+    return;
   }
+
+  dialog
+    .showOpenDialog(mainWindow, {
+      title: 'Install Pack',
+      filters: [{ name: 'Tracker Packs', extensions: ['zip'] }],
+      properties: ['openFile'],
+    })
+    .then((value) => {
+      if (!value.canceled) {
+        const filePath = value.filePaths[0];
+        const packFileName = basename(filePath);
+        const packTrackerJson = getPackTrackerJson(filePath);
+
+        if (!packTrackerJson) {
+          dialog.showErrorBox(
+            'Invalid Pack',
+            `${packFileName} is invalid and cannot be installed.`
+          );
+          console.error('installPackDialog(): packTrackerJson is null');
+          return;
+        }
+
+        // Pack seems valid, install in packs dir
+        installPack(filePath);
+      }
+    })
+    .catch((err: any) => {
+      dialog.showErrorBox('Error', getErrorMsg(err));
+    });
 }
