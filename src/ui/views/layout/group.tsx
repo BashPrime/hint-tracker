@@ -17,6 +17,7 @@ export function LayoutGroup({ group }: Props) {
       )}
       data-name="layout-group"
       style={{
+        gap: group.gap ? `calc(var(--spacing) * ${group.gap})` : undefined,
         borderLeft: group.borderColor
           ? `2px solid ${group.borderColor}`
           : undefined,

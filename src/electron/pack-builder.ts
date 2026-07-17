@@ -85,11 +85,11 @@ function buildLayout(pack: BasicPack) {
   // Build initial, unprocessed layout object
   for (const layoutPath of pack.layout) {
     const json = JSON.parse(zip.readAsText(layoutPath));
-    const parsedGroup = LayoutObjectJsonSchema.safeParse(json);
+    const parsedObject = LayoutObjectJsonSchema.safeParse(json);
 
-    if (parsedGroup.success) {
+    if (parsedObject.success) {
       // Assign to groups
-      Object.assign(layoutObjects, parsedGroup.data);
+      Object.assign(layoutObjects, parsedObject.data);
     }
   }
 

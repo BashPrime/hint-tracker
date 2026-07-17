@@ -12,7 +12,6 @@ import { LayoutGrid } from './grid';
 import { LayoutGroup } from './group';
 import { LayoutHint } from './hint';
 import { InvalidObject } from './invalid-object';
-import './parser.css';
 import { UnhintedItems } from './unhinted-items';
 
 type Props = {
@@ -33,7 +32,9 @@ export function LayoutParser({ elem }: Props) {
       {elem.type === 'unhinted' && (
         <UnhintedItems unhinted={elem as LayoutStateUnhintedItems} />
       )}
-      {elem.type === 'invalid' && <InvalidObject obj={elem as InvalidStateObject}/>}
+      {elem.type === 'invalid' && (
+        <InvalidObject obj={elem as InvalidStateObject} />
+      )}
     </>
   );
 }

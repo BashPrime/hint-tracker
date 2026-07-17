@@ -61,6 +61,7 @@ function processGroup(group: LayoutGroup, saveState?: TrackerSaveState) {
     color: group.color,
     borderColor: group.borderColor,
     grow: group.grow,
+    gap: group.gap,
     content: group.content.map((c) => processElement(c, saveState)),
   });
 }
@@ -75,6 +76,7 @@ function processArray(
     color: arr.color,
     borderColor: arr.borderColor,
     grow: arr.grow,
+    gap: arr.gap,
     content: arr.content.map((c) =>
       processElement(c, saveState, arr.comboboxOptions)
     ),
@@ -91,6 +93,7 @@ function processGrid(
     color: grid.color,
     borderColor: grid.borderColor,
     grow: grid.grow,
+    gap: grid.gap,
     content: grid.content.map((row) =>
       row.map((col) => processElement(col, saveState, grid.comboboxOptions))
     ),
@@ -105,6 +108,7 @@ function processUnhinted(unhinted: LayoutUnhintedItems) {
     borderColor: unhinted.borderColor,
     comboboxOptions: unhinted.comboboxOptions,
     grow: unhinted.grow,
+    gap: unhinted.gap,
   });
 }
 

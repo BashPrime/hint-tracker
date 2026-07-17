@@ -30,6 +30,9 @@ export function LayoutGrid({ grid }: Props) {
       className={cn('layout-grid flex flex-col', grid.grow && 'h-full')}
       data-name="layout-grid"
       key={grid.id}
+      style={{
+        gap: grid.gap ? `calc(var(--spacing) * ${grid.gap})` : undefined,
+      }}
     >
       {grid.content.map((row, rowIdx) => (
         <LayoutRow row={row} key={`${grid.id}-${rowIdx}`} />

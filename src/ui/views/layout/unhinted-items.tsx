@@ -110,6 +110,11 @@ export function UnhintedItems({ unhinted }: Props) {
     <div
       className={cn('flex flex-col gap-2', unhinted.grow && 'h-full')}
       data-name="unhinted-items"
+      style={{
+        gap: unhinted.gap
+          ? `calc(var(--spacing) * ${unhinted.gap})`
+          : undefined,
+      }}
     >
       <div data-name="unhinted-hints-container">
         {parsedHints.map((hint) => (

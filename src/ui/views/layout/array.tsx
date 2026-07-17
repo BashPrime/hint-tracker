@@ -12,6 +12,9 @@ export function LayoutArray({ array }: Props) {
       className={cn('flex flex-col', array.grow && 'h-full')}
       data-name="layout-array"
       key={array.id}
+      style={{
+        gap: array.gap ? `calc(var(--spacing) * ${array.gap})` : undefined,
+      }}
     >
       {array.content.map((elem) => (
         <LayoutParser

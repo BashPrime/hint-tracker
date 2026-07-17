@@ -8,11 +8,13 @@ const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
 export const LayoutStateObjectSchema = z.object({
   header: z.string().optional(),
   id: z.uuidv4(),
+  type: z.string(),
+  content: z.array(z.any()),
+  // Styling
   color: z.string().optional(),
   borderColor: z.string().optional(),
   grow: z.boolean().optional(),
-  type: z.string(),
-  content: z.array(z.any()),
+  gap: z.number().optional(),
   // Hint stuff
   name: z.string().optional(),
   code: z.string().optional(),
@@ -20,7 +22,7 @@ export const LayoutStateObjectSchema = z.object({
   location: HintStrAtomSchema.nullish(),
   checked: HintBoolAtomSchema.optional(),
   // Invalid state object
-  err: z.instanceof(z.ZodError).optional()
+  err: z.instanceof(z.ZodError).optional(),
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;
 
