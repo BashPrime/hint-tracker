@@ -26,10 +26,11 @@ export const trackerHintsAtom = atom((get) => {
   }
 
   function processObject(layoutStateObj: LayoutStateObject): void {
-    switch (layoutStateObj.type) {
+    switch (layoutStateObj.type) {        
       case 'hint':
         processHint(layoutStateObj as HintWithState);
         break;
+      case 'group':
       case 'array':
         layoutStateObj.content.map(processObject);
         break;
