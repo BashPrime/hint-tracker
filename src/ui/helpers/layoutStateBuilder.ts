@@ -118,10 +118,14 @@ function processElement(
         : InvalidStateObjectSchema.parse;
     case 'grid':
       parsed = LayoutGridSchema.safeParse(elem);
-      return parsed.success ? processGrid(parsed.data, saveState) : buildInvalidObject(parsed.error);
+      return parsed.success
+        ? processGrid(parsed.data, saveState)
+        : buildInvalidObject(parsed.error);
     case 'unhinted':
       parsed = LayoutUnhintedItemsSchema.safeParse(elem);
-      return parsed.success ? processUnhinted(parsed.data) : buildInvalidObject(parsed.error);
+      return parsed.success
+        ? processUnhinted(parsed.data)
+        : buildInvalidObject(parsed.error);
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
       return parsed.success
@@ -132,7 +136,10 @@ function processElement(
         new z.ZodError([
           {
             code: 'custom',
-            path: [],
+            path: ['type'],
+            params: {
+              value: elem.type ?? '',
+            },
             message: 'Unable to determine what type this object is',
           },
         ])

@@ -10,9 +10,14 @@ export function InvalidObject({ obj }: Props) {
       <p className="mb-2 text-xl font-bold">Invalid Object!</p>
       {obj.err.issues.map((issue) => (
         <div className="font-mono" data-name="issue">
-          <p data-name="issue-code">Code: {issue.code}</p>
-          <p data-name="issue-path">Path: {JSON.stringify(issue.path)}</p>
-          <p data-name="issue-message">{issue.message}</p>
+          <p>{issue.message}</p>
+          {Object.entries(issue)
+            .filter(([key]) => key !== 'message')
+            .map(([key, val]) => (
+              <p>
+                {key}: {JSON.stringify(val)}
+              </p>
+            ))}
         </div>
       ))}
     </div>

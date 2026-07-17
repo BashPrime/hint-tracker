@@ -19,8 +19,21 @@ export const LayoutStateObjectSchema = z.object({
   item: HintStrAtomSchema.nullish(),
   location: HintStrAtomSchema.nullish(),
   checked: HintBoolAtomSchema.optional(),
+  // Invalid state object
+  err: z.instanceof(z.ZodError).optional()
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;
+
+export const LayoutStateGroupShema = LayoutStateObjectSchema.omit({
+  name: true,
+  code: true,
+  item: true,
+  location: true,
+  checked: true,
+}).extend({
+  type: z.literal('group'),
+});
+export type LayoutStateGroup = z.infer<typeof LayoutStateGroupShema>;
 
 export const HintWithStateSchema = LayoutStateObjectSchema.omit({
   id: true,
@@ -75,3 +88,9 @@ export type LayoutStateUnhintedItems = z.infer<
 
 export const LayoutStateRootSchema = z.array(LayoutStateObjectSchema);
 export type LayoutStateRoot = z.infer<typeof LayoutStateRootSchema>;
+
+export const InvalidStateObjectSchema = z.object({
+  type: z.literal('invalid'),
+  err: z.instanceof(z.ZodError),
+});
+export type InvalidStateObject = z.infer<typeof InvalidStateObjectSchema>;
