@@ -38,9 +38,16 @@ export function PackSelection() {
 
   return (
     <div data-name="pack-selection">
-      <p className="p-2 text-center text-4xl font-bold uppercase">
-        Select a Pack
-      </p>
+      <div
+        className="flex flex-col items-center gap-1"
+        data-name="selection-header"
+      >
+        <p className="p-2 text-center text-4xl font-bold uppercase">
+          Select a Pack
+        </p>
+        <div className="h-1.5 w-3/5 min-w-72 bg-[#f4B938]" />
+        <div className="h-1.5 w-3/5 min-w-72 bg-[#ab4d1b]" />
+      </div>
       <div className="flex flex-col justify-center gap-4 p-2">
         <ItemGroup>
           {packs.map((pack) => {
