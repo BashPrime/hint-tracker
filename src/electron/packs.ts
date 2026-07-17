@@ -135,7 +135,7 @@ export function installPack(srcFilePath: string) {
         message: `${packFileName} installed successfully.`,
         type: 'info',
         buttons: ['OK'],
-      })
+      });
 
       // Show tracker home after install
       mainWindow?.webContents.send(IPC_IDS.trackerHome);

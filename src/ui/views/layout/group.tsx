@@ -9,7 +9,11 @@ type Props = {
 export function LayoutGroup({ group }: Props) {
   return (
     <div
-      className={cn('shadow-md dark:shadow-none', 'flex flex-col', 'layout-group')}
+      className={cn(
+        'shadow-md dark:shadow-none',
+        'flex flex-col',
+        'layout-group'
+      )}
       data-name="layout-group"
       style={{
         borderLeft: group.borderColor
