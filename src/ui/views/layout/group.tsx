@@ -9,15 +9,9 @@ type Props = {
 export function LayoutGroup({ group }: Props) {
   return (
     <div
-      className={cn(
-        'shadow-md dark:shadow-none',
-        'flex flex-col',
-        group.grow && 'h-full',
-        'layout-group'
-      )}
+      className={cn('shadow-md dark:shadow-none', 'flex flex-col', 'layout-group')}
       data-name="layout-group"
       style={{
-        gap: group.gap ? `calc(var(--spacing) * ${group.gap})` : undefined,
         borderLeft: group.borderColor
           ? `2px solid ${group.borderColor}`
           : undefined,
@@ -34,12 +28,20 @@ export function LayoutGroup({ group }: Props) {
           {group.header}
         </p>
       )}
-      {group.content.map((elem) => (
-        <LayoutParser
-          elem={elem}
-          key={elem.type === 'hint' ? elem.code : elem.id}
-        />
-      ))}
+      <div
+        className={cn('flex flex-col', group.grow && 'h-full')}
+        style={{
+          gap: group.gap ? `calc(var(--spacing) * ${group.gap})` : undefined,
+        }}
+        data-name="group-content"
+      >
+        {group.content.map((elem) => (
+          <LayoutParser
+            elem={elem}
+            key={elem.type === 'hint' ? elem.code : elem.id}
+          />
+        ))}
+      </div>
     </div>
   );
 }
