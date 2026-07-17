@@ -1,24 +1,30 @@
-import { cn } from '@/lib/utils';
 import {
   HintWithState,
+  InvalidStateObject,
   LayoutStateArray,
   LayoutStateGrid,
+  LayoutStateGroup,
   LayoutStateObject,
   LayoutStateUnhintedItems,
 } from '@/types/state.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
+import { LayoutGroup } from './group';
 import { LayoutHint } from './hint';
+import { InvalidObject } from './invalid-object';
 import './parser.css';
 import { UnhintedItems } from './unhinted-items';
 
-type BodyProps = {
+type Props = {
   elem: LayoutStateObject;
 };
 
-function ParserBody({ elem }: BodyProps) {
+export function LayoutParser({ elem }: Props) {
   return (
     <>
+      {elem.type === 'group' && (
+        <LayoutGroup group={elem as LayoutStateGroup} />
+      )}
       {elem.type === 'array' && (
         <LayoutArray array={elem as LayoutStateArray} />
       )}
@@ -27,44 +33,7 @@ function ParserBody({ elem }: BodyProps) {
       {elem.type === 'unhinted' && (
         <UnhintedItems unhinted={elem as LayoutStateUnhintedItems} />
       )}
+      {elem.type === 'invalid' && <InvalidObject obj={elem as InvalidStateObject}/>}
     </>
   );
-}
-
-type Props = {
-  elem: LayoutStateObject;
-};
-
-export function LayoutParser({ elem }: Props) {
-  if (elem.header) {
-    return (
-      <div
-        className={cn(
-          'shadow-md dark:shadow-none',
-          'flex flex-col',
-          elem.grow && 'h-full',
-          'layout-group'
-        )}
-        data-name="layout-group"
-        style={{
-          borderLeft: elem.borderColor
-            ? `2px solid ${elem.borderColor}`
-            : undefined,
-        }}
-      >
-        <p
-          className={cn(
-            'dark:text-foreground bg-neutral-700 text-neutral-50 dark:bg-neutral-900',
-            'px-2 py-1',
-            'text-base font-bold uppercase select-none'
-          )}
-        >
-          {elem.header}
-        </p>
-        <ParserBody elem={elem} />
-      </div>
-    );
-  }
-
-  return <ParserBody elem={elem} />;
 }

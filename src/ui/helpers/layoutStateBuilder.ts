@@ -1,6 +1,7 @@
 import {
   HintWithState,
   HintWithStateSchema,
+  InvalidStateObjectSchema,
   LayoutStateArray,
   LayoutStateArraySchema,
   LayoutStateGrid,
@@ -26,6 +27,7 @@ import {
   LayoutUnhintedItemsSchema,
 } from 'src/shared/types/layout.types';
 import { v4 as uuidv4 } from 'uuid';
+import z from 'zod';
 
 function buildHintState(
   hint: LayoutHint,
@@ -94,6 +96,13 @@ function processUnhinted(unhinted: LayoutUnhintedItems) {
   });
 }
 
+function buildInvalidObject(err: z.ZodError) {
+  return InvalidStateObjectSchema.parse({
+    type: 'invalid',
+    err,
+  });
+}
+
 function processElement(
   elem: LayoutObject,
   saveState?: TrackerSaveState,
@@ -104,20 +113,30 @@ function processElement(
   switch (elem.type) {
     case 'array':
       parsed = LayoutArraySchema.safeParse(elem);
-      return parsed.success ? processArray(parsed.data, saveState) : [];
+      return parsed.success
+        ? processArray(parsed.data, saveState)
+        : InvalidStateObjectSchema.parse;
     case 'grid':
       parsed = LayoutGridSchema.safeParse(elem);
-      return parsed.success ? processGrid(parsed.data, saveState) : [];
+      return parsed.success ? processGrid(parsed.data, saveState) : buildInvalidObject(parsed.error);
     case 'unhinted':
       parsed = LayoutUnhintedItemsSchema.safeParse(elem);
-      return parsed.success ? processUnhinted(parsed.data) : {};
+      return parsed.success ? processUnhinted(parsed.data) : buildInvalidObject(parsed.error);
     case 'hint':
       parsed = LayoutHintSchema.safeParse(elem);
       return parsed.success
         ? buildHintState(parsed.data, optionKeys, saveState)
-        : {};
+        : buildInvalidObject(parsed.error);
     default:
-      return {};
+      return buildInvalidObject(
+        new z.ZodError([
+          {
+            code: 'custom',
+            path: [],
+            message: 'Unable to determine what type this object is',
+          },
+        ])
+      );
   }
 }
 

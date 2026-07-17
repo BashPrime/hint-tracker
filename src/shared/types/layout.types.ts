@@ -27,6 +27,12 @@ export const LayoutObjectSchema = z.object({
 });
 export type LayoutObject = z.infer<typeof LayoutObjectSchema>;
 
+export const LayoutGroupSchema = LayoutObjectSchema.extend({
+  type: z.literal('group'),
+  header: z.string(),
+});
+export type LayoutGroup = z.infer<typeof LayoutGroupSchema>;
+
 export const LayoutGridSchema = LayoutObjectSchema.extend({
   type: z.literal('grid'),
   // !WHY having a hard time getting the union types to work, so using any for now
