@@ -12,7 +12,7 @@ import {
   USER_PACKS_PATH,
   USER_TRACKER_SAVES_PATH,
 } from './constants.js';
-import { readAndParseJsonFile, writeJsonFile } from './io.js';
+import { readAndParseJsonFile, readJsonFile, writeJsonFile } from './io.js';
 import { getErrorMsg } from './util.js';
 
 export function readConfigFile(path: string = CONFIG_PATH) {
@@ -81,7 +81,8 @@ export function saveTrackerState(
 }
 
 export function loadTrackerState(path: string) {
-  return readAndParseJsonFile(path, TrackerSaveStateSchema);
+  const json = readJsonFile(path);
+  return TrackerSaveStateSchema.safeParse(json);
 }
 
 // export function openUserProvidedTrackerFile() {

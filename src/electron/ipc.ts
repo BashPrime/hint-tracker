@@ -77,7 +77,17 @@ export function runIpcHandlers() {
     const pack = getBasicPack(packId);
 
     if (pack) {
-      return loadTrackerState(buildTrackerAutosavePath(pack));
+      const state = loadTrackerState(buildTrackerAutosavePath(pack));
+
+      if (!state.success) {
+        console.error(
+          'loadTrackerAutosave(): Tracker state failed validation',
+          state.error
+        );
+        return null;
+      }
+
+      return state.data;
     }
   });
 
@@ -207,11 +217,27 @@ export function importTrackerState() {
     })
     .then((value) => {
       if (!value.canceled) {
-        const trackerState = loadTrackerState(value.filePaths[0]);
-        mainWindow.webContents.send(IPC_IDS.importTrackerState, trackerState);
+        const state = loadTrackerState(value.filePaths[0]);
+
+        if (!state.success) {
+          dialog.showErrorBox(
+            'Import Error',
+            `Tracker state failed to validate. ${state.error.message}`
+          );
+          return;
+        }
+
+        mainWindow.webContents.send(IPC_IDS.importTrackerState, state.data);
       }
     })
     .catch((err: any) => {
-      dialog.showErrorBox('Import Error', getErrorMsg(err));
+      dialog.showErrorBox(
+        'Import Error',
+        `Tracker state failed to import. ${getErrorMsg(err)}`
+      );
+      console.error(
+        'importTrackerState(): Error loading tracker state:',
+        getErrorMsg(err)
+      );
     });
 }

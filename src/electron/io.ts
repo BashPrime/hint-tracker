@@ -1,3 +1,4 @@
+import { dialog } from 'electron';
 import fs from 'fs';
 import z from 'zod';
 import { getErrorMsg } from './util.js';
@@ -9,6 +10,10 @@ export function readJsonFile(path: string) {
       return JSON.parse(json);
     }
   } catch (err) {
+    dialog.showErrorBox(
+      'Error reading json file',
+      `An error occurred reading ${path}: ${getErrorMsg(err)}`
+    );
     console.error(
       'readJsonFile(): Error reading json file:',
       path,
@@ -22,6 +27,10 @@ export function readJsonFile(path: string) {
 export function writeJsonFile(path: string, json: string) {
   fs.writeFile(path, json, (err) => {
     if (err) {
+      dialog.showErrorBox(
+        'Error writing json file',
+        `An error occurred writing ${path}: ${getErrorMsg(err)}`
+      );
       console.error(
         'writeJsonFile(): Error writing json file:',
         path,

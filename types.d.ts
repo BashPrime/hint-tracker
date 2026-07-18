@@ -4,7 +4,7 @@ interface Window {
     fetchPackDetails: (packId: string) => Promise<object>;
     fetchImage: (packId: string, imgPath: string) => Promise<object>;
     autosaveTrackerState: (state: object, packId: string) => void;
-    loadTrackerAutosave: (packId: string) => Promise<object>;
+    loadTrackerAutosave: (packId: string) => Promise<object | null>;
     // ipcMain functions
     resetTracker: (callback: () => void) => () => void;
     resetSize: (callback: () => void) => () => void;
@@ -12,7 +12,9 @@ interface Window {
     trackerHome: (callback: () => void) => () => void;
     setExportTrackerState: (enabled: boolean) => void;
     exportTrackerState: (callback: () => void) => () => void;
-    importTrackerState: (callback: (state: object) => void) => () => void;
+    importTrackerState: (
+      callback: (state: object | null) => void
+    ) => () => void;
     exportTrackerStateResponse: (state: object, packId: string | null) => void;
   };
 }
