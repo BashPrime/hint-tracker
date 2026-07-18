@@ -19,6 +19,7 @@ export function buildPackDetails(pack: BasicPack): PackDetails {
 
   return PackDetailsSchema.parse({
     id: pack.id,
+    version: pack.version,
     items,
     locations,
     features,

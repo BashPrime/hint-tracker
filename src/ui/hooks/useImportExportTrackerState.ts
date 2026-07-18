@@ -29,24 +29,33 @@ export function useImportExportTrackerState() {
       window.electronApi.exportTrackerStateResponse(trackerState, packId);
     });
 
-    const cleanupImport = window.electronApi.importTrackerState((state) => {
-      setPausedAutosave(true);
-      const parsedState = state as TrackerSaveState;
-      setStateToLoad('import');
-      setImportTrackerState(parsedState);
-      navigate({
-        to: '/packs/$packId',
-        params: { packId: parsedState.pack.id },
-      }).finally(() => {
-        setStateToLoad('autosave');
-        setPausedAutosave(false);
-      });
-    });
+    const cleanupImport = window.electronApi.importTrackerState(
+      async (state) => {
+        setPausedAutosave(true);
+
+        // Prepare state for import
+        const parsedState = state as TrackerSaveState;
+        setStateToLoad('import');
+        setImportTrackerState(parsedState);
+
+        await navigate({ to: '/' });
+
+        // navigate to route, which will load the imported state
+        navigate({
+          to: '/packs/$packId',
+          params: { packId: parsedState.pack.id },
+        }).finally(() => {
+          // cleanup
+          setStateToLoad('autosave');
+          setPausedAutosave(false);
+        });
+      }
+    );
 
     // Execute both cleanups when the component unmounts
     return () => {
       cleanupExport();
       cleanupImport();
     };
-  }, [trackerState, setPausedAutosave]);
+  }, [trackerState]);
 }

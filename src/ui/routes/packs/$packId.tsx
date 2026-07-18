@@ -42,22 +42,28 @@ export const Route = createFileRoute('/packs/$packId')({
   loader: async ({ params }) => {
     const store = getDefaultStore();
     await fetchPackDetails(params.packId);
-
-    // Load either autosave or imported tracker state
-    const stateToLoad = store.get(trackerStateToLoad);
-    let trackerState: TrackerSaveState | undefined;
-
-    switch (stateToLoad) {
-      case 'autosave':
-        trackerState = await fetchTrackerAutosave(params.packId);
-        break;
-      case 'import':
-        trackerState = store.get(importTrackerState) ?? undefined;
-    }
-
     const pack = store.get(activePackState);
 
     if (pack) {
+      // Load either autosave or imported tracker state
+      const stateToLoad = store.get(trackerStateToLoad);
+      let trackerState: TrackerSaveState | undefined;
+
+      switch (stateToLoad) {
+        case 'autosave':
+          trackerState = await fetchTrackerAutosave(params.packId);
+          break;
+        case 'import':
+          trackerState = store.get(importTrackerState) ?? undefined;
+          break;
+      }
+
+      // If the existing tracker state doesn't match the pack version, don't load it into the app state
+      if (trackerState?.pack.version !== pack.version) {
+        trackerState = undefined;
+      }
+
+      // Build the tracker state
       store.set(layoutState, buildLayoutState(pack.layout, trackerState));
       store.set(unhintedHintsState, buildUnhintedState(trackerState));
       setExportTrackerStateMenuItem(true);

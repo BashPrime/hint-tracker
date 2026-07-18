@@ -57,6 +57,7 @@ export type Feature = z.infer<typeof FeatureSchema>;
 
 export const PackDetailsSchema = z.object({
   id: z.string(),
+  version: SemVerSchema,
   items: z.array(ItemSchema),
   locations: z.array(LocationParentSchema),
   features: z.array(FeatureSchema),
