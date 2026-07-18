@@ -42,9 +42,9 @@ function Hint({ hint, onDelete }: HintProps) {
       data-name="layout-hint"
     >
       <div className={cn('flex flex-row items-center justify-between')}>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 w-full">
           <HintChecked checked={checked} />
-          <div data-name="hints-container">
+          <div className="flex-1" data-name="hints-container">
             {hint.item && (
               <AtomCombobox
                 atom={hint.item}
