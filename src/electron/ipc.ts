@@ -178,6 +178,7 @@ export function exportTrackerState() {
       // Do save as here
       dialog
         .showSaveDialog(mainWindow, {
+          title: 'Save Tracker State',
           filters: [{ name: 'Tracker State', extensions: ['json'] }],
           properties: ['showOverwriteConfirmation'],
         })
