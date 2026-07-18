@@ -42,16 +42,6 @@ function toggleTheme(theme: ThemeType) {
 }
 
 const template: MenuItemConstructorOptions[] = [
-  // {
-  //   label: 'Tracker',
-  //   submenu: [
-  //     { label: 'Reset Size', click: () => requestRendererState('reset-size') },
-  //     { label: 'Reset Tracker', click: () => resetTracker() },
-  //     { type: 'separator' },
-  //     { label: 'Open', click: () => openUserProvidedTrackerFile() },
-  //     { label: 'Save As...', click: () => saveTrackerFileAs() },
-  //   ],
-  // },
   {
     label: 'File',
     submenu: [
