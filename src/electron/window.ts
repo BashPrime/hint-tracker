@@ -80,4 +80,8 @@ function mainWindowHandlers(window: BrowserWindow) {
   window.on('close', () => {
     handleSaveConfig();
   });
+
+  if (isDev()) {
+    window.on('resize', () => console.log('window size:', window.getSize()));
+  }
 }
