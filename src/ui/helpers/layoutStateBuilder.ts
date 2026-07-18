@@ -62,7 +62,9 @@ function processGroup(group: LayoutGroup, saveState?: TrackerSaveState) {
     borderColor: group.borderColor,
     grow: group.grow,
     gap: group.gap,
-    content: group.content.map((c) => processElement(c, saveState)),
+    content: group.content.map((c) =>
+      processElement(c, saveState, group.comboboxOptions)
+    ),
   });
 }
 
