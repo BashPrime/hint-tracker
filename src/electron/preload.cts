@@ -18,6 +18,14 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
 
     return () => ipcRenderer.removeListener('reset-tracker', subscription);
   },
+  resetSize: (callback: () => void) => {
+    const subscription = (_event: any) => callback();
+    ipcRenderer.on('reset-size', subscription);
+
+    return () => ipcRenderer.removeListener('reset-size-response', subscription);
+  },
+  resetSizeResponse: (packId: string | null) =>
+    ipcRenderer.invoke('reset-size-response', packId),
   trackerHome: (callback: () => void) => {
     const subscription = (_event: any) => callback();
     ipcRenderer.on('tracker-home', subscription);

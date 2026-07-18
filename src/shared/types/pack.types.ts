@@ -16,6 +16,10 @@ export const PackTrackerJsonSchema = z.object({
   locations: z.array(z.string()),
   features: z.array(z.string()),
   layout: z.array(z.string()),
+  defaultSize: z.object({
+    width: z.number(),
+    height: z.number(),
+  }).optional(),
 });
 export type PackTrackerJsonType = z.infer<typeof PackTrackerJsonSchema>;
 

@@ -1,7 +1,7 @@
 import AdmZip from 'adm-zip';
 import { dialog, ipcMain } from 'electron';
 import { loadTrackerState, saveTrackerState } from './config.js';
-import { IPC_IDS } from './constants.js';
+import { DEFAULT_WINDOW_SIZE, IPC_IDS } from './constants.js';
 import { getImage } from './images.js';
 import {
   buildTrackerAutosavePath,
@@ -54,6 +54,14 @@ export function runIpcHandlers() {
       return loadTrackerState(buildTrackerAutosavePath(pack));
     }
   });
+
+  ipcMain.handle(IPC_IDS.resetSizeResponse, (_, packId: string | null) => {
+    const mainWindow = getMainWindow();
+    const pack = packId ? getBasicPack(packId) : null;
+    const size =
+      pack && pack.defaultSize ? pack.defaultSize : DEFAULT_WINDOW_SIZE;
+    mainWindow?.setSize(size.width, size.height, true);
+  });
 }
 
 // these calls originate from ipcMain.
@@ -81,4 +89,9 @@ export function resetTracker() {
 export function trackerHome() {
   const mainWindow = getMainWindow();
   mainWindow?.webContents.send(IPC_IDS.trackerHome);
+}
+
+export function resetSize() {
+  const mainWindow = getMainWindow();
+  mainWindow?.webContents.send(IPC_IDS.resetSize);
 }

@@ -17,6 +17,8 @@ export const IPC_IDS = {
   autosaveTrackerState: 'autosave-tracker-state',
   loadTrackerAutosave: 'load-tracker-autosave',
   resetTracker: 'reset-tracker',
+  resetSize: 'reset-size',
+  resetSizeResponse: 'reset-size-response',
   trackerHome: 'tracker-home',
 };
 

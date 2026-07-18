@@ -7,6 +7,8 @@ interface Window {
     loadTrackerAutosave: (packId: string) => Promise<object>;
     // ipcMain functions
     resetTracker: (callback: () => void) => () => void;
+    resetSize: (callback: () => void) => () => void;
+    resetSizeResponse: (packId: string | null) => void;
     trackerHome: (callback: () => void) => () => void;
   };
 }

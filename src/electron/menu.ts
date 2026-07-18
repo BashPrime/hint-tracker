@@ -7,7 +7,7 @@ import {
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
-import { resetTracker, trackerHome } from './ipc.js';
+import { resetSize, resetTracker, trackerHome } from './ipc.js';
 import { installPackDialog } from './packs.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
@@ -64,6 +64,7 @@ const template: MenuItemConstructorOptions[] = [
       {
         id: MENU_IDS.file.resetSize,
         label: 'Reset Size',
+        click: () => resetSize(),
       },
       {
         id: MENU_IDS.file.resetTracker,

@@ -1,4 +1,5 @@
 import { useAutosaveTracker } from '@/hooks/useAutosaveTracker';
+import { useResetSize } from '@/hooks/useResetSize';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { useTrackerHome } from '@/hooks/useTrackerHome';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
@@ -27,6 +28,7 @@ function RootLayout() {
   // !HOOKS
   useTrackerHome();
   useAutosaveTracker();
+  useResetSize();
   useThemeChanger();
 
   return (
