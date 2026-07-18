@@ -91,15 +91,12 @@ export function runIpcHandlers() {
     mainWindow?.setSize(size.width, size.height, true);
   });
 
-  ipcMain.handle(
-    IPC_IDS.setExportTrackerState,
-    (_, enabled: boolean) => {
-      const exportMenuItem = menu.getMenuItemById(MENU_IDS.file.exportState);
-      if (exportMenuItem) {
-        exportMenuItem.enabled = enabled;
-      }
+  ipcMain.handle(IPC_IDS.setExportTrackerState, (_, enabled: boolean) => {
+    const exportMenuItem = menu.getMenuItemById(MENU_IDS.file.exportState);
+    if (exportMenuItem) {
+      exportMenuItem.enabled = enabled;
     }
-  );
+  });
 }
 
 // these calls originate from ipcMain.
@@ -139,14 +136,15 @@ export function exportTrackerState() {
   mainWindow?.webContents.send(IPC_IDS.exportTrackerState);
 
   ipcMain.handleOnce(
-    IPC_IDS.resetSizeResponse,
+    IPC_IDS.exportTrackerStateResponse,
     (_, state: object, packId: string | null) => {
-      const pack = packId ? getBasicPack(packId) : null;
+      dialog.showErrorBox('test', 'test');
+      // const pack = packId ? getBasicPack(packId) : null;
 
-      // If no active pack is set, show error
-      if (!pack) {
-        dialog.showErrorBox('No Active Tracker', '');
-      }
+      // // If no active pack is set, show error
+      // if (!pack) {
+      //   dialog.showErrorBox('No Active Tracker', '');
+      // }
     }
   );
 }
