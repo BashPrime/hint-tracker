@@ -224,6 +224,28 @@ export function importTrackerState() {
             'Import Error',
             `Tracker state failed to validate. ${state.error.message}`
           );
+          console.error(
+            'importTrackerState(): Tracker state is invalid:',
+            state.error
+          );
+          return;
+        }
+
+        // Verify version before loading
+        const pack = getBasicPack(state.data.pack.id);
+
+        if (pack?.version !== state.data.pack.version) {
+          dialog.showErrorBox(
+            pack ? 'Version Mismatch' : 'Missing Pack',
+            pack
+              ? `The version of the tracker state (${state.data.pack.version}) does not match the version of the pack (${pack.version}). Aborting.`
+              : 'Could not find the pack for this import. Is it installed?'
+          );
+          console.error(
+            'importTrackerState(): version mismatch or missing pack:',
+            state.data.pack.version,
+            pack ? pack.version : null
+          );
           return;
         }
 

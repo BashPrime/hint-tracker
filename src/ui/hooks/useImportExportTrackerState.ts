@@ -38,6 +38,7 @@ export function useImportExportTrackerState() {
         setStateToLoad('import');
         setImportTrackerState(parsedState);
 
+        // force navigate back to home so existing pack route state clears
         await navigate({ to: '/' });
 
         // navigate to route, which will load the imported state
