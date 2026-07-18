@@ -13,13 +13,16 @@ import {
 import { cn } from '@/lib/utils';
 import {
   activePackState,
+  importTrackerState,
   layoutState,
   packsState,
+  trackerStateToLoad,
   unhintedHintsState,
 } from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
+import { TrackerSaveState } from 'src/shared/types/config.types';
 import { useMediaQuery } from 'usehooks-ts';
 
 export const Route = createFileRoute('/packs/$packId')({
@@ -39,16 +42,24 @@ export const Route = createFileRoute('/packs/$packId')({
   loader: async ({ params }) => {
     const store = getDefaultStore();
     await fetchPackDetails(params.packId);
-    const trackerAutosaveState = await fetchTrackerAutosave(params.packId);
+
+    // Load either autosave or imported tracker state
+    const stateToLoad = store.get(trackerStateToLoad);
+    let trackerState: TrackerSaveState | undefined;
+
+    switch (stateToLoad) {
+      case 'autosave':
+        trackerState = await fetchTrackerAutosave(params.packId);
+        break;
+      case 'import':
+        trackerState = store.get(importTrackerState) ?? undefined;
+    }
 
     const pack = store.get(activePackState);
 
     if (pack) {
-      store.set(
-        layoutState,
-        buildLayoutState(pack.layout, trackerAutosaveState)
-      );
-      store.set(unhintedHintsState, buildUnhintedState(trackerAutosaveState));
+      store.set(layoutState, buildLayoutState(pack.layout, trackerState));
+      store.set(unhintedHintsState, buildUnhintedState(trackerState));
       setExportTrackerStateMenuItem(true);
     }
   },

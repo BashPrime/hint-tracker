@@ -41,6 +41,13 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     return () =>
       ipcRenderer.removeListener('export-tracker-state', subscription);
   },
+  importTrackerState: (callback: (state: object) => void) => {
+    const subscription = (_event: any, state: object) => callback(state);
+    ipcRenderer.on('import-tracker-state', subscription);
+
+    return () =>
+      ipcRenderer.removeListener('import-tracker-state', subscription);
+  },
   exportTrackerStateResponse: (state: object, packId: string | null) =>
     ipcRenderer.invoke('export-tracker-state-response', state, packId),
 });

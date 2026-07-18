@@ -9,6 +9,7 @@ import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
 import {
   exportTrackerState,
+  importTrackerState,
   resetSize,
   resetTracker,
   trackerHome,
@@ -81,7 +82,11 @@ const template: MenuItemConstructorOptions[] = [
         click: () => resetTracker(),
       },
       { type: 'separator' },
-      { id: MENU_IDS.file.importState, label: 'Import State' },
+      {
+        id: MENU_IDS.file.importState,
+        label: 'Import State',
+        click: () => importTrackerState(),
+      },
       {
         id: MENU_IDS.file.exportState,
         label: 'Export State',

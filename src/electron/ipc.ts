@@ -138,53 +138,80 @@ export function resetSize() {
 export function exportTrackerState() {
   const mainWindow = getMainWindow();
 
-  if (mainWindow) {
-    mainWindow.webContents.send(IPC_IDS.exportTrackerState);
-
-    ipcMain.handleOnce(
-      IPC_IDS.exportTrackerStateResponse,
-      (_, state: object, packId: string | null) => {
-        const parsed = state as TrackerState;
-        const pack = packId ? getBasicPack(packId) : null;
-
-        // If no active pack is set, show error
-        if (!pack) {
-          dialog.showErrorBox(
-            'Export Error',
-            `The application returned a nonexistent tracker pack with (pack ID: ${packId})`
-          );
-          console.error(
-            'exportTrackerStateResponse(): Got a null pack from packId',
-            packId
-          );
-
-          return;
-        }
-
-        // Do save as here
-        dialog
-          .showSaveDialog(mainWindow, {
-            filters: [{ name: 'Tracker State', extensions: ['json'] }],
-            properties: ['showOverwriteConfirmation'],
-          })
-          .then((value) => {
-            if (!value.canceled) {
-              saveTrackerState(
-                {
-                  pack: {
-                    id: pack.id,
-                    version: pack.version,
-                  },
-                  state: parsed,
-                } satisfies TrackerSaveState,
-                value.filePath
-              );
-            }
-          })
-          .catch((err) => {
-            console.error(getErrorMsg(err));
-          });
-      }
-    );
+  if (!mainWindow) {
+    console.error('exportTrackerState(): main window not found');
+    return;
   }
+
+  mainWindow.webContents.send(IPC_IDS.exportTrackerState);
+
+  ipcMain.handleOnce(
+    IPC_IDS.exportTrackerStateResponse,
+    (_, state: object, packId: string | null) => {
+      const parsed = state as TrackerState;
+      const pack = packId ? getBasicPack(packId) : null;
+
+      // If no active pack is set, show error
+      if (!pack) {
+        dialog.showErrorBox(
+          'Export Error',
+          `The application returned a nonexistent tracker pack with (pack ID: ${packId})`
+        );
+        console.error(
+          'exportTrackerStateResponse(): Got a null pack from packId',
+          packId
+        );
+
+        return;
+      }
+
+      // Do save as here
+      dialog
+        .showSaveDialog(mainWindow, {
+          filters: [{ name: 'Tracker State', extensions: ['json'] }],
+          properties: ['showOverwriteConfirmation'],
+        })
+        .then((value) => {
+          if (!value.canceled) {
+            saveTrackerState(
+              {
+                pack: {
+                  id: pack.id,
+                  version: pack.version,
+                },
+                state: parsed,
+              } satisfies TrackerSaveState,
+              value.filePath
+            );
+          }
+        })
+        .catch((err) => {
+          console.error(getErrorMsg(err));
+        });
+    }
+  );
+}
+
+export function importTrackerState() {
+  const mainWindow = getMainWindow();
+
+  if (!mainWindow) {
+    return;
+  }
+
+  dialog
+    .showOpenDialog(mainWindow, {
+      title: 'Import Tracker State',
+      filters: [{ name: 'Tracker State', extensions: ['json'] }],
+      properties: ['openFile'],
+    })
+    .then((value) => {
+      if (!value.canceled) {
+        const trackerState = loadTrackerState(value.filePaths[0]);
+        mainWindow.webContents.send(IPC_IDS.importTrackerState, trackerState);
+      }
+    })
+    .catch((err: any) => {
+      dialog.showErrorBox('Import Error', getErrorMsg(err));
+    });
 }

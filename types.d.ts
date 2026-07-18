@@ -12,6 +12,7 @@ interface Window {
     trackerHome: (callback: () => void) => () => void;
     setExportTrackerState: (enabled: boolean) => void;
     exportTrackerState: (callback: () => void) => () => void;
+    importTrackerState: (callback: (state: object) => void) => () => void;
     exportTrackerStateResponse: (state: object, packId: string | null) => void;
   };
 }

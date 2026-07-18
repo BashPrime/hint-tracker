@@ -6,7 +6,7 @@ import {
   UnhintedItemHint,
 } from '@/types/state.types';
 import { atom } from 'jotai';
-import { TrackerState } from 'src/shared/types/config.types';
+import { TrackerSaveState, TrackerState } from 'src/shared/types/config.types';
 import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
 export const packsState = atom<BasicPack[] | null>(null);
@@ -14,6 +14,8 @@ export const activePackState = atom<PackDetails | null>(null);
 export const layoutState = atom<LayoutStateRoot | null>(null);
 export const pauseAutosaveState = atom<boolean>(false);
 export const unhintedHintsState = atom<UnhintedItemHint[]>([]);
+export const importTrackerState = atom<TrackerSaveState | null>(null);
+export const trackerStateToLoad = atom<'autosave' | 'import'>('autosave');
 
 export const trackerHintsAtom = atom((get) => {
   // !STATE
