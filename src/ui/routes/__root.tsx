@@ -1,4 +1,5 @@
 import { useAutosaveTracker } from '@/hooks/useAutosaveTracker';
+import { useImportExportTrackerState } from '@/hooks/useImportExportTrackerState';
 import { useResetSize } from '@/hooks/useResetSize';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { useTrackerHome } from '@/hooks/useTrackerHome';
@@ -28,6 +29,7 @@ function RootLayout() {
   // !HOOKS
   useTrackerHome();
   useAutosaveTracker();
+  useImportExportTrackerState();
   useResetSize();
   useThemeChanger();
 
