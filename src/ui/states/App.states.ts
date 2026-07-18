@@ -50,7 +50,7 @@ export const trackerHintsAtom = atom((get) => {
   return hints;
 });
 
-export const trackerSaveFormattedState = atom((get) => {
+export const trackerSaveFormattedState = atom<TrackerState>((get) => {
   // !STATE
   const hints = get(trackerHintsAtom);
   const unhintedHints = get(unhintedHintsState);

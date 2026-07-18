@@ -9,18 +9,18 @@ import { useEffect } from 'react';
 
 export function useAutosaveTracker() {
   // !STATE
-  const parsedTracker = useAtomValue(trackerSaveFormattedState);
+  const trackerState = useAtomValue(trackerSaveFormattedState);
   const pack = useAtomValue(activePackState);
   const paused = useAtomValue(pauseAutosaveState);
 
   // !HOOK
   useEffect(() => {
     function saveTracker() {
-      if (!paused && pack && parsedTracker) {
-        autosaveTrackerState(parsedTracker, pack.id);
+      if (!paused && pack && trackerState) {
+        autosaveTrackerState(trackerState, pack.id);
       }
     }
 
     saveTracker();
-  }, [parsedTracker, paused]);
+  }, [trackerState, paused]);
 }

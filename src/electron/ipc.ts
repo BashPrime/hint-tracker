@@ -1,6 +1,10 @@
 import AdmZip from 'adm-zip';
 import { dialog, ipcMain } from 'electron';
-import { TrackerSaveStateSchema } from '../shared/types/config.types.js';
+import {
+  TrackerSaveState,
+  TrackerSaveStateSchema,
+  TrackerState,
+} from '../shared/types/config.types.js';
 import { loadTrackerState, saveTrackerState } from './config.js';
 import {
   DEFAULT_WINDOW_SIZE,
@@ -133,18 +137,54 @@ export function resetSize() {
 
 export function exportTrackerState() {
   const mainWindow = getMainWindow();
-  mainWindow?.webContents.send(IPC_IDS.exportTrackerState);
 
-  ipcMain.handleOnce(
-    IPC_IDS.exportTrackerStateResponse,
-    (_, state: object, packId: string | null) => {
-      dialog.showErrorBox('test', 'test');
-      // const pack = packId ? getBasicPack(packId) : null;
+  if (mainWindow) {
+    mainWindow.webContents.send(IPC_IDS.exportTrackerState);
 
-      // // If no active pack is set, show error
-      // if (!pack) {
-      //   dialog.showErrorBox('No Active Tracker', '');
-      // }
-    }
-  );
+    ipcMain.handleOnce(
+      IPC_IDS.exportTrackerStateResponse,
+      (_, state: object, packId: string | null) => {
+        const parsed = state as TrackerState;
+        const pack = packId ? getBasicPack(packId) : null;
+
+        // If no active pack is set, show error
+        if (!pack) {
+          dialog.showErrorBox(
+            'Export Error',
+            `The application returned a nonexistent tracker pack with (pack ID: ${packId})`
+          );
+          console.error(
+            'exportTrackerStateResponse(): Got a null pack from packId',
+            packId
+          );
+
+          return;
+        }
+
+        // Do save as here
+        dialog
+          .showSaveDialog(mainWindow, {
+            filters: [{ name: 'Tracker State', extensions: ['json'] }],
+            properties: ['showOverwriteConfirmation'],
+          })
+          .then((value) => {
+            if (!value.canceled) {
+              saveTrackerState(
+                {
+                  pack: {
+                    id: pack.id,
+                    version: pack.version,
+                  },
+                  state: parsed,
+                } satisfies TrackerSaveState,
+                value.filePath
+              );
+            }
+          })
+          .catch((err) => {
+            console.error(getErrorMsg(err));
+          });
+      }
+    );
+  }
 }

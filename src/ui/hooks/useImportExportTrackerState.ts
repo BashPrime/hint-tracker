@@ -14,15 +14,13 @@ export function useImportExportTrackerState() {
     // !IPC
     // Handle export state
     const cleanupExport = window.electronApi.exportTrackerState(() => {
-      window.electronApi.exportTrackerStateResponse(
-        trackerState,
-        pack?.id ?? null
-      );
+      const packId = pack?.id ?? null;
+      window.electronApi.exportTrackerStateResponse(trackerState, packId);
     });
 
     // Execute both cleanups when the component unmounts
     return () => {
       cleanupExport();
     };
-  }, [pack]);
+  }, [trackerState]);
 }
