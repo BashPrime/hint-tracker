@@ -3,6 +3,7 @@ import { dirname } from 'path';
 import {
   ConfigSchema,
   ConfigType,
+  TrackerSaveState,
   TrackerSaveStateSchema,
 } from '../shared/types/config.types.js';
 import {
@@ -40,7 +41,7 @@ export function handleCreateUserDataDirs() {
   handleMkDir(USER_TRACKER_SAVES_PATH);
 }
 
-export function saveTrackerState(state: object, path: string) {
+export function saveTrackerState(state: TrackerSaveState, path: string) {
   // Make sure directory exists first
   const dir = dirname(path);
   fs.mkdir(dir, { recursive: true }, (err) => {

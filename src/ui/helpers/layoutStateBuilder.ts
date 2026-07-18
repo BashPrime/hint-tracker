@@ -37,7 +37,7 @@ function buildHintState(
   optionKeys?: ComboboxOptionKeys,
   saveState?: TrackerSaveState
 ): HintWithState {
-  const match = saveState ? saveState[hint.code] : null;
+  const match = saveState ? saveState.state[hint.code] : null;
 
   return HintWithStateSchema.parse({
     type: 'hint',
@@ -181,7 +181,7 @@ export function buildUnhintedState(
   saveState?: TrackerSaveState
 ): UnhintedItemHint[] {
   const unhinted = saveState
-    ? Object.entries(saveState).filter(([key]) => key.includes('unhinted'))
+    ? Object.entries(saveState.state).filter(([key]) => key.includes('unhinted'))
     : [];
 
   return unhinted.map(([key, val]) =>

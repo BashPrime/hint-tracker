@@ -63,7 +63,11 @@ export function readAndParseJsonFile<T extends z.ZodTypeAny>(
           schema.type,
           err.issues
         );
-      } else console.error(getErrorMsg(err));
+      } else
+        console.error(
+          'readAndParseJsonFile(): Error trying to read json file:',
+          getErrorMsg(err)
+        );
     }
   }
 

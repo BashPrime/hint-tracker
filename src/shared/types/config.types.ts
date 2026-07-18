@@ -1,5 +1,6 @@
 import { Rectangle } from 'electron';
 import z from 'zod';
+import { SemVerSchema } from './base.types.js';
 
 export const ConfigSchema = z.object({
   theme: z.enum(['system', 'light', 'dark']),
@@ -10,7 +11,7 @@ export type ConfigType = z.infer<typeof ConfigSchema>;
 export const WindowConfigSchema = z.custom<Rectangle>();
 export type WindowConfig = z.infer<typeof WindowConfigSchema>;
 
-export const TrackerSaveStateSchema = z.record(
+export const TrackerStateSchema = z.record(
   z.string(),
   z.object({
     item: z.string().nullable(),
@@ -18,4 +19,12 @@ export const TrackerSaveStateSchema = z.record(
     checked: z.boolean(),
   })
 );
+
+export const TrackerSaveStateSchema = z.object({
+  pack: z.object({
+    id: z.string(),
+    version: SemVerSchema,
+  }),
+  state: TrackerStateSchema,
+});
 export type TrackerSaveState = z.infer<typeof TrackerSaveStateSchema>;

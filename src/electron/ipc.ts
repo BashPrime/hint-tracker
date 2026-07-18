@@ -1,7 +1,12 @@
 import AdmZip from 'adm-zip';
 import { dialog, ipcMain } from 'electron';
+import { TrackerSaveStateSchema } from '../shared/types/config.types.js';
 import { loadTrackerState, saveTrackerState } from './config.js';
-import { DEFAULT_WINDOW_SIZE, IPC_IDS } from './constants.js';
+import {
+  DEFAULT_WINDOW_SIZE,
+  IPC_IDS,
+  WINDOW_RESIZE_OFFSETS,
+} from './constants.js';
 import { getImage } from './images.js';
 import {
   buildTrackerAutosavePath,
@@ -9,6 +14,7 @@ import {
   getBasicPack,
   getPackDetails,
 } from './packs.js';
+import { getErrorMsg } from './util.js';
 import { getMainWindow } from './window.js';
 
 export function runIpcHandlers() {
@@ -41,7 +47,21 @@ export function runIpcHandlers() {
       const pack = getBasicPack(packId);
 
       if (pack) {
-        saveTrackerState(state, buildTrackerAutosavePath(pack));
+        try {
+          const trackerState = TrackerSaveStateSchema.parse({
+            pack: {
+              id: pack.id,
+              version: pack.version,
+            },
+            state,
+          });
+          saveTrackerState(trackerState, buildTrackerAutosavePath(pack));
+        } catch (err) {
+          console.error(
+            'ipcMain.autosaveTrackerState() error:',
+            getErrorMsg(err)
+          );
+        }
       }
     }
   );
@@ -58,8 +78,14 @@ export function runIpcHandlers() {
   ipcMain.handle(IPC_IDS.resetSizeResponse, (_, packId: string | null) => {
     const mainWindow = getMainWindow();
     const pack = packId ? getBasicPack(packId) : null;
-    const size =
-      pack && pack.defaultSize ? pack.defaultSize : DEFAULT_WINDOW_SIZE;
+    const packWindowSize =
+      pack && pack.defaultWindowSize ? pack.defaultWindowSize : null;
+    const size = packWindowSize
+      ? {
+          width: packWindowSize.width + WINDOW_RESIZE_OFFSETS.width,
+          height: packWindowSize.height + WINDOW_RESIZE_OFFSETS.height,
+        }
+      : DEFAULT_WINDOW_SIZE;
     mainWindow?.setSize(size.width, size.height, true);
   });
 }

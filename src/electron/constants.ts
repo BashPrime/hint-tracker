@@ -55,3 +55,9 @@ export const DEFAULT_WINDOW_BOUNDS = {
   y: 0,
   ...DEFAULT_WINDOW_SIZE,
 };
+
+// !WHY the window size counts the menubar, so these offsets are added to ensure the values are correct.
+export const WINDOW_RESIZE_OFFSETS = {
+  width: 13,
+  height: 62,
+}
