@@ -7,7 +7,12 @@ import {
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
 import { MENU_IDS, USER_DATA_DIR } from './constants.js';
-import { resetSize, resetTracker, trackerHome } from './ipc.js';
+import {
+  exportTrackerState,
+  resetSize,
+  resetTracker,
+  trackerHome,
+} from './ipc.js';
 import { installPackDialog } from './packs.js';
 import { isDev } from './util.js';
 import { getMainWindow } from './window.js';
@@ -77,7 +82,12 @@ const template: MenuItemConstructorOptions[] = [
       },
       { type: 'separator' },
       { id: MENU_IDS.file.importState, label: 'Import State' },
-      { id: MENU_IDS.file.exportState, label: 'Export State', enabled: false },
+      {
+        id: MENU_IDS.file.exportState,
+        label: 'Export State',
+        enabled: false,
+        click: () => exportTrackerState(),
+      },
       { type: 'separator' },
       {
         label: 'Exit',
