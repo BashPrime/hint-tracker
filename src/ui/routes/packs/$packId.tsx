@@ -58,11 +58,6 @@ export const Route = createFileRoute('/packs/$packId')({
           break;
       }
 
-      // If the existing tracker state doesn't match the pack version, don't load it into the app state
-      if (trackerState?.pack.version !== pack.version) {
-        trackerState = undefined;
-      }
-
       // Build the tracker state
       store.set(layoutState, buildLayoutState(pack.layout, trackerState));
       store.set(unhintedHintsState, buildUnhintedState(trackerState));

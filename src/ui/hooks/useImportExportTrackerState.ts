@@ -47,6 +47,7 @@ export function useImportExportTrackerState() {
           params: { packId: parsedState.pack.id },
         }).finally(() => {
           // cleanup
+          setImportTrackerState(null);
           setStateToLoad('autosave');
           setPausedAutosave(false);
         });
