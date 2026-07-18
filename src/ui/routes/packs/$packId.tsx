@@ -4,7 +4,12 @@ import {
   buildUnhintedState,
 } from '@/helpers/layoutStateBuilder';
 import { useResetTracker } from '@/hooks/useResetTracker';
-import { fetchPackDetails, fetchPacks, fetchTrackerAutosave } from '@/ipc';
+import {
+  fetchPackDetails,
+  fetchPacks,
+  fetchTrackerAutosave,
+  setExportTrackerStateMenuItem,
+} from '@/ipc';
 import { cn } from '@/lib/utils';
 import {
   activePackState,
@@ -44,9 +49,11 @@ export const Route = createFileRoute('/packs/$packId')({
         buildLayoutState(pack.layout, trackerAutosaveState)
       );
       store.set(unhintedHintsState, buildUnhintedState(trackerAutosaveState));
+      setExportTrackerStateMenuItem(true);
     }
   },
   onLeave: async () => {
+    setExportTrackerStateMenuItem(false);
     const store = getDefaultStore();
     store.set(activePackState, null);
     store.set(layoutState, null);

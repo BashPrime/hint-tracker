@@ -2,14 +2,14 @@ import { autosaveTrackerState } from '@/ipc';
 import {
   activePackState,
   pauseAutosaveState,
-  trackerSaveFormatted,
+  trackerSaveFormattedState,
 } from '@/states/App.states';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 
 export function useAutosaveTracker() {
   // !STATE
-  const parsedTracker = useAtomValue(trackerSaveFormatted);
+  const parsedTracker = useAtomValue(trackerSaveFormattedState);
   const pack = useAtomValue(activePackState);
   const paused = useAtomValue(pauseAutosaveState);
 

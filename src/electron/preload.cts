@@ -22,7 +22,7 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     const subscription = (_event: any) => callback();
     ipcRenderer.on('reset-size', subscription);
 
-    return () => ipcRenderer.removeListener('reset-size-response', subscription);
+    return () => ipcRenderer.removeListener('reset-size', subscription);
   },
   resetSizeResponse: (packId: string | null) =>
     ipcRenderer.invoke('reset-size-response', packId),
@@ -32,4 +32,15 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
 
     return () => ipcRenderer.removeListener('tracker-home', subscription);
   },
+  setExportTrackerState: (enabled: boolean) =>
+    ipcRenderer.invoke('set-export-tracker-state', enabled),
+  exportTrackerState: (callback: () => void) => {
+    const subscription = (_event: any) => callback();
+    ipcRenderer.on('export-tracker-state', subscription);
+
+    return () =>
+      ipcRenderer.removeListener('export-tracker-state', subscription);
+  },
+  exportTrackerStateResponse: (state: object, packId: string | null) =>
+    ipcRenderer.invoke('export-tracker-state-response', state, packId),
 });

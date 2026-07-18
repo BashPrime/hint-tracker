@@ -54,7 +54,11 @@ const template: MenuItemConstructorOptions[] = [
         label: 'Home',
         click: () => trackerHome(),
       },
-      { label: 'Install Pack', click: () => installPackDialog() },
+      {
+        id: MENU_IDS.file.installPack,
+        label: 'Install Pack',
+        click: () => installPackDialog(),
+      },
       {
         id: MENU_IDS.file.openUserDataFolder,
         label: 'Open User Data Folder',
@@ -72,8 +76,8 @@ const template: MenuItemConstructorOptions[] = [
         click: () => resetTracker(),
       },
       { type: 'separator' },
-      { label: 'Import State' },
-      { label: 'Export State' },
+      { id: MENU_IDS.file.importState, label: 'Import State' },
+      { id: MENU_IDS.file.exportState, label: 'Export State', enabled: false },
       { type: 'separator' },
       {
         label: 'Exit',

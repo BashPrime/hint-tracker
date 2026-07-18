@@ -6,7 +6,7 @@ import {
   UnhintedItemHint,
 } from '@/types/state.types';
 import { atom } from 'jotai';
-import { TrackerSaveState } from 'src/shared/types/config.types';
+import { TrackerState } from 'src/shared/types/config.types';
 import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
 export const packsState = atom<BasicPack[] | null>(null);
@@ -50,11 +50,11 @@ export const trackerHintsAtom = atom((get) => {
   return hints;
 });
 
-export const trackerSaveFormatted = atom((get) => {
+export const trackerSaveFormattedState = atom((get) => {
   // !STATE
   const hints = get(trackerHintsAtom);
   const unhintedHints = get(unhintedHintsState);
-  const trackerSaveState: TrackerSaveState = {};
+  const trackerSaveState: TrackerState = {};
 
   // !FUNCTION
   function parseHints(hints: HintWithState[] | null) {

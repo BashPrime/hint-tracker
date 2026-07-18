@@ -20,6 +20,11 @@ export const IPC_IDS = {
   resetSize: 'reset-size',
   resetSizeResponse: 'reset-size-response',
   trackerHome: 'tracker-home',
+  setExportTrackerState: 'set-export-tracker-state',
+  exportTrackerState: 'export-tracker-state',
+  exportTrackerStateResponse: 'export-tracker-state-response',
+  importTrackerState: 'import-tracker-state',
+  importTrackerStateResponse: 'import-tracker-state-response',
 };
 
 // Tracker
@@ -29,9 +34,12 @@ export const TRACKER_AUTOSAVE_JSON = 'autosave.json';
 export const MENU_IDS = {
   file: {
     trackerHome: 'trackerHome',
+    installPack: 'installPack',
     openUserDataFolder: 'openUserDataFolder',
     resetSize: 'resetSize',
     resetTracker: 'resetTracker',
+    importState: 'importState',
+    exportState: 'exportState',
   },
   toggles: {
     alwaysOnTop: 'alwaysOnTop',
@@ -60,4 +68,4 @@ export const DEFAULT_WINDOW_BOUNDS = {
 export const WINDOW_RESIZE_OFFSETS = {
   width: 13,
   height: 62,
-}
+};

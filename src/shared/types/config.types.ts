@@ -19,6 +19,7 @@ export const TrackerStateSchema = z.record(
     checked: z.boolean(),
   })
 );
+export type TrackerState = z.infer<typeof TrackerStateSchema>;
 
 export const TrackerSaveStateSchema = z.object({
   pack: z.object({

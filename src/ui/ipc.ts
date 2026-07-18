@@ -53,3 +53,7 @@ export async function fetchTrackerAutosave(packId: string) {
     packId
   )) as TrackerSaveState;
 }
+
+export function setExportTrackerStateMenuItem(enabled: boolean) {
+  window.electronApi.setExportTrackerState(enabled);
+}

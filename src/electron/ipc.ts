@@ -5,9 +5,11 @@ import { loadTrackerState, saveTrackerState } from './config.js';
 import {
   DEFAULT_WINDOW_SIZE,
   IPC_IDS,
+  MENU_IDS,
   WINDOW_RESIZE_OFFSETS,
 } from './constants.js';
 import { getImage } from './images.js';
+import { menu } from './menu.js';
 import {
   buildTrackerAutosavePath,
   getAllPacksInDir,
@@ -88,6 +90,16 @@ export function runIpcHandlers() {
       : DEFAULT_WINDOW_SIZE;
     mainWindow?.setSize(size.width, size.height, true);
   });
+
+  ipcMain.handle(
+    IPC_IDS.setExportTrackerState,
+    (_, enabled: boolean) => {
+      const exportMenuItem = menu.getMenuItemById(MENU_IDS.file.exportState);
+      if (exportMenuItem) {
+        exportMenuItem.enabled = enabled;
+      }
+    }
+  );
 }
 
 // these calls originate from ipcMain.
@@ -120,4 +132,21 @@ export function trackerHome() {
 export function resetSize() {
   const mainWindow = getMainWindow();
   mainWindow?.webContents.send(IPC_IDS.resetSize);
+}
+
+export function exportTrackerState() {
+  const mainWindow = getMainWindow();
+  mainWindow?.webContents.send(IPC_IDS.exportTrackerState);
+
+  ipcMain.handleOnce(
+    IPC_IDS.resetSizeResponse,
+    (_, state: object, packId: string | null) => {
+      const pack = packId ? getBasicPack(packId) : null;
+
+      // If no active pack is set, show error
+      if (!pack) {
+        dialog.showErrorBox('No Active Tracker', '');
+      }
+    }
+  );
 }
