@@ -53,8 +53,8 @@ export const MENU_IDS = {
 
 // Window size
 export const DEFAULT_WINDOW_SIZE = {
-  width: 640,
-  height: 480,
+  width: 1024,
+  height: 640,
 };
 
 // Window state
