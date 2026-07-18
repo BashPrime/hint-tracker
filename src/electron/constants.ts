@@ -28,6 +28,7 @@ export const MENU_IDS = {
   file: {
     trackerHome: 'trackerHome',
     openUserDataFolder: 'openUserDataFolder',
+    resetSize: 'resetSize',
     resetTracker: 'resetTracker',
   },
   toggles: {

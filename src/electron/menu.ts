@@ -60,6 +60,11 @@ const template: MenuItemConstructorOptions[] = [
         label: 'Open User Data Folder',
         click: () => openUserDataFolder(),
       },
+      { type: 'separator' },
+      {
+        id: MENU_IDS.file.resetSize,
+        label: 'Reset Size',
+      },
       {
         id: MENU_IDS.file.resetTracker,
         label: 'Reset Tracker',
