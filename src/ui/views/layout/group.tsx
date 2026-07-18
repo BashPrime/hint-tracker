@@ -12,6 +12,7 @@ export function LayoutGroup({ group }: Props) {
       className={cn(
         'shadow-md dark:shadow-none',
         'flex flex-col',
+        group.grow && 'h-full',
         'layout-group'
       )}
       data-name="layout-group"
