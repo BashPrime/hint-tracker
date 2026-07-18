@@ -9,8 +9,7 @@ import { loadTrackerState, saveTrackerState } from './config.js';
 import {
   DEFAULT_WINDOW_SIZE,
   IPC_IDS,
-  MENU_IDS,
-  WINDOW_RESIZE_OFFSETS,
+  MENU_IDS
 } from './constants.js';
 import { getImage } from './images.js';
 import { menu } from './menu.js';
@@ -96,12 +95,7 @@ export function runIpcHandlers() {
     const pack = packId ? getBasicPack(packId) : null;
     const packWindowSize =
       pack && pack.defaultWindowSize ? pack.defaultWindowSize : null;
-    const size = packWindowSize
-      ? {
-          width: packWindowSize.width + WINDOW_RESIZE_OFFSETS.width,
-          height: packWindowSize.height + WINDOW_RESIZE_OFFSETS.height,
-        }
-      : DEFAULT_WINDOW_SIZE;
+    const size = packWindowSize ?? DEFAULT_WINDOW_SIZE;
     mainWindow?.setSize(size.width, size.height, true);
   });
 
@@ -142,7 +136,7 @@ export function trackerHome() {
 
 export function resetSize() {
   const mainWindow = getMainWindow();
-  mainWindow?.webContents.send(IPC_IDS.resetSize);
+mainWindow?.webContents.send(IPC_IDS.resetSize);
 }
 
 export function exportTrackerState() {
