@@ -9,7 +9,11 @@ type Props = {
 export function LayoutArray({ array }: Props) {
   return (
     <div
-      className={cn('flex flex-col', array.grow && 'h-full')}
+      className={cn(
+        'flex flex-col',
+        array.content.find((c) => c.type === 'unhinted') && 'min-h-0',
+        array.grow && 'h-full'
+      )}
       data-name="layout-array"
       key={array.id}
       style={{

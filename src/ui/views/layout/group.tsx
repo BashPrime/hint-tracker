@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { LayoutStateGroup } from '@/types/state.types';
+import { Header } from './header';
 import { LayoutParser } from './parser';
 
 type Props = {
@@ -12,6 +13,7 @@ export function LayoutGroup({ group }: Props) {
       className={cn(
         'shadow-md dark:shadow-none',
         'flex flex-col',
+        group.content.find((c) => c.type === 'unhinted') && 'min-h-0 flex-none',
         group.grow && 'h-full',
         'layout-group'
       )}
@@ -22,19 +24,13 @@ export function LayoutGroup({ group }: Props) {
           : undefined,
       }}
     >
-      {group.header && (
-        <p
-          className={cn(
-            'dark:text-foreground bg-neutral-700 text-neutral-50 dark:bg-neutral-900',
-            'px-2 py-1',
-            'text-base font-bold uppercase select-none'
-          )}
-        >
-          {group.header}
-        </p>
-      )}
+      {group.header && <Header>{group.header}</Header>}
       <div
-        className={cn('flex flex-col', group.grow && 'h-full')}
+        className={cn(
+          'flex flex-col',
+          group.content.find((c) => c.type === 'unhinted') && 'min-h-0',
+          group.grow && 'h-full'
+        )}
         style={{
           gap: group.gap ? `calc(var(--spacing) * ${group.gap})` : undefined,
         }}

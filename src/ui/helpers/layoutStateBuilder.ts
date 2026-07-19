@@ -106,11 +106,11 @@ function processUnhinted(unhinted: LayoutUnhintedItems) {
   return LayoutStateUnhintedItemsSchema.parse({
     id: uuidv4(),
     type: 'unhinted',
+    header: unhinted.header,
     color: unhinted.color,
     borderColor: unhinted.borderColor,
     comboboxOptions: unhinted.comboboxOptions,
     grow: unhinted.grow,
-    gap: unhinted.gap,
   });
 }
 

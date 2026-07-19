@@ -27,7 +27,13 @@ type Props = {
 export function LayoutGrid({ grid }: Props) {
   return (
     <div
-      className={cn('layout-grid flex flex-col', grid.grow && 'h-full')}
+      className={cn(
+        'layout-grid flex flex-col',
+        grid.content.find((row) =>
+          row.find((col) => col.type === 'unhinted')
+        ) && 'min-h-0',
+        grid.grow && 'h-full'
+      )}
       data-name="layout-grid"
       key={grid.id}
       style={{

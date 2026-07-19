@@ -109,7 +109,7 @@ export function UnhintedItems({ unhinted }: Props) {
 
   return (
     <div
-      className={cn('min-h-0', unhinted.grow && 'h-full')}
+      className={cn('flex min-h-0 flex-col', unhinted.grow && 'h-full')}
       data-name="unhinted-items"
       style={{
         borderLeft: unhinted.borderColor
@@ -127,7 +127,7 @@ export function UnhintedItems({ unhinted }: Props) {
         <Button
           onClick={addHint}
           variant="outline"
-          className={cn('cursor-pointer place-self-center')}
+          className={cn('mb-2 cursor-pointer place-self-center')}
         >
           <Plus /> Add new hint
         </Button>
