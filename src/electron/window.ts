@@ -64,10 +64,12 @@ function setInitialTheme(theme: ThemeType) {
 }
 
 function setResetPackSize(checked: boolean) {
-  const resetPackSize = menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)
+  const resetPackSize = menu.getMenuItemById(
+    MENU_IDS.toggles.resetSizeOnPackOpen
+  );
 
   if (resetPackSize) {
-    resetPackSize.checked = checked
+    resetPackSize.checked = checked;
   }
 }
 
@@ -76,7 +78,9 @@ function handleSaveConfig() {
     const parsed = ConfigSchema.parse({
       theme: nativeTheme.themeSource,
       window: mainWindow?.getBounds() ?? DEFAULT_WINDOW_BOUNDS,
-      resetSizeOnPackOpen: menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked ?? false
+      resetSizeOnPackOpen:
+        menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked ??
+        false,
     });
 
     writeConfigFile(parsed);

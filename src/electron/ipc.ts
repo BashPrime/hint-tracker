@@ -6,10 +6,7 @@ import {
   TrackerState,
 } from '../shared/types/config.types.js';
 import { loadTrackerState, saveTrackerState } from './config.js';
-import {
-  IPC_IDS,
-  MENU_IDS
-} from './constants.js';
+import { IPC_IDS, MENU_IDS } from './constants.js';
 import { getImage } from './images.js';
 import { menu } from './menu.js';
 import {
@@ -30,7 +27,10 @@ export function runIpcHandlers() {
   // get pack details
   ipcMain.handle(IPC_IDS.fetchPackDetails, (_, packId: string) => {
     const packDetails = getPackDetails(packId);
-    const resetPackSize = Boolean(packDetails && menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked)
+    const resetPackSize = Boolean(
+      packDetails &&
+      menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked
+    );
 
     if (resetPackSize) {
       resetWindowSize(packId);
@@ -97,7 +97,7 @@ export function runIpcHandlers() {
   });
 
   ipcMain.handle(IPC_IDS.resetSizeResponse, (_, packId: string | null) => {
-    resetWindowSize(packId)
+    resetWindowSize(packId);
   });
 
   ipcMain.handle(IPC_IDS.setExportTrackerState, (_, enabled: boolean) => {
@@ -131,12 +131,14 @@ export function resetTracker() {
 }
 
 export function trackerHome() {
-  const resetPackSize = Boolean(menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked)
+  const resetPackSize = Boolean(
+    menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked
+  );
   const mainWindow = getMainWindow();
   mainWindow?.webContents.send(IPC_IDS.trackerHome);
 
   if (resetPackSize) {
-    resetWindowSize(null)
+    resetWindowSize(null);
   }
 }
 
