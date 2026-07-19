@@ -5,6 +5,7 @@ import { SemVerSchema } from './base.types.js';
 export const ConfigSchema = z.object({
   theme: z.enum(['system', 'light', 'dark']),
   window: z.custom<Rectangle>(),
+  resetSizeOnPackOpen: z.boolean(),
 });
 export type ConfigType = z.infer<typeof ConfigSchema>;
 

@@ -10,6 +10,7 @@ import {
   MENU_IDS,
 } from './constants.js';
 import { menu } from './menu.js';
+import { getBasicPack } from './packs.js';
 import { getPreloadPath } from './pathResolver.js';
 import { getErrorMsg, isDev } from './util.js';
 
@@ -33,6 +34,7 @@ export function createMainWindow(config: ConfigType | null) {
 
   if (config) {
     setInitialTheme(config.theme);
+    setResetPackSize(config.resetSizeOnPackOpen);
   }
 
   Menu.setApplicationMenu(menu);
@@ -61,11 +63,20 @@ function setInitialTheme(theme: ThemeType) {
   }
 }
 
+function setResetPackSize(checked: boolean) {
+  const resetPackSize = menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)
+
+  if (resetPackSize) {
+    resetPackSize.checked = checked
+  }
+}
+
 function handleSaveConfig() {
   try {
     const parsed = ConfigSchema.parse({
       theme: nativeTheme.themeSource,
       window: mainWindow?.getBounds() ?? DEFAULT_WINDOW_BOUNDS,
+      resetSizeOnPackOpen: menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked ?? false
     });
 
     writeConfigFile(parsed);
@@ -84,4 +95,12 @@ function mainWindowHandlers(window: BrowserWindow) {
   if (isDev()) {
     window.on('resize', () => console.log('window size:', window.getSize()));
   }
+}
+
+export function resetWindowSize(packId: string | null) {
+  const pack = packId ? getBasicPack(packId) : null;
+  const packWindowSize =
+    pack && pack.defaultWindowSize ? pack.defaultWindowSize : null;
+  const size = packWindowSize ?? DEFAULT_WINDOW_SIZE;
+  mainWindow?.setSize(size.width, size.height, true);
 }

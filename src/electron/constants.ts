@@ -42,6 +42,7 @@ export const MENU_IDS = {
   },
   toggles: {
     alwaysOnTop: 'alwaysOnTop',
+    resetSizeOnPackOpen: 'resetSizeOnPackOpen',
   },
   theme: {
     system: 'system',

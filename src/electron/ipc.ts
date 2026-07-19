@@ -7,7 +7,6 @@ import {
 } from '../shared/types/config.types.js';
 import { loadTrackerState, saveTrackerState } from './config.js';
 import {
-  DEFAULT_WINDOW_SIZE,
   IPC_IDS,
   MENU_IDS
 } from './constants.js';
@@ -20,7 +19,7 @@ import {
   getPackDetails,
 } from './packs.js';
 import { getErrorMsg } from './util.js';
-import { getMainWindow } from './window.js';
+import { getMainWindow, resetWindowSize } from './window.js';
 
 export function runIpcHandlers() {
   // get all basic packs data
@@ -30,6 +29,13 @@ export function runIpcHandlers() {
 
   // get pack details
   ipcMain.handle(IPC_IDS.fetchPackDetails, (_, packId: string) => {
+    const packDetails = getPackDetails(packId);
+    const resetPackSize = Boolean(packDetails && menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked)
+
+    if (resetPackSize) {
+      resetWindowSize(packId);
+    }
+
     return getPackDetails(packId);
   });
 
@@ -91,12 +97,7 @@ export function runIpcHandlers() {
   });
 
   ipcMain.handle(IPC_IDS.resetSizeResponse, (_, packId: string | null) => {
-    const mainWindow = getMainWindow();
-    const pack = packId ? getBasicPack(packId) : null;
-    const packWindowSize =
-      pack && pack.defaultWindowSize ? pack.defaultWindowSize : null;
-    const size = packWindowSize ?? DEFAULT_WINDOW_SIZE;
-    mainWindow?.setSize(size.width, size.height, true);
+    resetWindowSize(packId)
   });
 
   ipcMain.handle(IPC_IDS.setExportTrackerState, (_, enabled: boolean) => {
@@ -130,13 +131,18 @@ export function resetTracker() {
 }
 
 export function trackerHome() {
+  const resetPackSize = Boolean(menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked)
   const mainWindow = getMainWindow();
   mainWindow?.webContents.send(IPC_IDS.trackerHome);
+
+  if (resetPackSize) {
+    resetWindowSize(null)
+  }
 }
 
 export function resetSize() {
   const mainWindow = getMainWindow();
-mainWindow?.webContents.send(IPC_IDS.resetSize);
+  mainWindow?.webContents.send(IPC_IDS.resetSize);
 }
 
 export function exportTrackerState() {

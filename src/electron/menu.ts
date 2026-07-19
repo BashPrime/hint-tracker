@@ -12,7 +12,7 @@ import {
   importTrackerState,
   resetSize,
   resetTracker,
-  trackerHome,
+  trackerHome
 } from './ipc.js';
 import { installPackDialog } from './packs.js';
 import { isDev } from './util.js';
@@ -101,6 +101,12 @@ const template: MenuItemConstructorOptions[] = [
         click: (item) => toggleAlwaysOnTop(item.checked),
       },
       {
+        id: MENU_IDS.toggles.resetSizeOnPackOpen,
+        label: 'Reset Size when Opening Tracker',
+        type: 'checkbox',
+        checked: false,
+      },
+      {
         label: 'Theme',
         submenu: [
           {
@@ -131,13 +137,13 @@ const template: MenuItemConstructorOptions[] = [
   isDev()
     ? { role: 'viewMenu' }
     : {
-        label: 'View',
-        submenu: [
-          { role: 'resetZoom' },
-          { role: 'zoomIn' },
-          { role: 'zoomOut' },
-        ],
-      },
+      label: 'View',
+      submenu: [
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+      ],
+    },
   { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];
