@@ -110,7 +110,6 @@ function processUnhinted(unhinted: LayoutUnhintedItems) {
     color: unhinted.color,
     borderColor: unhinted.borderColor,
     comboboxOptions: unhinted.comboboxOptions,
-    grow: unhinted.grow,
   });
 }
 

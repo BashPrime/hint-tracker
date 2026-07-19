@@ -80,6 +80,7 @@ export const LayoutStateUnhintedItemsSchema = LayoutStateObjectSchema.omit({
   item: true,
   location: true,
   checked: true,
+  grow: true,
 }).extend({
   type: z.literal('unhinted'),
   comboboxOptions: ComboboxOptionKeysSchema.optional(),

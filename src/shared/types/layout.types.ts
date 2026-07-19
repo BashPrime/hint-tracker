@@ -62,6 +62,7 @@ export type LayoutHint = z.infer<typeof LayoutHintSchema>;
 
 export const LayoutUnhintedItemsSchema = LayoutObjectSchema.omit({
   content: true,
+  grow: true,
 }).extend({
   type: z.literal('unhinted'),
 });
