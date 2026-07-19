@@ -11,6 +11,7 @@ import {
 import { atom, useAtom } from 'jotai';
 import { CircleMinus, Plus } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
+import { Header } from './header';
 import { HintChecked } from './hint';
 
 type HintProps = {
@@ -42,7 +43,7 @@ function Hint({ hint, onDelete }: HintProps) {
       data-name="layout-hint"
     >
       <div className={cn('flex flex-row items-center justify-between')}>
-        <div className="flex flex-row gap-2 w-full">
+        <div className="flex w-full flex-row gap-2">
           <HintChecked checked={checked} />
           <div className="flex-1" data-name="hints-container">
             {hint.item && (
@@ -108,26 +109,29 @@ export function UnhintedItems({ unhinted }: Props) {
 
   return (
     <div
-      className={cn('flex flex-col gap-2', unhinted.grow && 'h-full')}
+      className={cn('min-h-0', unhinted.grow && 'h-full')}
       data-name="unhinted-items"
       style={{
-        gap: unhinted.gap
-          ? `calc(var(--spacing) * ${unhinted.gap})`
+        borderLeft: unhinted.borderColor
+          ? `2px solid ${unhinted.borderColor}`
           : undefined,
       }}
     >
-      <div data-name="unhinted-hints-container">
-        {parsedHints.map((hint) => (
-          <Hint hint={hint} key={hint.code} onDelete={deleteHint} />
-        ))}
+      {unhinted.header && <Header>{unhinted.header}</Header>}
+      <div className="flex min-h-0 flex-col gap-2" data-name="uh-body">
+        <div className="min-h-0 flex-1 overflow-y-auto" data-name="uh-hints">
+          {parsedHints.map((hint) => (
+            <Hint hint={hint} key={hint.code} onDelete={deleteHint} />
+          ))}
+        </div>
+        <Button
+          onClick={addHint}
+          variant="outline"
+          className={cn('cursor-pointer place-self-center')}
+        >
+          <Plus /> Add new hint
+        </Button>
       </div>
-      <Button
-        onClick={addHint}
-        variant="outline"
-        className={cn('cursor-pointer place-self-center')}
-      >
-        <Plus /> Add new hint
-      </Button>
     </div>
   );
 }
