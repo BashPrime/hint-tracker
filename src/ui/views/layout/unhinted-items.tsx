@@ -119,7 +119,7 @@ export function UnhintedItems({ unhinted }: Props) {
     >
       {unhinted.header && <Header>{unhinted.header}</Header>}
       <div className="flex min-h-0 flex-col gap-2" data-name="uh-body">
-        <div className="min-h-0 flex-1 overflow-y-auto" data-name="uh-hints">
+        <div className="overflow-y-auto" data-name="uh-hints">
           {parsedHints.map((hint) => (
             <Hint hint={hint} key={hint.code} onDelete={deleteHint} />
           ))}
