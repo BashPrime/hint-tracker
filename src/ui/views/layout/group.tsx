@@ -13,7 +13,8 @@ export function LayoutGroup({ group }: Props) {
       className={cn(
         'shadow-md dark:shadow-none',
         'flex flex-col',
-        group.content.find((c) => c.type === 'unhinted') && 'min-h-0 flex-none',
+        group.content.find((c) => c.type === 'unhinted') &&
+          'sm:min-h-0 sm:flex-none',
         group.grow && 'h-full',
         'layout-group'
       )}
@@ -28,7 +29,7 @@ export function LayoutGroup({ group }: Props) {
       <div
         className={cn(
           'flex flex-col',
-          group.content.find((c) => c.type === 'unhinted') && 'min-h-0',
+          group.content.find((c) => c.type === 'unhinted') && 'sm:min-h-0',
           group.grow && 'h-full'
         )}
         style={{

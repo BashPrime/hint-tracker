@@ -95,7 +95,7 @@ function PackLayoutRoot() {
             : undefined,
       }}
       className={cn(
-        'grid h-full grid-cols-1 gap-2',
+        'grid h-full grid-cols-1 sm:gap-2',
         'overflow-none',
         layout.length >= 2 && 'sm:grid-cols-2',
         layout.length >= 3 && 'md:grid-cols-3'

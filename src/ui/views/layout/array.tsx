@@ -11,7 +11,7 @@ export function LayoutArray({ array }: Props) {
     <div
       className={cn(
         'flex flex-col',
-        array.content.find((c) => c.type === 'unhinted') && 'min-h-0',
+        array.content.find((c) => c.type === 'unhinted') && 'sm:min-h-0',
         array.grow && 'h-full'
       )}
       data-name="layout-array"

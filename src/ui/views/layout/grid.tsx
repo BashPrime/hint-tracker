@@ -31,7 +31,7 @@ export function LayoutGrid({ grid }: Props) {
         'layout-grid flex flex-col',
         grid.content.find((row) =>
           row.find((col) => col.type === 'unhinted')
-        ) && 'min-h-0',
+        ) && 'sm:min-h-0',
         grid.grow && 'h-full'
       )}
       data-name="layout-grid"
