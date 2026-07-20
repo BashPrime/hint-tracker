@@ -30,7 +30,7 @@ export function PackSelection() {
   return (
     <div className="flex flex-col items-center" data-name="pack-selection">
       <div
-        className="flex flex-col items-center gap-1"
+        className="flex w-full flex-col items-center gap-1"
         data-name="selection-header"
       >
         <p className="p-2 text-center text-4xl font-bold uppercase">
@@ -39,14 +39,7 @@ export function PackSelection() {
         <div className="h-1.5 w-3/5 min-w-72 bg-[#f4B938]" />
         <div className="h-1.5 w-3/5 min-w-72 bg-[#ab4d1b]" />
       </div>
-      <div
-        className={cn(
-          'columns-1 gap-6 p-4',
-          packs.length >= 2 && 'md:columns-2',
-          packs.length >= 3 && 'lg:columns-3',
-          packs.length >= 4 && 'xl:columns-4'
-        )}
-      >
+      <div className={cn('flex flex-wrap gap-6 p-4')}>
         {packs.map((pack, idx) => (
           <Link
             to="/packs/$packId"
