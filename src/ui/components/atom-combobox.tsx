@@ -1,22 +1,26 @@
+import { ComboboxOption } from '@/types/combobox.types';
 import { PrimitiveAtom, useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import {
   Combobox,
+  ComboboxCollection,
   ComboboxContent,
   ComboboxEmpty,
+  ComboboxGroup,
   ComboboxInput,
   ComboboxItem,
+  ComboboxLabel,
   ComboboxList,
 } from './ui/combobox';
 
 type Props = {
   atom: PrimitiveAtom<string>;
-  items: string[];
+  options: ComboboxOption[];
   placeholder?: string;
   emptyStr?: string;
 };
 
-export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
+export function AtomCombobox({ atom, options, placeholder, emptyStr }: Props) {
   // !STATE
   const [value, setValue] = useAtom(atom);
   const [inputValue, setInputValue] = useState(value ?? '');
@@ -29,7 +33,7 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
   return (
     <Combobox
       autoHighlight
-      items={items}
+      items={options}
       value={value}
       onValueChange={(v) => setValue(v ?? '')}
       inputValue={inputValue}
@@ -44,10 +48,17 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
       <ComboboxContent>
         <ComboboxEmpty>{emptyStr ? emptyStr : 'No items found.'}</ComboboxEmpty>
         <ComboboxList>
-          {(item) => (
-            <ComboboxItem key={item} value={item}>
-              {item}
-            </ComboboxItem>
+          {(option) => (
+            <ComboboxGroup key={option.group} items={option.items}>
+              <ComboboxLabel>{option.group}</ComboboxLabel>
+              <ComboboxCollection>
+                {(item) => (
+                  <ComboboxItem key={item} value={item}>
+                    {item}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxGroup>
           )}
         </ComboboxList>
       </ComboboxContent>
