@@ -28,7 +28,7 @@ export function PackSelection() {
   }
 
   return (
-    <div data-name="pack-selection">
+    <div className="flex flex-col items-center" data-name="pack-selection">
       <div
         className="flex flex-col items-center gap-1"
         data-name="selection-header"
@@ -41,31 +41,31 @@ export function PackSelection() {
       </div>
       <div
         className={cn(
-          'gap-4 p-4',
-          'columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5'
+          'columns-1 gap-6 p-4',
+          packs.length >= 2 && 'md:columns-2',
+          packs.length >= 3 && 'lg:columns-3',
+          packs.length >= 4 && 'xl:columns-4'
         )}
       >
-        {packs.map((pack) => (
+        {packs.map((pack, idx) => (
           <Link
             to="/packs/$packId"
             params={{ packId: pack.id }}
-            key={pack.id}
-            className="mb-4 flex w-max break-inside-avoid flex-col gap-1"
+            key={idx}
+            className="mb-6 flex w-max break-inside-avoid flex-col gap-1"
           >
             <GameCover
               name={pack.cover?.name ?? ''}
               image={pack.cover ?? undefined}
-              className="h-[280px] w-auto"
+              className="h-[280px] w-auto hover:ring hover:brightness-125"
             />
             <div className="flex items-center gap-2">
               <p className="text-lg font-semibold">{pack.name}</p>
-              <p className="text-muted-foreground text-sm font-normal">
-                v{pack.version}
-              </p>
+              <p className="text-muted-foreground text-sm">v{pack.version}</p>
             </div>
-            <div className="text-muted-foreground flex flex-row gap-1 text-sm">
+            <div className="text-muted-foreground flex flex-row gap-1">
               <User size={16} />
-              <p>{pack.author}</p>
+              <p className="text-md">{pack.author}</p>
             </div>
           </Link>
         ))}
