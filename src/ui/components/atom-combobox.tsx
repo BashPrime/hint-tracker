@@ -39,7 +39,7 @@ export function AtomCombobox({ atom, items, placeholder, emptyStr }: Props) {
         showTrigger={false}
         placeholder={placeholder}
         // !WHY need a right margin or single-column layouts are going to freak out when the list opens
-        className="mr-2 font-semibold"
+        className="mr-4 font-semibold"
       />
       <ComboboxContent>
         <ComboboxEmpty>{emptyStr ? emptyStr : 'No items found.'}</ComboboxEmpty>
