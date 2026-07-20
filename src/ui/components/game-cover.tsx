@@ -12,13 +12,11 @@ export function GameCover({ name, image, className }: Props) {
   return (
     <>
       {image && (
-        <div className={cn(className)} data-name="game-cover">
-          <img
-            src={`data:image/${image.type};base64,${image.data}`}
-            alt={name}
-            className="h-full w-auto"
-          />
-        </div>
+        <img
+          src={`data:image/${image.type};base64,${image.data}`}
+          alt={name}
+          className={className}
+        />
       )}
       {!image && (
         <div

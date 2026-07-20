@@ -1,18 +1,9 @@
 import { GameCover } from '@/components/game-cover';
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemGroup,
-  ItemMedia,
-  ItemTitle,
-} from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'jotai';
-import { ChevronRightIcon } from 'lucide-react';
+import { User } from 'lucide-react';
 
 export function PackSelection() {
   // !STATE
@@ -48,53 +39,50 @@ export function PackSelection() {
         <div className="h-1.5 w-3/5 min-w-72 bg-[#f4B938]" />
         <div className="h-1.5 w-3/5 min-w-72 bg-[#ab4d1b]" />
       </div>
-      <div className="flex flex-col justify-center gap-4 p-2">
-        <ItemGroup>
-          {packs.map((pack) => {
-            return (
-              <Link
-                to="/packs/$packId"
-                params={{ packId: pack.id }}
-                key={pack.id}
-                className={cn(
-                  'flex flex-col',
-                  'relative'
-                  // 'after:absolute after:inset-0 hover:after:bg-blue-400/50'
-                )}
-              >
-                <Item
-                  variant="outline"
-                  className={cn(
-                    'rounded-none border-zinc-300 dark:border-zinc-900',
-                    'bg-zinc-100 dark:bg-zinc-800',
-                    'hover:bg-zinc-300 hover:dark:bg-zinc-700',
-                    'active:bg-zinc-600 active:dark:bg-zinc-900'
-                  )}
-                >
-                  <ItemMedia>
-                    <GameCover
-                      name={pack.cover?.name ?? ''}
-                      image={pack.cover ?? undefined}
-                      className="h-48"
-                    />
-                  </ItemMedia>
-                  <ItemContent>
-                    <ItemTitle className="text-2xl">{pack.name}</ItemTitle>
-                    <ItemDescription className="text-base">
-                      {pack.author} · v{pack.version}
-                    </ItemDescription>
-                    <ItemDescription className="mt-4 text-lg">
-                      {pack.description}
-                    </ItemDescription>
-                  </ItemContent>
-                  <ItemActions>
-                    <ChevronRightIcon className="size-4" />
-                  </ItemActions>
-                </Item>
-              </Link>
-            );
-          })}
-        </ItemGroup>
+      <div
+        className={cn(
+          'p-4',
+          'grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4'
+        )}
+      >
+        {packs.map((pack) => (
+          <Link to="/packs/$packId" params={{ packId: pack.id }} key={pack.id}>
+            {/* <Card className={cn('pt-0', 'h-[280px]')}>
+              <GameCover
+                name={pack.cover?.name ?? ''}
+                image={pack.cover ?? undefined}
+                className="h-[200px] w-auto"
+              />
+              <CardHeader>
+                <CardTitle>
+                  {pack.name}{' '}
+                  <span className="text-muted-foreground ml-1 text-sm font-normal">
+                    v{pack.version}
+                  </span>
+                </CardTitle>
+                <CardDescription className="flex flex-row gap-1">
+                  <User size={16} />
+                  {pack.author}
+                </CardDescription>
+              </CardHeader>
+            </Card> */}
+            <GameCover
+              name={pack.cover?.name ?? ''}
+              image={pack.cover ?? undefined}
+              className="h-[280px] w-auto"
+            />
+            <p className="text-lg font-semibold">
+              {pack.name}{' '}
+              <span className="text-muted-foreground ml-1 text-sm font-normal">
+                v{pack.version}
+              </span>
+            </p>
+            <p className="text-muted-foreground flex flex-row gap-1 text-sm">
+              <User size={16} />
+              {pack.author}
+            </p>
+          </Link>
+        ))}
       </div>
     </div>
   );
