@@ -45,12 +45,12 @@ export function PackSelection() {
             to="/packs/$packId"
             params={{ packId: pack.id }}
             key={idx}
-            className="mb-6 flex w-max break-inside-avoid flex-col gap-1"
+            className="group mb-6 flex w-max break-inside-avoid flex-col gap-1"
           >
             <GameCover
               name={pack.cover?.name ?? ''}
               image={pack.cover ?? undefined}
-              className="h-[280px] w-auto hover:ring hover:brightness-125"
+              className="h-[280px] w-auto group-hover:ring group-hover:brightness-125"
             />
             <div className="flex items-center gap-2">
               <p className="text-lg font-semibold">{pack.name}</p>
