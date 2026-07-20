@@ -10,10 +10,6 @@ export function readJsonFile(path: string) {
       return JSON.parse(json);
     }
   } catch (err) {
-    dialog.showErrorBox(
-      'Error reading json file',
-      `An error occurred reading ${path}: ${getErrorMsg(err)}`
-    );
     console.error(
       'readJsonFile(): Error reading json file:',
       path,
