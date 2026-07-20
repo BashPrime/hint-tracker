@@ -41,46 +41,32 @@ export function PackSelection() {
       </div>
       <div
         className={cn(
-          'p-4',
-          'grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4'
+          'gap-4 p-4',
+          'columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5'
         )}
       >
         {packs.map((pack) => (
-          <Link to="/packs/$packId" params={{ packId: pack.id }} key={pack.id}>
-            {/* <Card className={cn('pt-0', 'h-[280px]')}>
-              <GameCover
-                name={pack.cover?.name ?? ''}
-                image={pack.cover ?? undefined}
-                className="h-[200px] w-auto"
-              />
-              <CardHeader>
-                <CardTitle>
-                  {pack.name}{' '}
-                  <span className="text-muted-foreground ml-1 text-sm font-normal">
-                    v{pack.version}
-                  </span>
-                </CardTitle>
-                <CardDescription className="flex flex-row gap-1">
-                  <User size={16} />
-                  {pack.author}
-                </CardDescription>
-              </CardHeader>
-            </Card> */}
+          <Link
+            to="/packs/$packId"
+            params={{ packId: pack.id }}
+            key={pack.id}
+            className="mb-4 flex w-max break-inside-avoid flex-col gap-1"
+          >
             <GameCover
               name={pack.cover?.name ?? ''}
               image={pack.cover ?? undefined}
               className="h-[280px] w-auto"
             />
-            <p className="text-lg font-semibold">
-              {pack.name}{' '}
-              <span className="text-muted-foreground ml-1 text-sm font-normal">
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold">{pack.name}</p>
+              <p className="text-muted-foreground text-sm font-normal">
                 v{pack.version}
-              </span>
-            </p>
-            <p className="text-muted-foreground flex flex-row gap-1 text-sm">
+              </p>
+            </div>
+            <div className="text-muted-foreground flex flex-row gap-1 text-sm">
               <User size={16} />
-              {pack.author}
-            </p>
+              <p>{pack.author}</p>
+            </div>
           </Link>
         ))}
       </div>
