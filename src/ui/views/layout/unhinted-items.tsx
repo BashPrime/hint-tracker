@@ -50,14 +50,14 @@ function Hint({ hint, onDelete }: HintProps) {
               <AtomCombobox
                 atom={hint.item}
                 placeholder="Item"
-                items={itemOptions}
+                options={itemOptions}
               />
             )}
             {hint.location && (
               <AtomCombobox
                 atom={hint.location}
                 placeholder="Location"
-                items={locationOptions}
+                options={locationOptions}
               />
             )}
           </div>
