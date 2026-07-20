@@ -8,16 +8,20 @@ import {
   LocationParent,
   PackDetails,
 } from 'src/shared/types/pack.types';
+import { capitalizeFirstLetter } from './string';
 
 function parseItems(items: Item[]): ComboboxOptionsDbGroupRecord {
   const group: ComboboxOptionsDbGroupRecord = {};
 
-  for (const type of [...new Set(items.map((i) => i.type))]) {
-    group[type] = [];
-  }
-
   for (const item of items) {
-    group[item.type].push(item.name);
+    const capitalizedType = capitalizeFirstLetter(item.type);
+
+    // create group array if it doesn't exist
+    if (!group[capitalizedType]) {
+      group[capitalizedType] = [];
+    }
+
+    group[capitalizedType].push(item.name);
   }
 
   return group;
