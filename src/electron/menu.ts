@@ -69,6 +69,7 @@ const template: MenuItemConstructorOptions[] = [
       {
         id: MENU_IDS.file.resetTracker,
         label: 'Reset Tracker',
+        enabled: false,
         click: () => resetTracker(),
       },
       { type: 'separator' },

@@ -102,8 +102,16 @@ export function runIpcHandlers() {
 
   ipcMain.handle(IPC_IDS.setExportTrackerState, (_, enabled: boolean) => {
     const exportMenuItem = menu.getMenuItemById(MENU_IDS.file.exportState);
+    const resetTrackerMenuItem = menu.getMenuItemById(
+      MENU_IDS.file.resetTracker
+    );
+
     if (exportMenuItem) {
       exportMenuItem.enabled = enabled;
+    }
+
+    if (resetTrackerMenuItem) {
+      resetTrackerMenuItem.enabled = enabled;
     }
   });
 }
