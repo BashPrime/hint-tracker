@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "type": { "type": "string", "enum": ["progression", "useful", "filler"] },
+    "features": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["name", "code", "type", "features"],
+  "additionalProperties": false
+}
