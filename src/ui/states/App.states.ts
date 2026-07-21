@@ -1,43 +1,78 @@
-import { atom } from "jotai";
-import { TrackerConfig, Game } from "../../shared/types";
-import { prime2TrackerSelector } from "./Prime2.states";
-import { atomWithReset } from "jotai/utils";
-import { UnhintedItem } from "@/types/common.types";
-import { prime1TrackerSelector } from "./Prime1.states";
-import { prime3TrackerSelector } from "./Prime3.states";
+import {
+  HintWithState,
+  LayoutStateGrid,
+  LayoutStateObject,
+  LayoutStateRoot,
+  UnhintedItemHint,
+} from '@/types/state.types';
+import { atom } from 'jotai';
+import { TrackerSaveState, TrackerState } from 'src/shared/types/config.types';
+import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 
-export const appSessionLoadedState = atom<boolean>(false);
-export const currentGameState = atom<Game>("prime");
-export const legacyHintsEnabledState = atom<boolean>(true);
+export const packsState = atom<BasicPack[] | null>(null);
+export const activePackState = atom<PackDetails | null>(null);
+export const layoutState = atom<LayoutStateRoot | null>(null);
+export const pauseAutosaveState = atom<boolean>(false);
+export const unhintedHintsState = atom<UnhintedItemHint[]>([]);
+export const importTrackerState = atom<TrackerSaveState | null>(null);
+export const trackerStateToLoad = atom<'autosave' | 'import'>('autosave');
 
-export const currentGameTrackerSelector = atom((get) => {
-  const game = get(currentGameState);
-  const prime1TrackerState = get(prime1TrackerSelector);
-  const prime2TrackerState = get(prime2TrackerSelector);
-  const prime3TrackerState = get(prime3TrackerSelector);
+export const trackerHintsAtom = atom((get) => {
+  // !STATE
+  const layout = get(layoutState);
+  const hints: HintWithState[] = [];
 
-  switch (game) {
-    case "prime":
-      return prime1TrackerState;
-    case "echoes":
-      return prime2TrackerState;
-    case "corruption":
-      return prime3TrackerState;
+  // !FUNCTION
+  function processHint(hint: HintWithState): void {
+    hints.push(hint);
   }
+
+  function processObject(layoutStateObj: LayoutStateObject): void {
+    switch (layoutStateObj.type) {
+      case 'hint':
+        processHint(layoutStateObj as HintWithState);
+        break;
+      case 'group':
+      case 'array':
+        layoutStateObj.content.map(processObject);
+        break;
+      case 'grid':
+        const grid = layoutStateObj as LayoutStateGrid;
+        grid.content.map((row) => row.map(processObject));
+        break;
+    }
+  }
+
+  if (!layout) {
+    return null;
+  }
+
+  // build save state and return
+  layout.map(processObject);
+  return hints;
 });
 
-export const trackerStateSelector = atom<TrackerConfig>((get) => {
-  const game = get(currentGameState);
-  const legacyHintsEnabled = get(legacyHintsEnabledState);
-  const tracker = get(currentGameTrackerSelector);
+export const trackerSaveFormattedState = atom<TrackerState>((get) => {
+  // !STATE
+  const hints = get(trackerHintsAtom);
+  const unhintedHints = get(unhintedHintsState);
+  const trackerSaveState: TrackerState = {};
 
-  return {
-    game,
-    legacyHintsEnabled,
-    tracker,
-  };
+  // !FUNCTION
+  function parseHints(hints: HintWithState[] | null) {
+    if (hints) {
+      for (const hint of hints) {
+        trackerSaveState[hint.code] = {
+          item: hint.item ? get(hint.item) : null,
+          location: hint.location ? get(hint.location) : null,
+          checked: get(hint.checked),
+        };
+      }
+    }
+  }
+
+  parseHints(hints);
+  parseHints(unhintedHints);
+
+  return trackerSaveState;
 });
-
-export const appLoadingMsgAtom = atomWithReset<string>("Getting Ready...");
-
-export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);

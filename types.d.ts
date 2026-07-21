@@ -1,16 +1,18 @@
 interface Window {
   electronApi: {
-    onResetTracker: (callback: () => void) => void;
-    setLegacyHintsEnabled: (callback: (checked: boolean) => void) => void;
-    onRequestRendererState: (callback: (action: string) => void) => void;
-    rendererTrackerState: (state: object) => void;
-    resetSize: (game: string, isLegacyHints: boolean) => void;
-    requestMainState: () => void;
-    loadTrackerSession: (
-      callback: (config: object, legacyHintsEnabled: boolean) => void
-    ) => void;
-    setKeybearerRooms: (callback: (value: string) => void) => void;
-    setGame: (callback: (game: string) => void) => void;
-    setPhazonSuitHint: (callback: (value: string) => void) => void;
+    fetchPacks: () => Promise<object[]>;
+    fetchPackDetails: (packId: string) => Promise<object>;
+    fetchImage: (packId: string, imgPath: string) => Promise<object>;
+    autosaveTrackerState: (state: object, packId: string) => void;
+    loadTrackerAutosave: (packId: string) => Promise<object | null>;
+    // ipcMain functions
+    resetTracker: (callback: () => void) => () => void;
+    resetSize: (callback: () => void) => () => void;
+    resetSizeResponse: (packId: string | null) => void;
+    trackerHome: (callback: () => void) => () => void;
+    setTrackerMenuItems: (enabled: boolean) => void;
+    exportTrackerState: (callback: () => void) => () => void;
+    importTrackerState: (callback: (state: object) => void) => () => void;
+    exportTrackerStateResponse: (state: object, packId: string | null) => void;
   };
 }

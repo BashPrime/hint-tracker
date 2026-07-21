@@ -1,173 +1,151 @@
-import { app, Menu, MenuItemConstructorOptions } from "electron";
-import { getMainWindow } from "./window.js";
-import { isDev } from "./util.js";
 import {
-  handleSaveAppConfig,
-  openUserProvidedTrackerFile,
-  saveTrackerFileAs,
-} from "./config.js";
-import { MENU_IDS } from "./data.js";
+  app,
+  Menu,
+  MenuItemConstructorOptions,
+  nativeTheme,
+  shell,
+} from 'electron';
+import { ThemeType } from '../shared/types/base.types.js';
+import { MENU_IDS, USER_DATA_DIR } from './constants.js';
 import {
-  requestRendererState,
+  exportTrackerState,
+  importTrackerState,
+  resetSize,
   resetTracker,
-  setGame,
-  setKeybearerRoomLabels,
-  setLegacyHintsEnabled,
-  setPhazonSuitHint,
-} from "./ipc.js";
-import {
-  Game,
-  GameSchema,
-  KeybearerRooms,
-  KeybearerRoomsSchema,
-  PhazonSuitHint,
-  PhazonSuitHintSchema,
-} from "../shared/types.js";
+  trackerHome,
+} from './ipc.js';
+import { installPackDialog } from './packs.js';
+import { isDev } from './util.js';
+import { getMainWindow } from './window.js';
+
+async function openUserDataFolder() {
+  try {
+    // Check if the path is valid and then open it
+    await shell.openPath(USER_DATA_DIR);
+    return { success: true };
+  } catch (error) {
+    console.error(
+      'openUserDataFolder(): Failed to open userData directory:',
+      error
+    );
+    return { success: false, error: error };
+  }
+}
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
   window?.setAlwaysOnTop(checked);
-  handleSaveAppConfig();
 }
 
-function toggleLegacyHints(checked: boolean) {
-  setLegacyHintsEnabled(checked);
-  handleSaveAppConfig();
-}
-
-function toggleKeybearerRooms(value: KeybearerRooms) {
-  setKeybearerRoomLabels(value);
-  handleSaveAppConfig();
-}
-
-function toggleGame(game: Game) {
-  setGame(game);
-  handleSaveAppConfig();
-}
-
-function togglePhazonSuitHint(value: PhazonSuitHint) {
-  setPhazonSuitHint(value);
-  handleSaveAppConfig();
+function toggleTheme(theme: ThemeType) {
+  nativeTheme.themeSource = theme;
 }
 
 const template: MenuItemConstructorOptions[] = [
   {
-    label: "Tracker",
+    label: 'File',
     submenu: [
-      { label: "Reset Size", click: () => requestRendererState("reset-size") },
-      { label: "Reset Tracker", click: () => resetTracker() },
-      { type: "separator" },
-      { label: "Open", click: () => openUserProvidedTrackerFile() },
-      { label: "Save As...", click: () => saveTrackerFileAs() },
+      {
+        id: MENU_IDS.file.trackerHome,
+        label: 'Home',
+        click: () => trackerHome(),
+      },
+      {
+        id: MENU_IDS.file.installPack,
+        label: 'Install Pack',
+        click: () => installPackDialog(),
+      },
+      {
+        id: MENU_IDS.file.openUserDataFolder,
+        label: 'Open User Data Folder',
+        click: () => openUserDataFolder(),
+      },
+      { type: 'separator' },
+      {
+        id: MENU_IDS.file.resetSize,
+        label: 'Reset Size',
+        click: () => resetSize(),
+      },
+      {
+        id: MENU_IDS.file.resetTracker,
+        label: 'Reset Tracker',
+        enabled: false,
+        click: () => resetTracker(),
+      },
+      { type: 'separator' },
+      {
+        id: MENU_IDS.file.importState,
+        label: 'Import State',
+        click: () => importTrackerState(),
+      },
+      {
+        id: MENU_IDS.file.exportState,
+        label: 'Export State',
+        enabled: false,
+        click: () => exportTrackerState(),
+      },
+      { type: 'separator' },
+      {
+        label: 'Exit',
+        role: 'quit',
+      },
     ],
   },
   {
-    label: "Game",
-    id: MENU_IDS.game,
+    label: 'Toggles',
     submenu: [
       {
-        label: "Metroid Prime",
-        id: GameSchema.enum.prime,
-        type: "radio",
-        checked: true,
-        click: () => toggleGame(GameSchema.enum.prime),
-      },
-      {
-        label: "Metroid Prime 2: Echoes",
-        id: GameSchema.enum.echoes,
-        type: "radio",
-        checked: false,
-        click: () => toggleGame(GameSchema.enum.echoes),
-      },
-      {
-        label: "Metroid Prime 3: Corruption",
-        id: GameSchema.enum.corruption,
-        type: "radio",
-        checked: false,
-        click: () => toggleGame(GameSchema.enum.corruption),
-      },
-    ],
-  },
-  {
-    label: "Toggles",
-    submenu: [
-      {
-        id: MENU_IDS.alwaysOnTop,
-        label: "Always on Top",
-        type: "checkbox",
+        id: MENU_IDS.toggles.alwaysOnTop,
+        label: 'Always on Top',
+        type: 'checkbox',
         checked: false,
         click: (item) => toggleAlwaysOnTop(item.checked),
       },
       {
-        id: MENU_IDS.legacyHintsEnabled,
-        label: "Legacy Hints",
-        type: "checkbox",
+        id: MENU_IDS.toggles.resetSizeOnPackOpen,
+        label: 'Reset Size when Opening Pack',
+        type: 'checkbox',
         checked: false,
-        click: (item) => {
-          toggleLegacyHints(item.checked);
-        },
       },
       {
-        label: "Prime 1 Phazon Suit Hint",
+        label: 'Theme',
         submenu: [
           {
-            id: PhazonSuitHintSchema.enum.areaName,
-            label: "Area Name",
-            type: "radio",
+            id: MENU_IDS.theme.system,
+            label: 'System',
+            type: 'radio',
             checked: true,
-            click: () =>
-              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaName),
+            click: () => toggleTheme('system'),
           },
           {
-            id: PhazonSuitHintSchema.enum.roomName,
-            label: "Room Name",
-            type: "radio",
+            id: MENU_IDS.theme.light,
+            label: 'Light',
+            type: 'radio',
             checked: false,
-            click: () =>
-              togglePhazonSuitHint(PhazonSuitHintSchema.enum.roomName),
-          },
-        ],
-      },
-      {
-        label: "Prime 2 Keybearer Room Labels",
-        submenu: [
-          {
-            id: MENU_IDS.keybearerRoomLabels.both,
-            label: "Both",
-            type: "radio",
-            checked: true,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.both),
+            click: () => toggleTheme('light'),
           },
           {
-            id: MENU_IDS.keybearerRoomLabels.aether,
-            label: "Aether only",
-            type: "radio",
+            id: MENU_IDS.theme.dark,
+            label: 'Dark',
+            type: 'radio',
             checked: false,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.aether),
-          },
-          {
-            id: MENU_IDS.keybearerRoomLabels.darkAether,
-            label: "Dark Aether only",
-            type: "radio",
-            checked: false,
-            click: () =>
-              toggleKeybearerRooms(KeybearerRoomsSchema.enum.darkAether),
+            click: () => toggleTheme('dark'),
           },
         ],
       },
     ],
   },
   isDev()
-    ? { role: "viewMenu" }
+    ? { role: 'viewMenu' }
     : {
-        label: "View",
+        label: 'View',
         submenu: [
-          { role: "resetZoom" },
-          { role: "zoomIn" },
-          { role: "zoomOut" },
+          { role: 'resetZoom' },
+          { role: 'zoomIn' },
+          { role: 'zoomOut' },
         ],
       },
-  { label: "Help", submenu: [{ label: "About", role: "about" }] },
+  { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
   { label: `Version ${app.getVersion()}` },
 ];
 

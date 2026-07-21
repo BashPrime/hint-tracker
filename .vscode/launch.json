@@ -10,7 +10,7 @@
       "windows": {
         "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
       },
-      "args" : ["."],
+      "args": ["."],
       "outputCapture": "std",
       "env": {
         "NODE_ENV": "development"
@@ -21,7 +21,7 @@
         "!**/node_modules/**"
       ],
       "presentation": {
-        "hidden": true,
+        "hidden": true
       },
       "preLaunchTask": "npm: transpile:electron"
     },
@@ -40,7 +40,7 @@
         "uriFormat": "http://localhost:%s"
       },
       "presentation": {
-        "hidden": true,
+        "hidden": true
       }
     }
   ],
@@ -50,6 +50,13 @@
       "configurations": ["Debug Main Process", "Debug Renderer Process"],
       "presentation": {
         "order": 1
+      }
+    },
+    {
+      "name": "Debug Electron",
+      "configurations": ["Debug Main Process"],
+      "presentation": {
+        "order": 2
       }
     }
   ]

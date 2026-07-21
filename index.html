@@ -1,13 +1,17 @@
 <!doctype html>
-<html lang="en" class="dark h-screen">
+<html class="h-screen" lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Metroid Prime Hint Tracker</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
+    />
+    <title>BashPrime Hint Tracker</title>
   </head>
   <body class="h-full">
-    <div id="root" class="w-full h-full"></div>
+    <div id="root" class="h-full w-full"></div>
     <script type="module" src="/src/ui/main.tsx"></script>
   </body>
 </html>

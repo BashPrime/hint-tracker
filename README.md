@@ -1,4 +1,4 @@
-# Metroid Prime Hint Tracker
+# BashPrime Hint Tracker
 
 A tracker which helps organize the hints that players write down during a randomizer play session.
 

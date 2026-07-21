@@ -1,220 +1,86 @@
-import { app, dialog } from "electron";
-import path from "path";
-import fs from "fs";
-import { getMainWindow } from "./window.js";
+import { dialog } from 'electron';
+import fs from 'fs';
+import { dirname } from 'path';
 import {
-  AppConfig,
-  AppConfigSchema,
-  Game,
-  KeybearerRoomsSchema,
-  PhazonSuitHintSchema,
-  Toggles,
-  TrackerConfig,
-} from "../shared/types.js";
-import { z } from "zod";
-import { menu } from "./menu.js";
-import { getErrorMsg, parseTrackerConfig } from "./util.js";
-import { MENU_IDS } from "./data.js";
-import { loadTrackerSession } from "./ipc.js";
+  ConfigSchema,
+  ConfigType,
+  TrackerSaveState,
+  TrackerSaveStateSchema,
+} from '../shared/types/config.types.js';
+import {
+  CONFIG_PATH,
+  USER_PACKS_PATH,
+  USER_TRACKER_SAVES_PATH,
+} from './constants.js';
+import { readAndParseJsonFile, readJsonFile, writeJsonFile } from './io.js';
+import { getErrorMsg } from './util.js';
 
-const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
-const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
-
-let trackerState: TrackerConfig | null = null;
-
-export function setGameMenuItem(game: Game) {
-  const menuItem = menu.getMenuItemById(game);
-
-  if (menuItem) {
-    menuItem.checked = true;
-  }
+export function readConfigFile(path: string = CONFIG_PATH) {
+  return readAndParseJsonFile(path, ConfigSchema);
 }
 
-export function getTrackerState() {
-  return trackerState;
-}
-
-export function setTrackerState(state: TrackerConfig | null) {
-  if (state) {
-    setGameMenuItem(state.game);
-  }
-  trackerState = state;
-}
-
-function readJsonFile(path: string) {
-  try {
-    const json = fs.readFileSync(path, "utf-8");
-    if (json) {
-      return JSON.parse(json);
-    }
-  } catch (err) {
-    console.error("Error reading json file:", path, getErrorMsg(err));
-  }
-
-  return null;
-}
-
-function writeJsonFile(path: string, json: string) {
-  fs.writeFile(path, json, (err) => {
-    if (err) {
-      console.error("Error writing json file:", path, getErrorMsg(err));
-    }
-  });
-}
-
-export function readTrackerConfigFile(path: string = TRACKER_CONFIG_PATH) {
-  return parseTrackerConfig(readJsonFile(path));
-}
-
-export function writeTrackerConfigFile(
-  config: TrackerConfig,
-  path: string = TRACKER_CONFIG_PATH
+export function writeConfigFile(
+  config: ConfigType,
+  path: string = CONFIG_PATH
 ) {
   const json = JSON.stringify(config, null, 2);
   writeJsonFile(path, json);
 }
 
-export function readAppConfigFile() {
-  const raw = readJsonFile(APP_CONFIG_PATH);
-
-  if (raw) {
-    try {
-      const parsed = AppConfigSchema.parse(raw);
-      return parsed;
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        console.error(
-          "readAppConfigFile(): Error trying to read application config file:",
-          err.issues
-        );
-      } else console.error(getErrorMsg(err));
-    }
-  }
-
-  return null;
-}
-
-export function writeAppConfigFile(config: AppConfig) {
-  const json = JSON.stringify(config, null, 2);
-  writeJsonFile(APP_CONFIG_PATH, json);
-}
-
-function getTogglesState(): Toggles {
-  function getKeybearerRoomsValue() {
-    for (const value of KeybearerRoomsSchema.options) {
-      if (menu.getMenuItemById(value)?.checked) {
-        return value;
-      }
-    }
-
-    return KeybearerRoomsSchema.enum.both;
-  }
-
-  function getPhazonSuitHintValue() {
-    for (const value of PhazonSuitHintSchema.options) {
-      if (menu.getMenuItemById(value)?.checked) {
-        return value;
-      }
-    }
-
-    return PhazonSuitHintSchema.enum.areaName;
-  }
-
-  return {
-    alwaysOnTop: menu.getMenuItemById(MENU_IDS.alwaysOnTop)?.checked ?? false,
-    legacyHintsEnabled:
-      menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked ?? false,
-    keybearerRoomLabels: getKeybearerRoomsValue(),
-    phazonSuitHint: getPhazonSuitHintValue(),
-  };
-}
-
-export function getAppConfigState() {
-  const mainWindow = getMainWindow();
-
-  if (mainWindow) {
-    try {
-      return AppConfigSchema.parse({
-        toggles: getTogglesState(),
-        window: mainWindow.getBounds(),
-      });
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        console.error(
-          "getAppConfigState(): Error parsing app configuration:",
-          err.issues
-        );
-      } else console.error(getErrorMsg(err));
-    }
-  }
-
-  return null;
-}
-
-export function handleSaveAppConfig() {
-  const config = getAppConfigState();
-
-  if (config) {
-    writeAppConfigFile(config);
-  }
-}
-
-export function openUserProvidedTrackerFile() {
-  const mainWindow = getMainWindow();
-  if (mainWindow) {
-    dialog
-      .showOpenDialog(mainWindow, {
-        title: "Open Tracker File",
-        filters: [{ name: "JSON files", extensions: ["json"] }],
-        properties: ["openFile"],
-      })
-      .then((value) => {
-        if (!value.canceled) {
-          const config = readTrackerConfigFile(value.filePaths[0]);
-          if (!config) {
-            dialog.showErrorBox(
-              "Cannot Parse Tracker File",
-              "This does not appear to be a valid tracker file."
-            );
-            throw new Error("openTrackerFile(): tracker config is null");
-          }
-
-          loadTrackerSession(config);
+export function handleCreateUserDataDirs() {
+  function handleMkDir(dir: string) {
+    if (!fs.existsSync(dir)) {
+      fs.mkdir(dir, { recursive: true }, (err) => {
+        if (err) {
+          return console.error(err);
         }
-      })
-      .catch((err) => {
-        console.error(getErrorMsg(err));
       });
+    }
   }
+
+  handleMkDir(USER_PACKS_PATH);
+  handleMkDir(USER_TRACKER_SAVES_PATH);
 }
 
-export function saveTrackerFileAs() {
-  // async handle tracker state received from renderer
-  const state = getTrackerState();
-
-  if (state) {
-    const mainWindow = getMainWindow();
-
-    if (mainWindow) {
-      dialog
-        .showSaveDialog(mainWindow, {
-          filters: [{ name: "JSON files", extensions: ["json"] }],
-          properties: ["showOverwriteConfirmation"],
-        })
-        .then((value) => {
-          if (!value.canceled) {
-            writeTrackerConfigFile(state, value.filePath);
+export function saveTrackerState(
+  state: TrackerSaveState,
+  path: string,
+  showErrorBox?: boolean
+) {
+  // Make sure directory exists first
+  const dir = dirname(path);
+  fs.mkdir(dir, { recursive: true }, (err) => {
+    if (err) {
+      if (showErrorBox) {
+        dialog.showErrorBox('Failed to Create Directory', getErrorMsg(err));
+      }
+      return console.error(
+        'saveTrackerState(): Error creating save directory:',
+        getErrorMsg(err)
+      );
+    } else {
+      // Handle writing file
+      const json = JSON.stringify(state, null, 2);
+      fs.writeFile(path, json, (err) => {
+        if (err) {
+          if (showErrorBox) {
+            dialog.showErrorBox(
+              'Failed to Save Tracker State',
+              `Failed to save ${path}: ${getErrorMsg(err)}`
+            );
           }
-        })
-        .catch((err) => {
-          console.error(getErrorMsg(err));
-        });
+          console.error(
+            'saveTrackerState(): Error writing json file:',
+            path,
+            getErrorMsg(err)
+          );
+        }
+      });
     }
-  } else {
-    dialog.showErrorBox(
-      "Cannot Save Tracker File",
-      "There is currently no tracker state to save."
-    );
-    console.error("saveTrackerFile(): there is no tracker state to save");
-  }
+  });
+}
+
+export function loadTrackerState(path: string) {
+  const json = readJsonFile(path);
+  return TrackerSaveStateSchema.safeParse(json);
 }

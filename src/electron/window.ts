@@ -1,36 +1,44 @@
-import { BrowserWindow, Menu } from "electron";
-import { menu } from "./menu.js";
-import { getPreloadPath } from "./pathResolver.js";
-import { isDev } from "./util.js";
+import { app, BrowserWindow, Menu, nativeTheme } from 'electron';
+import path from 'path';
+import z from 'zod';
+import { ThemeType } from '../shared/types/base.types.js';
+import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
+import { writeConfigFile } from './config.js';
 import {
-  getTrackerState,
-  handleSaveAppConfig,
-  setTrackerState,
-  writeTrackerConfigFile,
-} from "./config.js";
-import { WINDOW_SIZE } from "./data.js";
-import { AppConfig } from "../shared/types.js";
+  DEFAULT_WINDOW_BOUNDS,
+  DEFAULT_WINDOW_SIZE,
+  MENU_IDS,
+} from './constants.js';
+import { menu } from './menu.js';
+import { getBasicPack } from './packs.js';
+import { getPreloadPath } from './pathResolver.js';
+import { getErrorMsg, isDev } from './util.js';
 
 let mainWindow: BrowserWindow | null = null;
 
-export function createMainWindow(config: AppConfig | null) {
+export function createMainWindow(config: ConfigType | null) {
   mainWindow = new BrowserWindow({
-    title: "Metroid Prime Hint Tracker",
-    width: config?.window.width ?? WINDOW_SIZE.default.width,
-    height: config?.window.height ?? WINDOW_SIZE.default.height,
+    title: 'BashPrime Hint Tracker',
+    width: config?.window.width ?? DEFAULT_WINDOW_SIZE.width,
+    height: config?.window.height ?? DEFAULT_WINDOW_SIZE.height,
     x: config?.window.x ?? undefined,
     y: config?.window.y ?? undefined,
-    minWidth: 640,
-    minHeight: 480,
+    minWidth: 240,
+    minHeight: 240,
     webPreferences: {
       devTools: isDev(),
       preload: getPreloadPath(),
     },
+    icon: isDev() ? path.join(app.getAppPath(), 'icon.png') : undefined,
   });
+
+  if (config) {
+    setInitialTheme(config.theme);
+    setResetPackSize(config.resetSizeOnPackOpen);
+  }
 
   Menu.setApplicationMenu(menu);
   mainWindowHandlers(mainWindow);
-
   return mainWindow;
 }
 
@@ -47,23 +55,56 @@ export function closeMainWindow() {
   mainWindow?.close();
 }
 
+function setInitialTheme(theme: ThemeType) {
+  nativeTheme.themeSource = theme;
+  const menuThemeRadioItem = menu.getMenuItemById(MENU_IDS.theme[theme]);
+  if (menuThemeRadioItem) {
+    menuThemeRadioItem.checked = true;
+  }
+}
+
+function setResetPackSize(checked: boolean) {
+  const resetPackSize = menu.getMenuItemById(
+    MENU_IDS.toggles.resetSizeOnPackOpen
+  );
+
+  if (resetPackSize) {
+    resetPackSize.checked = checked;
+  }
+}
+
+function handleSaveConfig() {
+  try {
+    const parsed = ConfigSchema.parse({
+      theme: nativeTheme.themeSource,
+      window: mainWindow?.getBounds() ?? DEFAULT_WINDOW_BOUNDS,
+      resetSizeOnPackOpen:
+        menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked ??
+        false,
+    });
+
+    writeConfigFile(parsed);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error('handleSaveConfig(): Error when parsing:', err.issues);
+    } else console.error(getErrorMsg(err));
+  }
+}
+
 function mainWindowHandlers(window: BrowserWindow) {
-  window.on("resized", () => {
-    handleSaveAppConfig();
+  window.on('close', () => {
+    handleSaveConfig();
   });
 
-  window.on("moved", () => {
-    handleSaveAppConfig();
-  });
+  if (isDev()) {
+    window.on('resize', () => console.log('window size:', window.getSize()));
+  }
+}
 
-  window.on("close", (event) => {
-    const state = getTrackerState();
-
-    if (state) {
-      event.preventDefault();
-      writeTrackerConfigFile(state);
-      setTrackerState(null);
-      window.close();
-    }
-  });
+export function resetWindowSize(packId: string | null) {
+  const pack = packId ? getBasicPack(packId) : null;
+  const packWindowSize =
+    pack && pack.defaultWindowSize ? pack.defaultWindowSize : null;
+  const size = packWindowSize ?? DEFAULT_WINDOW_SIZE;
+  mainWindow?.setSize(size.width, size.height, true);
 }
