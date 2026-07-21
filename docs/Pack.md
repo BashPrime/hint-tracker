@@ -31,5 +31,30 @@
 }
 ```
 
+## Layout
+
+
+
 ## Images
+
+Your tracker pack can display PNG, JPEG, or WEBP images. There are currently two ways that images are used:
+
+- Displaying the pack's cover image on the home screen
+- Hints in the pack layout can display images
+
+To display an image, include it somewhere in your .zip archive and refrence it by its relative file path:
+
+`tracker.json`:
+```json
+{
+  "cover": "path/to/img.png"
+}
+```
+
+Hint in your layout:
+```json
+{
+  "image": "path/to/img.png"
+}
+```
 
