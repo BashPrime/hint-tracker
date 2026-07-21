@@ -38,5 +38,5 @@ export function useResetTracker() {
     return () => {
       cleanup();
     };
-  }, []);
+  }, [setPauseAutosave, store, hints, setUnhintedHints]);
 }

@@ -70,7 +70,7 @@ const LayoutObjectJsonSchema = z.record(
 type LayoutObjectJson = z.infer<typeof LayoutObjectJsonSchema>;
 
 function getLayoutRoot(layout: LayoutObjectJson): UnprocessedLayoutRoot | null {
-  for (const [key, val] of Object.entries(layout)) {
+  for (const [_, val] of Object.entries(layout)) {
     if (val.type === 'root') {
       return UnprocessedLayoutRootSchema.parse(val);
     }
