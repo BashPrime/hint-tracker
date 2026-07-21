@@ -1,7 +1,6 @@
 import {
   LayoutArraySchema,
   LayoutGridSchema,
-  LayoutGroupSchema,
   LayoutHintSchema,
   LayoutUnhintedItemsSchema,
   UnprocessedLayoutRootSchema,
@@ -26,7 +25,6 @@ printSchema('location parent', LocationParentSchema);
 printSchema('location', LocationSchema);
 printSchema('feature', FeatureSchema);
 printSchema('layout root', UnprocessedLayoutRootSchema);
-printSchema('layout group', LayoutGroupSchema);
 printSchema('layout array', LayoutArraySchema);
 printSchema('layout grid', LayoutGridSchema);
 printSchema('layout unhinted items', LayoutUnhintedItemsSchema);

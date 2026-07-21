@@ -32,7 +32,6 @@ export const trackerHintsAtom = atom((get) => {
       case 'hint':
         processHint(layoutStateObj as HintWithState);
         break;
-      case 'group':
       case 'array':
         layoutStateObj.content.map(processObject);
         break;

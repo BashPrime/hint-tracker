@@ -6,11 +6,10 @@ import {
   LayoutStateArraySchema,
   LayoutStateGrid,
   LayoutStateGridSchema,
-  LayoutStateGroupShema,
   LayoutStateRoot,
   LayoutStateUnhintedItemsSchema,
   UnhintedItemHint,
-  UnhintedItemHintSchema,
+  UnhintedItemHintSchema
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';
@@ -20,8 +19,6 @@ import {
   LayoutArraySchema,
   LayoutGrid,
   LayoutGridSchema,
-  LayoutGroup,
-  LayoutGroupSchema,
   LayoutHint,
   LayoutHintSchema,
   LayoutObject,
@@ -50,21 +47,6 @@ function buildHintState(
     item: hint.hintType !== 'location' ? atom(match?.item ?? '') : null,
     location: hint.hintType !== 'item' ? atom(match?.location ?? '') : null,
     checked: atom(match?.checked ?? false),
-  });
-}
-
-function processGroup(group: LayoutGroup, saveState?: TrackerSaveState) {
-  return LayoutStateGroupShema.parse({
-    type: 'group',
-    id: uuidv4(),
-    header: group.header,
-    color: group.color,
-    borderColor: group.borderColor,
-    grow: group.grow,
-    gap: group.gap,
-    content: group.content.map((c) =>
-      processElement(c, saveState, group.comboboxOptions)
-    ),
   });
 }
 
@@ -129,16 +111,11 @@ function processElement(
   let parsed;
 
   switch (elem.type) {
-    case 'group':
-      parsed = LayoutGroupSchema.safeParse(elem);
-      return parsed.success
-        ? processGroup(parsed.data, saveState)
-        : InvalidStateObjectSchema.parse(elem);
     case 'array':
       parsed = LayoutArraySchema.safeParse(elem);
       return parsed.success
         ? processArray(parsed.data, saveState)
-        : InvalidStateObjectSchema.parse(elem);
+        : buildInvalidObject(parsed.error);
     case 'grid':
       parsed = LayoutGridSchema.safeParse(elem);
       return parsed.success

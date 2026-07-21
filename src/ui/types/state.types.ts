@@ -26,17 +26,6 @@ export const LayoutStateObjectSchema = z.object({
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;
 
-export const LayoutStateGroupShema = LayoutStateObjectSchema.omit({
-  name: true,
-  code: true,
-  item: true,
-  location: true,
-  checked: true,
-}).extend({
-  type: z.literal('group'),
-});
-export type LayoutStateGroup = z.infer<typeof LayoutStateGroupShema>;
-
 export const HintWithStateSchema = LayoutStateObjectSchema.omit({
   id: true,
   content: true,
