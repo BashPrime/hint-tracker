@@ -9,7 +9,7 @@ import {
   LayoutStateRoot,
   LayoutStateUnhintedItemsSchema,
   UnhintedItemHint,
-  UnhintedItemHintSchema
+  UnhintedItemHintSchema,
 } from '@/types/state.types';
 import { atom } from 'jotai';
 import { TrackerSaveState } from 'src/shared/types/config.types';
@@ -57,6 +57,7 @@ function processArray(
   return LayoutStateArraySchema.parse({
     type: 'array',
     id: uuidv4(),
+    header: arr.header,
     color: arr.color,
     borderColor: arr.borderColor,
     grow: arr.grow,
