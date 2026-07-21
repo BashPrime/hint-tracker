@@ -21,6 +21,9 @@ export function LayoutArray({ array }: Props) {
         key={array.id}
         style={{
           gap: array.gap ? `calc(var(--spacing) * ${array.gap})` : undefined,
+          borderLeft: array.borderColor
+            ? `2px solid ${array.borderColor}`
+            : undefined,
         }}
       >
         {array.content.map((elem) => (
@@ -41,8 +44,7 @@ export function LayoutArray({ array }: Props) {
       className={cn(
         'shadow-md dark:shadow-none',
         'flex flex-col',
-        array.content.find((c) => c.type === 'unhinted') &&
-          'sm:min-h-0',
+        array.content.find((c) => c.type === 'unhinted') && 'sm:min-h-0',
         array.grow && 'h-full',
         'layout-array-group'
       )}
@@ -53,7 +55,7 @@ export function LayoutArray({ array }: Props) {
           : undefined,
       }}
     >
-      {array.header && <Header>{array.header}</Header>}
+      {array.header && <Header color={array.color}>{array.header}</Header>}
       <div
         className={cn(
           'flex flex-col',

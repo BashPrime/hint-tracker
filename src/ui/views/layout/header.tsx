@@ -3,9 +3,10 @@ import { ReactNode } from 'react';
 
 type Props = {
   children?: ReactNode;
+  color?: string;
 };
 
-export function Header({ children }: Props) {
+export function Header({ children, color }: Props) {
   return (
     <p
       className={cn(
@@ -13,6 +14,8 @@ export function Header({ children }: Props) {
         'px-2 py-1',
         'text-base font-bold uppercase select-none'
       )}
+      style={{ color: color }}
+
       data-name="header"
     >
       {children}
