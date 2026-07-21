@@ -1,6 +1,15 @@
 import {
+  LayoutArraySchema,
+  LayoutGridSchema,
+  LayoutGroupSchema,
+  LayoutHintSchema,
+  LayoutUnhintedItemsSchema,
+  UnprocessedLayoutRootSchema,
+} from 'src/shared/types/layout.types';
+import {
   FeatureSchema,
   ItemSchema,
+  LocationParentSchema,
   LocationSchema,
   PackTrackerJsonSchema,
 } from 'src/shared/types/pack.types';
@@ -13,5 +22,12 @@ function printSchema(title: string, schema: z.ZodType) {
 
 printSchema('tracker.json', PackTrackerJsonSchema);
 printSchema('item', ItemSchema);
+printSchema('location parent', LocationParentSchema);
 printSchema('location', LocationSchema);
 printSchema('feature', FeatureSchema);
+printSchema('layout root', UnprocessedLayoutRootSchema);
+printSchema('layout group', LayoutGroupSchema);
+printSchema('layout array', LayoutArraySchema);
+printSchema('layout grid', LayoutGridSchema);
+printSchema('layout unhinted items', LayoutUnhintedItemsSchema);
+printSchema('layout hint', LayoutHintSchema);

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "color": { "type": "string" },
+    "borderColor": { "type": "string" },
+    "grow": { "type": "boolean" },
+    "gap": { "type": "number" },
+    "comboboxOptions": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "items",
+              "locations",
+              "regions",
+              "features:item",
+              "features:location"
+            ]
+          }
+        },
+        "location": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "items",
+              "locations",
+              "regions",
+              "features:item",
+              "features:location"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": { "type": "string", "const": "hint" },
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "image": { "type": "string" },
+    "hintType": {
+      "type": "string",
+      "enum": ["item", "location", "itemAndLocation"]
+    }
+  },
+  "required": ["type", "name", "code", "hintType"],
+  "additionalProperties": false
+}

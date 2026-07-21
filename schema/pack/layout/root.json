@@ -2,20 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "name": { "type": "string" },
-    "children": {
+    "type": { "type": "string", "const": "root" },
+    "content": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "features": { "type": "array", "items": { "type": "string" } }
+          "key": { "type": "string" },
+          "type": { "type": "string", "const": "pointer" }
         },
-        "required": ["name", "features"],
+        "required": ["key", "type"],
         "additionalProperties": false
       }
     }
   },
-  "required": ["name", "children"],
+  "required": ["type", "content"],
   "additionalProperties": false
 }
