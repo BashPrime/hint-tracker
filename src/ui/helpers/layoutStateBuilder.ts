@@ -115,6 +115,7 @@ function processUnhinted(unhinted: LayoutUnhintedItems) {
 
 function buildInvalidObject(err: z.ZodError) {
   return InvalidStateObjectSchema.parse({
+    id: uuidv4(),
     type: 'invalid',
     err,
   });
