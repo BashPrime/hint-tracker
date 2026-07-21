@@ -20,7 +20,7 @@ export const IPC_IDS = {
   resetSize: 'reset-size',
   resetSizeResponse: 'reset-size-response',
   trackerHome: 'tracker-home',
-  setExportTrackerState: 'set-export-tracker-state',
+  setTrackerMenuItems: 'set-tracker-menu-items',
   exportTrackerState: 'export-tracker-state',
   exportTrackerStateResponse: 'export-tracker-state-response',
   importTrackerState: 'import-tracker-state',

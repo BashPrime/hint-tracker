@@ -32,8 +32,8 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
 
     return () => ipcRenderer.removeListener('tracker-home', subscription);
   },
-  setExportTrackerState: (enabled: boolean) =>
-    ipcRenderer.invoke('set-export-tracker-state', enabled),
+  setTrackerMenuItems: (enabled: boolean) =>
+    ipcRenderer.invoke('set-tracker-menu-items', enabled),
   exportTrackerState: (callback: () => void) => {
     const subscription = (_event: any) => callback();
     ipcRenderer.on('export-tracker-state', subscription);

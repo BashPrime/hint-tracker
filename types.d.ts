@@ -10,7 +10,7 @@ interface Window {
     resetSize: (callback: () => void) => () => void;
     resetSizeResponse: (packId: string | null) => void;
     trackerHome: (callback: () => void) => () => void;
-    setExportTrackerState: (enabled: boolean) => void;
+    setTrackerMenuItems: (enabled: boolean) => void;
     exportTrackerState: (callback: () => void) => () => void;
     importTrackerState: (callback: (state: object) => void) => () => void;
     exportTrackerStateResponse: (state: object, packId: string | null) => void;

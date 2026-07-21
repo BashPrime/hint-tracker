@@ -100,7 +100,7 @@ export function runIpcHandlers() {
     resetWindowSize(packId);
   });
 
-  ipcMain.handle(IPC_IDS.setExportTrackerState, (_, enabled: boolean) => {
+  ipcMain.handle(IPC_IDS.setTrackerMenuItems, (_, enabled: boolean) => {
     const exportMenuItem = menu.getMenuItemById(MENU_IDS.file.exportState);
     const resetTrackerMenuItem = menu.getMenuItemById(
       MENU_IDS.file.resetTracker
