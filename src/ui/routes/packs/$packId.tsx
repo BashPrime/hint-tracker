@@ -72,6 +72,7 @@ export const Route = createFileRoute('/packs/$packId')({
   },
 });
 
+// oxlint-disable-next-line react/only-export-components
 function PackLayoutRoot() {
   // !STATE
   const layout = useAtomValue(layoutState);

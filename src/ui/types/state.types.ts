@@ -93,6 +93,7 @@ export const LayoutStateRootSchema = z.array(LayoutStateObjectSchema);
 export type LayoutStateRoot = z.infer<typeof LayoutStateRootSchema>;
 
 export const InvalidStateObjectSchema = z.object({
+  id: z.uuidv4(),
   type: z.literal('invalid'),
   err: z.instanceof(z.ZodError),
 });

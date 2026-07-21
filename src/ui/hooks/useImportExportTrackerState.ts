@@ -59,5 +59,12 @@ export function useImportExportTrackerState() {
       cleanupExport();
       cleanupImport();
     };
-  }, [trackerState]);
+  }, [
+    trackerState,
+    navigate,
+    setPausedAutosave,
+    setStateToLoad,
+    setImportTrackerState,
+    pack,
+  ]);
 }

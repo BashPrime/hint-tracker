@@ -127,7 +127,9 @@ export function UnhintedItems({ unhinted }: Props) {
         <Button
           onClick={addHint}
           variant="outline"
-          className={cn('mb-2 cursor-pointer place-self-center border-zinc-500 dark:border-input')}
+          className={cn(
+            'dark:border-input mb-2 cursor-pointer place-self-center border-zinc-500'
+          )}
         >
           <Plus /> Add new hint
         </Button>

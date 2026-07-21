@@ -3,7 +3,7 @@ import {
   trackerHintsAtom,
   unhintedHintsState,
 } from '@/states/App.states';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
 import { useEffect } from 'react';
 
 export function useResetTracker() {
@@ -12,24 +12,22 @@ export function useResetTracker() {
   const setUnhintedHints = useSetAtom(unhintedHintsState);
   const setPauseAutosave = useSetAtom(pauseAutosaveState);
 
-  const resettableHints = hints
-    ? hints.map((hint) => ({
-        ...hint,
-        setItem: hint.item ? useSetAtom(hint.item) : null,
-        setLocation: hint.location ? useSetAtom(hint.location) : null,
-        setChecked: useSetAtom(hint.checked),
-      }))
-    : null;
+  // !HOOK
+  const store = useStore();
 
   useEffect(() => {
     // !IPC
     const cleanup = window.electronApi.resetTracker(() => {
       setPauseAutosave(true);
-      if (resettableHints) {
-        for (const hint of resettableHints) {
-          hint.setItem?.('');
-          hint.setLocation?.('');
-          hint.setChecked(false);
+      if (hints) {
+        for (const hint of hints) {
+          if (hint.item) {
+            store.set(hint.item, '');
+          }
+          if (hint.location) {
+            store.set(hint.location, '');
+          }
+          store.set(hint.checked, false);
         }
       }
       setUnhintedHints([]);
@@ -40,5 +38,5 @@ export function useResetTracker() {
     return () => {
       cleanup();
     };
-  }, []);
+  }, [setPauseAutosave, store, hints, setUnhintedHints]);
 }

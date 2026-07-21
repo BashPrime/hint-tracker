@@ -71,7 +71,10 @@ export function getPackTrackerJson(filePath: string): BasicPack | null {
   });
 
   if (!parsed.success) {
-    console.error('getPackTrackerJson(): tracker.json failed validation:', parsed.error)
+    console.error(
+      'getPackTrackerJson(): tracker.json failed validation:',
+      parsed.error
+    );
     return null;
   }
 

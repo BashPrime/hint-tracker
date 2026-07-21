@@ -22,5 +22,5 @@ export function useAutosaveTracker() {
     }
 
     saveTracker();
-  }, [trackerState, paused]);
+  }, [trackerState, paused, pack]);
 }
