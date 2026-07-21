@@ -117,7 +117,9 @@ export function UnhintedItems({ unhinted }: Props) {
           : undefined,
       }}
     >
-      {unhinted.header && <Header>{unhinted.header}</Header>}
+      {unhinted.header && (
+        <Header color={unhinted.color}>{unhinted.header}</Header>
+      )}
       <div className="flex min-h-0 flex-col gap-2" data-name="uh-body">
         <div className="overflow-y-auto" data-name="uh-hints">
           {parsedHints.map((hint) => (
