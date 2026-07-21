@@ -31,6 +31,7 @@ export const HintWithStateSchema = LayoutStateObjectSchema.omit({
   content: true,
   header: true,
   grow: true,
+  gap: true,
 }).extend({
   type: z.literal('hint'),
   name: z.string(),
@@ -69,6 +70,7 @@ export const LayoutStateUnhintedItemsSchema = LayoutStateObjectSchema.omit({
   item: true,
   location: true,
   checked: true,
+  gap: true,
   grow: true,
 }).extend({
   type: z.literal('unhinted'),

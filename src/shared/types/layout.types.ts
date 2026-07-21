@@ -43,6 +43,8 @@ export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 export const LayoutHintSchema = LayoutObjectSchema.omit({
   content: true,
   header: true,
+  grow: true,
+  gap: true,
 }).extend({
   type: z.literal('hint'),
   name: z.string(),
@@ -57,6 +59,7 @@ export type LayoutHint = z.infer<typeof LayoutHintSchema>;
 export const LayoutUnhintedItemsSchema = LayoutObjectSchema.omit({
   content: true,
   grow: true,
+  gap: true,
 }).extend({
   type: z.literal('unhinted'),
 });
