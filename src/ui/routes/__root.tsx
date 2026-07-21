@@ -4,27 +4,10 @@ import { useResetSize } from '@/hooks/useResetSize';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { useTrackerHome } from '@/hooks/useTrackerHome';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { DevTools } from 'jotai-devtools';
-import 'jotai-devtools/styles.css';
-import css from 'jotai-devtools/styles.css?inline';
+import { JotaiDevTools, RouterDevTools } from './-components/dev-tools';
 import './root.css';
 
-function RouterDevTools() {
-  return process.env.NODE_ENV !== 'production' ? (
-    <TanStackRouterDevtools position="bottom-left" />
-  ) : null;
-}
-
-function JotaiDevTools() {
-  return process.env.NODE_ENV !== 'production' ? (
-    <>
-      <style>{css}</style>
-      <DevTools position="bottom-right" />
-    </>
-  ) : null;
-}
-
+// oxlint-disable-next-line react/only-export-components
 function RootLayout() {
   // !HOOKS
   useTrackerHome();
