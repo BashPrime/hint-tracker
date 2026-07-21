@@ -23,12 +23,12 @@ export function GameCover({ name, image, className }: Props) {
           className={cn(
             'flex items-center justify-center',
             'aspect-2/3',
-            'bg-slate-800 dark:bg-slate-700',
+            'bg-zinc-800 dark:bg-zinc-700',
             className
           )}
           data-name="game-without-cover"
         >
-          <CircleQuestionMark className="h-auto w-3/5 text-neutral-50" />
+          <CircleQuestionMark className="h-3/4 w-auto max-w-3/4 text-zinc-50" />
         </div>
       )}
     </>
