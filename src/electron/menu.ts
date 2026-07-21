@@ -103,7 +103,7 @@ const template: MenuItemConstructorOptions[] = [
       },
       {
         id: MENU_IDS.toggles.resetSizeOnPackOpen,
-        label: 'Reset Size when Opening Tracker',
+        label: 'Reset Size when Opening Pack',
         type: 'checkbox',
         checked: false,
       },
