@@ -47,10 +47,10 @@ jobs:
       - name: 'Upload artifacts'
         uses: actions/upload-artifact@v7
         with:
-          name: bashprime-hint-tracker-${{ matrix.dist }}
+          name: BashPrime Hint Tracker-${{ matrix.dist }}
           if-no-files-found: error
           path: |
-            dist/bashprime-hint-tracker*.msi
-            dist/bashprime-hint-tracker*.exe
-            dist/bashprime-hint-tracker*.dmg
-            dist/bashprime-hint-tracker*.AppImage
+            dist/BashPrime Hint Tracker*.msi
+            dist/BashPrime Hint Tracker*.exe
+            dist/BashPrime Hint Tracker*.dmg
+            dist/BashPrime Hint Tracker*.AppImage
