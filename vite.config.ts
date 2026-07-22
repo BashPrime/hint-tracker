@@ -1,6 +1,9 @@
+import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
+import jotaiDebugLabel from 'jotai-babel/plugin-debug-label';
+import jotaiReactRefresh from 'jotai-babel/plugin-react-refresh';
 import path from 'path';
 import { defineConfig } from 'vite';
 
@@ -13,10 +16,9 @@ export default defineConfig({
       routesDirectory: './src/ui/routes',
       generatedRouteTree: './src/ui/routeTree.gen.ts',
     }),
-    react({
-      babel: {
-        presets: ['jotai-babel/preset'],
-      },
+    react(),
+    babel({
+      plugins: [jotaiDebugLabel, jotaiReactRefresh],
     }),
     tailwindcss(),
   ],
