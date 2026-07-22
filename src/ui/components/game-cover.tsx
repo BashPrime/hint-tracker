@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { CircleQuestionMark } from 'lucide-react';
-import { Image } from 'src/shared/types/image.types';
+import { Image } from '../../shared/types/image.types';
 
 type Props = {
   name: string;

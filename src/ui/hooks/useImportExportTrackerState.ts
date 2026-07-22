@@ -8,7 +8,7 @@ import {
 import { useNavigate } from '@tanstack/react-router';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
-import { TrackerSaveState } from 'src/shared/types/config.types';
+import { TrackerSaveState } from '../../shared/types/config.types';
 
 export function useImportExportTrackerState() {
   // !STATE

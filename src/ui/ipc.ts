@@ -1,9 +1,9 @@
 import { comboboxOptionsDbState } from '@/states/Combobox.states';
 import { getDefaultStore } from 'jotai';
-import { TrackerSaveState } from 'src/shared/types/config.types';
-import { Image } from 'src/shared/types/image.types';
-import { BasicPack, PackDetails } from 'src/shared/types/pack.types';
 import z from 'zod';
+import { TrackerSaveState } from '../shared/types/config.types';
+import { Image } from '../shared/types/image.types';
+import { BasicPack, PackDetails } from '../shared/types/pack.types';
 import { buildComboboxOptionsDatabase } from './helpers/comboboxOptions';
 import { activePackState, packsState } from './states/App.states';
 

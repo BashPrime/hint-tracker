@@ -7,7 +7,7 @@ import {
   Item,
   LocationParent,
   PackDetails,
-} from 'src/shared/types/pack.types';
+} from '../../shared/types/pack.types';
 import { capitalizeFirstLetter } from './string';
 
 function parseItems(items: Item[]): ComboboxOptionsDbGroupRecord {

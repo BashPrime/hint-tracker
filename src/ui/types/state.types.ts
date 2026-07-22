@@ -1,6 +1,6 @@
 import { PrimitiveAtom } from 'jotai';
-import { ComboboxOptionKeysSchema } from 'src/shared/types/layout.types';
 import z from 'zod';
+import { ComboboxOptionKeysSchema } from '../../shared/types/layout.types';
 
 const HintStrAtomSchema: z.ZodType<PrimitiveAtom<string>> = z.any();
 const HintBoolAtomSchema: z.ZodType<PrimitiveAtom<boolean>> = z.any();
