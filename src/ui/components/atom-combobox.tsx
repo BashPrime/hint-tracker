@@ -46,7 +46,7 @@ export function AtomCombobox({ atom, options, placeholder, emptyStr }: Props) {
         className="mr-4 font-semibold"
       />
       <ComboboxContent>
-        <ComboboxEmpty>{emptyStr ? emptyStr : 'No items found.'}</ComboboxEmpty>
+        <ComboboxEmpty>{emptyStr ? emptyStr : 'No entries found.'}</ComboboxEmpty>
         <ComboboxList>
           {(option) => (
             <ComboboxGroup key={option.group} items={option.items}>
