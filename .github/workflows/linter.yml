@@ -25,5 +25,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run eslint
+      - name: Run linter
         run: pnpm lint
