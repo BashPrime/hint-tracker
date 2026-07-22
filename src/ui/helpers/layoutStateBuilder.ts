@@ -12,7 +12,9 @@ import {
   UnhintedItemHintSchema,
 } from '@/types/state.types';
 import { atom } from 'jotai';
-import { TrackerSaveState } from 'src/shared/types/config.types';
+import { v4 as uuidv4 } from 'uuid';
+import z from 'zod';
+import { TrackerSaveState } from '../../shared/types/config.types';
 import {
   ComboboxOptionKeys,
   LayoutArray,
@@ -25,9 +27,7 @@ import {
   LayoutRoot,
   LayoutUnhintedItems,
   LayoutUnhintedItemsSchema,
-} from 'src/shared/types/layout.types';
-import { v4 as uuidv4 } from 'uuid';
-import z from 'zod';
+} from '../../shared/types/layout.types';
 
 function buildHintState(
   hint: LayoutHint,

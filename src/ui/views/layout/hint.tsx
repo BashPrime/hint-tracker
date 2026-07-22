@@ -8,7 +8,7 @@ import { HintWithState } from '@/types/state.types';
 import { useAtom, useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Image } from 'src/shared/types/image.types';
+import { Image } from '../../../shared/types/image.types';
 
 type HintCheckedProps = {
   checked: boolean;

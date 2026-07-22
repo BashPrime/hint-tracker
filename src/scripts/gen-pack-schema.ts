@@ -1,18 +1,18 @@
+import z from 'zod';
 import {
   LayoutArraySchema,
   LayoutGridSchema,
   LayoutHintSchema,
   LayoutUnhintedItemsSchema,
   UnprocessedLayoutRootSchema,
-} from 'src/shared/types/layout.types';
+} from '../shared/types/layout.types';
 import {
   FeatureSchema,
   ItemSchema,
   LocationParentSchema,
   LocationSchema,
   PackTrackerJsonSchema,
-} from 'src/shared/types/pack.types';
-import z from 'zod';
+} from '../shared/types/pack.types';
 
 function printSchema(title: string, schema: z.ZodType) {
   console.log('-----', title.toUpperCase(), '-----');

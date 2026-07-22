@@ -22,8 +22,8 @@ import {
 import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
-import { TrackerSaveState } from 'src/shared/types/config.types';
 import { useMediaQuery } from 'usehooks-ts';
+import { TrackerSaveState } from '../../../shared/types/config.types';
 
 export const Route = createFileRoute('/packs/$packId')({
   component: PackLayoutRoot,
