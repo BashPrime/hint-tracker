@@ -5,6 +5,7 @@
   "author": "BashPrime",
   "version": "4.0.0",
   "type": "module",
+  "license": "MIT",
   "main": "dist-electron/electron/main.js",
   "scripts": {
     "dev": "npm-run-all --parallel dev:react dev:electron",
