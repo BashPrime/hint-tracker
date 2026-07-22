@@ -31,6 +31,7 @@
     "<array of JSON file path strings describing your layout data. See Layout for more info>"
   ],
   "defaultWindowSize": {
+    // this sets the application window size when `File > Reset Size` is clicked.
     "width": "<number, pixel width>",
     "height": "<number, pixel height>"
   }
