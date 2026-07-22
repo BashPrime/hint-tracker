@@ -18,14 +18,18 @@
   "author": "<String. The person or people that made the pack>",
   "description": "<String. Describes what's in the pack>",
   "cover": "<String. Filepath for the pack cover image. See Images for more details>",
-  "items": ["<array of JSON file path strings describing your item data. See Items for more info>"],
+  "items": [
+    "<array of JSON file path strings describing your item data. See Items for more info>"
+  ],
   "locations": [
     "<array of JSON file path strings describing your location data. See Locations for more info>"
   ],
   "features": [
     "<array of JSON file path strings describing your item and location features data. See Features for more info>"
   ],
-  "layout": ["<array of JSON file path strings describing your layout data. See Layout for more info>"],
+  "layout": [
+    "<array of JSON file path strings describing your layout data. See Layout for more info>"
+  ],
   "defaultWindowSize": {
     "width": "<number, pixel width>",
     "height": "<number, pixel height>"
