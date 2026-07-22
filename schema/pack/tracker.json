@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": { "type": "number", "const": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+    },
+    "id": { "type": "string" },
+    "author": { "type": "string" },
+    "name": { "type": "string" },
+    "gameName": { "type": "string" },
+    "description": { "type": "string" },
+    "cover": { "type": "string" },
+    "items": { "type": "array", "items": { "type": "string" } },
+    "locations": { "type": "array", "items": { "type": "string" } },
+    "features": { "type": "array", "items": { "type": "string" } },
+    "layout": { "type": "array", "items": { "type": "string" } },
+    "defaultWindowSize": {
+      "type": "object",
+      "properties": {
+        "width": { "type": "number" },
+        "height": { "type": "number" }
+      },
+      "required": ["width", "height"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "version",
+    "id",
+    "author",
+    "name",
+    "gameName",
+    "items",
+    "locations",
+    "features",
+    "layout"
+  ],
+  "additionalProperties": false
+}

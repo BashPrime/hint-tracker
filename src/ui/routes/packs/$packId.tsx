@@ -27,7 +27,7 @@ import { useMediaQuery } from 'usehooks-ts';
 
 export const Route = createFileRoute('/packs/$packId')({
   component: PackLayoutRoot,
-  pendingComponent: () => <LoadingSpinner text="Loading Tracker..." />,
+  pendingComponent: () => <LoadingSpinner text="Loading Pack..." />,
   pendingMs: 0,
   pendingMinMs: 300,
   gcTime: 0,

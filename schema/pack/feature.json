@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "code": { "type": "string" },
+    "type": { "type": "string", "enum": ["feature:item", "feature:location"] }
+  },
+  "required": ["name", "code", "type"],
+  "additionalProperties": false
+}

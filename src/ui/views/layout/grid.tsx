@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { LayoutStateGrid } from '@/types/state.types';
 import './grid.css';
+import { Header } from './header';
 import { LayoutParser } from './parser';
 
 type RowProps = {
@@ -38,8 +39,12 @@ export function LayoutGrid({ grid }: Props) {
       key={grid.id}
       style={{
         gap: grid.gap ? `calc(var(--spacing) * ${grid.gap})` : undefined,
+        borderLeft: grid.borderColor
+          ? `2px solid ${grid.borderColor}`
+          : undefined,
       }}
     >
+      {grid.header && <Header color={grid.color}>{grid.header}</Header>}
       {grid.content.map((row, rowIdx) => (
         <LayoutRow row={row} key={`${grid.id}-${rowIdx}`} />
       ))}

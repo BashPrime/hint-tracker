@@ -28,12 +28,6 @@ export const LayoutObjectSchema = z.object({
 });
 export type LayoutObject = z.infer<typeof LayoutObjectSchema>;
 
-export const LayoutGroupSchema = LayoutObjectSchema.extend({
-  type: z.literal('group'),
-  header: z.string(),
-});
-export type LayoutGroup = z.infer<typeof LayoutGroupSchema>;
-
 export const LayoutGridSchema = LayoutObjectSchema.extend({
   type: z.literal('grid'),
   // !WHY having a hard time getting the union types to work, so using any for now
@@ -49,6 +43,8 @@ export type LayoutArray = z.infer<typeof LayoutArraySchema>;
 export const LayoutHintSchema = LayoutObjectSchema.omit({
   content: true,
   header: true,
+  grow: true,
+  gap: true,
 }).extend({
   type: z.literal('hint'),
   name: z.string(),
@@ -63,6 +59,7 @@ export type LayoutHint = z.infer<typeof LayoutHintSchema>;
 export const LayoutUnhintedItemsSchema = LayoutObjectSchema.omit({
   content: true,
   grow: true,
+  gap: true,
 }).extend({
   type: z.literal('unhinted'),
 });

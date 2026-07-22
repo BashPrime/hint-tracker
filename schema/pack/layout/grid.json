@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "header": { "type": "string" },
+    "color": { "type": "string" },
+    "borderColor": { "type": "string" },
+    "grow": { "type": "boolean" },
+    "gap": { "type": "number" },
+    "comboboxOptions": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "items",
+              "locations",
+              "regions",
+              "features:item",
+              "features:location"
+            ]
+          }
+        },
+        "location": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "items",
+              "locations",
+              "regions",
+              "features:item",
+              "features:location"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": { "type": "string", "const": "grid" },
+    "content": { "type": "array", "items": { "type": "array", "items": {} } }
+  },
+  "required": ["type", "content"],
+  "additionalProperties": false
+}

@@ -26,22 +26,12 @@ export const LayoutStateObjectSchema = z.object({
 });
 export type LayoutStateObject = z.infer<typeof LayoutStateObjectSchema>;
 
-export const LayoutStateGroupShema = LayoutStateObjectSchema.omit({
-  name: true,
-  code: true,
-  item: true,
-  location: true,
-  checked: true,
-}).extend({
-  type: z.literal('group'),
-});
-export type LayoutStateGroup = z.infer<typeof LayoutStateGroupShema>;
-
 export const HintWithStateSchema = LayoutStateObjectSchema.omit({
   id: true,
   content: true,
   header: true,
   grow: true,
+  gap: true,
 }).extend({
   type: z.literal('hint'),
   name: z.string(),
@@ -80,6 +70,7 @@ export const LayoutStateUnhintedItemsSchema = LayoutStateObjectSchema.omit({
   item: true,
   location: true,
   checked: true,
+  gap: true,
   grow: true,
 }).extend({
   type: z.literal('unhinted'),

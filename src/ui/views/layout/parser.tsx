@@ -3,13 +3,11 @@ import {
   InvalidStateObject,
   LayoutStateArray,
   LayoutStateGrid,
-  LayoutStateGroup,
   LayoutStateObject,
   LayoutStateUnhintedItems,
 } from '@/types/state.types';
 import { LayoutArray } from './array';
 import { LayoutGrid } from './grid';
-import { LayoutGroup } from './group';
 import { LayoutHint } from './hint';
 import { InvalidObject } from './invalid-object';
 import { UnhintedItems } from './unhinted-items';
@@ -22,7 +20,7 @@ export function LayoutParser({ elem }: Props) {
   return (
     <>
       {elem.type === 'group' && (
-        <LayoutGroup group={elem as LayoutStateGroup} />
+        <LayoutArray array={elem as LayoutStateArray} />
       )}
       {elem.type === 'array' && (
         <LayoutArray array={elem as LayoutStateArray} />
