@@ -10,7 +10,7 @@
     "executableName": "bashprime-hint-tracker",
     "syncDesktopName": false,
     "target": "AppImage",
-    "icon": "assets/icon.png",
+    "icon": "assets/icons/",
     "category": "Game"
   },
   "win": {
