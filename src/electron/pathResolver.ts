@@ -13,7 +13,6 @@ export function getPreloadPath() {
 export function getIconPath() {
   return path.join(
     app.getAppPath(),
-    isDev() ? '.' : '..',
     'assets',
     'icon.png'
   )
