@@ -30,7 +30,7 @@ export function PackSelection() {
   const sortedPacks = packs.sort((a, b) => a.name.localeCompare(b.name))
 
   return (
-    <div className="flex flex-col items-center" data-name="pack-selection">
+    <div className="flex flex-col items-center select-none" data-name="pack-selection">
       <div
         className="flex w-full flex-col items-center gap-1"
         data-name="selection-header"
