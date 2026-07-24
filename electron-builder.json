@@ -4,7 +4,7 @@
   "extraResources": ["dist-electron/electron/preload.cjs"],
   "mac": {
     "target": "dmg",
-    "icon": "assets/icon.png"
+    "icon": "assets/icon.icns"
   },
   "linux": {
     "target": "AppImage",
