@@ -16,7 +16,7 @@ export function getIconPath() {
   return path.join(app.getAppPath(), 'assets', 'icon.png');
 }
 
-export function getAboutIconPath() {
+export function getAboutPanelIconPath() {
   return path.join(
     app.getAppPath(),
     'assets',
