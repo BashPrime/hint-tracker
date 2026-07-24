@@ -13,7 +13,7 @@ app.on('ready', () => {
     copyright:
       `Copyright (c) ${new Date().getFullYear()} BashPrime` +
       '\n\nThis software is free for personal and commercial use under the MIT License.',
-    iconPath: './icon.png',
+    iconPath: path.join('./assets/icon.png'),
   });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
