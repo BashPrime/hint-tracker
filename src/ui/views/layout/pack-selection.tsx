@@ -27,6 +27,8 @@ export function PackSelection() {
     );
   }
 
+  const sortedPacks = packs.sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <div className="flex flex-col items-center" data-name="pack-selection">
       <div
@@ -40,7 +42,7 @@ export function PackSelection() {
         <div className="h-1.5 w-3/5 min-w-72 bg-[#ab4d1b]" />
       </div>
       <div className={cn('flex flex-wrap gap-6 p-4')}>
-        {packs.map((pack, idx) => (
+        {sortedPacks.map((pack, idx) => (
           <Link
             to="/packs/$packId"
             params={{ packId: pack.id }}
