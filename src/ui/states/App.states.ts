@@ -6,7 +6,10 @@ import {
   UnhintedItemHint,
 } from '@/types/state.types';
 import { atom } from 'jotai';
-import { TrackerSaveState, TrackerState } from '../../shared/types/config.types';
+import {
+  TrackerSaveState,
+  TrackerState,
+} from '../../shared/types/config.types';
 import { BasicPack, PackDetails } from '../../shared/types/pack.types';
 
 export const packsState = atom<BasicPack[] | null>(null);

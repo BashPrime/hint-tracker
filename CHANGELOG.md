@@ -10,10 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The tracker has been completely overhauled and now functions as a universal tracker!
   - The previously-hardcoded trackers have been completely replaced by a new pack system, inspired by [PopTracker](https://github.com/black-sliver/PopTracker). Tracker packs are bundled .zip files that are installed and read by the application, and then parsed to generate the resulting layout and hint structure.
   - If you want to build your own Pack, please read `docs/Pack.md`!
-- Autosaving is now done for every installed tracker pack (and every installed *version* of that pack), meaning that your progress in Pack A won't be lost if you switch to Pack B.
+- Autosaving is now done for every installed tracker pack (and every installed _version_ of that pack), meaning that your progress in Pack A won't be lost if you switch to Pack B.
 - Light theme has been added.
   - By default, the application will use the system theme, but the light or dark themes can be manually set if desired.
-
 
 ## [3.0.0] - 2025-04-07
 
@@ -34,9 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The tracker configuration schemas have been significantly overhauled, so the structure of any tracker .json files opened by the user are expected to more strictly conform to what's defined in the app.
 
 ### Metroid Prime 2
+
 - Location featural hints have been updated to match what's in Randovania v9.0.0.
 - The keybearer and translator hints are now sorted in alphabetical room order (per region).
-- Related to the above tracker config note, almost all of the Prime 2-related data structures have been overhauled. I *think* this results in a performance increase based on how I'm handling the tracker state, but will need confirmation through testing
+- Related to the above tracker config note, almost all of the Prime 2-related data structures have been overhauled. I _think_ this results in a performance increase based on how I'm handling the tracker state, but will need confirmation through testing
 
 ## [1.1.0] - 2025-02-13
 
@@ -67,9 +67,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This release contains the following changes:
 
-* "Joke Hint" can now be selected in Translator Hints.
-* Fixed [#5](https://github.com/BashPrime/prime-hint-tracker/issues/5), [#6](https://github.com/BashPrime/prime-hint-tracker/issues/6), and [#7](https://github.com/BashPrime/prime-hint-tracker/issues/7)
-* Some small layout tweaks for the boss info container
+- "Joke Hint" can now be selected in Translator Hints.
+- Fixed [#5](https://github.com/BashPrime/prime-hint-tracker/issues/5), [#6](https://github.com/BashPrime/prime-hint-tracker/issues/6), and [#7](https://github.com/BashPrime/prime-hint-tracker/issues/7)
+- Some small layout tweaks for the boss info container
 
 ## [0.1.0] - 2025-01-02
 
