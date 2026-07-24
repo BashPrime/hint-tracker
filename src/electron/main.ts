@@ -17,7 +17,7 @@ app.on('ready', () => {
     copyright:
       `Copyright (c) ${new Date().getFullYear()} BashPrime` +
       '\n\nThis software is free for personal and commercial use under the MIT License.',
-    iconPath: path.join('./assets/icon.png'),
+    iconPath: path.join(app.getAppPath(), 'assets/icon.png'),
   });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
@@ -31,6 +31,11 @@ app.on('ready', () => {
   // if (config) {
   //   setToggles(config.toggles, mainWindow);
   // }
+});
+
+// Handle quit
+app.on('window-all-closed', () => {
+  app.quit();
 });
 
 // Handlers
