@@ -2,15 +2,17 @@
   "appId": "com.bashprime.bashprime-hint-tracker",
   "files": ["dist-electron", "dist-react"],
   "extraResources": ["dist-electron/electron/preload.cjs"],
-  "icon": "./icon.png",
   "mac": {
-    "target": "dmg"
+    "target": "dmg",
+    "icon": "./icon.png"
   },
   "linux": {
     "target": "AppImage",
+    "icon": "./icon.png",
     "category": "Game"
   },
   "win": {
+    "icon": "./icon.png",
     "target": ["nsis", "portable"]
   }
 }
