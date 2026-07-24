@@ -5,6 +5,10 @@ import { runIpcHandlers } from './ipc.js';
 import { isDev, isWayland } from './util.js';
 import { createMainWindow } from './window.js';
 
+if (isWayland()) {
+  app.setDesktopName('com.bashprime.hint-tracker');
+}
+
 app.on('ready', () => {
   app.setAboutPanelOptions({
     applicationName: 'BashPrime Hint Tracker',
@@ -17,10 +21,6 @@ app.on('ready', () => {
   });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
-
-  if (isWayland()) {
-    app.setDesktopName('com.bashprime.hint-tracker');
-  }
 
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173');
