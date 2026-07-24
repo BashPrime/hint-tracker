@@ -2,7 +2,7 @@ import { app } from 'electron';
 import path from 'path';
 import { handleCreateUserDataDirs, readConfigFile } from './config.js';
 import { runIpcHandlers } from './ipc.js';
-import { isDev } from './util.js';
+import { isDev, isWayland } from './util.js';
 import { createMainWindow } from './window.js';
 
 app.on('ready', () => {
@@ -17,6 +17,10 @@ app.on('ready', () => {
   });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
+
+  if (isWayland()) {
+    app.setDesktopName('com.bashprime.hint-tracker');
+  }
 
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173');
