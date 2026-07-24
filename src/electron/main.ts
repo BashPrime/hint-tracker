@@ -2,6 +2,7 @@ import { app } from 'electron';
 import path from 'path';
 import { handleCreateUserDataDirs, readConfigFile } from './config.js';
 import { runIpcHandlers } from './ipc.js';
+import { getIconPath } from './pathResolver.js';
 import { isDev, isWayland } from './util.js';
 import { createMainWindow } from './window.js';
 
@@ -17,7 +18,7 @@ app.on('ready', () => {
     copyright:
       `Copyright (c) ${new Date().getFullYear()} BashPrime` +
       '\n\nThis software is free for personal and commercial use under the MIT License.',
-    iconPath: path.join(app.getAppPath(), 'assets/icon.png'),
+    iconPath: getIconPath(),
   });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
