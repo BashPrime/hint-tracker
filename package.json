@@ -1,7 +1,6 @@
 {
   "name": "bashprime-hint-tracker",
   "productName": "BashPrime Hint Tracker",
-  "desktopName": "com.bashprime.hint-tracker",
   "private": true,
   "author": "BashPrime",
   "version": "4.0.0",

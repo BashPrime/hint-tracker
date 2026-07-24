@@ -1,5 +1,6 @@
 {
   "appId": "com.bashprime.hint-tracker",
+  "desktopName": "com.bashprime.hint-tracker",
   "files": ["dist-electron", "dist-react"],
   "extraResources": ["dist-electron/electron/preload.cjs"],
   "mac": {
