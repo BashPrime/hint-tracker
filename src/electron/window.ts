@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, nativeTheme } from 'electron';
+import { app, BrowserWindow, Menu, nativeTheme } from 'electron';
 import path from 'path';
 import z from 'zod';
 import { ThemeType } from '../shared/types/base.types.js';
@@ -29,7 +29,7 @@ export function createMainWindow(config: ConfigType | null) {
       devTools: isDev(),
       preload: getPreloadPath(),
     },
-    icon: path.join('./assets/icon.png'),
+    icon: path.join(app.getAppPath(), 'assets/icon.png'),
   });
 
   if (config) {
