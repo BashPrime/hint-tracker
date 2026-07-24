@@ -1,13 +1,14 @@
 {
   "appId": "com.bashprime.hint-tracker",
-  "files": ["dist-electron", "dist-react"],
+  "files": ["dist-electron", "dist-react", "assets"],
   "extraResources": ["dist-electron/electron/preload.cjs"],
   "mac": {
     "target": "dmg",
     "icon": "assets/icon.icns"
   },
   "linux": {
-    "syncDesktopName": true,
+    "executableName": "bashprime-hint-tracker",
+    "syncDesktopName": false,
     "target": "AppImage",
     "icon": "assets/icon.png",
     "category": "Game"
