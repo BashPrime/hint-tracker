@@ -17,10 +17,16 @@ export function getIconPath() {
 }
 
 export function getAboutPanelIconPath() {
-  return path.join(
+  const iconPath = path.join(
     app.getAppPath(),
     'assets',
     'icons',
     process.platform === 'win32' ? '48x48.png' : '64x64.png'
   );
+
+  if (isDev()) {
+    return iconPath;
+  }
+
+  return iconPath.replace('app.asar', 'app.asar.unpacked');
 }

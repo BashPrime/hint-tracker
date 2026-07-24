@@ -1,6 +1,9 @@
 {
   "appId": "com.bashprime.hint-tracker",
   "files": ["dist-electron", "dist-react", "assets"],
+  "asarUnpack": [
+    "assets/icons/*"
+  ],
   "extraResources": ["dist-electron/electron/preload.cjs"],
   "mac": {
     "target": "dmg",
