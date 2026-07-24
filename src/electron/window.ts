@@ -29,7 +29,7 @@ export function createMainWindow(config: ConfigType | null) {
       devTools: isDev(),
       preload: getPreloadPath(),
     },
-    icon: path.join('./icon.png'),
+    icon: path.join('./assets/icon.png'),
   });
 
   if (config) {
