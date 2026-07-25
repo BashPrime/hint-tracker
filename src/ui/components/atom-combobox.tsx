@@ -23,9 +23,22 @@ type Props = {
 export function AtomCombobox({ atom, options, placeholder, emptyStr }: Props) {
   // !STATE
   const [value, setValue] = useAtom(atom);
-  const [inputValue, setInputValue] = useState(value ?? '');
+  const [inputValue, setInputValue] = useState('');
 
   // !HOOK
+  // On init, validate the existing atom value. If invalid, set it to a blank string.
+  useEffect(() => {
+    if (value) {
+      const allOptions = options
+        .map((o) => o.items)
+        .reduce((acc, cur) => [...acc, ...cur], [] as string[]);
+      if (!allOptions.find((option) => option === value)) {
+        setValue('');
+      }
+    }
+  }, []);
+
+  // Sync the value atom with the inputValue state
   useEffect(() => {
     setInputValue(value);
   }, [value]);
