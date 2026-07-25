@@ -1,4 +1,6 @@
-<img src="assets/icons/256x256.png" width="200" />
+<div align="center">
+  <img src="assets/icons/256x256.png" width="200" />
+</div>
 
 # BashPrime Hint Tracker
 
