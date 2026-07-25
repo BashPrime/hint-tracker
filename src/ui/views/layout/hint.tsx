@@ -20,7 +20,7 @@ export function HintChecked({ checked, className }: HintCheckedProps) {
     <Check
       className={cn(
         'text-green-800 dark:text-green-300',
-        'mx-1 my-0.5 h-4 w-4',
+        'mx-1 my-0.5 size-4',
         !checked && 'opacity-0',
         className
       )}
