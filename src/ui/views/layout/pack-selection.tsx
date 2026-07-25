@@ -57,8 +57,8 @@ export function PackSelection() {
               image={pack.cover ?? undefined}
               className={cn(
                 'h-[280px] w-auto',
-                'group-hover:border-bashprime-red group-hover:border-1 group-hover:brightness-125',
-                'dark:group-hover:border-bashprime-yellow',
+                'group-hover:outline-bashprime-red group-hover:outline group-hover:brightness-125',
+                'dark:group-hover:outline-bashprime-yellow',
                 'shadow-foreground group-hover:shadow-md/25'
               )}
             />
