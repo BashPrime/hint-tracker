@@ -9,7 +9,7 @@ import {
   UnhintedItemHint,
 } from '@/types/state.types';
 import { atom, useAtom } from 'jotai';
-import { CircleMinus, Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Header } from './header';
 import { HintChecked } from './hint';
@@ -62,14 +62,20 @@ function Hint({ hint, onDelete }: HintProps) {
             )}
           </div>
         </div>
-        <CircleMinus
-          size={18}
-          className={cn(
-            'fill-white text-red-700 dark:text-red-600',
-            'cursor-pointer'
-          )}
+
+        <Button
+          tabIndex={0}
+          variant="ghost"
+          size="icon"
           onClick={() => onDelete(hint.code)}
-        />
+          className={cn(
+            'cursor-pointer text-red-600 dark:text-red-500',
+            'hover:bg-red-300 dark:hover:bg-red-400 dark:hover:text-black',
+            checked && 'text-red-500'
+          )}
+        >
+          <X className="size-6" />
+        </Button>
       </div>
     </div>
   );

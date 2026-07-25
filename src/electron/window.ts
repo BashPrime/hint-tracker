@@ -1,5 +1,4 @@
-import { app, BrowserWindow, Menu, nativeTheme } from 'electron';
-import path from 'path';
+import { BrowserWindow, Menu, nativeTheme } from 'electron';
 import z from 'zod';
 import { ThemeType } from '../shared/types/base.types.js';
 import { ConfigSchema, ConfigType } from '../shared/types/config.types.js';
@@ -11,7 +10,7 @@ import {
 } from './constants.js';
 import { menu } from './menu.js';
 import { getBasicPack } from './packs.js';
-import { getPreloadPath } from './pathResolver.js';
+import { getIconPath, getPreloadPath } from './pathResolver.js';
 import { getErrorMsg, isDev } from './util.js';
 
 let mainWindow: BrowserWindow | null = null;
@@ -29,7 +28,7 @@ export function createMainWindow(config: ConfigType | null) {
       devTools: isDev(),
       preload: getPreloadPath(),
     },
-    icon: isDev() ? path.join(app.getAppPath(), 'icon.png') : undefined,
+    icon: getIconPath(),
   });
 
   if (config) {

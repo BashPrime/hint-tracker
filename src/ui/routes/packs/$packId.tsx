@@ -20,7 +20,7 @@ import {
   unhintedHintsState,
 } from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { getDefaultStore, useAtomValue } from 'jotai';
 import { useMediaQuery } from 'usehooks-ts';
 import { TrackerSaveState } from '../../../shared/types/config.types';
@@ -44,25 +44,30 @@ export const Route = createFileRoute('/packs/$packId')({
     await fetchPackDetails(params.packId);
     const pack = store.get(activePackState);
 
-    if (pack) {
-      // Load either autosave or imported tracker state
-      const stateToLoad = store.get(trackerStateToLoad);
-      let trackerState: TrackerSaveState | undefined;
-
-      switch (stateToLoad) {
-        case 'autosave':
-          trackerState = await fetchTrackerAutosave(params.packId);
-          break;
-        case 'import':
-          trackerState = store.get(importTrackerState) ?? undefined;
-          break;
-      }
-
-      // Build the tracker state
-      store.set(layoutState, buildLayoutState(pack.layout, trackerState));
-      store.set(unhintedHintsState, buildUnhintedState(trackerState));
-      setExportTrackerStateMenuItem(true);
+    // Most likely an error fetching the pack. Go back home
+    if (!pack) {
+      throw redirect({
+        to: '/',
+      });
     }
+
+    // Load either autosave or imported tracker state
+    const stateToLoad = store.get(trackerStateToLoad);
+    let trackerState: TrackerSaveState | undefined;
+
+    switch (stateToLoad) {
+      case 'autosave':
+        trackerState = await fetchTrackerAutosave(params.packId);
+        break;
+      case 'import':
+        trackerState = store.get(importTrackerState) ?? undefined;
+        break;
+    }
+
+    // Build the tracker state
+    store.set(layoutState, buildLayoutState(pack.layout, trackerState));
+    store.set(unhintedHintsState, buildUnhintedState(trackerState));
+    setExportTrackerStateMenuItem(true);
   },
   onLeave: async () => {
     setExportTrackerStateMenuItem(false);

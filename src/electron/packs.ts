@@ -82,13 +82,18 @@ export function getPackTrackerJson(filePath: string): BasicPack | null {
 }
 
 export function getPackDetails(packId: string) {
-  if (!packs) {
-    getAllPacksInDir();
-  }
+  // Fetch packs state again in case the user does something unintended,
+  // like removing the pack file while the app is running
+  getAllPacksInDir();
 
   const match = packs.find((p) => p.id === packId);
 
   if (!match) {
+    console.error('getPackDetails(): No matching pack for packId', packId);
+    dialog.showErrorBox(
+      'Error Loading Pack',
+      'The application could not find the specified pack.'
+    );
     return null;
   }
 

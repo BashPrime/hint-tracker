@@ -2,8 +2,13 @@ import { app } from 'electron';
 import path from 'path';
 import { handleCreateUserDataDirs, readConfigFile } from './config.js';
 import { runIpcHandlers } from './ipc.js';
-import { isDev } from './util.js';
+import { getAboutPanelIconPath } from './pathResolver.js';
+import { isDev, isWayland } from './util.js';
 import { createMainWindow } from './window.js';
+
+if (isWayland()) {
+  app.setDesktopName('com.bashprime.hint-tracker');
+}
 
 app.on('ready', () => {
   app.setAboutPanelOptions({
@@ -11,9 +16,9 @@ app.on('ready', () => {
     applicationVersion: `v${app.getVersion()}`,
     website: 'https://github.com/bashprime/prime-hint-tracker',
     copyright:
-      `Copyright (c) ${new Date().getFullYear()} BashPrime` +
+      `Copyright (c) 2026 BashPrime` +
       '\n\nThis software is free for personal and commercial use under the MIT License.',
-    iconPath: './icon.png',
+    iconPath: getAboutPanelIconPath(),
   });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
@@ -21,12 +26,15 @@ app.on('ready', () => {
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173');
   } else {
-    mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'));
+    mainWindow.loadFile(
+      path.join(app.getAppPath(), 'dist-react', 'index.html')
+    );
   }
+});
 
-  // if (config) {
-  //   setToggles(config.toggles, mainWindow);
-  // }
+// Handle quit
+app.on('window-all-closed', () => {
+  app.quit();
 });
 
 // Handlers

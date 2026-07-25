@@ -1,16 +1,21 @@
 {
-  "appId": "com.bashprime.bashprime-hint-tracker",
-  "files": ["dist-electron", "dist-react"],
+  "appId": "com.bashprime.hint-tracker",
+  "files": ["dist-electron", "dist-react", "assets"],
+  "asarUnpack": ["assets/icons/*"],
   "extraResources": ["dist-electron/electron/preload.cjs"],
-  "icon": "./icon.png",
   "mac": {
-    "target": "dmg"
+    "target": "dmg",
+    "icon": "assets/icon.icns"
   },
   "linux": {
+    "executableName": "bashprime-hint-tracker",
+    "syncDesktopName": false,
     "target": "AppImage",
+    "icon": "assets/icons/",
     "category": "Game"
   },
   "win": {
+    "icon": "assets/icon.ico",
     "target": ["nsis", "portable"]
   }
 }

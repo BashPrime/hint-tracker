@@ -9,3 +9,16 @@ export function getErrorMsg(err: any) {
 
   return String(err);
 }
+
+export function isWayland() {
+  // Only relevant if on linux
+  if (process.platform !== 'linux') {
+    return false;
+  }
+
+  // If linux, check the env vars
+  return (
+    process.env.XDG_SESSION_TYPE === 'wayland' ||
+    Boolean(process.env.WAYLAND_DISPLAY)
+  );
+}

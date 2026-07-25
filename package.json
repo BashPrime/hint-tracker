@@ -1,10 +1,12 @@
 {
   "name": "bashprime-hint-tracker",
   "productName": "BashPrime Hint Tracker",
+  "desktopName": "com.bashprime.hint-tracker",
   "private": true,
   "author": "BashPrime",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "type": "module",
+  "license": "MIT",
   "main": "dist-electron/electron/main.js",
   "scripts": {
     "dev": "npm-run-all --parallel dev:react dev:electron",
@@ -18,7 +20,10 @@
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
     "dist:mac": "pnpm run transpile:electron && npm run build && electron-builder --mac --arm64",
     "dist:win": "pnpm run transpile:electron && npm run build && electron-builder --win --x64",
-    "dist:linux": "pnpm run transpile:electron && npm run build && electron-builder --linux --x64"
+    "dist:linux": "pnpm run transpile:electron && npm run build && electron-builder --linux --x64",
+    "unpack:win": "pnpm dlx @electron/asar extract ./dist/win-unpacked/resources/app.asar ./dist/app-asar-unpacked",
+    "unpack:mac": "pnpm dlx @electron/asar extract ./dist/mac-unpacked/resources/app.asar ./dist/app-asar-unpacked",
+    "unpack:linux": "pnpm dlx @electron/asar extract ./dist/linux-unpacked/resources/app.asar ./dist/app-asar-unpacked"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

@@ -7,7 +7,7 @@ import { activePackState } from '@/states/App.states';
 import { HintWithState } from '@/types/state.types';
 import { useAtom, useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { Image } from '../../../shared/types/image.types';
 
 type HintCheckedProps = {
@@ -20,7 +20,7 @@ export function HintChecked({ checked, className }: HintCheckedProps) {
     <Check
       className={cn(
         'text-green-800 dark:text-green-300',
-        'mx-1 my-0.5 h-4 w-4',
+        'mx-1 my-0.5 size-4',
         !checked && 'opacity-0',
         className
       )}
@@ -54,12 +54,27 @@ export function LayoutHint({ hint }: Props) {
     fetchHintImage();
   }, [pack, hint]);
 
+  // !FUNCTION
+  function handleSpacebarKeyDown(event: KeyboardEvent<HTMLElement>) {
+    const target = event.target as HTMLElement;
+
+    if (target.tagName === 'INPUT') {
+      return;
+    }
+
+    if (event.code === 'Space' || event.key === ' ') {
+      event.preventDefault();
+      setChecked(!checked);
+    }
+  }
+
   // !OPTIONS
   const itemOptions = buildOptions(hint.comboboxOptions?.item ?? []);
   const locationOptions = buildOptions(hint.comboboxOptions?.location ?? []);
 
   return (
     <div
+      tabIndex={0}
       className={cn(
         'bg-zinc-200 dark:bg-zinc-800',
         'flex flex-auto flex-col px-1.5 py-1',
@@ -72,6 +87,7 @@ export function LayoutHint({ hint }: Props) {
           : undefined,
       }}
       onMouseDown={handleRightClick}
+      onKeyDown={handleSpacebarKeyDown}
       data-name="layout-hint"
     >
       {image && (
