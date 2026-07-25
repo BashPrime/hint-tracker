@@ -6,7 +6,11 @@ import {
   shell,
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
-import { MENU_IDS, USER_DATA_DIR } from './constants.js';
+import {
+  MENU_IDS,
+  TRACKER_HOME_MENU_TEXT,
+  USER_DATA_DIR,
+} from './constants.js';
 import {
   exportTrackerState,
   importTrackerState,
@@ -47,7 +51,7 @@ const template: MenuItemConstructorOptions[] = [
     submenu: [
       {
         id: MENU_IDS.file.trackerHome,
-        label: 'Home',
+        label: TRACKER_HOME_MENU_TEXT.refreshPacks,
         click: () => trackerHome(),
       },
       {
@@ -103,7 +107,7 @@ const template: MenuItemConstructorOptions[] = [
       },
       {
         id: MENU_IDS.toggles.resetSizeOnPackOpen,
-        label: 'Use Pack\'s Default Window Size on Load',
+        label: "Use Pack's Default Window Size on Load",
         type: 'checkbox',
         checked: false,
       },

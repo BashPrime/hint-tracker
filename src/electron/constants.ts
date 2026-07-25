@@ -51,6 +51,12 @@ export const MENU_IDS = {
   },
 };
 
+// Tracker Home Text
+export const TRACKER_HOME_MENU_TEXT = {
+  returnToPackSelection: 'Return to Pack Selection',
+  refreshPacks: 'Refresh Packs',
+};
+
 // Window size
 export const DEFAULT_WINDOW_SIZE = {
   width: 800,

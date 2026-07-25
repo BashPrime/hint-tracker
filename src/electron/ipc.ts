@@ -6,7 +6,7 @@ import {
   TrackerState,
 } from '../shared/types/config.types.js';
 import { loadTrackerState, saveTrackerState } from './config.js';
-import { IPC_IDS, MENU_IDS } from './constants.js';
+import { IPC_IDS, MENU_IDS, TRACKER_HOME_MENU_TEXT } from './constants.js';
 import { getImage } from './images.js';
 import { menu } from './menu.js';
 import {
@@ -101,10 +101,17 @@ export function runIpcHandlers() {
   });
 
   ipcMain.handle(IPC_IDS.setTrackerMenuItems, (_, enabled: boolean) => {
+    const trackerHomeMenuItem = menu.getMenuItemById(MENU_IDS.file.trackerHome);
     const exportMenuItem = menu.getMenuItemById(MENU_IDS.file.exportState);
     const resetTrackerMenuItem = menu.getMenuItemById(
       MENU_IDS.file.resetTracker
     );
+
+    if (trackerHomeMenuItem) {
+      trackerHomeMenuItem.label = enabled
+        ? TRACKER_HOME_MENU_TEXT.returnToPackSelection
+        : TRACKER_HOME_MENU_TEXT.refreshPacks;
+    }
 
     if (exportMenuItem) {
       exportMenuItem.enabled = enabled;
