@@ -8,7 +8,7 @@ This project owes its success to the following people and organizations:
 
 ## Special Thanks
 
-- [Miepee](https://github.com/Miepee): For his extensive, thorough, and valuable bugtesting/UAT.
+- **[Miepee](https://github.com/Miepee)**: For his extensive, thorough, and valuable bugtesting/UAT.
 
 ## Third-party Libraries
 
