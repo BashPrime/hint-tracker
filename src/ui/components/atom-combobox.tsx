@@ -36,6 +36,7 @@ export function AtomCombobox({ atom, options, placeholder, emptyStr }: Props) {
         setValue('');
       }
     }
+  // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync the value atom with the inputValue state
