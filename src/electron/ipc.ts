@@ -232,8 +232,8 @@ export function importTrackerState() {
 
         if (!state.success) {
           dialog.showErrorBox(
-            'Import Error',
-            `Tracker state failed to validate. ${state.error.message}`
+            'Import State Error',
+            'The tracker state is invalid and cannot be imported.'
           );
           console.error(
             'importTrackerState(): Tracker state is invalid:',
