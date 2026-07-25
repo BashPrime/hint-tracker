@@ -89,8 +89,11 @@ export function getPackDetails(packId: string) {
   const match = packs.find((p) => p.id === packId);
 
   if (!match) {
-    console.error('getPackDetails(): No matching pack for packId', packId)
-    dialog.showErrorBox('Error Loading Pack', 'The application could not find the specified pack.');
+    console.error('getPackDetails(): No matching pack for packId', packId);
+    dialog.showErrorBox(
+      'Error Loading Pack',
+      'The application could not find the specified pack.'
+    );
     return null;
   }
 

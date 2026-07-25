@@ -16,7 +16,7 @@ export function PackSelection() {
           <p className="p-2 text-center text-4xl font-bold uppercase">
             No Packs Installed!
           </p>
-          <p className="text-2xl text-center">
+          <p className="text-center text-2xl">
             Packs can be installed from the menu by going to:
           </p>
           <p className="font-mono text-2xl font-bold">
