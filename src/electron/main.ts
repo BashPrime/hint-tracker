@@ -16,7 +16,7 @@ app.on('ready', () => {
     applicationVersion: `v${app.getVersion()}`,
     website: 'https://github.com/bashprime/prime-hint-tracker',
     copyright:
-      `Copyright (c) ${new Date().getFullYear()} BashPrime` +
+      `Copyright (c) 2026 BashPrime` +
       '\n\nThis software is free for personal and commercial use under the MIT License.',
     iconPath: getAboutPanelIconPath(),
   });
@@ -26,7 +26,9 @@ app.on('ready', () => {
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173');
   } else {
-    mainWindow.loadFile(path.join(app.getAppPath(), 'dist-react', 'index.html'));
+    mainWindow.loadFile(
+      path.join(app.getAppPath(), 'dist-react', 'index.html')
+    );
   }
 });
 
