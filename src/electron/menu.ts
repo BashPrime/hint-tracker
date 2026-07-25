@@ -103,7 +103,7 @@ const template: MenuItemConstructorOptions[] = [
       },
       {
         id: MENU_IDS.toggles.resetSizeOnPackOpen,
-        label: 'Reset Size when Opening Pack',
+        label: 'Use Pack\'s Default Window Size on Load',
         type: 'checkbox',
         checked: false,
       },

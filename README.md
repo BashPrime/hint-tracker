@@ -24,7 +24,7 @@ A universal tracker for organizing your [randomizer](docs/Randomizer.md) hints. 
 - You can manually save and load your tracker states by going to **File > Import** and **File > Export**.
 - You can reset the tracker state by clicking **File > Reset Tracker**.
 - If your window feels too small or large, instead of dragging the corners with a mouse, you can hit **Reset Size** to reset the window to fit the content.
-  - This can be done automatically when loading a pack by checking **Reset Size when Opening Pack** in **File > Toggles**.
+  - This can be done automatically when loading a pack by checking **Use Pack's Default Window Size on Load** in **File > Toggles**.
   - You can also zoom in and out from **File > View** or by hitting `Ctrl -` and `Ctrl Shift +`, respectively.
 - The tracker supports light and dark mode! This can be switched manually from **File > Toggles > Theme**.
 
