@@ -139,15 +139,8 @@ export function resetTracker() {
 }
 
 export function trackerHome() {
-  const resetPackSize = Boolean(
-    menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked
-  );
   const mainWindow = getMainWindow();
   mainWindow?.webContents.send(IPC_IDS.trackerHome);
-
-  if (resetPackSize) {
-    resetWindowSize(null);
-  }
 }
 
 export function resetSize() {
