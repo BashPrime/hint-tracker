@@ -50,22 +50,22 @@ export function PackSelection() {
             to="/packs/$packId"
             params={{ packId: pack.id }}
             key={idx}
-            className="group mb-6 flex w-max break-inside-avoid flex-col gap-1"
+            className="group flex w-max break-inside-avoid flex-col gap-1"
           >
             <GameCover
               name={pack.cover?.name ?? ''}
               image={pack.cover ?? undefined}
               className={cn(
-                'h-[280px] w-auto',
+                'h-56 sm:h-88 object-contain object-left',
                 'group-hover:outline-bashprime-red group-hover:outline group-hover:brightness-125',
                 'dark:group-hover:outline-bashprime-yellow',
                 'shadow-foreground group-hover:shadow-md/25'
               )}
             />
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <p
                 className={cn(
-                  'text-lg font-semibold',
+                  'text-md font-semibold sm:text-lg',
                   'group-hover:text-bashprime-red',
                   'dark:group-hover:text-bashprime-yellow',
                   'text-shadow-muted-foreground group-hover:text-shadow-sm/10'
@@ -90,8 +90,8 @@ export function PackSelection() {
                 'dark:group-hover:text-bashprime-yellow dark:group-hover:brightness-80'
               )}
             >
-              <User size={16} />
-              <p className="text-md">{pack.author}</p>
+              <User className="size-4 sm:size-5" />
+              <p className="sm:text-md text-sm">{pack.author}</p>
             </div>
           </Link>
         ))}
