@@ -15,7 +15,7 @@ import {
   getBasicPack,
   getPackDetails,
 } from './packs.js';
-import { getErrorMsg } from './util.js';
+import { getErrorMsg, showDialog } from './util.js';
 import { getMainWindow, resetWindowSize } from './window.js';
 
 export function runIpcHandlers() {
@@ -173,10 +173,13 @@ export function exportTrackerState() {
 
       // If no active pack is set, show error
       if (!pack) {
-        dialog.showErrorBox(
-          'Export Error',
-          `The application returned a nonexistent tracker pack with (pack ID: ${packId})`
-        );
+        const mainWindow = getMainWindow();
+        if (mainWindow) {
+          dialog.showMessageBox(mainWindow, {
+            title: 'Export Error',
+            message: `The application returned a nonexistent tracker pack with (pack ID: ${packId})`,
+          });
+        }
         console.error(
           'exportTrackerStateResponse(): Got a null pack from packId',
           packId
@@ -231,10 +234,11 @@ export function importTrackerState() {
         const state = loadTrackerState(value.filePaths[0]);
 
         if (!state.success) {
-          dialog.showErrorBox(
-            'Import State Error',
-            'The tracker state is invalid and cannot be imported.'
-          );
+          showDialog({
+            type: 'error',
+            title: 'Import State Error',
+            message: 'The tracker state is invalid and cannot be imported.',
+          });
           console.error(
             'importTrackerState(): Tracker state is invalid:',
             state.error

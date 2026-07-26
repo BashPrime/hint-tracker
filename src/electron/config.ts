@@ -1,4 +1,3 @@
-import { dialog } from 'electron';
 import fs from 'fs';
 import { dirname } from 'path';
 import {
@@ -13,7 +12,7 @@ import {
   USER_TRACKER_SAVES_PATH,
 } from './constants.js';
 import { readAndParseJsonFile, readJsonFile, writeJsonFile } from './io.js';
-import { getErrorMsg } from './util.js';
+import { getErrorMsg, showDialog } from './util.js';
 
 export function readConfigFile(path: string = CONFIG_PATH) {
   return readAndParseJsonFile(path, ConfigSchema);
@@ -52,7 +51,11 @@ export function saveTrackerState(
   fs.mkdir(dir, { recursive: true }, (err) => {
     if (err) {
       if (showErrorBox) {
-        dialog.showErrorBox('Failed to Create Directory', getErrorMsg(err));
+        showDialog({
+          type: 'error',
+          title: 'Failed to Create Directory',
+          message: getErrorMsg(err),
+        });
       }
       return console.error(
         'saveTrackerState(): Error creating save directory:',
@@ -64,10 +67,11 @@ export function saveTrackerState(
       fs.writeFile(path, json, (err) => {
         if (err) {
           if (showErrorBox) {
-            dialog.showErrorBox(
-              'Failed to Save Tracker State',
-              `Failed to save ${path}: ${getErrorMsg(err)}`
-            );
+            showDialog({
+              type: 'error',
+              title: 'Failed to Save Tracker State',
+              message: `Failed to save ${path}: ${getErrorMsg(err)}`,
+            });
           }
           console.error(
             'saveTrackerState(): Error writing json file:',
