@@ -11,6 +11,7 @@ import {
   TRACKER_HOME_MENU_TEXT,
   USER_DATA_DIR,
 } from './constants.js';
+import { showAboutPanel } from './dialogs.js';
 import {
   exportTrackerState,
   importTrackerState,
@@ -149,7 +150,10 @@ const template: MenuItemConstructorOptions[] = [
           { role: 'zoomOut' },
         ],
       },
-  { label: 'Help', submenu: [{ label: 'About', role: 'about' }] },
+  {
+    label: 'Help',
+    submenu: [{ label: 'About', click: () => showAboutPanel() }],
+  },
   { label: `Version ${app.getVersion()}` },
 ];
 

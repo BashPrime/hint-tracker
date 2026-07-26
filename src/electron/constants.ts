@@ -1,6 +1,8 @@
 import { app } from 'electron';
 import path from 'path';
 
+export const COPYRIGHT_YEAR = '2026';
+
 // Paths
 export const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
 

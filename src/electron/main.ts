@@ -2,7 +2,6 @@ import { app } from 'electron';
 import path from 'path';
 import { handleCreateUserDataDirs, readConfigFile } from './config.js';
 import { runIpcHandlers } from './ipc.js';
-import { getAboutPanelIconPath } from './pathResolver.js';
 import { isDev, isWayland } from './util.js';
 import { createMainWindow } from './window.js';
 
@@ -11,15 +10,6 @@ if (isWayland()) {
 }
 
 app.on('ready', () => {
-  app.setAboutPanelOptions({
-    applicationName: 'BashPrime Hint Tracker',
-    applicationVersion: `v${app.getVersion()}`,
-    website: 'https://github.com/bashprime/prime-hint-tracker',
-    copyright:
-      `Copyright (c) 2026 BashPrime` +
-      '\n\nThis software is free for personal and commercial use under the MIT License.',
-    iconPath: getAboutPanelIconPath(),
-  });
   const config = readConfigFile();
   const mainWindow = createMainWindow(config);
 
