@@ -17,7 +17,7 @@ export const Route = createFileRoute('/')({
 // oxlint-disable-next-line react/only-export-components
 function Index() {
   return (
-    <div data-name="route-index">
+    <div className="h-full" data-name="route-index">
       <PackSelection />
     </div>
   );

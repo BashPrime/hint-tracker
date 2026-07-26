@@ -1,9 +1,34 @@
 import { GameCover } from '@/components/game-cover';
+import { Button } from '@/components/ui/button';
+import { installPack } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'jotai';
 import { User } from 'lucide-react';
+import { ReactNode } from 'react';
+
+type InstallPackButtonProps = {
+  children: ReactNode;
+  className?: string;
+};
+function InstallPackButton({ children, className }: InstallPackButtonProps) {
+  return (
+    <Button
+      variant="default"
+      onClick={installPack}
+      className={cn(
+        'hover:brightness-125',
+        'bg-bashprime-red hover:bg-bashprime-red',
+        'dark:bg-bashprime-yellow dark:hover:bg-bashprime-yellow',
+        'cursor-pointer p-10 text-2xl sm:w-100',
+        className
+      )}
+    >
+      {children}
+    </Button>
+  );
+}
 
 export function PackSelection() {
   // !STATE
@@ -11,18 +36,15 @@ export function PackSelection() {
 
   if (!(packs && packs.length)) {
     return (
-      <div data-name="pack-selection-no-packs">
-        <div className="flex flex-col items-center">
-          <p className="p-2 text-center text-4xl font-bold uppercase">
-            No Packs Installed!
-          </p>
-          <p className="text-center text-2xl">
-            Packs can be installed from the menu by going to:
-          </p>
-          <p className="font-mono text-2xl font-bold">
-            {'File > Install Pack'}
-          </p>
-        </div>
+      <div
+        className={cn(
+          'flex flex-col items-center justify-center gap-2',
+          'h-full'
+        )}
+        data-name="pack-selection-no-packs"
+      >
+        <p className="p-2 text-4xl font-bold uppercase">No Packs Installed!</p>
+        <InstallPackButton className="text-4xl p-12">Install Pack</InstallPackButton>
       </div>
     );
   }
@@ -56,7 +78,7 @@ export function PackSelection() {
               name={pack.cover?.name ?? ''}
               image={pack.cover ?? undefined}
               className={cn(
-                'h-56 sm:h-88 object-contain object-left',
+                'h-56 object-contain object-left sm:h-88',
                 'group-hover:outline-bashprime-red group-hover:outline group-hover:brightness-125',
                 'dark:group-hover:outline-bashprime-yellow',
                 'shadow-foreground group-hover:shadow-md/25'
