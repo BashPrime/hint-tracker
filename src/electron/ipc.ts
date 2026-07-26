@@ -14,6 +14,7 @@ import {
   getAllPacksInDir,
   getBasicPack,
   getPackDetails,
+  installPackDialog,
 } from './packs.js';
 import { getErrorMsg, showDialog } from './util.js';
 import { getMainWindow, resetWindowSize } from './window.js';
@@ -121,6 +122,10 @@ export function runIpcHandlers() {
       resetTrackerMenuItem.enabled = enabled;
     }
   });
+
+  ipcMain.handle(IPC_IDS.installPack, () => {
+    installPackDialog();
+  })
 }
 
 // these calls originate from ipcMain.

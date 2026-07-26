@@ -57,3 +57,7 @@ export async function fetchTrackerAutosave(packId: string) {
 export function setExportTrackerStateMenuItem(enabled: boolean) {
   window.electronApi.setTrackerMenuItems(enabled);
 }
+
+export function installPack() {
+  window.electronApi.installPack();
+}

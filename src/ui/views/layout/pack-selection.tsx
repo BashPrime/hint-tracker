@@ -1,9 +1,34 @@
 import { GameCover } from '@/components/game-cover';
+import { Button } from '@/components/ui/button';
+import { installPack } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'jotai';
-import { User } from 'lucide-react';
+import { Plus, User } from 'lucide-react';
+import { ReactNode } from 'react';
+
+type InstallPackButtonProps = {
+  children: ReactNode;
+  className?: string;
+};
+function InstallPackButton({ children, className }: InstallPackButtonProps) {
+  return (
+    <Button
+      variant="default"
+      onClick={installPack}
+      className={cn(
+        'hover:brightness-125',
+        'bg-bashprime-red hover:bg-bashprime-red',
+        'dark:bg-bashprime-yellow dark:hover:bg-bashprime-yellow',
+        'cursor-pointer',
+        className
+      )}
+    >
+      {children}
+    </Button>
+  );
+}
 
 export function PackSelection() {
   // !STATE
@@ -11,18 +36,17 @@ export function PackSelection() {
 
   if (!(packs && packs.length)) {
     return (
-      <div data-name="pack-selection-no-packs">
-        <div className="flex flex-col items-center">
-          <p className="p-2 text-center text-4xl font-bold uppercase">
-            No Packs Installed!
-          </p>
-          <p className="text-center text-2xl">
-            Packs can be installed from the menu by going to:
-          </p>
-          <p className="font-mono text-2xl font-bold">
-            {'File > Install Pack'}
-          </p>
-        </div>
+      <div
+        className={cn(
+          'flex flex-col items-center justify-center gap-2',
+          'h-full'
+        )}
+        data-name="pack-selection-no-packs"
+      >
+        <p className="p-2 text-4xl font-bold uppercase">No Packs Installed!</p>
+        <InstallPackButton className="p-10 p-12 text-2xl text-4xl sm:w-100">
+          Install Pack
+        </InstallPackButton>
       </div>
     );
   }
@@ -38,34 +62,40 @@ export function PackSelection() {
         className="flex w-full flex-col items-center gap-1"
         data-name="selection-header"
       >
-        <p className="p-2 text-center text-4xl font-bold uppercase">
-          Select a Pack
-        </p>
-        <div className="bg-bashprime-yellow h-1.5 w-3/5 min-w-72" />
-        <div className="bg-bashprime-red h-1.5 w-3/5 min-w-72" />
+        <div
+          className="my-4 flex w-auto flex-row items-center justify-center gap-6"
+          data-name="header-text-and-button"
+        >
+          <p className="text-4xl font-bold uppercase">Select a Pack </p>
+          <InstallPackButton className="px-4 py-5">
+            <Plus className="size-8" />
+          </InstallPackButton>
+        </div>
+        <div className="bg-bashprime-yellow h-1.5 w-4/5" />
+        <div className="bg-bashprime-red h-1.5 w-4/5" />
       </div>
-      <div className={cn('flex flex-wrap gap-6 p-4')}>
+      <div className={cn('flex flex-wrap justify-center gap-6 p-4')}>
         {sortedPacks.map((pack, idx) => (
           <Link
             to="/packs/$packId"
             params={{ packId: pack.id }}
             key={idx}
-            className="group mb-6 flex w-max break-inside-avoid flex-col gap-1"
+            className="group flex w-max break-inside-avoid flex-col gap-1"
           >
             <GameCover
               name={pack.cover?.name ?? ''}
               image={pack.cover ?? undefined}
               className={cn(
-                'h-[280px] w-auto',
+                'h-56 object-contain object-left sm:h-88',
                 'group-hover:outline-bashprime-red group-hover:outline group-hover:brightness-125',
                 'dark:group-hover:outline-bashprime-yellow',
                 'shadow-foreground group-hover:shadow-md/25'
               )}
             />
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <p
                 className={cn(
-                  'text-lg font-semibold',
+                  'text-md font-semibold sm:text-lg',
                   'group-hover:text-bashprime-red',
                   'dark:group-hover:text-bashprime-yellow',
                   'text-shadow-muted-foreground group-hover:text-shadow-sm/10'
@@ -90,8 +120,8 @@ export function PackSelection() {
                 'dark:group-hover:text-bashprime-yellow dark:group-hover:brightness-80'
               )}
             >
-              <User size={16} />
-              <p className="text-md">{pack.author}</p>
+              <User className="size-4 sm:size-5" />
+              <p className="sm:text-md text-sm">{pack.author}</p>
             </div>
           </Link>
         ))}
