@@ -23,7 +23,8 @@
     "dist:linux": "pnpm run transpile:electron && npm run build && electron-builder --linux --x64",
     "unpack:win": "pnpm dlx @electron/asar extract ./dist/win-unpacked/resources/app.asar ./dist/app-asar-unpacked",
     "unpack:mac": "pnpm dlx @electron/asar extract ./dist/mac-unpacked/resources/app.asar ./dist/app-asar-unpacked",
-    "unpack:linux": "pnpm dlx @electron/asar extract ./dist/linux-unpacked/resources/app.asar ./dist/app-asar-unpacked"
+    "unpack:linux": "pnpm dlx @electron/asar extract ./dist/linux-unpacked/resources/app.asar ./dist/app-asar-unpacked",
+    "gen-third-party-licenses": "pnpm dlx generate-license-file --input ./package.json --output ./NOTICE"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
