@@ -20,7 +20,7 @@ import {
   trackerHome,
 } from './ipc.js';
 import { installPackDialog } from './packs.js';
-import { isDev } from './util.js';
+import { isDev, isWayland } from './util.js';
 import { getMainWindow } from './window.js';
 
 async function openUserDataFolder() {
@@ -105,6 +105,7 @@ const template: MenuItemConstructorOptions[] = [
         type: 'checkbox',
         checked: false,
         click: (item) => toggleAlwaysOnTop(item.checked),
+        visible: !isWayland(),
       },
       {
         id: MENU_IDS.toggles.resetSizeOnPackOpen,
