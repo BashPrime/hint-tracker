@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'jotai';
-import { User } from 'lucide-react';
+import { Plus, User } from 'lucide-react';
 import { ReactNode } from 'react';
 
 type InstallPackButtonProps = {
@@ -21,7 +21,7 @@ function InstallPackButton({ children, className }: InstallPackButtonProps) {
         'hover:brightness-125',
         'bg-bashprime-red hover:bg-bashprime-red',
         'dark:bg-bashprime-yellow dark:hover:bg-bashprime-yellow',
-        'cursor-pointer p-10 text-2xl sm:w-100',
+        'cursor-pointer',
         className
       )}
     >
@@ -44,7 +44,9 @@ export function PackSelection() {
         data-name="pack-selection-no-packs"
       >
         <p className="p-2 text-4xl font-bold uppercase">No Packs Installed!</p>
-        <InstallPackButton className="text-4xl p-12">Install Pack</InstallPackButton>
+        <InstallPackButton className="p-10 p-12 text-2xl text-4xl sm:w-100">
+          Install Pack
+        </InstallPackButton>
       </div>
     );
   }
@@ -60,11 +62,17 @@ export function PackSelection() {
         className="flex w-full flex-col items-center gap-1"
         data-name="selection-header"
       >
-        <p className="p-2 text-center text-4xl font-bold uppercase">
-          Select a Pack
-        </p>
-        <div className="bg-bashprime-yellow h-1.5 w-3/5 min-w-72" />
-        <div className="bg-bashprime-red h-1.5 w-3/5 min-w-72" />
+        <div
+          className="my-4 flex w-auto flex-row items-center justify-center gap-6"
+          data-name="header-text-and-button"
+        >
+          <p className="text-4xl font-bold uppercase">Select a Pack </p>
+          <InstallPackButton className="px-4 py-5">
+            <Plus className="size-8" />
+          </InstallPackButton>
+        </div>
+        <div className="bg-bashprime-yellow h-1.5 w-4/5" />
+        <div className="bg-bashprime-red h-1.5 w-4/5" />
       </div>
       <div className={cn('flex flex-wrap justify-center gap-6 p-4')}>
         {sortedPacks.map((pack, idx) => (
