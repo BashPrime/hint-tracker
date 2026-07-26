@@ -8,7 +8,7 @@ export async function showAboutPanel() {
   const xdgSessionType = process.env.XDG_SESSION_TYPE;
   const details = [
     `Version: ${app.getVersion()}`,
-    `OS: ${os.version} ${os.arch} ${process.getSystemVersion()}`,
+    `OS: ${os.type} ${os.arch} ${process.getSystemVersion()}`,
     ...(xdgSessionType
       ? [`XDG Session Type: ${process.env.XDG_SESSION_TYPE}`]
       : []),
