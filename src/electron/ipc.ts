@@ -234,15 +234,16 @@ export function importTrackerState() {
         const state = loadTrackerState(value.filePaths[0]);
 
         if (!state.success) {
+          console.error(
+            'importTrackerState(): Tracker state is invalid:',
+            state.error
+          );
           showDialog({
             type: 'error',
             title: 'Import State Error',
             message: 'The tracker state is invalid and cannot be imported.',
           });
-          console.error(
-            'importTrackerState(): Tracker state is invalid:',
-            state.error
-          );
+
           return;
         }
 
@@ -250,17 +251,19 @@ export function importTrackerState() {
         const pack = getBasicPack(state.data.pack.id);
 
         if (pack?.version !== state.data.pack.version) {
-          dialog.showErrorBox(
-            pack ? 'Version Mismatch' : 'Missing Pack',
-            pack
-              ? `The version of the tracker state (${state.data.pack.version}) does not match the version of the pack (${pack.version}). Aborting.`
-              : 'Could not find the pack for this import. Is it installed?'
-          );
           console.error(
             'importTrackerState(): version mismatch or missing pack:',
             state.data.pack.version,
             pack ? pack.version : null
           );
+          showDialog({
+            type: 'error',
+            title: pack ? 'Version Mismatch' : 'Missing Pack',
+            message: pack
+              ? `The version of the tracker state (${state.data.pack.version}) does not match the version of the pack (${pack.version}). Aborting.`
+              : 'Could not find the pack for this import. Is it installed?',
+          });
+
           return;
         }
 
@@ -268,13 +271,14 @@ export function importTrackerState() {
       }
     })
     .catch((err: any) => {
-      dialog.showErrorBox(
-        'Import Error',
-        `Tracker state failed to import. ${getErrorMsg(err)}`
-      );
       console.error(
         'importTrackerState(): Error loading tracker state:',
         getErrorMsg(err)
       );
+      showDialog({
+        type: 'error',
+        title: 'Import Error',
+        message: `Tracker state failed to import. ${getErrorMsg(err)}`,
+      });
     });
 }

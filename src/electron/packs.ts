@@ -17,7 +17,7 @@ import {
 import { getImage } from './images.js';
 import { readDir } from './io.js';
 import { buildPackDetails } from './pack-builder.js';
-import { getErrorMsg } from './util.js';
+import { getErrorMsg, showDialog } from './util.js';
 import { getMainWindow } from './window.js';
 
 let packs: BasicPack[];
@@ -90,10 +90,11 @@ export function getPackDetails(packId: string) {
 
   if (!match) {
     console.error('getPackDetails(): No matching pack for packId', packId);
-    dialog.showErrorBox(
-      'Error Loading Pack',
-      'The application could not find the specified pack.'
-    );
+    showDialog({
+      type: 'error',
+      title: 'Error Loading Pack',
+      message: 'The application could not find the specified pack.',
+    });
     return null;
   }
 
@@ -150,13 +151,14 @@ export function installPack(srcFilePath: string) {
       mainWindow?.webContents.send(IPC_IDS.trackerHome);
     })
     .catch((err: any) => {
-      dialog.showErrorBox(
-        'Error Installing',
-        `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`
-      );
       console.error(
         `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`
       );
+      showDialog({
+        type: 'error',
+        title: 'Error Installing',
+        message: `An error occurred installing ${packFileName}: ${getErrorMsg(err)}`,
+      });
     });
 }
 
@@ -180,11 +182,12 @@ export function installPackDialog() {
         const packTrackerJson = getPackTrackerJson(filePath);
 
         if (!packTrackerJson) {
-          dialog.showErrorBox(
-            'Invalid Pack',
-            `${packFileName} is invalid and cannot be installed.`
-          );
           console.error('installPackDialog(): packTrackerJson is null');
+          showDialog({
+            type: 'error',
+            title: 'Invalid Pack',
+            message: `${packFileName} is invalid and cannot be installed.`,
+          });
           return;
         }
 
@@ -193,6 +196,14 @@ export function installPackDialog() {
       }
     })
     .catch((err: any) => {
-      dialog.showErrorBox('Error', getErrorMsg(err));
+      console.error(
+        'installPackDialog(): An unknown error occurred:',
+        getErrorMsg(err)
+      );
+      showDialog({
+        type: 'error',
+        title: 'Error Installing Pack',
+        message: `An unexpected error occurred. ${getErrorMsg(err)}`,
+      });
     });
 }

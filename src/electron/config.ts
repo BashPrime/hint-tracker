@@ -50,6 +50,10 @@ export function saveTrackerState(
   const dir = dirname(path);
   fs.mkdir(dir, { recursive: true }, (err) => {
     if (err) {
+      console.error(
+        'saveTrackerState(): Error creating save directory:',
+        getErrorMsg(err)
+      );
       if (showErrorBox) {
         showDialog({
           type: 'error',
@@ -57,15 +61,18 @@ export function saveTrackerState(
           message: getErrorMsg(err),
         });
       }
-      return console.error(
-        'saveTrackerState(): Error creating save directory:',
-        getErrorMsg(err)
-      );
+
+      return;
     } else {
       // Handle writing file
       const json = JSON.stringify(state, null, 2);
       fs.writeFile(path, json, (err) => {
         if (err) {
+          console.error(
+            'saveTrackerState(): Error writing json file:',
+            path,
+            getErrorMsg(err)
+          );
           if (showErrorBox) {
             showDialog({
               type: 'error',
@@ -73,11 +80,6 @@ export function saveTrackerState(
               message: `Failed to save ${path}: ${getErrorMsg(err)}`,
             });
           }
-          console.error(
-            'saveTrackerState(): Error writing json file:',
-            path,
-            getErrorMsg(err)
-          );
         }
       });
     }

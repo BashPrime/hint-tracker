@@ -22,16 +22,16 @@ export function readJsonFile(path: string) {
 export function writeJsonFile(path: string, json: string) {
   fs.writeFile(path, json, (err) => {
     if (err) {
-      showDialog({
-        type: 'error',
-        title: 'Error writing json file',
-        message: `An error occurred writing ${path}: ${getErrorMsg(err)}`,
-      });
       console.error(
         'writeJsonFile(): Error writing json file:',
         path,
         getErrorMsg(err)
       );
+      showDialog({
+        type: 'error',
+        title: 'Error writing json file',
+        message: `An error occurred writing ${path}: ${getErrorMsg(err)}`,
+      });
     }
   });
 }
