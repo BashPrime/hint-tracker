@@ -44,7 +44,7 @@ export function PackSelection() {
         <div className="bg-bashprime-yellow h-1.5 w-3/5 min-w-72" />
         <div className="bg-bashprime-red h-1.5 w-3/5 min-w-72" />
       </div>
-      <div className={cn('flex flex-wrap gap-6 p-4')}>
+      <div className={cn('flex flex-wrap justify-center gap-6 p-4')}>
         {sortedPacks.map((pack, idx) => (
           <Link
             to="/packs/$packId"
