@@ -10,7 +10,7 @@ export async function showAboutPanel() {
     `Version: ${app.getVersion()}`,
     `OS: ${os.type} ${os.arch} ${process.getSystemVersion()}`,
     ...(xdgSessionType
-      ? [`XDG Session Type: ${process.env.XDG_SESSION_TYPE}`]
+      ? [`Display Server: ${process.env.XDG_SESSION_TYPE}`]
       : []),
     `Electron: ${process.versions.electron}`,
     `Node.js: ${process.versions.node}`,
