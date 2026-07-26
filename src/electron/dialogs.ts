@@ -1,8 +1,8 @@
 import { app, clipboard } from 'electron';
+import { readFile } from 'fs/promises';
 import os from 'os';
-import { COPYRIGHT_YEAR } from './constants.js';
-import { getAboutPanelIconPath } from './pathResolver.js';
-import { showDialog } from './util.js';
+import { getAboutPanelIconPath, getLicensePath } from './pathResolver.js';
+import { getErrorMsg, showDialog } from './util.js';
 
 export async function showAboutPanel() {
   const xdgSessionType = process.env.XDG_SESSION_TYPE;
@@ -37,16 +37,24 @@ export async function showAboutPanel() {
   }
 }
 
-export function showLicense() {
-  const details = [
-    `Copyright (c) ${COPYRIGHT_YEAR} BashPrime`,
-    'This software is free for personal and commercial use under the MIT License.',
-  ];
+export async function showLicense() {
+  try {
+    const license = await readFile(getLicensePath(), 'utf-8');
 
-  showDialog({
-    type: 'info',
-    title: 'License',
-    message: 'License',
-    detail: details.join('\n'),
-  });
+    showDialog({
+      type: 'info',
+      icon: getAboutPanelIconPath(),
+      title: 'License',
+      message: 'License',
+      detail: license,
+    });
+  } catch (err) {
+    console.error('showLicense(): Error reading license:', getErrorMsg(err));
+    showDialog({
+      type: 'error',
+      title: 'Error Getting License',
+      message:
+        'The application encountered an error getting the software license.',
+    });
+  }
 }
