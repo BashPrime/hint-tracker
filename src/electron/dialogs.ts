@@ -1,8 +1,9 @@
-import { app, clipboard } from 'electron';
+import { app, clipboard, shell } from 'electron';
 import { readFile } from 'fs/promises';
 import os from 'os';
+import { BASE_PROJECT_URL } from './constants.js';
 import { getAboutPanelIconPath, getLicensePath } from './pathResolver.js';
-import { getErrorMsg, showDialog } from './util.js';
+import { getErrorMsg, isDev, showDialog } from './util.js';
 
 export async function showAboutPanel() {
   const xdgSessionType = process.env.XDG_SESSION_TYPE;
@@ -38,16 +39,30 @@ export async function showAboutPanel() {
 }
 
 export async function showLicense() {
+  // https://github.com/BashPrime/hint-tracker/blob/['main' or 'vX.Y.Z']/NOTICE
+  const noticeUrl = new URL(
+    `blob/${isDev() ? 'main' : `v${app.getVersion()}`}/NOTICE`,
+    BASE_PROJECT_URL
+  );
+
   try {
     const license = await readFile(getLicensePath(), 'utf-8');
 
-    showDialog({
+    const res = await showDialog({
       type: 'info',
       icon: getAboutPanelIconPath(),
       title: 'License',
       message: 'License',
       detail: license,
+      buttons: ['View Third-Party Licenses', 'OK'],
+      defaultId: 1,
+      cancelId: 1,
+      noLink: true,
     });
+
+    if (res?.response === 0) {
+      shell.openExternal(noticeUrl.href);
+    }
   } catch (err) {
     console.error('showLicense(): Error reading license:', getErrorMsg(err));
     showDialog({

@@ -1,7 +1,7 @@
 import { app } from 'electron';
 import path from 'path';
 
-export const COPYRIGHT_YEAR = '2026';
+export const BASE_PROJECT_URL = 'https://github.com/BashPrime/hint-tracker/';
 
 // Paths
 export const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
