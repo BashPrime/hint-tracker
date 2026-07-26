@@ -11,7 +11,7 @@ import {
   TRACKER_HOME_MENU_TEXT,
   USER_DATA_DIR,
 } from './constants.js';
-import { showAboutPanel } from './dialogs.js';
+import { showAboutPanel, showLicense } from './dialogs.js';
 import {
   exportTrackerState,
   importTrackerState,
@@ -153,7 +153,10 @@ const template: MenuItemConstructorOptions[] = [
       },
   {
     label: 'Help',
-    submenu: [{ label: 'About', click: () => showAboutPanel() }],
+    submenu: [
+      { label: 'View License', click: () => showLicense() },
+      { label: 'About', click: () => showAboutPanel() },
+    ],
   },
   { label: `Version ${app.getVersion()}` },
 ];

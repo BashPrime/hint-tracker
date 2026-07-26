@@ -30,3 +30,7 @@ export function getAboutPanelIconPath() {
 
   return iconPath.replace('app.asar', 'app.asar.unpacked');
 }
+
+export function getLicensePath() {
+  return path.join(app.getAppPath(), 'LICENSE');
+}
