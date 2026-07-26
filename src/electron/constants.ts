@@ -26,6 +26,7 @@ export const IPC_IDS = {
   exportTrackerState: 'export-tracker-state',
   exportTrackerStateResponse: 'export-tracker-state-response',
   importTrackerState: 'import-tracker-state',
+  installPack: 'install-pack',
 };
 
 // Tracker

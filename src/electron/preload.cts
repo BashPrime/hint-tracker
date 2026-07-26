@@ -18,6 +18,7 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
 
     return () => ipcRenderer.removeListener('reset-tracker', subscription);
   },
+  installPack: () => ipcRenderer.invoke('install-pack'),
   resetSize: (callback: () => void) => {
     const subscription = (_event: any) => callback();
     ipcRenderer.on('reset-size', subscription);

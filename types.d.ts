@@ -5,6 +5,7 @@ interface Window {
     fetchImage: (packId: string, imgPath: string) => Promise<object>;
     autosaveTrackerState: (state: object, packId: string) => void;
     loadTrackerAutosave: (packId: string) => Promise<object | null>;
+    installPack: () => void;
     // ipcMain functions
     resetTracker: (callback: () => void) => () => void;
     resetSize: (callback: () => void) => () => void;
