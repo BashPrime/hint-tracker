@@ -1,10 +1,10 @@
-import { app } from 'electron';
+import { app, clipboard } from 'electron';
 import os from 'os';
 import { COPYRIGHT_YEAR } from './constants.js';
 import { getAboutPanelIconPath } from './pathResolver.js';
 import { showDialog } from './util.js';
 
-export function showAboutPanel() {
+export async function showAboutPanel() {
   const xdgSessionType = process.env.XDG_SESSION_TYPE;
   const details = [
     `Version: ${app.getVersion()}`,
@@ -17,14 +17,24 @@ export function showAboutPanel() {
     `Chromium: ${process.versions.chrome}`,
     `V8: ${process.versions.v8}`,
   ];
+  const detailsStr = details.join('\n');
 
-  showDialog({
+  const res = await showDialog({
     type: 'info',
     icon: getAboutPanelIconPath(),
     title: `About ${app.getName()}`,
     message: app.getName(),
-    detail: details.join('\n'),
+    detail: detailsStr,
+    buttons: ['Copy', 'OK'],
+    defaultId: 1,
+    cancelId: 1,
+    noLink: true,
   });
+
+  // User clicked 'Copy'
+  if (res?.response === 0) {
+    clipboard.writeText(detailsStr);
+  }
 }
 
 export function showLicense() {
