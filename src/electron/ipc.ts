@@ -36,7 +36,7 @@ export function runIpcHandlers() {
       resetWindowSize(packId);
     }
 
-    return getPackDetails(packId);
+    return packDetails;
   });
 
   // get image
