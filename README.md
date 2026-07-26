@@ -67,3 +67,15 @@ pnpm run dist:linux # Linux 64-bit
 ```
 
 The application will be built in the `<project root>/dist` directory.
+
+# Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md)
+
+# License
+
+See [LICENSE](./LICENSE)
+
+# Credits
+
+See [CREDITS.md](./CREDITS.md)
