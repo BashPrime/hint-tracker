@@ -173,17 +173,15 @@ export function exportTrackerState() {
 
       // If no active pack is set, show error
       if (!pack) {
-        const mainWindow = getMainWindow();
-        if (mainWindow) {
-          dialog.showMessageBox(mainWindow, {
-            title: 'Export Error',
-            message: `The application returned a nonexistent tracker pack with (pack ID: ${packId})`,
-          });
-        }
         console.error(
           'exportTrackerStateResponse(): Got a null pack from packId',
           packId
         );
+        showDialog({
+          type: 'error',
+          title: 'Export Error',
+          message: `The application returned a nonexistent tracker pack with (pack ID: ${packId})`,
+        });
 
         return;
       }

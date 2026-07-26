@@ -111,7 +111,7 @@ export function buildTrackerAutosavePath(pack: BasicPack) {
   );
 }
 
-export function installPack(srcFilePath: string) {
+export async function installPack(srcFilePath: string) {
   const mainWindow = getMainWindow();
   const packFileName = basename(srcFilePath);
   const destination = path.join(USER_PACKS_PATH, packFileName);
@@ -123,7 +123,7 @@ export function installPack(srcFilePath: string) {
 
   // Confirm if the pack file already exists
   if (fs.existsSync(destination)) {
-    const confirmButtonId = dialog.showMessageBoxSync(mainWindow, {
+    const confirmButtonId = await showDialog({
       title: 'Pack Exists',
       message: 'A pack with this file name exists. Overwrite?',
       type: 'warning',
@@ -132,7 +132,10 @@ export function installPack(srcFilePath: string) {
     });
 
     // If the user cancels, just return immediately/abort
-    if (confirmButtonId === confirmOverwriteCancelId) {
+    if (
+      !confirmButtonId ||
+      confirmButtonId.response === confirmOverwriteCancelId
+    ) {
       return;
     }
   }
@@ -140,7 +143,7 @@ export function installPack(srcFilePath: string) {
   fsPromises
     .cp(srcFilePath, destination)
     .then(() => {
-      dialog.showMessageBox(mainWindow, {
+      showDialog({
         title: 'Success',
         message: `${packFileName} installed successfully.`,
         type: 'info',
