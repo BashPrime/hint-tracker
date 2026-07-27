@@ -1,4 +1,5 @@
 import { AtomCombobox } from '@/components/atom-combobox';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { useRightClick } from '@/hooks/useRightClick';
@@ -10,6 +11,7 @@ import {
 } from '@/states/App.states';
 import { HintWithState } from '@/types/state.types';
 import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
+import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Image } from '../../../shared/types/image.types';
 
@@ -39,9 +41,10 @@ export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
 
 type Props = {
   hint: HintWithState;
+  onDelete?: (code: string) => void;
 };
 
-export function LayoutHint({ hint }: Props) {
+export function LayoutHint({ hint, onDelete }: Props) {
   // !STATE
   const pack = useAtomValue(activePackState);
   const [checked, setChecked] = useAtom(hint.checked);
@@ -106,7 +109,7 @@ export function LayoutHint({ hint }: Props) {
           />
         </div>
       )}
-      <div className={cn('relative order-[-9998]')}>
+      <div className={cn('order-[-9998]', 'flex flex-row justify-between')}>
         {hint.name && (
           <p
             style={{ color: !checked ? hint.color : '' }}
@@ -119,10 +122,27 @@ export function LayoutHint({ hint }: Props) {
             {hint.name}
           </p>
         )}
-        <HintChecked
-          checkedAtom={hint.checked}
-          className="absolute top-0 right-0 mx-1 my-0.5 p-2"
-        />
+        <div
+          className={cn('flex flex-row items-center gap-2')}
+          data-name="hint-buttons"
+        >
+          <HintChecked checkedAtom={hint.checked} className="size-6" />
+          {onDelete && (
+            <Button
+              tabIndex={0}
+              variant="ghost"
+              onDoubleClick={() => onDelete(hint.code)}
+              className={cn(
+                'size-7 cursor-pointer',
+                'text-red-600 dark:text-red-500',
+                'hover:bg-red-300 dark:hover:bg-red-400 dark:hover:text-black',
+                hint.checked && 'text-red-500'
+              )}
+            >
+              <X className="size-7" />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
