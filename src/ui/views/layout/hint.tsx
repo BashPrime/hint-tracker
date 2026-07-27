@@ -31,6 +31,8 @@ export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
       onCheckedChange={setChecked}
       disabled={!accessibleCheckboxes}
       className={cn(
+        'border-zinc-400 dark:border-zinc-600',
+        'data-checked:bg-zinc-200 data-checked:text-green-800',
         !accessibleCheckboxes && !checked && 'invisible',
         accessibleCheckboxes && 'cursor-pointer',
         className
@@ -131,7 +133,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
         )}
         <div
           className={cn(
-            'flex flex-row items-center gap-2 mx-1',
+            'mx-1 flex flex-row items-center gap-2',
             !hint.name && 'mt-4'
           )}
           data-name="hint-buttons"
