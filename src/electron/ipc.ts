@@ -63,6 +63,7 @@ export function runIpcHandlers() {
           const trackerState = TrackerSaveStateSchema.parse({
             pack: {
               id: pack.id,
+              name: pack.name,
               version: pack.version,
             },
             state,
