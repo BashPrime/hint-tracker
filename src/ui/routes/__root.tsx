@@ -2,6 +2,7 @@ import { isDev } from '@/helpers/utils';
 import { useAutosaveTracker } from '@/hooks/useAutosaveTracker';
 import { useImportExportTrackerState } from '@/hooks/useImportExportTrackerState';
 import { useResetSize } from '@/hooks/useResetSize';
+import { useSetAccessibleCheckboxes } from '@/hooks/useSetAccessibleCheckboxes';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { useTrackerHome } from '@/hooks/useTrackerHome';
 import { showDevtoolsState } from '@/states/App.states';
@@ -24,6 +25,7 @@ function RootLayout() {
   useImportExportTrackerState();
   useResetSize();
   useThemeChanger();
+  useSetAccessibleCheckboxes();
 
   useEffect(() => {
     function toggleDevtools(event: KeyboardEvent) {
