@@ -106,14 +106,7 @@ export function LayoutHint({ hint }: Props) {
           />
         </div>
       )}
-      <div
-        className={cn(
-          'relative order-[-9998] flex flex-row',
-          hint.name && 'justify-between',
-          !hint.name && 'h-0 justify-end',
-          'relative'
-        )}
-      >
+      <div className={cn('relative order-[-9998]')}>
         {hint.name && (
           <p
             style={{ color: !checked ? hint.color : '' }}
