@@ -88,6 +88,8 @@ type Props = {
 export function UnhintedItems({ unhinted }: Props) {
   // !STATE
   const [hints, setHints] = useAtom(unhintedHintsState);
+  // !WHY it's an arbitrary limit, but most players likely won't be using that many unhinted items
+  const lengthLimit = 50;
 
   const parsedHints = hints.map((h) => ({
     ...h,
@@ -96,17 +98,20 @@ export function UnhintedItems({ unhinted }: Props) {
 
   // !FUNCTION
   function addHint() {
-    setHints([
-      ...hints,
-      {
-        name: '',
-        code: `unhinted-${uuidv4()}`,
-        type: 'hint',
-        item: atom(''),
-        location: atom(''),
-        checked: atom(false),
-      } satisfies UnhintedItemHint,
-    ]);
+    // only add another hint if below the limit
+    if (hints.length < lengthLimit) {
+      setHints([
+        ...hints,
+        {
+          name: '',
+          code: `unhinted-${uuidv4()}`,
+          type: 'hint',
+          item: atom(''),
+          location: atom(''),
+          checked: atom(false),
+        } satisfies UnhintedItemHint,
+      ]);
+    }
   }
 
   function deleteHint(code: string) {
@@ -134,6 +139,7 @@ export function UnhintedItems({ unhinted }: Props) {
             'w-full cursor-pointer place-self-center rounded-none',
             'text-lg font-bold uppercase'
           )}
+          disabled={hints.length >= lengthLimit}
           data-name="add-hint-button"
         >
           <Plus className="size-6" /> Add New
