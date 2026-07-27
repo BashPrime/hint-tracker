@@ -1,21 +1,38 @@
 import { AtomCombobox } from '@/components/atom-combobox';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { useRightClick } from '@/hooks/useRightClick';
 import { fetchImage } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { activePackState } from '@/states/App.states';
+import {
+  accessibleCheckboxesState,
+  activePackState,
+} from '@/states/App.states';
 import { HintWithState } from '@/types/state.types';
-import { useAtom, useAtomValue } from 'jotai';
+import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
 import { Check } from 'lucide-react';
-import { KeyboardEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image } from '../../../shared/types/image.types';
 
 type HintCheckedProps = {
-  checked: boolean;
+  checkedAtom: PrimitiveAtom<boolean>;
   className?: string;
 };
 
-export function HintChecked({ checked, className }: HintCheckedProps) {
+export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
+  // !STATE
+  const accessibleCheckboxes = useAtomValue(accessibleCheckboxesState);
+  const [checked, setChecked] = useAtom(checkedAtom);
+
+  if (accessibleCheckboxes) {
+    return (
+      <Checkbox
+        checked={checked}
+        onCheckedChange={setChecked}
+        className={cn('order-3 cursor-pointer', 'mr-1', className)}
+      />
+    );
+  }
   return (
     <Check
       className={cn(
@@ -54,27 +71,12 @@ export function LayoutHint({ hint }: Props) {
     fetchHintImage();
   }, [pack, hint]);
 
-  // !FUNCTION
-  function handleSpacebarKeyDown(event: KeyboardEvent<HTMLElement>) {
-    const target = event.target as HTMLElement;
-
-    if (target.tagName === 'INPUT') {
-      return;
-    }
-
-    if (event.code === 'Space' || event.key === ' ') {
-      event.preventDefault();
-      setChecked(!checked);
-    }
-  }
-
   // !OPTIONS
   const itemOptions = buildOptions(hint.comboboxOptions?.item ?? []);
   const locationOptions = buildOptions(hint.comboboxOptions?.location ?? []);
 
   return (
     <div
-      tabIndex={0}
       className={cn(
         'bg-zinc-100 dark:bg-zinc-800',
         'flex flex-auto flex-col px-1.5 py-1',
@@ -87,7 +89,6 @@ export function LayoutHint({ hint }: Props) {
           : undefined,
       }}
       onMouseDown={handleRightClick}
-      onKeyDown={handleSpacebarKeyDown}
       data-name="layout-hint"
     >
       {image && (
@@ -118,7 +119,7 @@ export function LayoutHint({ hint }: Props) {
             {hint.name}
           </p>
         )}
-        <HintChecked checked={checked} />
+        <HintChecked checkedAtom={hint.checked} />
       </div>
       {hint.item && (
         <AtomCombobox
