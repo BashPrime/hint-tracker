@@ -126,21 +126,25 @@ export function UnhintedItems({ unhinted }: Props) {
       {unhinted.header && (
         <Header color={unhinted.color}>{unhinted.header}</Header>
       )}
-      <div className="flex min-h-0 flex-col gap-2" data-name="uh-body">
+      <div className="flex min-h-0 flex-col" data-name="uh-body">
+        <Button
+          onClick={addHint}
+          className={cn(
+            'hover:brightness-125',
+            'bg-bashprime-red hover:bg-bashprime-red',
+            'dark:bg-bashprime-yellow dark:hover:bg-bashprime-yellow',
+            'w-full cursor-pointer place-self-center rounded-none',
+            'text-lg font-bold uppercase'
+          )}
+          data-name="add-hint-button"
+        >
+          <Plus className="size-6" /> Add New Hint
+        </Button>
         <div className="overflow-y-auto" data-name="uh-hints">
           {parsedHints.map((hint) => (
             <Hint hint={hint} key={hint.code} onDelete={deleteHint} />
           ))}
         </div>
-        <Button
-          onClick={addHint}
-          variant="outline"
-          className={cn(
-            'dark:border-input mb-2 cursor-pointer place-self-center border-zinc-500'
-          )}
-        >
-          <Plus /> Add new hint
-        </Button>
       </div>
     </div>
   );
