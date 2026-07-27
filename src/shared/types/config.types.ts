@@ -25,6 +25,7 @@ export type TrackerState = z.infer<typeof TrackerStateSchema>;
 export const TrackerSaveStateSchema = z.object({
   pack: z.object({
     id: z.string(),
+    name: z.string(),
     version: SemVerSchema,
   }),
   state: TrackerStateSchema,

@@ -204,6 +204,7 @@ export function exportTrackerState() {
               {
                 pack: {
                   id: pack.id,
+                  name: pack.name,
                   version: pack.version,
                 },
                 state: parsed,
