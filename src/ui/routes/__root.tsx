@@ -7,8 +7,7 @@ import { showDevtoolsState } from '@/states/App.states';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { JotaiDevTools, RouterDevTools } from './-components/dev-tools';
-import './root.css';
+import ScrollSizeDevtools, { JotaiDevTools, RouterDevTools } from './-components/dev-tools';
 
 // oxlint-disable-next-line react/only-export-components
 function RootLayout() {
@@ -45,6 +44,7 @@ function RootLayout() {
       </div>
       <RouterDevTools />
       <JotaiDevTools />
+      <ScrollSizeDevtools />
     </>
   );
 }

@@ -24,6 +24,7 @@ function InstallPackButton({ children, className }: InstallPackButtonProps) {
         'cursor-pointer',
         className
       )}
+      data-name="install-pack-button"
     >
       {children}
     </Button>
