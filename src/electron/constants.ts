@@ -27,6 +27,7 @@ export const IPC_IDS = {
   exportTrackerStateResponse: 'export-tracker-state-response',
   importTrackerState: 'import-tracker-state',
   installPack: 'install-pack',
+  setAccessibleCheckboxes: 'set-accessible-checkboxes',
 };
 
 // Tracker
@@ -46,6 +47,7 @@ export const MENU_IDS = {
   toggles: {
     alwaysOnTop: 'alwaysOnTop',
     resetSizeOnPackOpen: 'resetSizeOnPackOpen',
+    accessibleCheckboxes: 'accessibleCheckboxes',
   },
   theme: {
     system: 'system',

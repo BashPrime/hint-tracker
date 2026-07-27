@@ -17,6 +17,7 @@ import {
   importTrackerState,
   resetSize,
   resetTracker,
+  setAccessibleCheckboxes,
   trackerHome,
 } from './ipc.js';
 import { installPackDialog } from './packs.js';
@@ -112,6 +113,13 @@ const template: MenuItemConstructorOptions[] = [
         label: "Use Pack's Default Window Size on Load",
         type: 'checkbox',
         checked: false,
+      },
+      {
+        id: MENU_IDS.toggles.accessibleCheckboxes,
+        label: 'Accessible Checkboxes',
+        type: 'checkbox',
+        checked: false,
+        click: (item) => setAccessibleCheckboxes(item.checked)
       },
       {
         label: 'Theme',
