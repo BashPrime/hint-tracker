@@ -1,6 +1,7 @@
 import { ComboboxOption } from '@/types/combobox.types';
+import { Combobox as ComboboxPrimitive } from '@base-ui/react';
 import { PrimitiveAtom, useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import {
   Combobox,
   ComboboxCollection,
@@ -18,9 +19,22 @@ type Props = {
   options: ComboboxOption[];
   placeholder?: string;
   emptyStr?: string;
+  anchor?: RefObject<Element | null>;
+  side?: ComboboxPrimitive.Positioner.Props['side'];
+  sideOffset?: ComboboxPrimitive.Positioner.Props['sideOffset'];
+  alignOffset?: ComboboxPrimitive.Positioner.Props['alignOffset'];
 };
 
-export function AtomCombobox({ atom, options, placeholder, emptyStr }: Props) {
+export function AtomCombobox({
+  atom,
+  options,
+  placeholder,
+  emptyStr,
+  anchor,
+  side,
+  sideOffset,
+  alignOffset,
+}: Props) {
   // !STATE
   const [value, setValue] = useAtom(atom);
   const [inputValue, setInputValue] = useState('');
@@ -59,7 +73,12 @@ export function AtomCombobox({ atom, options, placeholder, emptyStr }: Props) {
         // !WHY need a right margin or single-column layouts are going to freak out when the list opens
         className="mr-4 font-semibold"
       />
-      <ComboboxContent>
+      <ComboboxContent
+        anchor={anchor}
+        side={side}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+      >
         <ComboboxEmpty>
           {emptyStr ? emptyStr : 'No entries found.'}
         </ComboboxEmpty>
