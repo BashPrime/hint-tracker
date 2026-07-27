@@ -31,7 +31,7 @@ export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
       onCheckedChange={setChecked}
       disabled={!accessibleCheckboxes}
       className={cn(
-        !accessibleCheckboxes && !checked && 'hidden',
+        !accessibleCheckboxes && !checked && 'invisible',
         accessibleCheckboxes && 'cursor-pointer',
         className
       )}
@@ -109,7 +109,14 @@ export function LayoutHint({ hint, onDelete }: Props) {
           />
         </div>
       )}
-      <div className={cn('order-[-9998]', 'flex flex-row justify-between')}>
+      <div
+        className={cn(
+          'order-[-9998]',
+          'flex flex-row',
+          hint.name && 'justify-between',
+          !hint.name && 'h-0 justify-end'
+        )}
+      >
         {hint.name && (
           <p
             style={{ color: !checked ? hint.color : '' }}
@@ -123,7 +130,10 @@ export function LayoutHint({ hint, onDelete }: Props) {
           </p>
         )}
         <div
-          className={cn('flex flex-row items-center gap-2')}
+          className={cn(
+            'flex flex-row items-center gap-2 mx-1',
+            !hint.name && 'mt-4'
+          )}
           data-name="hint-buttons"
         >
           <HintChecked checkedAtom={hint.checked} className="size-6" />
