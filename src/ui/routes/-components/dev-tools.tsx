@@ -1,37 +1,31 @@
-import { isDev } from '@/helpers/utils';
 import { cn } from '@/lib/utils';
-import { showDevtoolsState } from '@/states/App.states';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { useAtomValue } from 'jotai';
 import { DevTools } from 'jotai-devtools';
 import css from 'jotai-devtools/styles.css?inline';
 import { useEffect, useState } from 'react';
 
 export function RouterDevTools() {
-  const showDevtools = useAtomValue(showDevtoolsState);
-  return isDev() && showDevtools ? (
+  return (
     <TanStackRouterDevtools
       position="bottom-left"
       panelProps={{
         className: 'z-[9999]',
       }}
     />
-  ) : null;
+  );
 }
 
 export function JotaiDevTools() {
-  const showDevtools = useAtomValue(showDevtoolsState);
-  return isDev() && showDevtools ? (
+  return (
     <>
       <style>{css}</style>
       <DevTools position="bottom-right" />
     </>
-  ) : null;
+  );
 }
 
 export default function ScrollSizeDevtools() {
   // !STATE
-  const showDevtools = useAtomValue(showDevtoolsState);
   const [scrollSize, setScrollSize] = useState({
     width: 0,
     height: 0,
@@ -55,10 +49,6 @@ export default function ScrollSizeDevtools() {
       window.removeEventListener('scroll', updateSize);
     };
   }, []);
-
-  if (!showDevtools) {
-    return null;
-  }
 
   return (
     <div
