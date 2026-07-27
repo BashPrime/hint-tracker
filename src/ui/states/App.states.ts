@@ -21,6 +21,9 @@ export const unhintedHintsState = atom<UnhintedItemHint[]>([]);
 export const importTrackerState = atom<TrackerSaveState | null>(null);
 export const trackerStateToLoad = atom<'autosave' | 'import'>('autosave');
 export const showDevtoolsState = atom<boolean>(isDev());
+// !WHY it's an arbitrary limit, but most players likely won't be using that many unhinted items
+// also, putting it in an atom makes it easy to configure later :)
+export const unhintedItemsLimitAtom = atom<number>(50);
 
 export const trackerHintsAtom = atom((get) => {
   // !STATE

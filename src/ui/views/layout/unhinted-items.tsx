@@ -3,12 +3,15 @@ import { Button } from '@/components/ui/button';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { useRightClick } from '@/hooks/useRightClick';
 import { cn } from '@/lib/utils';
-import { unhintedHintsState } from '@/states/App.states';
+import {
+  unhintedHintsState,
+  unhintedItemsLimitAtom,
+} from '@/states/App.states';
 import {
   LayoutStateUnhintedItems,
   UnhintedItemHint,
 } from '@/types/state.types';
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom, useAtomValue } from 'jotai';
 import { Plus, X } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Header } from './header';
@@ -88,6 +91,7 @@ type Props = {
 export function UnhintedItems({ unhinted }: Props) {
   // !STATE
   const [hints, setHints] = useAtom(unhintedHintsState);
+  const lengthLimit = useAtomValue(unhintedItemsLimitAtom);
 
   const parsedHints = hints.map((h) => ({
     ...h,
@@ -96,17 +100,20 @@ export function UnhintedItems({ unhinted }: Props) {
 
   // !FUNCTION
   function addHint() {
-    setHints([
-      ...hints,
-      {
-        name: '',
-        code: `unhinted-${uuidv4()}`,
-        type: 'hint',
-        item: atom(''),
-        location: atom(''),
-        checked: atom(false),
-      } satisfies UnhintedItemHint,
-    ]);
+    // only add another hint if below the limit
+    if (hints.length < lengthLimit) {
+      setHints([
+        ...hints,
+        {
+          name: '',
+          code: `unhinted-${uuidv4()}`,
+          type: 'hint',
+          item: atom(''),
+          location: atom(''),
+          checked: atom(false),
+        } satisfies UnhintedItemHint,
+      ]);
+    }
   }
 
   function deleteHint(code: string) {
@@ -134,6 +141,7 @@ export function UnhintedItems({ unhinted }: Props) {
             'w-full cursor-pointer place-self-center rounded-none',
             'text-lg font-bold uppercase'
           )}
+          disabled={hints.length >= lengthLimit}
           data-name="add-hint-button"
         >
           <Plus className="size-6" /> Add New
