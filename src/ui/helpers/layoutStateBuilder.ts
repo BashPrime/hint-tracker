@@ -156,7 +156,8 @@ export function buildLayoutState(
 }
 
 export function buildUnhintedState(
-  saveState?: TrackerSaveState
+  saveState?: TrackerSaveState,
+  limit?: number
 ): UnhintedItemHint[] {
   const unhinted = saveState
     ? Object.entries(saveState.state).filter(([key]) =>
@@ -164,7 +165,7 @@ export function buildUnhintedState(
       )
     : [];
 
-  return unhinted.map(([key, val]) =>
+  const parsed = unhinted.map(([key, val]) =>
     UnhintedItemHintSchema.parse({
       code: key,
       item: atom(val.item ?? ''),
@@ -172,4 +173,10 @@ export function buildUnhintedState(
       checked: atom(val.checked ?? false),
     })
   );
+
+  if (limit) {
+    return parsed.slice(0, limit);
+  }
+
+  return parsed;
 }

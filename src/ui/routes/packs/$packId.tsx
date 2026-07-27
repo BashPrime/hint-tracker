@@ -18,6 +18,7 @@ import {
   packsState,
   trackerStateToLoad,
   unhintedHintsState,
+  unhintedItemsLimitAtom,
 } from '@/states/App.states';
 import { LayoutParser } from '@/views/layout/parser';
 import { createFileRoute, redirect } from '@tanstack/react-router';
@@ -65,8 +66,9 @@ export const Route = createFileRoute('/packs/$packId')({
     }
 
     // Build the tracker state
+    const unhintedLimit = store.get(unhintedItemsLimitAtom)
     store.set(layoutState, buildLayoutState(pack.layout, trackerState));
-    store.set(unhintedHintsState, buildUnhintedState(trackerState));
+    store.set(unhintedHintsState, buildUnhintedState(trackerState, unhintedLimit));
     setExportTrackerStateMenuItem(true);
   },
   onLeave: async () => {

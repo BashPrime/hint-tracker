@@ -3,12 +3,15 @@ import { Button } from '@/components/ui/button';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { useRightClick } from '@/hooks/useRightClick';
 import { cn } from '@/lib/utils';
-import { unhintedHintsState } from '@/states/App.states';
+import {
+  unhintedHintsState,
+  unhintedItemsLimitAtom,
+} from '@/states/App.states';
 import {
   LayoutStateUnhintedItems,
   UnhintedItemHint,
 } from '@/types/state.types';
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom, useAtomValue } from 'jotai';
 import { Plus, X } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { Header } from './header';
@@ -88,8 +91,7 @@ type Props = {
 export function UnhintedItems({ unhinted }: Props) {
   // !STATE
   const [hints, setHints] = useAtom(unhintedHintsState);
-  // !WHY it's an arbitrary limit, but most players likely won't be using that many unhinted items
-  const lengthLimit = 50;
+  const lengthLimit = useAtomValue(unhintedItemsLimitAtom);
 
   const parsedHints = hints.map((h) => ({
     ...h,
