@@ -10,6 +10,7 @@ import {
 } from '@/types/state.types';
 import { atom, useAtom } from 'jotai';
 import { Plus, X } from 'lucide-react';
+import { RefObject, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Header } from './header';
 import { HintChecked } from './hint';
@@ -17,9 +18,10 @@ import { HintChecked } from './hint';
 type HintProps = {
   hint: UnhintedItemHint;
   onDelete: (code: string) => void;
+  parentRef: RefObject<null>;
 };
 
-function Hint({ hint, onDelete }: HintProps) {
+function Hint({ hint, onDelete, parentRef }: HintProps) {
   // !STATE
   const [checked, setChecked] = useAtom(hint.checked);
 
@@ -51,6 +53,9 @@ function Hint({ hint, onDelete }: HintProps) {
                 atom={hint.item}
                 placeholder="Item"
                 options={itemOptions}
+                anchor={parentRef}
+                side="right"
+                sideOffset={(data) => -data.anchor.width * .75}
               />
             )}
             {hint.location && (
@@ -58,6 +63,9 @@ function Hint({ hint, onDelete }: HintProps) {
                 atom={hint.location}
                 placeholder="Location"
                 options={locationOptions}
+                anchor={parentRef}
+                side="right"
+                sideOffset={(data) => -data.anchor.width * .75}
               />
             )}
           </div>
@@ -88,6 +96,7 @@ type Props = {
 export function UnhintedItems({ unhinted }: Props) {
   // !STATE
   const [hints, setHints] = useAtom(unhintedHintsState);
+  const ref = useRef(null);
 
   const parsedHints = hints.map((h) => ({
     ...h,
@@ -126,7 +135,7 @@ export function UnhintedItems({ unhinted }: Props) {
       {unhinted.header && (
         <Header color={unhinted.color}>{unhinted.header}</Header>
       )}
-      <div className="flex min-h-0 flex-col" data-name="uh-body">
+      <div className="flex min-h-0 flex-col" ref={ref} data-name="uh-body">
         <Button
           variant="secondary"
           onClick={addHint}
@@ -140,7 +149,12 @@ export function UnhintedItems({ unhinted }: Props) {
         </Button>
         <div className="overflow-y-auto" data-name="uh-hints">
           {parsedHints.map((hint) => (
-            <Hint hint={hint} key={hint.code} onDelete={deleteHint} />
+            <Hint
+              hint={hint}
+              key={hint.code}
+              onDelete={deleteHint}
+              parentRef={ref}
+            />
           ))}
         </div>
       </div>
