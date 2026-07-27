@@ -91,15 +91,6 @@ export function LayoutHint({ hint }: Props) {
       onMouseDown={handleRightClick}
       data-name="layout-hint"
     >
-      {image && (
-        <div className="mb-1 w-24 select-none" data-name="hint-img">
-          <img
-            src={`data:image/${image.type};base64,${image.data}`}
-            title={hint.name}
-            alt={`Image for ${hint.name}`}
-          />
-        </div>
-      )}
       {hint.item && (
         <AtomCombobox
           atom={hint.item}
@@ -114,9 +105,18 @@ export function LayoutHint({ hint }: Props) {
           options={locationOptions}
         />
       )}
+      {image && (
+        <div className="order-first mb-1 w-24 select-none" data-name="hint-img">
+          <img
+            src={`data:image/${image.type};base64,${image.data}`}
+            title={hint.name}
+            alt={`Image for ${hint.name}`}
+          />
+        </div>
+      )}
       <div
         className={cn(
-          'order-first flex flex-row',
+          'order-[-9998] flex flex-row',
           hint.name && 'justify-between',
           !hint.name && 'h-0 justify-end'
         )}
