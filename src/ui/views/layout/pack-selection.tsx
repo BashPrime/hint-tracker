@@ -40,7 +40,7 @@ export function PackSelection() {
       <div
         className={cn(
           'flex flex-col items-center justify-center gap-2',
-          'h-full'
+          'h-full bg-zinc-50'
         )}
         data-name="pack-selection-no-packs"
       >
@@ -56,7 +56,10 @@ export function PackSelection() {
 
   return (
     <div
-      className="flex flex-col items-center select-none"
+      className={cn(
+        'flex flex-col items-center select-none',
+        'dark:bg-background h-full bg-zinc-50'
+      )}
       data-name="pack-selection"
     >
       <div

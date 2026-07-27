@@ -76,7 +76,7 @@ export function LayoutHint({ hint }: Props) {
     <div
       tabIndex={0}
       className={cn(
-        'bg-zinc-200 dark:bg-zinc-800',
+        'bg-zinc-100 dark:bg-zinc-800',
         'flex flex-auto flex-col px-1.5 py-1',
         'border border-zinc-300 dark:border-zinc-900',
         checked && 'bg-green-300/90 dark:bg-green-900/90'
@@ -111,7 +111,7 @@ export function LayoutHint({ hint }: Props) {
             style={{ color: !checked ? hint.color : '' }}
             className={cn(
               'text-sm font-bold uppercase select-none',
-              hint.color && !checked && 'brightness-75 dark:brightness-100',
+              hint.color && !checked && 'brightness-67 dark:brightness-100',
               checked && 'text-green-800 dark:text-green-400'
             )}
           >

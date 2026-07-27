@@ -34,7 +34,7 @@ function Hint({ hint, onDelete }: HintProps) {
   return (
     <div
       className={cn(
-        'bg-zinc-200 dark:bg-zinc-800',
+        'bg-zinc-100 dark:bg-zinc-800',
         'flex flex-auto flex-col px-1.5 py-1',
         'border border-zinc-300 dark:border-zinc-900',
         checked && 'bg-green-300/90 dark:bg-green-900/90'
