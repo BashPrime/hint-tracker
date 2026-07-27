@@ -10,7 +10,6 @@ import {
 } from '@/states/App.states';
 import { HintWithState } from '@/types/state.types';
 import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
-import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Image } from '../../../shared/types/image.types';
 
@@ -24,21 +23,14 @@ export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
   const accessibleCheckboxes = useAtomValue(accessibleCheckboxesState);
   const [checked, setChecked] = useAtom(checkedAtom);
 
-  if (accessibleCheckboxes) {
-    return (
-      <Checkbox
-        checked={checked}
-        onCheckedChange={setChecked}
-        className={cn('order-3 cursor-pointer', 'mr-1', className)}
-      />
-    );
-  }
   return (
-    <Check
+    <Checkbox
+      checked={checked}
+      onCheckedChange={setChecked}
+      disabled={!accessibleCheckboxes}
       className={cn(
-        'text-green-800 dark:text-green-300',
-        'mx-1 my-0.5 size-4',
-        !checked && 'opacity-0',
+        !accessibleCheckboxes && !checked && 'hidden',
+        accessibleCheckboxes && 'cursor-pointer',
         className
       )}
     />
@@ -116,9 +108,10 @@ export function LayoutHint({ hint }: Props) {
       )}
       <div
         className={cn(
-          'order-[-9998] flex flex-row',
+          'relative order-[-9998] flex flex-row',
           hint.name && 'justify-between',
-          !hint.name && 'h-0 justify-end'
+          !hint.name && 'h-0 justify-end',
+          'relative'
         )}
       >
         {hint.name && (
@@ -133,7 +126,10 @@ export function LayoutHint({ hint }: Props) {
             {hint.name}
           </p>
         )}
-        <HintChecked checkedAtom={hint.checked} />
+        <HintChecked
+          checkedAtom={hint.checked}
+          className="absolute top-0 right-0 mx-1 my-0.5 p-2"
+        />
       </div>
     </div>
   );
