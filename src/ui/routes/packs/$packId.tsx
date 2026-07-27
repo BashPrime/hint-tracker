@@ -66,9 +66,12 @@ export const Route = createFileRoute('/packs/$packId')({
     }
 
     // Build the tracker state
-    const unhintedLimit = store.get(unhintedItemsLimitAtom)
+    const unhintedLimit = store.get(unhintedItemsLimitAtom);
     store.set(layoutState, buildLayoutState(pack.layout, trackerState));
-    store.set(unhintedHintsState, buildUnhintedState(trackerState, unhintedLimit));
+    store.set(
+      unhintedHintsState,
+      buildUnhintedState(trackerState, unhintedLimit)
+    );
     setExportTrackerStateMenuItem(true);
   },
   onLeave: async () => {
