@@ -100,9 +100,23 @@ export function LayoutHint({ hint }: Props) {
           />
         </div>
       )}
+      {hint.item && (
+        <AtomCombobox
+          atom={hint.item}
+          placeholder={'Item'}
+          options={itemOptions}
+        />
+      )}
+      {hint.location && (
+        <AtomCombobox
+          atom={hint.location}
+          placeholder={'Location'}
+          options={locationOptions}
+        />
+      )}
       <div
         className={cn(
-          'flex flex-row',
+          'order-first flex flex-row',
           hint.name && 'justify-between',
           !hint.name && 'h-0 justify-end'
         )}
@@ -121,20 +135,6 @@ export function LayoutHint({ hint }: Props) {
         )}
         <HintChecked checkedAtom={hint.checked} />
       </div>
-      {hint.item && (
-        <AtomCombobox
-          atom={hint.item}
-          placeholder={'Item'}
-          options={itemOptions}
-        />
-      )}
-      {hint.location && (
-        <AtomCombobox
-          atom={hint.location}
-          placeholder={'Location'}
-          options={locationOptions}
-        />
-      )}
     </div>
   );
 }
