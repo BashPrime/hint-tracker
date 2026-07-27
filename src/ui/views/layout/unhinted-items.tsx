@@ -128,17 +128,15 @@ export function UnhintedItems({ unhinted }: Props) {
       )}
       <div className="flex min-h-0 flex-col" data-name="uh-body">
         <Button
+          variant="secondary"
           onClick={addHint}
           className={cn(
-            'hover:brightness-125',
-            'bg-bashprime-red hover:bg-bashprime-red',
-            'dark:bg-bashprime-yellow dark:hover:bg-bashprime-yellow',
             'w-full cursor-pointer place-self-center rounded-none',
             'text-lg font-bold uppercase'
           )}
           data-name="add-hint-button"
         >
-          <Plus className="size-6" /> Add New Hint
+          <Plus className="size-6" /> Add New
         </Button>
         <div className="overflow-y-auto" data-name="uh-hints">
           {parsedHints.map((hint) => (
