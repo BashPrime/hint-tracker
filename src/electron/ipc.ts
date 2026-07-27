@@ -125,7 +125,7 @@ export function runIpcHandlers() {
 
   ipcMain.handle(IPC_IDS.installPack, () => {
     installPackDialog();
-  })
+  });
 }
 
 // these calls originate from ipcMain.
@@ -254,18 +254,33 @@ export function importTrackerState() {
         // Verify version before loading
         const pack = getBasicPack(state.data.pack.id);
 
-        if (pack?.version !== state.data.pack.version) {
+        if (!pack) {
+          console.error('importTrackerState(): missing pack:', state.data.pack);
+          showDialog({
+            type: 'error',
+            title: 'Missing Pack',
+            message:
+              'Could not find the pack for this import. Is it installed?',
+            detail: [
+              `Pack Name: ${state.data.pack.name}`,
+              `Pack Version: ${state.data.pack.version}`,
+              `Pack ID: ${state.data.pack.id}`,
+            ].join('\n'),
+          });
+
+          return;
+        }
+
+        if (pack.version !== state.data.pack.version) {
           console.error(
-            'importTrackerState(): version mismatch or missing pack:',
-            state.data.pack.version,
-            pack ? pack.version : null
+            'importTrackerState(): version mismatch',
+            `(received: ${state.data.pack.version},`,
+            `expected: ${pack.version})`
           );
           showDialog({
             type: 'error',
-            title: pack ? 'Version Mismatch' : 'Missing Pack',
-            message: pack
-              ? `The version of the tracker state (${state.data.pack.version}) does not match the version of the pack (${pack.version}). Aborting.`
-              : 'Could not find the pack for this import. Is it installed?',
+            title: 'Version Mismatch',
+            message: `The version of the tracker state (${state.data.pack.version}) does not match the version of the pack (${pack.version}). Aborting.`,
           });
 
           return;
