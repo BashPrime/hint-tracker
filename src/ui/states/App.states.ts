@@ -1,3 +1,4 @@
+import { isDev } from '@/helpers/utils';
 import {
   HintWithState,
   LayoutStateGrid,
@@ -19,6 +20,7 @@ export const pauseAutosaveState = atom<boolean>(false);
 export const unhintedHintsState = atom<UnhintedItemHint[]>([]);
 export const importTrackerState = atom<TrackerSaveState | null>(null);
 export const trackerStateToLoad = atom<'autosave' | 'import'>('autosave');
+export const showDevtoolsState = atom<boolean>(isDev());
 
 export const trackerHintsAtom = atom((get) => {
   // !STATE
