@@ -20,8 +20,6 @@ import { buildPackDetails } from './pack-builder.js';
 import { getErrorMsg, showDialog } from './util.js';
 import { getMainWindow } from './window.js';
 
-let packs: BasicPack[];
-
 export function getAllPacksInDir(dir: string = USER_PACKS_PATH): BasicPack[] {
   const files = readDir(dir);
 
@@ -29,20 +27,18 @@ export function getAllPacksInDir(dir: string = USER_PACKS_PATH): BasicPack[] {
     return [];
   }
 
-  packs = files
+  return files
     .filter((file) => {
       return path.extname(file).toLowerCase() === '.zip';
     })
     .map((file) => getPackTrackerJson(path.join(dir, file)))
     .filter((pack) => pack !== null);
-
-  return packs;
 }
 
 export function getBasicPack(packId: string) {
-  if (!packs) {
-    getAllPacksInDir();
-  }
+  // Fetch packs state again in case the user does something unintended,
+  // like removing the pack file while the app is running
+  const packs = getAllPacksInDir();
 
   return packs.find((pack) => pack.id === packId);
 }
@@ -84,7 +80,7 @@ export function getPackTrackerJson(filePath: string): BasicPack | null {
 export function getPackDetails(packId: string) {
   // Fetch packs state again in case the user does something unintended,
   // like removing the pack file while the app is running
-  getAllPacksInDir();
+  const packs = getAllPacksInDir();
 
   const match = packs.find((p) => p.id === packId);
 
