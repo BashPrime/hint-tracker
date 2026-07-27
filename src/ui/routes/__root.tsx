@@ -1,3 +1,4 @@
+import { isDev } from '@/helpers/utils';
 import { useAutosaveTracker } from '@/hooks/useAutosaveTracker';
 import { useImportExportTrackerState } from '@/hooks/useImportExportTrackerState';
 import { useResetSize } from '@/hooks/useResetSize';
@@ -27,7 +28,9 @@ function RootLayout() {
   useEffect(() => {
     function toggleDevtools(event: KeyboardEvent) {
       if (event.ctrlKey && event.key === 'k') {
-        setShowDevtools(!showDevtools);
+        if (isDev()) {
+          setShowDevtools(!showDevtools);
+        }
       }
     }
 
@@ -45,9 +48,13 @@ function RootLayout() {
       <div className="h-full" data-name="_root">
         <Outlet />
       </div>
-      <RouterDevTools />
-      <JotaiDevTools />
-      <ScrollSizeDevtools />
+      {showDevtools && (
+        <>
+          <RouterDevTools />
+          <JotaiDevTools />
+          <ScrollSizeDevtools />
+        </>
+      )}
     </>
   );
 }
