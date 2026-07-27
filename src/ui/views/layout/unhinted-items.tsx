@@ -54,8 +54,8 @@ function Hint({ hint, onDelete, parentRef }: HintProps) {
                 placeholder="Item"
                 options={itemOptions}
                 anchor={parentRef}
-                side="right"
-                sideOffset={(data) => -data.anchor.width * .75}
+                side="bottom"
+                sideOffset={(data) => -data.anchor.height * 0.75}
               />
             )}
             {hint.location && (
@@ -64,8 +64,8 @@ function Hint({ hint, onDelete, parentRef }: HintProps) {
                 placeholder="Location"
                 options={locationOptions}
                 anchor={parentRef}
-                side="right"
-                sideOffset={(data) => -data.anchor.width * .75}
+                side="bottom"
+                sideOffset={(data) => -data.anchor.height * 0.75}
               />
             )}
           </div>
