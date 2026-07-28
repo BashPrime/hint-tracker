@@ -305,5 +305,5 @@ export function importTrackerState() {
 
 export function setAccessibleCheckboxes(enabled: boolean) {
   const mainWindow = getMainWindow();
-  mainWindow?.webContents.send(IPC_IDS.setAccessibleCheckboxes, enabled)
+  mainWindow?.webContents.send(IPC_IDS.setAccessibleCheckboxes, enabled);
 }

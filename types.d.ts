@@ -15,6 +15,8 @@ interface Window {
     exportTrackerState: (callback: () => void) => () => void;
     importTrackerState: (callback: (state: object) => void) => () => void;
     exportTrackerStateResponse: (state: object, packId: string | null) => void;
-    setAccessibleCheckboxes: (callback: (enabled: boolean) => void) => () => void;
+    setAccessibleCheckboxes: (
+      callback: (enabled: boolean) => void
+    ) => () => void;
   };
 }

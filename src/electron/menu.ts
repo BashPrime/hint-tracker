@@ -119,7 +119,7 @@ const template: MenuItemConstructorOptions[] = [
         label: 'Accessible Checkboxes',
         type: 'checkbox',
         checked: false,
-        click: (item) => setAccessibleCheckboxes(item.checked)
+        click: (item) => setAccessibleCheckboxes(item.checked),
       },
       {
         label: 'Theme',

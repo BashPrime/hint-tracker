@@ -1,10 +1,10 @@
-import { accessibleCheckboxesState } from "@/states/App.states";
-import { useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { accessibleCheckboxesState } from '@/states/App.states';
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 
 export function useSetAccessibleCheckboxes() {
   // !STATE
-  const setAccessibleCheckboxes = useSetAtom(accessibleCheckboxesState)
+  const setAccessibleCheckboxes = useSetAtom(accessibleCheckboxesState);
 
   useEffect(() => {
     // !IPC
