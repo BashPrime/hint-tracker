@@ -19,14 +19,11 @@ type Props = {
 export function LayoutParser({ elem }: Props) {
   return (
     <>
-      {elem.type === 'group' && (
-        <LayoutArray array={elem as LayoutStateArray} />
-      )}
+      {elem.type === 'hint' && <LayoutHint hint={elem as HintWithState} />}
       {elem.type === 'array' && (
         <LayoutArray array={elem as LayoutStateArray} />
       )}
       {elem.type === 'grid' && <LayoutGrid grid={elem as LayoutStateGrid} />}
-      {elem.type === 'hint' && <LayoutHint hint={elem as HintWithState} />}
       {elem.type === 'unhinted' && (
         <UnhintedItems unhinted={elem as LayoutStateUnhintedItems} />
       )}
