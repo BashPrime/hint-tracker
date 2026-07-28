@@ -8,6 +8,7 @@ import {
   DEFAULT_WINDOW_SIZE,
   MENU_IDS,
 } from './constants.js';
+import { setAccessibleCheckboxes } from './ipc.js';
 import { menu } from './menu.js';
 import { getBasicPack } from './packs.js';
 import { getIconPath, getPreloadPath } from './pathResolver.js';
@@ -34,6 +35,8 @@ export function createMainWindow(config: ConfigType | null) {
   if (config) {
     setInitialTheme(config.theme);
     setResetPackSize(config.resetSizeOnPackOpen);
+    mainWindow.setAlwaysOnTop(config.alwaysOnTop);
+    setAccessibleCheckboxes(config.accessibleCheckboxes);
   }
 
   Menu.setApplicationMenu(menu);
@@ -77,8 +80,12 @@ function handleSaveConfig() {
     const parsed = ConfigSchema.parse({
       theme: nativeTheme.themeSource,
       window: mainWindow?.getBounds() ?? DEFAULT_WINDOW_BOUNDS,
+      alwaysOnTop: mainWindow?.isAlwaysOnTop() ?? false,
       resetSizeOnPackOpen:
         menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked ??
+        false,
+      accessibleCheckboxes:
+        menu.getMenuItemById(MENU_IDS.toggles.accessibleCheckboxes)?.checked ??
         false,
     });
 
