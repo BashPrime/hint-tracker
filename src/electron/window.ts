@@ -124,8 +124,7 @@ function mainWindowHandlers(window: BrowserWindow) {
 
 export function resetWindowSize(packId: string | null) {
   const pack = packId ? getBasicPack(packId) : null;
-  const packWindowSize =
-    pack && pack.defaultSize ? pack.defaultSize : null;
-  const size = packWindowSize ?? DEFAULT_WINDOW_SIZE;
-  mainWindow?.setSize(size.width, size.height, true);
+  const size =
+    pack && pack.defaultSize ? pack.defaultSize : DEFAULT_WINDOW_SIZE;
+  mainWindow?.setContentSize(size.width, size.height, true);
 }
