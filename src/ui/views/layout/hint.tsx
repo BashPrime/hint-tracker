@@ -135,12 +135,15 @@ export function LayoutHint({ hint, onDelete }: Props) {
         <div
           className={cn(
             'z-10 mr-0.75', // prevents weird scrolling behavior
-            'flex-right flex items-center gap-2',
+            'flex flex-row items-center gap-2',
             !hint.name && 'mt-4'
           )}
           data-name="hint-buttons"
         >
-          <HintChecked checkedAtom={hint.checked} className="size-6 select-none" />
+          <HintChecked
+            checkedAtom={hint.checked}
+            className="size-6 select-none"
+          />
           {onDelete && (
             <Button
               tabIndex={0}
