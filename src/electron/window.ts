@@ -120,16 +120,12 @@ function mainWindowHandlers(window: BrowserWindow) {
   window.on('close', () => {
     handleSaveConfig();
   });
-
-  if (isDev()) {
-    window.on('resize', () => console.log('window size:', window.getSize()));
-  }
 }
 
 export function resetWindowSize(packId: string | null) {
   const pack = packId ? getBasicPack(packId) : null;
   const packWindowSize =
-    pack && pack.defaultWindowSize ? pack.defaultWindowSize : null;
+    pack && pack.defaultSize ? pack.defaultSize : null;
   const size = packWindowSize ?? DEFAULT_WINDOW_SIZE;
   mainWindow?.setSize(size.width, size.height, true);
 }
