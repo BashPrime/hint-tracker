@@ -4,8 +4,6 @@
   "properties": {
     "color": { "type": "string" },
     "borderColor": { "type": "string" },
-    "grow": { "type": "boolean" },
-    "gap": { "type": "number" },
     "comboboxOptions": {
       "type": "object",
       "properties": {

@@ -16,7 +16,7 @@ export const PackTrackerJsonSchema = z.object({
   locations: z.array(z.string()),
   features: z.array(z.string()),
   layout: z.array(z.string()),
-  defaultWindowSize: z
+  defaultSize: z
     .object({
       width: z.number(),
       height: z.number(),

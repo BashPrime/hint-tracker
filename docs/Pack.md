@@ -30,8 +30,12 @@
   "layout": [
     "<array of JSON file path strings describing your layout data. See Layout for more info>"
   ],
-  "defaultWindowSize": {
-    // this sets the application window size when `File > Reset Size` is clicked.
+  "defaultSize": {
+    // Optional object. If the pack has a defined `defaultSize` object when `File > Reset Size` is clicked, the application will resize the client area (the main content, not including the menu bar and title area) to the given width and height.
+
+    // If `defaultSize` is undefined, the application will reset the client area to 800x600 pixels when `File > Reset Size` is clicked.
+
+    // I recommend running the hint tracker in a development environment. There are some dev tools that will display, including the active scroll width and scroll height of the client area which can help with getting a good default width and height for your pack.
     "width": "<number, pixel width>",
     "height": "<number, pixel height>"
   }

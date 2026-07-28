@@ -136,7 +136,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
         )}
         <div
           className={cn(
-            'z-10 mr-1.25 lg:mr-0.75', // prevents weird scrolling behavior
+            'z-10 mr-[0.5rem]', // prevents weird scrolling behavior
             'flex flex-row items-center gap-1',
             !hint.name && 'mt-2.5'
           )}

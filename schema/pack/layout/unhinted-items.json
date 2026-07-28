@@ -5,7 +5,6 @@
     "header": { "type": "string" },
     "color": { "type": "string" },
     "borderColor": { "type": "string" },
-    "gap": { "type": "number" },
     "comboboxOptions": {
       "type": "object",
       "properties": {
