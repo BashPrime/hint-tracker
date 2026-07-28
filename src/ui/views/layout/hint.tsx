@@ -32,7 +32,8 @@ export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
       disabled={!accessibleCheckboxes}
       className={cn(
         'border-zinc-400 dark:border-zinc-600',
-        'data-checked:bg-zinc-200 data-checked:text-green-800',
+        'data-checked:bg-zinc-200 data-checked:text-green-950',
+        'data-checked:dark:border-zinc-600',
         !accessibleCheckboxes && !checked && 'invisible',
         accessibleCheckboxes && 'cursor-pointer',
         className
@@ -106,8 +107,8 @@ export function LayoutHint({ hint, onDelete }: Props) {
         <div className="order-first mb-1 w-24 select-none" data-name="hint-img">
           <img
             src={`data:image/${image.type};base64,${image.data}`}
-            title={hint.name}
-            alt={`Image for ${hint.name}`}
+            title={hint.code}
+            alt={`Image for ${hint.code}`}
           />
         </div>
       )}
@@ -133,25 +134,27 @@ export function LayoutHint({ hint, onDelete }: Props) {
         )}
         <div
           className={cn(
-            'mx-1 flex flex-row items-center gap-2',
+            'z-10 mr-0.75', // prevents weird scrolling behavior
+            'flex-right flex items-center gap-2',
             !hint.name && 'mt-4'
           )}
           data-name="hint-buttons"
         >
-          <HintChecked checkedAtom={hint.checked} className="size-6" />
+          <HintChecked checkedAtom={hint.checked} className="size-6 select-none" />
           {onDelete && (
             <Button
               tabIndex={0}
+              size="icon"
               variant="ghost"
               onDoubleClick={() => onDelete(hint.code)}
               className={cn(
-                'size-7 cursor-pointer',
+                'cursor-pointer select-none',
                 'text-red-600 dark:text-red-500',
                 'hover:bg-red-300 dark:hover:bg-red-400 dark:hover:text-black',
-                hint.checked && 'text-red-500'
+                checked && 'text-red-700 dark:text-red-600'
               )}
             >
-              <X className="size-7" />
+              <X className="size-6" />
             </Button>
           )}
         </div>
