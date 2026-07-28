@@ -58,9 +58,7 @@ export function closeMainWindow() {
 
 function setInitialAlwaysOnTop(checked: boolean) {
   const mainWindow = getMainWindow();
-  const alwaysOnTop = menu.getMenuItemById(
-    MENU_IDS.toggles.alwaysOnTop
-  );
+  const alwaysOnTop = menu.getMenuItemById(MENU_IDS.toggles.alwaysOnTop);
 
   if (alwaysOnTop) {
     mainWindow?.setAlwaysOnTop(checked);
