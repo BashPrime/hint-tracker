@@ -7,7 +7,7 @@ import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { useTrackerHome } from '@/hooks/useTrackerHome';
 import { rendererLoaded } from '@/ipc';
 import { showDevtoolsState } from '@/states/App.states';
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRoute, Outlet, useRouter } from '@tanstack/react-router';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import ScrollSizeDevtools, {
@@ -21,12 +21,15 @@ function RootLayout() {
   const [showDevtools, setShowDevtools] = useAtom(showDevtoolsState);
 
   // !HOOKS
+  const router = useRouter();
   useTrackerHome();
   useAutosaveTracker();
   useImportExportTrackerState();
   useResetSize();
   useThemeChanger();
   useSetAccessibleCheckboxes();
+
+  const pathName = router.state.location.pathname;
 
   // Handle toggle dev tools
   useEffect(() => {
@@ -49,6 +52,11 @@ function RootLayout() {
   useEffect(() => {
     rendererLoaded();
   }, []);
+
+  // Clear highlighted text on route change
+  useEffect(() => {
+    window.getSelection()?.removeAllRanges();
+  }, [pathName]);
 
   return (
     <>
