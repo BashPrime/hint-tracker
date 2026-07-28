@@ -122,7 +122,7 @@ function mainWindowHandlers(window: BrowserWindow) {
   });
 }
 
-export function resetWindowSize(packId: string | null) {
+export function resetWindowContentSize(packId: string | null) {
   const pack = packId ? getBasicPack(packId) : null;
   const size =
     pack && pack.defaultSize ? pack.defaultSize : DEFAULT_WINDOW_SIZE;

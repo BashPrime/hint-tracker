@@ -17,7 +17,7 @@ import {
   installPackDialog,
 } from './packs.js';
 import { getErrorMsg, showDialog } from './util.js';
-import { getMainWindow, resetWindowSize } from './window.js';
+import { getMainWindow, resetWindowContentSize } from './window.js';
 
 export function runIpcHandlers() {
   // set some state when React app has loaded
@@ -35,14 +35,19 @@ export function runIpcHandlers() {
 
   // get pack details
   ipcMain.handle(IPC_IDS.fetchPackDetails, (_, packId: string) => {
+    const mainWindow = getMainWindow();
     const packDetails = getPackDetails(packId);
     const resetPackSize = Boolean(
       packDetails &&
       menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked
     );
 
-    if (resetPackSize) {
-      resetWindowSize(packId);
+    // Don't reset the window size if the app is maximized or fullscreen
+    if (
+      resetPackSize &&
+      !(mainWindow?.isMaximized() || mainWindow?.isFullScreen())
+    ) {
+      resetWindowContentSize(packId);
     }
 
     return packDetails;
@@ -107,7 +112,7 @@ export function runIpcHandlers() {
   });
 
   ipcMain.handle(IPC_IDS.resetSizeResponse, (_, packId: string | null) => {
-    resetWindowSize(packId);
+    resetWindowContentSize(packId);
   });
 
   ipcMain.handle(IPC_IDS.setTrackerMenuItems, (_, enabled: boolean) => {
