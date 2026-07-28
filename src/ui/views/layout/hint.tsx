@@ -35,6 +35,8 @@ export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
         'data-checked:bg-zinc-200 data-checked:text-green-950',
         'data-checked:dark:border-zinc-600',
         !accessibleCheckboxes && !checked && 'invisible',
+        !accessibleCheckboxes &&
+          'data-checked:text-green:800 data-checked:border-none data-checked:bg-transparent data-checked:dark:bg-transparent data-checked:dark:text-green-300',
         accessibleCheckboxes && 'cursor-pointer',
         className
       )}
@@ -116,7 +118,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
         className={cn(
           'order-[-9998]',
           'flex flex-row',
-          hint.name && 'gap-2 items-start justify-between',
+          hint.name && 'items-start justify-between gap-2',
           !hint.name && 'h-0 justify-end'
         )}
       >
@@ -134,7 +136,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
         )}
         <div
           className={cn(
-            'z-10 mr-0.75', // prevents weird scrolling behavior
+            'z-10 mr-1.25 lg:mr-0.75', // prevents weird scrolling behavior
             'flex flex-row items-center gap-1',
             !hint.name && 'mt-2.5'
           )}
@@ -142,7 +144,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
         >
           <HintChecked
             checkedAtom={hint.checked}
-            className="size-5 select-none z-11"
+            className="z-11 size-5 select-none"
           />
           {onDelete && (
             <Button
@@ -150,8 +152,14 @@ export function LayoutHint({ hint, onDelete }: Props) {
               size="icon"
               variant="ghost"
               onDoubleClick={() => onDelete(hint.code)}
+              onKeyDown={(e) => {
+                // Allow for keyboard deletions
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Space') {
+                  onDelete(hint.code);
+                }
+              }}
               className={cn(
-                'cursor-pointer select-none z-12',
+                'z-12 cursor-pointer select-none',
                 'text-red-600 dark:text-red-500',
                 'hover:bg-red-300 dark:hover:bg-red-400 dark:hover:text-black',
                 checked && 'text-red-700 dark:text-red-600'
