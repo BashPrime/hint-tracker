@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - The tracker has been completely overhauled and now functions as a universal tracker!
-  - The previously-hardcoded trackers have been completely replaced by a new pack system, inspired by [PopTracker](https://github.com/black-sliver/PopTracker). Tracker packs are bundled .zip files that are installed and read by the application, and then parsed to generate the resulting layout and hint structure.
-  - If you want to build your own Pack, please read `docs/Pack.md`!
+  - The previously-hardcoded trackers have been completely replaced by a new pack system, inspired by [PopTracker](https://github.com/black-sliver/PopTracker).
+  - Tracker packs are bundled .zip files that are installed and read by the application, and then parsed to generate the resulting layout and hint structure.
+  - If you want to build your own pack, please read `docs/Pack.md`!
 - Autosaving is now done for every installed tracker pack (and every installed _version_ of that pack), meaning that your progress in Pack A won't be lost if you switch to Pack B.
 - Light theme has been added.
   - By default, the application will use the system theme, but the light or dark themes can be manually set if desired.
+- Checkboxes can be made accessible by keyboard and directly interacted with by enabling the **Accessible Checkboxes** toggle.
+- New toggle **Use Pack's Default Window Size on Load** that automatically resizes the window to the pack's default size (if defined) when loading it.
+  - This will **not** occur if the window is maximized or in fullscreen.
+- Improved error handling, including:
+  - The app will tell you what pack is missing if you attempt to import a tracker state for a pack that is not installed.
+- Performance has improved application-wide.
 
 ## [3.0.0] - 2025-04-07
 
