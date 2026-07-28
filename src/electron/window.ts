@@ -33,7 +33,9 @@ export function createMainWindow(config: ConfigType | null) {
 
   if (config) {
     setInitialTheme(config.theme);
-    setResetPackSize(config.resetSizeOnPackOpen);
+    setInitialResetPackSize(config.resetSizeOnPackOpen);
+    setInitialAlwaysOnTop(config.alwaysOnTop);
+    setInitialAccessibleCheckboxes(config.accessibleCheckboxes);
   }
 
   Menu.setApplicationMenu(menu);
@@ -54,6 +56,16 @@ export function closeMainWindow() {
   mainWindow?.close();
 }
 
+function setInitialAlwaysOnTop(checked: boolean) {
+  const mainWindow = getMainWindow();
+  const alwaysOnTop = menu.getMenuItemById(MENU_IDS.toggles.alwaysOnTop);
+
+  if (alwaysOnTop) {
+    mainWindow?.setAlwaysOnTop(checked);
+    alwaysOnTop.checked = checked;
+  }
+}
+
 function setInitialTheme(theme: ThemeType) {
   nativeTheme.themeSource = theme;
   const menuThemeRadioItem = menu.getMenuItemById(MENU_IDS.theme[theme]);
@@ -62,7 +74,7 @@ function setInitialTheme(theme: ThemeType) {
   }
 }
 
-function setResetPackSize(checked: boolean) {
+function setInitialResetPackSize(checked: boolean) {
   const resetPackSize = menu.getMenuItemById(
     MENU_IDS.toggles.resetSizeOnPackOpen
   );
@@ -72,13 +84,27 @@ function setResetPackSize(checked: boolean) {
   }
 }
 
+function setInitialAccessibleCheckboxes(checked: boolean) {
+  const accessibleCheckboxes = menu.getMenuItemById(
+    MENU_IDS.toggles.accessibleCheckboxes
+  );
+
+  if (accessibleCheckboxes) {
+    accessibleCheckboxes.checked = checked;
+  }
+}
+
 function handleSaveConfig() {
   try {
     const parsed = ConfigSchema.parse({
       theme: nativeTheme.themeSource,
       window: mainWindow?.getBounds() ?? DEFAULT_WINDOW_BOUNDS,
+      alwaysOnTop: mainWindow?.isAlwaysOnTop() ?? false,
       resetSizeOnPackOpen:
         menu.getMenuItemById(MENU_IDS.toggles.resetSizeOnPackOpen)?.checked ??
+        false,
+      accessibleCheckboxes:
+        menu.getMenuItemById(MENU_IDS.toggles.accessibleCheckboxes)?.checked ??
         false,
     });
 

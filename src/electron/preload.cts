@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 const electron = require('electron');
 
 electron.contextBridge.exposeInMainWorld('electronApi', {
+  rendererLoaded: () => ipcRenderer.invoke('renderer-loaded'),
   fetchPacks: () => ipcRenderer.invoke('fetch-packs'),
   fetchPackDetails: (fileName: string) =>
     ipcRenderer.invoke('fetch-pack-details', fileName),
@@ -51,4 +52,11 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
   },
   exportTrackerStateResponse: (state: object, packId: string | null) =>
     ipcRenderer.invoke('export-tracker-state-response', state, packId),
+  setAccessibleCheckboxes: (callback: (enabled: boolean) => void) => {
+    const subscription = (_event: any, enabled: boolean) => callback(enabled);
+    ipcRenderer.on('set-accessible-checkboxes', subscription);
+
+    return () =>
+      ipcRenderer.removeListener('set-accessible-checkboxes', subscription);
+  },
 });

@@ -1,5 +1,6 @@
 interface Window {
   electronApi: {
+    rendererLoaded: () => void;
     fetchPacks: () => Promise<object[]>;
     fetchPackDetails: (packId: string) => Promise<object>;
     fetchImage: (packId: string, imgPath: string) => Promise<object>;
@@ -15,5 +16,8 @@ interface Window {
     exportTrackerState: (callback: () => void) => () => void;
     importTrackerState: (callback: (state: object) => void) => () => void;
     exportTrackerStateResponse: (state: object, packId: string | null) => void;
+    setAccessibleCheckboxes: (
+      callback: (enabled: boolean) => void
+    ) => () => void;
   };
 }

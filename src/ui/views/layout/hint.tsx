@@ -1,27 +1,43 @@
 import { AtomCombobox } from '@/components/atom-combobox';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useComboboxOptionsBuilder } from '@/hooks/useComboboxOptionsBuilder';
 import { useRightClick } from '@/hooks/useRightClick';
 import { fetchImage } from '@/ipc';
 import { cn } from '@/lib/utils';
-import { activePackState } from '@/states/App.states';
+import {
+  accessibleCheckboxesState,
+  activePackState,
+} from '@/states/App.states';
 import { HintWithState } from '@/types/state.types';
-import { useAtom, useAtomValue } from 'jotai';
-import { Check } from 'lucide-react';
-import { KeyboardEvent, useEffect, useState } from 'react';
+import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
+import { X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Image } from '../../../shared/types/image.types';
 
 type HintCheckedProps = {
-  checked: boolean;
+  checkedAtom: PrimitiveAtom<boolean>;
   className?: string;
 };
 
-export function HintChecked({ checked, className }: HintCheckedProps) {
+export function HintChecked({ checkedAtom, className }: HintCheckedProps) {
+  // !STATE
+  const accessibleCheckboxes = useAtomValue(accessibleCheckboxesState);
+  const [checked, setChecked] = useAtom(checkedAtom);
+
   return (
-    <Check
+    <Checkbox
+      checked={checked}
+      onCheckedChange={setChecked}
+      disabled={!accessibleCheckboxes}
       className={cn(
-        'text-green-800 dark:text-green-300',
-        'mx-1 my-0.5 size-4',
-        !checked && 'opacity-0',
+        'border-zinc-400 dark:border-zinc-600',
+        'data-checked:bg-zinc-200 data-checked:text-green-950',
+        'data-checked:dark:border-zinc-600',
+        !accessibleCheckboxes && !checked && 'invisible',
+        !accessibleCheckboxes &&
+          'data-checked:text-green:800 data-checked:border-none data-checked:bg-transparent data-checked:dark:bg-transparent data-checked:dark:text-green-300',
+        accessibleCheckboxes && 'cursor-pointer',
         className
       )}
     />
@@ -30,9 +46,10 @@ export function HintChecked({ checked, className }: HintCheckedProps) {
 
 type Props = {
   hint: HintWithState;
+  onDelete?: (code: string) => void;
 };
 
-export function LayoutHint({ hint }: Props) {
+export function LayoutHint({ hint, onDelete }: Props) {
   // !STATE
   const pack = useAtomValue(activePackState);
   const [checked, setChecked] = useAtom(hint.checked);
@@ -54,27 +71,12 @@ export function LayoutHint({ hint }: Props) {
     fetchHintImage();
   }, [pack, hint]);
 
-  // !FUNCTION
-  function handleSpacebarKeyDown(event: KeyboardEvent<HTMLElement>) {
-    const target = event.target as HTMLElement;
-
-    if (target.tagName === 'INPUT') {
-      return;
-    }
-
-    if (event.code === 'Space' || event.key === ' ') {
-      event.preventDefault();
-      setChecked(!checked);
-    }
-  }
-
   // !OPTIONS
   const itemOptions = buildOptions(hint.comboboxOptions?.item ?? []);
   const locationOptions = buildOptions(hint.comboboxOptions?.location ?? []);
 
   return (
     <div
-      tabIndex={0}
       className={cn(
         'bg-zinc-100 dark:bg-zinc-800',
         'flex flex-auto flex-col px-1.5 py-1',
@@ -87,22 +89,36 @@ export function LayoutHint({ hint }: Props) {
           : undefined,
       }}
       onMouseDown={handleRightClick}
-      onKeyDown={handleSpacebarKeyDown}
       data-name="layout-hint"
     >
+      {hint.item && (
+        <AtomCombobox
+          atom={hint.item}
+          placeholder={'Item'}
+          options={itemOptions}
+        />
+      )}
+      {hint.location && (
+        <AtomCombobox
+          atom={hint.location}
+          placeholder={'Location'}
+          options={locationOptions}
+        />
+      )}
       {image && (
-        <div className="mb-1 w-24 select-none" data-name="hint-img">
+        <div className="order-first mb-1 w-24 select-none" data-name="hint-img">
           <img
             src={`data:image/${image.type};base64,${image.data}`}
-            title={hint.name}
-            alt={`Image for ${hint.name}`}
+            title={hint.code}
+            alt={`Image for ${hint.code}`}
           />
         </div>
       )}
       <div
         className={cn(
+          'order-[-9998]',
           'flex flex-row',
-          hint.name && 'justify-between',
+          hint.name && 'items-start justify-between gap-2',
           !hint.name && 'h-0 justify-end'
         )}
       >
@@ -118,22 +134,42 @@ export function LayoutHint({ hint }: Props) {
             {hint.name}
           </p>
         )}
-        <HintChecked checked={checked} />
+        <div
+          className={cn(
+            'z-10 mr-1.25 lg:mr-0.75', // prevents weird scrolling behavior
+            'flex flex-row items-center gap-1',
+            !hint.name && 'mt-2.5'
+          )}
+          data-name="hint-buttons"
+        >
+          <HintChecked
+            checkedAtom={hint.checked}
+            className="z-11 size-5 select-none"
+          />
+          {onDelete && (
+            <Button
+              tabIndex={0}
+              size="icon"
+              variant="ghost"
+              onDoubleClick={() => onDelete(hint.code)}
+              onKeyDown={(e) => {
+                // Allow for keyboard deletions
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Space') {
+                  onDelete(hint.code);
+                }
+              }}
+              className={cn(
+                'z-12 cursor-pointer select-none',
+                'text-red-600 dark:text-red-500',
+                'hover:bg-red-300 dark:hover:bg-red-400 dark:hover:text-black',
+                checked && 'text-red-700 dark:text-red-600'
+              )}
+            >
+              <X className="size-6" />
+            </Button>
+          )}
+        </div>
       </div>
-      {hint.item && (
-        <AtomCombobox
-          atom={hint.item}
-          placeholder={'Item'}
-          options={itemOptions}
-        />
-      )}
-      {hint.location && (
-        <AtomCombobox
-          atom={hint.location}
-          placeholder={'Location'}
-          options={locationOptions}
-        />
-      )}
     </div>
   );
 }
