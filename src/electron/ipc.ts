@@ -20,6 +20,12 @@ import { getErrorMsg, showDialog } from './util.js';
 import { getMainWindow, resetWindowSize } from './window.js';
 
 export function runIpcHandlers() {
+  // set some state when React app has loaded
+  ipcMain.handle(IPC_IDS.rendererLoaded, () => {
+    const checkboxes = menu.getMenuItemById(MENU_IDS.toggles.accessibleCheckboxes);
+    setAccessibleCheckboxes(checkboxes?.checked ?? false)
+  });
+  
   // get all basic packs data
   ipcMain.handle(IPC_IDS.fetchPacks, () => {
     return getAllPacksInDir();

@@ -7,6 +7,10 @@ import { BasicPack, PackDetails } from '../shared/types/pack.types';
 import { buildComboboxOptionsDatabase } from './helpers/comboboxOptions';
 import { activePackState, packsState } from './states/App.states';
 
+export function rendererLoaded() {
+  window.electronApi.rendererLoaded();
+}
+
 export async function fetchPacks() {
   const data = (await window.electronApi.fetchPacks()) as BasicPack[];
   try {

@@ -5,6 +5,7 @@ import { useResetSize } from '@/hooks/useResetSize';
 import { useSetAccessibleCheckboxes } from '@/hooks/useSetAccessibleCheckboxes';
 import { useThemeChanger } from '@/hooks/useThemeChanger';
 import { useTrackerHome } from '@/hooks/useTrackerHome';
+import { rendererLoaded } from '@/ipc';
 import { showDevtoolsState } from '@/states/App.states';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { useAtom } from 'jotai';
@@ -27,6 +28,7 @@ function RootLayout() {
   useThemeChanger();
   useSetAccessibleCheckboxes();
 
+  // Handle toggle dev tools
   useEffect(() => {
     function toggleDevtools(event: KeyboardEvent) {
       if (event.ctrlKey && event.key === 'k') {
@@ -43,7 +45,10 @@ function RootLayout() {
     };
   });
 
-  // !FUNCTION
+  // Trigger renderer loaded on root mount
+  useEffect(() => {
+    rendererLoaded();
+  }, []);
 
   return (
     <>

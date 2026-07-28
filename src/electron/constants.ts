@@ -28,6 +28,7 @@ export const IPC_IDS = {
   importTrackerState: 'import-tracker-state',
   installPack: 'install-pack',
   setAccessibleCheckboxes: 'set-accessible-checkboxes',
+  rendererLoaded: 'renderer-loaded',
 };
 
 // Tracker
