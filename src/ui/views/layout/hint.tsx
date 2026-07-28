@@ -116,7 +116,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
         className={cn(
           'order-[-9998]',
           'flex flex-row',
-          hint.name && 'justify-between',
+          hint.name && 'gap-2 items-start justify-between',
           !hint.name && 'h-0 justify-end'
         )}
       >
@@ -135,14 +135,14 @@ export function LayoutHint({ hint, onDelete }: Props) {
         <div
           className={cn(
             'z-10 mr-0.75', // prevents weird scrolling behavior
-            'flex flex-row items-center gap-2',
-            !hint.name && 'mt-4'
+            'flex flex-row items-center gap-1',
+            !hint.name && 'mt-2.5'
           )}
           data-name="hint-buttons"
         >
           <HintChecked
             checkedAtom={hint.checked}
-            className="size-6 select-none"
+            className="size-5 select-none z-11"
           />
           {onDelete && (
             <Button
@@ -151,7 +151,7 @@ export function LayoutHint({ hint, onDelete }: Props) {
               variant="ghost"
               onDoubleClick={() => onDelete(hint.code)}
               className={cn(
-                'cursor-pointer select-none',
+                'cursor-pointer select-none z-12',
                 'text-red-600 dark:text-red-500',
                 'hover:bg-red-300 dark:hover:bg-red-400 dark:hover:text-black',
                 checked && 'text-red-700 dark:text-red-600'
