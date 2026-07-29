@@ -12,6 +12,7 @@ function App() {
       <DownloadsSection />
       <section id="packs">
         <h2 className="text-2xl font-bold">Packs</h2>
+        <p className="text-muted-foreground">Coming Soon!</p>
       </section>
     </div>
   );
