@@ -1,7 +1,8 @@
 import { app } from 'electron';
 import path from 'path';
 
-export const BASE_PROJECT_URL = 'https://github.com/BashPrime/hint-tracker/';
+export const BASE_GITHUB_URL = 'https://github.com/BashPrime/hint-tracker/';
+export const GH_PAGES_URL = 'https://bashprime.github.io/hint-tracker/';
 
 // Paths
 export const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');

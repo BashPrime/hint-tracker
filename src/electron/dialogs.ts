@@ -1,7 +1,7 @@
 import { app, clipboard, shell } from 'electron';
 import { readFile } from 'fs/promises';
 import os from 'os';
-import { BASE_PROJECT_URL } from './constants.js';
+import { BASE_GITHUB_URL } from './constants.js';
 import { getAboutPanelIconPath, getLicensePath } from './pathResolver.js';
 import { getErrorMsg, isDev, showDialog } from './util.js';
 
@@ -42,7 +42,7 @@ export async function showLicense() {
   // https://github.com/BashPrime/hint-tracker/blob/['main' or 'vX.Y.Z']/NOTICE
   const noticeUrl = new URL(
     `blob/${isDev() ? 'main' : `v${app.getVersion()}`}/NOTICE`,
-    BASE_PROJECT_URL
+    BASE_GITHUB_URL
   );
 
   try {
