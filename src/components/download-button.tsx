@@ -1,3 +1,4 @@
+import { AppleIcon, LinuxIcon, WindowsIcon } from '@/assets/brand-icons';
 import { buildDownloadAsset } from '@/lib/helpers';
 import type { ReleaseAsset } from '@/lib/types';
 import { Button } from './ui/button';
@@ -14,9 +15,11 @@ export function DownloadButton({ asset }: Props) {
 
   return (
     <a href={asset.browser_download_url}>
-      <Button className="bg-bashprime-red text-foreground">
-        <img src={parsed.iconSrc} className="h-4 w-auto" />
-        {parsed.name}
+      <Button variant="secondary" className="bg-bashprime-red fill-foreground py-5">
+        {parsed.icon === 'windows' && <WindowsIcon />}
+        {parsed.icon === 'apple' && <AppleIcon />}
+        {parsed.icon === 'linux' && <LinuxIcon />}
+        <span className="text-lg">{parsed.name}</span>
       </Button>
     </a>
   );

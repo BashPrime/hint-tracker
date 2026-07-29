@@ -7,7 +7,7 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
     const isInstaller = asset.name.includes('setup');
     return {
       name: `Windows ${isInstaller ? 'Installer' : 'Portable'}`,
-      iconSrc: '/brands/windows.svg',
+      icon: 'windows',
       url: asset.browser_download_url,
     } satisfies DownloadAsset;
   }
@@ -16,7 +16,7 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
   if (asset.name.includes('mac')) {
     return {
       name: 'macOS Executable',
-      iconSrc: '/brands/apple.svg',
+      icon: 'apple',
       url: asset.browser_download_url,
     } satisfies DownloadAsset;
   }
@@ -24,7 +24,7 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
   if (asset.name.includes('linux')) {
     return {
       name: 'Linux Appimage',
-      iconSrc: '/brands/linux.svg',
+      icon: 'linux',
       url: asset.browser_download_url,
     } satisfies DownloadAsset;
   }

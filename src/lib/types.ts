@@ -5,7 +5,7 @@ export type ReleaseAsset =
   Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']['data']['assets'][number];
 
 export const DownloadAssetSchema = z.object({
-  iconSrc: z.string(),
+  icon: z.enum(['windows', 'apple', 'linux']),
   name: z.string(),
   url: z.url(),
 });
