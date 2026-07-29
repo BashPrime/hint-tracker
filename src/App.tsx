@@ -1,4 +1,8 @@
+import { QueryClient } from "@tanstack/react-query";
 import { Button } from "./components/ui/button";
+
+// create query client
+const queryClient = new QueryClient();
 
 function App() {
   return (

@@ -1,0 +1,7 @@
+build
+dist
+coverage
+README.md
+pnpm-lock.yaml
+pnpm-workspace.yaml
+src/ui/routeTree.gen.ts
