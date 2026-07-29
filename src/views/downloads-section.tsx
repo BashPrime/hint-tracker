@@ -36,11 +36,11 @@ export function DownloadsSection() {
   }
 
   return (
-    <section id="downloads" className="flex w-full flex-col gap-2">
-      <h2 className="text-bashprime-yellow text-center text-4xl font-semibold">
+    <section id="downloads" className="flex flex-col gap-2">
+      <h2 className="text-2xl font-semibold">
         Download {release.data.tag_name}
       </h2>
-      <div className="flex justify-center gap-2">
+      <div className="flex flex-wrap gap-2">
         {release.data.assets
           .sort((a, b) => a.name.localeCompare(b.name))
           .reverse()
