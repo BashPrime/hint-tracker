@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This will **not** occur if the window is maximized or in fullscreen.
 - Improved error handling, including:
   - The app will tell you what pack is missing if you attempt to import a tracker state for a pack that is not installed.
-- Performance has improved application-wide.
+- The application is better optimized for performance compared to v3.0.0.
 
 ## [3.0.0] - 2025-04-07
 
