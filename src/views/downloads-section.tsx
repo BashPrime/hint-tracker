@@ -23,19 +23,18 @@ export function DownloadsSection() {
   }
 
   return (
-    <section id="downloads" className="w-full">
+    <section id="downloads" className="flex w-full flex-col gap-2">
       {isFetching && (
-        <div>
-          <Spinner />
-          Fetching...
+        <div className="text-bashprime-red flex items-center justify-center gap-3">
+          <Spinner className="size-8" />
+          <p className="text-xl">Fetching Release...</p>
         </div>
       )}
-      {release && (
+      {isFetched && release && (
         <>
-          <h2 className="text-bashprime-yellow text-center text-2xl font-bold">
+          <h2 className="text-bashprime-yellow text-center text-4xl font-semibold">
             Download {release.data.tag_name}
           </h2>
-
           <div className="flex justify-center gap-2">
             {release.data.assets
               .sort()
