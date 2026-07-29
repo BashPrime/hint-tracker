@@ -42,7 +42,7 @@ export function DownloadsSection() {
       </h2>
       <div className="flex justify-center gap-2">
         {release.data.assets
-          .sort()
+          .sort((a, b) => a.name.localeCompare(b.name))
           .reverse()
           .map((asset) => (
             <DownloadButton asset={asset} />
