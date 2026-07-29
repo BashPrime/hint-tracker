@@ -15,7 +15,10 @@ export function DownloadButton({ asset }: Props) {
 
   return (
     <a href={asset.browser_download_url}>
-      <Button variant="secondary" className="bg-bashprime-red fill-foreground py-5">
+      <Button
+        variant="secondary"
+        className="bg-bashprime-red fill-foreground py-5"
+      >
         {parsed.icon === 'windows' && <WindowsIcon />}
         {parsed.icon === 'apple' && <AppleIcon />}
         {parsed.icon === 'linux' && <LinuxIcon />}
