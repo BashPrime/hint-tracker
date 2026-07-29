@@ -23,7 +23,7 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
 
   if (asset.name.includes('linux')) {
     return {
-      name: 'Linux Appimage',
+      name: 'Linux AppImage',
       icon: 'linux',
       url: asset.browser_download_url,
     } satisfies DownloadAsset;
