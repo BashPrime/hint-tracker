@@ -1,11 +1,22 @@
 import { Button } from '@/components/ui/button';
 import type { Pack } from '@/lib/types';
 import type { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<Pack>[] = [
   {
     accessorKey: 'name',
-    header: 'Pack',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Pack
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     accessorFn: (row) => row.name,
     cell: ({ row }) => {
       const { name, version } = row.original;
@@ -20,7 +31,17 @@ export const columns: ColumnDef<Pack>[] = [
   },
   {
     accessorKey: 'game',
-    header: 'Game',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Game
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: 'author',
