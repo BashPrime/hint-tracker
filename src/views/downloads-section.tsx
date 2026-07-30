@@ -45,7 +45,7 @@ export function DownloadsSection() {
           .sort((a, b) => a.name.localeCompare(b.name))
           .reverse()
           .map((asset) => (
-            <DownloadButton asset={asset} />
+            <DownloadButton key={asset.id} asset={asset} />
           ))}
       </div>
     </section>
