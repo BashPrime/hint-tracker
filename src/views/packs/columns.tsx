@@ -1,20 +1,38 @@
 import { Button } from '@/components/ui/button';
 import type { Pack } from '@/lib/types';
 import type { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
+import type { ReactNode } from 'react';
+
+type SortableHeaderProps = {
+  children: ReactNode;
+  isSorted: 'asc' | 'desc' | false;
+  onClick: () => void;
+};
+
+function SortableHeader({ children, onClick, isSorted }: SortableHeaderProps) {
+  return (
+    <Button variant="ghost" onClick={onClick}>
+      {children}
+      {{
+        asc: <ArrowUp className="ml-1 h-4 w-4" />,
+        desc: <ArrowDown className="ml-1 h-4 w-4" />,
+      }[isSorted as string] ?? <ArrowUpDown className="ml-1 h-4 w-4" />}
+    </Button>
+  );
+}
 
 export const columns: ColumnDef<Pack>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <SortableHeader
+          isSorted={column.getIsSorted()}
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Pack
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        </SortableHeader>
       );
     },
     accessorFn: (row) => row.name,
@@ -33,13 +51,12 @@ export const columns: ColumnDef<Pack>[] = [
     accessorKey: 'game',
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <SortableHeader
+          isSorted={column.getIsSorted()}
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Game
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        </SortableHeader>
       );
     },
   },
