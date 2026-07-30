@@ -1,0 +1,10 @@
+[
+  {
+    "version": "1.0.0",
+    "id": "prime2-hint-tracker",
+    "name": "Metroid Prime 2 Hints",
+    "game": "Metroid Prime 2: Echoes",
+    "author": "BashPrime",
+    "downloadUrl": "https://github.com/BashPrime/prime2-hint-tracker/releases/download/v1.0.0/prime2-hint-tracker-1.0.0.zip"
+  }
+]
