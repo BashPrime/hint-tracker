@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 type Props = {
   asset: ReleaseAsset;
 };
-export function DownloadButton({ asset }: Props) {
+export function AssetDownloadButton({ asset }: Props) {
   const parsed = buildDownloadAsset(asset);
 
   if (!parsed) {
@@ -19,9 +19,9 @@ export function DownloadButton({ asset }: Props) {
         variant="secondary"
         className="bg-bashprime-red fill-foreground py-5"
       >
-        {parsed.icon === 'windows' && <WindowsIcon />}
-        {parsed.icon === 'apple' && <AppleIcon />}
-        {parsed.icon === 'linux' && <LinuxIcon />}
+        {parsed.icon === 'windows' && <WindowsIcon data-icon="inline-start" />}
+        {parsed.icon === 'apple' && <AppleIcon data-icon="inline-start" />}
+        {parsed.icon === 'linux' && <LinuxIcon data-icon="inline-start" />}
         <span className="text-lg">{parsed.name}</span>
       </Button>
     </a>

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import type { Pack } from '@/lib/types';
 import type { ColumnDef } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Download } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 type SortableHeaderProps = {
@@ -69,7 +69,10 @@ export const columns: ColumnDef<Pack>[] = [
     header: undefined,
     cell: ({ row }) => (
       <a href={row.getValue('downloadUrl')}>
-        <Button className="bg-bashprime-yellow">Download</Button>
+        <Button className="bg-bashprime-yellow">
+          <Download data-icon="inline-start" />
+          Download
+        </Button>
       </a>
     ),
   },

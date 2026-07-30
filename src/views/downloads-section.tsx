@@ -1,6 +1,6 @@
 import { fetchLatestRelease } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
-import { DownloadButton } from '../components/download-button';
+import { AssetDownloadButton } from '../components/asset-download-button';
 import { Spinner } from '../components/ui/spinner';
 
 export function DownloadsSection() {
@@ -45,7 +45,7 @@ export function DownloadsSection() {
           .sort((a, b) => a.name.localeCompare(b.name))
           .reverse()
           .map((asset) => (
-            <DownloadButton key={asset.id} asset={asset} />
+            <AssetDownloadButton key={asset.id} asset={asset} />
           ))}
       </div>
     </section>
