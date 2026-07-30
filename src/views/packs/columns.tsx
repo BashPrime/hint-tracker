@@ -68,7 +68,7 @@ export const columns: ColumnDef<Pack>[] = [
     accessorKey: 'downloadUrl',
     header: undefined,
     cell: ({ row }) => (
-      <a href={row.getValue('downloadUrl')} target="_blank">
+      <a href={row.getValue('downloadUrl')}>
         <Button className="bg-bashprime-yellow">Download</Button>
       </a>
     ),
