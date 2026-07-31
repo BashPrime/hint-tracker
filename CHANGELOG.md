@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - This will **not** occur if the window is maximized or in fullscreen.
 - Improved error handling, including:
   - The app will tell you what pack is missing if you attempt to import a tracker state for a pack that is not installed.
+  - Version mismatches when importing the state for a tracker
+  - Failed pack validation during install
 - Unhinted items now need their X button double-clicked to remove them from the list.
 - The application is better optimized for performance compared to v3.0.0.
 
