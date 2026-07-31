@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - If you want to build your own pack, please read `docs/Pack.md`.
 - The hint tracker now has [a website](https://bashprime.github.io/hint-tracker)!
   - It includes a table of community-made packs that can be downloaded and installed.
-- Autosaving is now done for every installed tracker pack (and every installed _version_ of that pack), meaning that your progress in Pack A won't be lost if you switch to Pack B.
+- Autosaving is now done for every installed tracker pack (and every installed version of that pack), meaning that your progress in Pack A won't be lost if you switch to Pack B.
 - Light theme has been added.
   - By default, the application will use the system theme, but the light or dark themes can be manually set if desired.
 - Checkboxes can be made accessible by keyboard and directly interacted with by enabling the **Accessible Checkboxes** toggle.
