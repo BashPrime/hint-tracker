@@ -1,10 +1,11 @@
 import type { DownloadAsset, ReleaseAsset } from './types';
 
 export function buildDownloadAsset(asset: ReleaseAsset) {
+  const assetName = asset.name.toLowerCase();
   // Windows
-  if (asset.name.includes('windows')) {
+  if (assetName.includes('windows')) {
     // Installer
-    const isInstaller = asset.name.includes('setup');
+    const isInstaller = asset.name.includes('installer') || asset.name.includes('setup');
     return {
       name: `Windows ${isInstaller ? 'Installer' : 'Portable'}`,
       icon: 'windows',
@@ -13,7 +14,7 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
   }
 
   // macOS
-  if (asset.name.includes('mac')) {
+  if (assetName.includes('macos') || assetName.includes('mac')) {
     return {
       name: 'macOS Executable',
       icon: 'apple',
@@ -21,7 +22,7 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
     } satisfies DownloadAsset;
   }
 
-  if (asset.name.includes('linux')) {
+  if (assetName.includes('linux')) {
     return {
       name: 'Linux AppImage',
       icon: 'linux',
