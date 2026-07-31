@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The tracker has been completely overhauled and now functions as a universal tracker!
   - The previously-hardcoded trackers have been completely replaced by a new pack system, inspired by [PopTracker](https://github.com/black-sliver/PopTracker).
   - Tracker packs are bundled .zip files that are installed and read by the application, and then parsed to generate the resulting layout and hint structure.
-  - If you want to build your own pack, please read `docs/Pack.md`!
+  - If you want to build your own pack, please read `docs/Pack.md`.
+- The hint tracker now has [a website](https://bashprime.github.io/hint-tracker)!
+  - It includes a table of community-made packs that can be downloaded and installed.
 - Autosaving is now done for every installed tracker pack (and every installed _version_ of that pack), meaning that your progress in Pack A won't be lost if you switch to Pack B.
 - Light theme has been added.
   - By default, the application will use the system theme, but the light or dark themes can be manually set if desired.
