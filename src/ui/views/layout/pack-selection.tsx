@@ -37,7 +37,6 @@ function PacksExternalLink() {
       variant="link"
       className={cn(
         'text-bashprime-yellow text-lg cursor-pointer',
-        // 'hover:brightness-125'
       )}
       onClick={() => openExternalLink('https://bashprime.github.io/hint-tracker')}
     >
