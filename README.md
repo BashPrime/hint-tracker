@@ -4,15 +4,20 @@
 
 # BashPrime Hint Tracker
 
-[Website](https://bashprime.github.io/hint-tracker/)
+<div align="center" style="font-size: 24px; font-weight: 600;">
+  <a href="https://bashprime.github.io/hint-tracker/">
+    <p>Website</p>
+  </a>
+</div>
 
 A universal tracker for organizing your [randomizer](docs/Randomizer.md) hints. Just download a pack or [create your own pack](docs/Pack.md), install, and enjoy a rich, customizable note-taking experience.
 
 ## Getting Started
 
 1. Download an installer or portable build for Windows, macOS, or Linux at the [Releases page](https://github.com/BashPrime/prime-hint-tracker/releases).
-2. Download and install a tracker pack (no website yet, sorry!)
-3. Click on the pack you want to use
+2. Install a tracker pack.
+    - Community-made packs can be downloaded from the website.
+3. Click on the pack you want to use.
 4. Enjoy!
 
 ## Screenshot
