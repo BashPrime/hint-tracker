@@ -17,12 +17,12 @@ export function AssetDownloadButton({ asset }: Props) {
     <a href={asset.browser_download_url}>
       <Button
         variant="secondary"
-        className="bg-bashprime-red fill-foreground py-5"
+        className="bg-bashprime-red fill-foreground py-5 w-full"
       >
         {parsed.icon === 'windows' && <WindowsIcon data-icon="inline-start" />}
         {parsed.icon === 'apple' && <AppleIcon data-icon="inline-start" />}
         {parsed.icon === 'linux' && <LinuxIcon data-icon="inline-start" />}
-        <span className="text-lg">{parsed.name}</span>
+        <span className="text-sm sm:text-lg">{parsed.name}</span>
       </Button>
     </a>
   );
