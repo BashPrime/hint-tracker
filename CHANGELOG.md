@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.0.0] - 2026-07-31
 
 - The tracker has been completely overhauled and now functions as a universal tracker!
   - The previously-hardcoded trackers have been completely replaced by a new pack system, inspired by [PopTracker](https://github.com/black-sliver/PopTracker).
@@ -27,8 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The application is better optimized for performance compared to v3.0.0.
 
 ## [3.0.0] - 2025-04-07
-
-## Changes
 
 - The tracker now supports the following hints for **Metroid Prime 3: Corruption**:
   - Hyper Missile scan
