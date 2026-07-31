@@ -30,6 +30,7 @@ export const IPC_IDS = {
   installPack: 'install-pack',
   setAccessibleCheckboxes: 'set-accessible-checkboxes',
   rendererLoaded: 'renderer-loaded',
+  openExternalLink: 'open-external-link',
 };
 
 // Tracker

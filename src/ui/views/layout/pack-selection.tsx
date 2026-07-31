@@ -1,6 +1,6 @@
 import { GameCover } from '@/components/game-cover';
 import { Button } from '@/components/ui/button';
-import { installPack } from '@/ipc';
+import { installPack, openExternalLink } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { Link } from '@tanstack/react-router';
@@ -27,6 +27,21 @@ function InstallPackButton({ children, className }: InstallPackButtonProps) {
       data-name="install-pack-button"
     >
       {children}
+    </Button>
+  );
+}
+
+function PacksExternalLink() {
+  return (
+    <Button
+      variant="link"
+      className={cn(
+        'text-bashprime-yellow text-lg cursor-pointer',
+        // 'hover:brightness-125'
+      )}
+      onClick={() => openExternalLink('https://bashprime.github.io/hint-tracker')}
+    >
+      Looking for Packs?
     </Button>
   );
 }
@@ -63,11 +78,11 @@ export function PackSelection() {
       data-name="pack-selection"
     >
       <div
-        className="flex w-full flex-col items-center gap-1"
+        className="flex w-full flex-col items-center gap-2"
         data-name="selection-header"
       >
         <div
-          className="my-4 flex w-auto flex-row items-center justify-center gap-6"
+          className="mt-4 flex w-auto flex-row items-center justify-center gap-6"
           data-name="header-text-and-button"
         >
           <p className="text-4xl font-bold uppercase">Select a Pack </p>
@@ -75,6 +90,7 @@ export function PackSelection() {
             <Plus className="size-8" />
           </InstallPackButton>
         </div>
+        <PacksExternalLink />
         <div className="bg-bashprime-yellow h-1.5 w-4/5" />
         <div className="bg-bashprime-red h-1.5 w-4/5" />
       </div>
