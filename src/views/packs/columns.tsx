@@ -8,11 +8,17 @@ type SortableHeaderProps = {
   children: ReactNode;
   isSorted: 'asc' | 'desc' | false;
   onClick: () => void;
+  className?: string;
 };
 
-function SortableHeader({ children, onClick, isSorted }: SortableHeaderProps) {
+function SortableHeader({
+  children,
+  onClick,
+  isSorted,
+  className,
+}: SortableHeaderProps) {
   return (
-    <Button variant="ghost" onClick={onClick}>
+    <Button variant="ghost" onClick={onClick} className={className}>
       {children}
       {{
         asc: <ArrowUp className="ml-1 h-4 w-4" />,
@@ -54,15 +60,22 @@ export const columns: ColumnDef<Pack>[] = [
         <SortableHeader
           isSorted={column.getIsSorted()}
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          className="hidden sm:inline-flex"
         >
           Game
         </SortableHeader>
       );
     },
+    cell: ({ row }) => (
+      <span className="hidden sm:inline">{row.getValue('game')}</span>
+    ),
   },
   {
     accessorKey: 'author',
-    header: 'Author(s)',
+    header: () => <span className="inline">Author(s)</span>,
+    cell: ({ row }) => (
+      <span className="inline">{row.getValue('author')}</span>
+    ),
   },
   {
     accessorKey: 'downloadUrl',
