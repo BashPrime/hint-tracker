@@ -4,6 +4,8 @@
 
 # BashPrime Hint Tracker
 
+[Website](https://bashprime.github.io/hint-tracker/)
+
 A universal tracker for organizing your [randomizer](docs/Randomizer.md) hints. Just download a pack or [create your own pack](docs/Pack.md), install, and enjoy a rich, customizable note-taking experience.
 
 ## Getting Started
