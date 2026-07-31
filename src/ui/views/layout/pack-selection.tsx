@@ -31,14 +31,17 @@ function InstallPackButton({ children, className }: InstallPackButtonProps) {
   );
 }
 
-function PacksExternalLink() {
+type ExternalLinkProps = {
+  className?: string;
+};
+function PacksExternalLink({ className }: ExternalLinkProps) {
   return (
     <Button
       variant="link"
-      className={cn(
-        'text-bashprime-yellow text-lg cursor-pointer',
-      )}
-      onClick={() => openExternalLink('https://bashprime.github.io/hint-tracker')}
+      className={cn('text-bashprime-yellow cursor-pointer text-xl', className)}
+      onClick={() =>
+        openExternalLink('https://bashprime.github.io/hint-tracker')
+      }
     >
       Looking for Packs?
     </Button>
@@ -62,6 +65,7 @@ export function PackSelection() {
         <InstallPackButton className="p-10 p-12 text-2xl text-4xl sm:w-100">
           Install Pack
         </InstallPackButton>
+        <PacksExternalLink className="mt-2" />
       </div>
     );
   }
