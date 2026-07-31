@@ -125,6 +125,7 @@ export async function installPack(srcFilePath: string) {
       type: 'warning',
       buttons: ['No, cancel', 'Yes, overwrite'],
       cancelId: confirmOverwriteCancelId,
+      noLink: true,
     });
 
     // If the user cancels, just return immediately/abort
