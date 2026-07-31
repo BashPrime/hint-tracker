@@ -38,7 +38,12 @@ function PacksExternalLink({ className }: ExternalLinkProps) {
   return (
     <Button
       variant="link"
-      className={cn('text-bashprime-yellow cursor-pointer text-xl', className)}
+      className={cn(
+        'text-bashprime-red brightness-80',
+        'dark:text-bashprime-yellow dark:brightness-100',
+        'cursor-pointer p-0 text-xl font-normal',
+        className
+      )}
       onClick={() =>
         openExternalLink('https://bashprime.github.io/hint-tracker')
       }
@@ -93,7 +98,6 @@ export function PackSelection() {
             <Plus className="size-8" />
           </InstallPackButton>
         </div>
-        <PacksExternalLink />
         <div className="bg-bashprime-yellow h-1.5 w-4/5" />
         <div className="bg-bashprime-red h-1.5 w-4/5" />
       </div>
@@ -149,6 +153,7 @@ export function PackSelection() {
           </Link>
         ))}
       </div>
+      <PacksExternalLink />
     </div>
   );
 }
