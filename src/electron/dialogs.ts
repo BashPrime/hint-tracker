@@ -80,7 +80,7 @@ export async function showHowToUse() {
     'Hints can be marked as checked by right-clicking them.',
     'If you prefer clicking checkboxes directly, turn on Accessible Checkboxes from the Toggles menu.',
     'The X button needs to be double-clicked to remove a hint from the Unhinted Items list.',
-  ].map((d, idx) => `${idx + 1}. ${d}`)
+  ].map((d, idx) => `${idx + 1}. ${d}`);
 
   const res = await showDialog({
     type: 'info',
@@ -96,6 +96,6 @@ export async function showHowToUse() {
 
   // User clicked 'View Website'
   if (res?.response === 0) {
-    shell.openExternal(GH_PAGES_URL)
+    shell.openExternal(GH_PAGES_URL);
   }
 }
