@@ -1,7 +1,7 @@
 import { app, clipboard, shell } from 'electron';
 import { readFile } from 'fs/promises';
 import os from 'os';
-import { BASE_GITHUB_URL } from './constants.js';
+import { BASE_GITHUB_URL, GH_PAGES_URL } from './constants.js';
 import { getAboutPanelIconPath, getLicensePath } from './pathResolver.js';
 import { getErrorMsg, isDev, showDialog } from './util.js';
 
@@ -71,5 +71,31 @@ export async function showLicense() {
       message:
         'The application encountered an error getting the software license.',
     });
+  }
+}
+
+export async function showHowToUse() {
+  const details = [
+    'There are community-made packs that can be downloaded from the Hint Tracker website.',
+    'Hints can be marked as checked by right-clicking them.',
+    'If you prefer clicking checkboxes directly, turn on Accessible Checkboxes from the Toggles menu.',
+    'The X button needs to be double-clicked to remove a hint from the Unhinted Items list.',
+  ].map((d, idx) => `${idx + 1}. ${d}`)
+
+  const res = await showDialog({
+    type: 'info',
+    icon: getAboutPanelIconPath(),
+    title: 'How To Use',
+    message: 'How to Use the Tracker',
+    detail: details.join('\n'),
+    buttons: ['View Website', 'OK'],
+    defaultId: 1,
+    cancelId: 1,
+    noLink: true,
+  });
+
+  // User clicked 'View Website'
+  if (res?.response === 0) {
+    shell.openExternal(GH_PAGES_URL)
   }
 }
