@@ -19,5 +19,6 @@ interface Window {
     setAccessibleCheckboxes: (
       callback: (enabled: boolean) => void
     ) => () => void;
+    openExternalLink: (url: string) => void;
   };
 }

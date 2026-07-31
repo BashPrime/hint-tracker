@@ -7,11 +7,13 @@ import {
 } from 'electron';
 import { ThemeType } from '../shared/types/base.types.js';
 import {
+  BASE_GITHUB_URL,
+  GH_PAGES_URL,
   MENU_IDS,
   TRACKER_HOME_MENU_TEXT,
   USER_DATA_DIR,
 } from './constants.js';
-import { showAboutPanel, showLicense } from './dialogs.js';
+import { showAboutPanel, showHowToUse, showLicense } from './dialogs.js';
 import {
   exportTrackerState,
   importTrackerState,
@@ -162,6 +164,13 @@ const template: MenuItemConstructorOptions[] = [
   {
     label: 'Help',
     submenu: [
+      { label: 'How To Use', click: () => showHowToUse() },
+      { label: 'View Website', click: () => shell.openExternal(GH_PAGES_URL) },
+      {
+        label: 'View Source Code on GitHub',
+        click: () => shell.openExternal(BASE_GITHUB_URL),
+      },
+      { type: 'separator' },
       { label: 'View License', click: () => showLicense() },
       { label: 'About', click: () => showAboutPanel() },
     ],

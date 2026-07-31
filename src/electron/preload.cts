@@ -59,4 +59,6 @@ electron.contextBridge.exposeInMainWorld('electronApi', {
     return () =>
       ipcRenderer.removeListener('set-accessible-checkboxes', subscription);
   },
+  openExternalLink: (url: string) =>
+    ipcRenderer.invoke('open-external-link', url),
 });

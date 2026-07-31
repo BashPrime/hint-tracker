@@ -123,8 +123,9 @@ export async function installPack(srcFilePath: string) {
       title: 'Pack Exists',
       message: 'A pack with this file name exists. Overwrite?',
       type: 'warning',
-      buttons: ['No, cancel', 'Yes, overwrite'],
+      buttons: ['No, Cancel', 'Yes, Overwrite'],
       cancelId: confirmOverwriteCancelId,
+      noLink: true,
     });
 
     // If the user cancels, just return immediately/abort

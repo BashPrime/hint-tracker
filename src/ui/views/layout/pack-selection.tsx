@@ -1,6 +1,6 @@
 import { GameCover } from '@/components/game-cover';
 import { Button } from '@/components/ui/button';
-import { installPack } from '@/ipc';
+import { installPack, openExternalLink } from '@/ipc';
 import { cn } from '@/lib/utils';
 import { packsState } from '@/states/App.states';
 import { Link } from '@tanstack/react-router';
@@ -31,6 +31,28 @@ function InstallPackButton({ children, className }: InstallPackButtonProps) {
   );
 }
 
+type ExternalLinkProps = {
+  className?: string;
+};
+function PacksExternalLink({ className }: ExternalLinkProps) {
+  return (
+    <Button
+      variant="link"
+      className={cn(
+        'text-bashprime-red brightness-80',
+        'dark:text-bashprime-yellow dark:brightness-100',
+        'cursor-pointer p-0 text-xl font-normal',
+        className
+      )}
+      onClick={() =>
+        openExternalLink('https://bashprime.github.io/hint-tracker')
+      }
+    >
+      Looking for Packs?
+    </Button>
+  );
+}
+
 export function PackSelection() {
   // !STATE
   const packs = useAtomValue(packsState);
@@ -48,6 +70,7 @@ export function PackSelection() {
         <InstallPackButton className="p-10 p-12 text-2xl text-4xl sm:w-100">
           Install Pack
         </InstallPackButton>
+        <PacksExternalLink className="mt-2" />
       </div>
     );
   }
@@ -63,11 +86,11 @@ export function PackSelection() {
       data-name="pack-selection"
     >
       <div
-        className="flex w-full flex-col items-center gap-1"
+        className="flex w-full flex-col items-center gap-2"
         data-name="selection-header"
       >
         <div
-          className="my-4 flex w-auto flex-row items-center justify-center gap-6"
+          className="mt-4 flex w-auto flex-row items-center justify-center gap-6"
           data-name="header-text-and-button"
         >
           <p className="text-4xl font-bold uppercase">Select a Pack </p>
@@ -130,6 +153,7 @@ export function PackSelection() {
           </Link>
         ))}
       </div>
+      <PacksExternalLink />
     </div>
   );
 }

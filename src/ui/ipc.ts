@@ -65,3 +65,7 @@ export function setExportTrackerStateMenuItem(enabled: boolean) {
 export function installPack() {
   window.electronApi.installPack();
 }
+
+export function openExternalLink(url: string) {
+  window.electronApi.openExternalLink(url);
+}

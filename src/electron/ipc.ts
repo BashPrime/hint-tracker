@@ -1,5 +1,5 @@
 import AdmZip from 'adm-zip';
-import { dialog, ipcMain } from 'electron';
+import { dialog, ipcMain, shell } from 'electron';
 import {
   TrackerSaveState,
   TrackerSaveStateSchema,
@@ -139,6 +139,10 @@ export function runIpcHandlers() {
 
   ipcMain.handle(IPC_IDS.installPack, () => {
     installPackDialog();
+  });
+
+  ipcMain.handle(IPC_IDS.openExternalLink, (_, url: string) => {
+    shell.openExternal(url);
   });
 }
 

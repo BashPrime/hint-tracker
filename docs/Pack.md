@@ -13,7 +13,7 @@
   "schemaVersion": "<Number that lets the tracker app know how to validate your pack files>",
   "id": "<Unique string identifier, required for autosaves and state files. e.g. 'prime1-hints'>",
   "name": "<String. The pack's readable name, e.g. 'Metroid Prime Hints'>",
-  "gameName": "<String. Readable name for the game the pack represents, e.g. 'Metroid Prime'>",
+  "game": "<String. Readable name for the game the pack represents, e.g. 'Metroid Prime'>",
   "version": "<String. The pack's semantic version, required for autosaves and state files>",
   "author": "<String. The person or people that made the pack>",
   "description": "<String. Describes what's in the pack>",
