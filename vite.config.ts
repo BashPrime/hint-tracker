@@ -32,8 +32,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src/ui'),
-      src: path.resolve(__dirname, './src'),
+      '@': path.resolve(import.meta.dirname, './src/ui'),
+      src: path.resolve(import.meta.dirname, './src'),
     },
   },
 });
