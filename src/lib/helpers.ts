@@ -5,7 +5,8 @@ export function buildDownloadAsset(asset: ReleaseAsset) {
   // Windows
   if (assetName.includes('windows')) {
     // Installer
-    const isInstaller = assetName.includes('installer') || assetName.includes('setup');
+    const isInstaller =
+      assetName.includes('installer') || assetName.includes('setup');
     return {
       name: `Windows ${isInstaller ? 'Installer' : 'Portable'}`,
       icon: 'windows',

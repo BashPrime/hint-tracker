@@ -27,7 +27,7 @@
 
     /* Required for shadcn/ui */
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
