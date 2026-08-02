@@ -67,26 +67,29 @@ export const columns: ColumnDef<Pack>[] = [
       );
     },
     cell: ({ row }) => (
-      <span className="hidden sm:inline">{row.getValue('game')}</span>
+      <span className="hidden sm:table-cell">{row.getValue('game')}</span>
     ),
   },
   {
     accessorKey: 'author',
-    header: () => <span className="inline">Author(s)</span>,
+    header: () => <span className="hidden sm:inline">Author(s)</span>,
     cell: ({ row }) => (
-      <span className="inline">{row.getValue('author')}</span>
+      <span className="hidden sm:inline">{row.getValue('author')}</span>
     ),
   },
   {
     accessorKey: 'downloadUrl',
     header: undefined,
+
     cell: ({ row }) => (
-      <a href={row.getValue('downloadUrl')}>
-        <Button className="bg-bashprime-yellow">
-          <Download data-icon="inline-start" />
-          Download
-        </Button>
-      </a>
+      <div className="flex justify-end">
+        <a href={row.getValue('downloadUrl')}>
+          <Button className="bg-bashprime-yellow">
+            <Download data-icon="inline-start" />
+            Download
+          </Button>
+        </a>
+      </div>
     ),
   },
 ];

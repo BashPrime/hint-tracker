@@ -55,10 +55,9 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn('game')?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
         />
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="w-full overflow-hidden border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
