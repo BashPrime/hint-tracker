@@ -1,5 +1,8 @@
+import packs from '@/data/packs.json';
 import { throttling } from '@octokit/plugin-throttling';
 import { Octokit } from 'octokit';
+import z from 'zod';
+import { PackSchema } from './types';
 
 const ThrottledOctokit = Octokit.plugin(throttling);
 const octokit = new ThrottledOctokit({
@@ -35,4 +38,8 @@ export async function fetchLatestRelease() {
   } catch (err) {
     throw new Error('fetchLatestRelease(): github api response was not ok');
   }
+}
+
+export async function fetchPacks() {
+  return z.array(PackSchema).parse(packs);
 }
